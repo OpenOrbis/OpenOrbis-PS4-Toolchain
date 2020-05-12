@@ -36,6 +36,10 @@
 #ifndef	_SYS_CDEFS_H_
 #define	_SYS_CDEFS_H_
 
+#if __clang_major__ >= 10
+#define __GNUC__ 3
+#endif
+
 #if defined(__cplusplus)
 #define	__BEGIN_DECLS	extern "C" {
 #define	__END_DECLS	}
