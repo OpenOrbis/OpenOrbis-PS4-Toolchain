@@ -158,6 +158,7 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - flatz: Homebrew research and writeups, SELF reversing and documentation
 - m0rph3us1987: Help with debugging stuff
 - bigboss / psxdev: Library research and reverse engineering, used for reference by various samples
+- LightningMods / LM: Testing via APP_HOME and lib loading help on the Mira side
 - MrSlick: Awesome logo <3
 - OpenOrbis Team
 - Other anonymous contributors
