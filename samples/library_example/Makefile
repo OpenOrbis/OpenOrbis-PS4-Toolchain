@@ -23,6 +23,9 @@ STUBOBJS 	:= $(patsubst $(SDIR)/%.c, $(ODIR)/%.o.stub, $(CFILES)) $(patsubst $(S
 TARGET = libExample.prx
 TARGETSTUB = libExample_stub.so
 
+# Create the intermediate directory incase it doesn't already exist.
+_unused := $(shell mkdir -p $(INTDIR))
+
 # Make rules
 $(TARGET): $(ODIR) $(OBJS)
 	$(LD) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf $(LFLAGS)

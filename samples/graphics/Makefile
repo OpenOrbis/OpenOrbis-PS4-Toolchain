@@ -21,6 +21,9 @@ OBJS 		:= $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(CFILES)) $(patsubst $(SDIR)/%.c
 
 TARGET = eboot.bin
 
+# Create the intermediate directory incase it doesn't already exist.
+_unused := $(shell mkdir -p $(INTDIR))
+
 # Make rules
 $(TARGET): $(ODIR) $(OBJS)
 	$(LD) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf $(LFLAGS)
