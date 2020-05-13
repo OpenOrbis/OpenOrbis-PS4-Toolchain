@@ -1,4 +1,4 @@
-name: Go
+name: create-eboot/create-lib
 
 on:
   push:
