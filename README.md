@@ -4,6 +4,8 @@
 
 [![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/MacOS-COMING_SOON-Red.svg)](https://shields.io/)
 
+**Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.
+
 This repository contains the source code and documentation for the OpenOrbis PS4 toolchain, which enables developers to build homebrew without the need of Sony's official Software Development Kit (SDK). It contains the header files, library stubs, and tools to build applications and libraries for the PS4.
 
 The header files as well as the library stubs may need updating to support yet undiscovered functions, so feel free to fork the repository and make pull requests to update support.
