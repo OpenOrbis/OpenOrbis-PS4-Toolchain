@@ -29,4 +29,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: miralib.dll
-        path: src/tools/miralib/csharp/bin/release/netcoreapp3.1/MiraLib.dll
+        path: src/tools/miralib/csharp/bin/Release/netcoreapp3.1/MiraLib.dll
