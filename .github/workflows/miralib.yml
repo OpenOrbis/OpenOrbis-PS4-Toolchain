@@ -4,11 +4,11 @@ on:
   push:
     branches: [ master ]
     paths:
-      - '/src/tools/miralib/csharp/**'
+      - 'src/tools/miralib/csharp/**'
   pull_request:
     branches: [ master ]
     paths:
-      - '/src/tools/miralib/csharp/**'
+      - 'src/tools/miralib/csharp/**'
 
 jobs:
   build:
