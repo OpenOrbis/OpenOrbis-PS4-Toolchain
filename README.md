@@ -48,6 +48,11 @@ sudo apt-get update
 sudo apt-get install clang
 sudo apt-get install lld
 ```
+In case you're using any Arch derivative:
+```
+sudo pacman -S clang
+sudo pacman -S lld
+```
 
 In the future, we may include pre-built binaries for clang/lld, however for the present, it is required for you to install these separately.
 
