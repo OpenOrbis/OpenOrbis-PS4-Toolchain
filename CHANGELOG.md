@@ -4,17 +4,17 @@
 
 ## Beta
 
-v0.1.1 - May 13th, 2020
+**v0.1.1 - May 13th, 2020**
 
 - Added MiraLib C# library on Continuous Integration (CI).
 
-v0.1.1 - May 12th, 2020
+**v0.1.1 - May 12th, 2020**
 
 - Fixed an issue where samples would fail to build on clang 10+ due to a sneaky change in LLVM where it no longer defines `__GNUC__`.
 - Fixed an issue where Makefiles would not automatically create directories for intermediate files, causing them to fail on systems where the directories didn't already exist (ie. Visual Studio didn't create them).
 - Fixed script line endings in `/extra` scripts from CRLF to LF for release.
 
-v0.1.0 - May 11th, 2020
+**v0.1.0 - May 11th, 2020**
 
 - Public release.
 - Put create-eboot/create-lib on Continuous Integration (CI).
