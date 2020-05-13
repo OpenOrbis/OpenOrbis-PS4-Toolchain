@@ -18,7 +18,9 @@ jobs:
       with:
         dotnet-version: 3.1.101
     - name: Install dependencies
-      run: dotnet restore
+      run: |
+        cd src/tools/miralib/csharp
+        dotnet restore
     - name: Build
       run: |
         cd src/tools/miralib/csharp
