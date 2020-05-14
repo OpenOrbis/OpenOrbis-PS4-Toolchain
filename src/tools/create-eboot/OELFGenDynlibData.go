@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"io"
+	"path/filepath"
 	"strings"
 )
 
@@ -233,12 +234,12 @@ func (orbisElf *OrbisElf) GenerateDynlibData(sizeOfFile uint64) error {
 	segmentSize += writeFingerprint("OPENORBIS-HOMEBREW", &segmentData)
 
 	// Write linking tables
-	tableOffsets.stringTable = segmentSize - 1 // Subtract 1 to account for first null entry
+	tableOffsets.stringTable = segmentSize
 	tableOffsets.stringTableSz = writeStringTable(orbisElf, orbisElf.ElfToConvertName, orbisElf.ModuleSymbolDictionary, &segmentData)
 	segmentSize += tableOffsets.stringTableSz
 
 	// Align to 0x8 byte boundary
-	segmentSize += writeNullBytes(&segmentData, segmentSize, 0x8)
+	segmentSize += writePaddingBytes(&segmentData, segmentSize, 0x8)
 
 	tableOffsets.symbolTable = segmentSize
 	tableOffsets.symbolTableSz = writeSymbolTable(orbisElf, &segmentData)
@@ -262,7 +263,7 @@ func (orbisElf *OrbisElf) GenerateDynlibData(sizeOfFile uint64) error {
 	segmentSize += tableOffsets.hashTableSz
 
 	// Align to 0x10 byte boundary
-	segmentSize += writeNullBytes(&segmentData, segmentSize, 0x10)
+	segmentSize += writePaddingBytes(&segmentData, segmentSize, 0x10)
 
 	// Write dynamic table
 	tableOffsets.dynamicTable = segmentSize
@@ -279,7 +280,7 @@ func (orbisElf *OrbisElf) GenerateDynlibData(sizeOfFile uint64) error {
 
 // writeFingerprint writes a given fingerprint to segmentData
 func writeFingerprint(fingerprint string, segmentData *[]byte) uint64 {
-	fingerprintSize := uint64(0x18 + 1)
+	fingerprintSize := uint64(0x18)
 	interpreterBuff := make([]byte, fingerprintSize)
 
 	copy(interpreterBuff[:], fingerprint)
@@ -296,12 +297,15 @@ func writeFingerprint(fingerprint string, segmentData *[]byte) uint64 {
 // written.
 func writeStringTable(orbisElf *OrbisElf, projectName string, moduleSymbolDictionary *OrderedMap, segmentData *[]byte) uint64 {
 	sizeOfStrTable = 0
+	
+	// Write the first null module entry
+	writeNullBytes(segmentData, 1)
 
 	sizeOfStrTable += writeModuleTable(moduleSymbolDictionary, segmentData)
-	offsetOfProjectName = sizeOfStrTable
+	offsetOfProjectName = sizeOfStrTable + 1 // Account for null entry
 
 	sizeOfStrTable += writeProjectMetaData(projectName, segmentData)
-	offsetOfNidTable = sizeOfStrTable + 1
+	offsetOfNidTable = sizeOfStrTable + 1 // Account for null entry
 
 	sizeOfStrTable += writeNIDTable(orbisElf, segmentData)
 
@@ -309,12 +313,7 @@ func writeStringTable(orbisElf *OrbisElf, projectName string, moduleSymbolDictio
 		sizeOfStrTable += writeModuleStrings(segmentData)
 	}
 
-	// The next section should be aligned to an 8 byte boundary, so we'll pad to satisfy this condition. We also need to
-	// add 1 to the size to account for the leading null byte in the module table.+
-	sizeOfStrTable++
-	sizeOfStrTable += writeNullBytes(segmentData, sizeOfStrTable, 0x8)
-
-	return sizeOfStrTable
+	return sizeOfStrTable + 1 // Account for null entry
 }
 
 // writeModuleTable writes the module string table using the given moduleSymbolDictionary to segmentData. Returns the
@@ -371,17 +370,26 @@ func writeModuleTable(moduleSymbolDictionary *OrderedMap, segmentData *[]byte) u
 // writeProjectMetaData writes the file name and project name to segmentData. Returns the number of bytes written.
 func writeProjectMetaData(fileName string, segmentData *[]byte) uint64 {
 	projectMetaBuff := new(bytes.Buffer)
+	
+	libName := "test"
 
-	// The project name will be the file name with the extension removed.
-	projectFile := fileName
-	projectName := strings.Replace(projectFile, ".elf", "", 1) + "\x00"
-	projectFile += "\x00"
+	projectName := filepath.Base(fileName)
+	projectName = strings.Replace(projectName, filepath.Ext(fileName), "", -1)
 
-	projectMetaBuff.WriteString(projectFile)
-	offsetOfProjectName += uint64(len(projectMetaBuff.Bytes())) + 1
+	// The module name will be either
+	// 1) the libName is given, or, if none is given,
+	// 2) the file name without the path'ing or extension
+	if libName != "" {
+		projectName = libName
+	}
 
-	projectMetaBuff.WriteString(projectName)
+	// Write the module name
+	projectMetaBuff.WriteString(projectName + "\x00")
 
+	// Record the offset of the file name, then write the file name
+	offsetOfFileName += uint64(len(projectMetaBuff.Bytes()))
+	projectMetaBuff.WriteString(fileName + "\x00")
+	
 	// Commit to segment data
 	*segmentData = append(*segmentData, projectMetaBuff.Bytes()...)
 	return uint64(len(projectMetaBuff.Bytes()))
