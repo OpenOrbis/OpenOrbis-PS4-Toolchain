@@ -310,8 +310,9 @@ func writeStringTable(orbisElf *OrbisElf, projectName string, moduleSymbolDictio
 	}
 
 	// The next section should be aligned to an 8 byte boundary, so we'll pad to satisfy this condition. We also need to
-	// add 1 to the size to account for the leading null byte in the module table.
-	sizeOfStrTable += writeNullBytes(segmentData, sizeOfStrTable+1, 0x8)
+	// add 1 to the size to account for the leading null byte in the module table.+
+	sizeOfStrTable++
+	sizeOfStrTable += writeNullBytes(segmentData, sizeOfStrTable, 0x8)
 
 	return sizeOfStrTable
 }
