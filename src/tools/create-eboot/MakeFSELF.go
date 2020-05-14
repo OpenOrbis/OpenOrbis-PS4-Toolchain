@@ -296,7 +296,7 @@ func createSignature(authInfo string, paid int64) []byte {
 
 	// Pad to 0x100 bytes
 	signature := signatureBuff.Bytes()
-	writeNullBytes(&signature, uint64(len(signature)), 0x100)
+	writePaddingBytes(&signature, uint64(len(signature)), 0x100)
 
 	return signature
 }

@@ -8,8 +8,10 @@ set intdir=%1
 set targetname=%~2
 set outputPath=%3
 
-set outputElf=%intdir%%targetname%.elf
-set outputOelf=%intdir%%targetname%.oelf
+set outputElf=%intdir%\%targetname%.elf
+set outputOelf=%intdir%\%targetname%.oelf
+
+@mkdir %intdir%
 
 Rem Compile object files for all the source files
 for %%f in (*.cpp) do (

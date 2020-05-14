@@ -1,8 +1,10 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/LICENSE)
+[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
 
-[![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/MacOS-COMING_SOON-Red.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-COMING_SOON-Red.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
+
+**Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.**
 
 This repository contains the source code and documentation for the OpenOrbis PS4 toolchain, which enables developers to build homebrew without the need of Sony's official Software Development Kit (SDK). It contains the header files, library stubs, and tools to build applications and libraries for the PS4.
 
@@ -47,6 +49,11 @@ The clang toolchain as well as the llvm linker (lld) is needed to compile and li
 sudo apt-get update
 sudo apt-get install clang
 sudo apt-get install lld
+```
+In case you're using any Arch derivative:
+```
+sudo pacman -S clang
+sudo pacman -S lld
 ```
 
 In the future, we may include pre-built binaries for clang/lld, however for the present, it is required for you to install these separately.
