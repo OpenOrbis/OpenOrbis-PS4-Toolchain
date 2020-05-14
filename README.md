@@ -1,8 +1,8 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
+[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.1.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
 
-[![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-COMING_SOON-Red.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
+[![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
 **Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.**
 
@@ -30,7 +30,7 @@ Each tool will have an additional `README.md` file in it's sub-directory giving 
 
 | Directory | Contents |
 |--|--|
-| `/bin` | Executables for tools for each platform (Windows in `/bin/windows` and Linux in `/bin/linux`) |
+| `/bin` | Executables for tools for each platform (Windows in `/bin/windows`, Linux in `/bin/linux` and macOS in `/bin/macos`) |
 | `/docs` | Documentation for PS4 format specifications (reverse engineered) and the toolchain itself
 | `/extra` | Extra / miscellaneous files. Currently, this includes project templates for Visual Studio
 | `/include` | Contains header files to compile against when building applications/libraries (PS4 specific files are in `/include/orbis`
@@ -51,14 +51,21 @@ sudo apt-get install clang
 sudo apt-get install lld
 ```
 In case you're using any Arch derivative:
+
 ```
 sudo pacman -S clang
 sudo pacman -S lld
 ```
 
+macOS users can use [Homebrew](https://brew.sh/) to install a pure copy of LLVM (the Apple version would not work with the toolchain!)
+
+```
+brew install llvm
+```
+
 In the future, we may include pre-built binaries for clang/lld, however for the present, it is required for you to install these separately.
 
-The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, this can be done using the environment variables control panel. On linux, the following command can be added to `~/.bashrc` (Debian/Ubuntu):
+The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, this can be done using the environment variables control panel. On linux and macOS, the following command can be added to `~/.bashrc` (Debian/Ubuntu), `~/.bash_profile` (macOS Mojave and lover) or `~/.zshrc` (macOS Catalina):
 
 ```
 export OO_PS4_TOOLCHAIN=[directory of installation]
@@ -72,19 +79,18 @@ For Windows, a Nullsoft scriptable installer is provided, which will automate th
 ### Linux
 For Linux, after installing the required dependencies and setting up the environment variable as noted above, you'll also want to run the `setup-toolchain.sh` script in `/extra`. This will mark all the Linux binaries as executable, as by default they're read/write.
 
-
+### macOS
+For macOS, a PKG installer is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable in both bash and zsh shells.
 
 ## Creating Homebrew Projects
 
 For Windows, `/extra` provides Visual Studio templates which can be added into your VS installation's templates directory to allow easy creation of homebrew projects. You can also copy and modify the solutions from the provided samples.
 
-For Linux, `/extra` contains a `setup-project.sh` script which will create a project directory based on the `hello_world` sample.
+For Linux and macOS, `/extra` contains a `setup-project.sh` script which will create a project directory based on the `hello_world` sample.
 
 ## Contribution
 
 Contribution is welcome, the OpenOrbis toolchain is open source after all. For those eager to contribute, we have an actively maintained list of issues on [CONTRIBUTING.md](/CONTRIBUTING.md) that are accessible and would be awesome to get closed. We appreciate anyone who contributes and acknowledgements will be maintained in this README.
-
-
 
 ## Tools
 
@@ -126,8 +132,6 @@ A replacement `readelf` tool for reading PS4-compatible ELFs, otherwise known as
 
 Author: Specter
 
-
-
 ## Scripts
 
 All scripts in the `/scripts` directory are Python 3 scripts, specifically targeting Python 3.7.0, with the exception of `/scripts/make_fself.py`. You will need Python installed on your system to run these scripts. Usage of these scripts can be found in [/scripts/README.md](/scripts/README.md).
@@ -166,6 +170,7 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - m0rph3us1987: Help with debugging stuff
 - bigboss / psxdev: Library research and reverse engineering, used for reference by various samples
 - LightningMods / LM: Testing via APP_HOME and lib loading help on the Mira side
+- Lord Friky: Proper macOS support
 - MrSlick: Awesome logo <3
 - OpenOrbis Team
 - Other anonymous contributors

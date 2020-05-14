@@ -6,8 +6,17 @@ INTDIR    	:= $(PROJDIR)/x64/Debug
 LIBS 		:= -lc -lkernel
 
 # Compiler options. You likely won't need to touch these.
-CC 			:= clang++
-LD 			:= ld.lld
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+		CC  	:= clang++
+		LD 		:= ld.lld
+		CDIR	:= linux
+endif
+ifeq ($(UNAME_S),Darwin)
+		CC 		:= /usr/local/opt/llvm/bin/clang++
+		LD 		:= /usr/local/opt/llvm/bin/ld.lld
+		CDIR	:= macos
+endif
 ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
 IDIRS 		:= -I$(TOOLCHAIN)/include
@@ -29,23 +38,23 @@ _unused := $(shell mkdir -p $(INTDIR))
 # Make rules
 $(TARGET): $(ODIR) $(OBJS)
 	$(LD) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf $(LFLAGS)
-	$(TOOLCHAIN)/bin/linux/create-lib -in=$(ODIR)/$(PROJDIR).elf -out=$(ODIR)/$(PROJDIR).oelf --paid 0x3800000000000011
+	$(TOOLCHAIN)/bin/$(CDIR)/create-lib -in=$(ODIR)/$(PROJDIR).elf -out=$(ODIR)/$(PROJDIR).oelf --paid 0x3800000000000011
 	mv $(ODIR)/$(PROJDIR).prx $(TARGET)
 
 $(TARGETSTUB): $(ODIR) $(STUBOBJS)
 	$(CC) $(ODIR)/*.o.stub -o $(TARGETSTUB) -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin $(LDIRS) $(LIBS)
 
 $(ODIR)/%.o: $(SDIR)/%.c
-	$(CC) $(CFLAGS) -o $@ $< 
+	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR)/%.o.stub: $(SDIR)/%.c
-	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(IDIRS) -o $@ $< 
+	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(IDIRS) -o $@ $<
 
 $(ODIR)/%.o.stub: $(SDIR)/%.cpp
-	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(IDIRS) -o $@ $< 
+	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(IDIRS) -o $@ $<
 
 $(ODIR):
 	@mkdir $@
