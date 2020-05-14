@@ -3,8 +3,12 @@ name: create-eboot/create-lib
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'src/tools/create-eboot/**'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'src/tools/create-eboot/**'
 
 jobs:
 
