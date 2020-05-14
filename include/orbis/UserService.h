@@ -351,7 +351,8 @@ void sceUserServiceSetVolumeForSidetone();
 void sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
 void sceUserServiceInitializeForShellCore();
-
+void sceUserServiceSetThemeEntitlementId();
+  
 #endif
 
 #ifdef __cplusplus
