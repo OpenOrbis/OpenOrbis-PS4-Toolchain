@@ -36,7 +36,7 @@
 #ifndef	_SYS_CDEFS_H_
 #define	_SYS_CDEFS_H_
 
-#if __clang_major__ >= 10
+#if __clang_major__ >= 10 && !defined(__GNUC__)
 #define __GNUC__ 3
 #endif
 

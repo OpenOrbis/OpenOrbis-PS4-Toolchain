@@ -18,8 +18,8 @@ const PT_SCE_RELRO = 0x61000010        // Read-Only Reallocation Data
 // SCE-specific dynamic table tags
 const DT_SCE_FINGERPRINT = 0x61000007     // Fingerprint data. Not important for homebrew.
 const DT_SCE_FILENAME = 0x61000009        // Original filename
-const DT_SCE_MODULE_INFO = 0x6100000D     // Module information
-const DT_SCE_NEEDED_MODULE = 0x6100000F   // Needed module
+const DT_SCE_EXPORT_MODULE = 0x6100000D   // Module exports
+const DT_SCE_IMPORT_MODULE = 0x6100000F   // Module imports
 const DT_SCE_MODULE_ATTR = 0x61000011     // Module attributes
 const DT_SCE_EXPORT_LIB = 0x61000013      // Library exports
 const DT_SCE_IMPORT_LIB = 0x61000015      // Library imports
