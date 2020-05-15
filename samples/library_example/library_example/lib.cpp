@@ -5,5 +5,5 @@
 int testLibraryFunction()
 {
     printf("This is a print from a test library function!");
-    return 1337;
+    return 0x1337;
 }
