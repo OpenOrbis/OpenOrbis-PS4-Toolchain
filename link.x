@@ -22,10 +22,14 @@ SECTIONS
 		*(.data.rel.ro)
 	}
 
+	# Align .got to 0x4000 if .data.rel.ro doesn't exist
+	. = (SIZEOF(.data.rel.ro) > 0 ? . : ALIGN(.,0x4000));
 	.got : {
 		*(.got)
 	}
 
+	# Align .got.plt to 0x4000 if .got doesn't exist
+	. = (SIZEOF(.got) > 0 ? . : ALIGN(.,0x4000));
 	.got.plt : {
 		*(.got.plt)
 	}
