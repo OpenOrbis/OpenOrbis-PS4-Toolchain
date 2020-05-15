@@ -398,7 +398,7 @@ func writeProjectMetaData(fileName string, libName string, segmentData *[]byte) 
 	// Record the offset of the file name, then write the file name
 	offsetOfFileName += uint64(len(projectMetaBuff.Bytes()))
 	projectMetaBuff.WriteString(fileName + "\x00")
-	
+
 	// Commit to segment data
 	*segmentData = append(*segmentData, projectMetaBuff.Bytes()...)
 	return uint64(len(projectMetaBuff.Bytes()))
@@ -600,7 +600,7 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 					Size: symbol.Size,
 					Shndx: uint16(symbol.Section),
 				})
-				
+
 				numSymbols++
 				numExportedSymbols++
 			}
@@ -858,7 +858,7 @@ func writeDynamicTable(orbisElf *OrbisElf, tableOffsets *TableOffsets, segmentDa
 	// Metadata
 	writeDynamicEntry(dynamicTableBuff, DT_SCE_FINGERPRINT, 0) // Fingerprint will always be at 0x0
 	writeDynamicEntry(dynamicTableBuff, DT_SCE_FILENAME, offsetOfFileName)
-	
+
 	// Exported module
 	{
 		moduleId := uint16(0)
