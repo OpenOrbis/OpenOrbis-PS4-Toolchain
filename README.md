@@ -166,6 +166,7 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - CrazyVoid: Stub generator, headers, samples and documentation
 - maxton: Create-pkg pkg and SFO generation tools
 - Kiwidog: Mira stuff, documentation
+- IDC: Lots of help with libraries and other bug fixes
 - flatz: Homebrew research and writeups, SELF reversing and documentation
 - m0rph3us1987: Help with debugging stuff
 - bigboss / psxdev: Library research and reverse engineering, used for reference by various samples
