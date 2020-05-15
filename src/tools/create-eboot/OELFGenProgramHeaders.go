@@ -98,11 +98,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	// We'll get the size by subtracting the proc param offset from data's offset so we get padding for free, which the
 	// header size will not provide.
 	dataSize := (dataSection.Offset - procParamSection.Offset) + dataSection.Size
-	dataMemSize := dataSize
+	dataMemSize := (dataSection.Addr - procParamSection.Addr) + dataSection.Size
 
 	// Also check for .bss - if it exists, factor it into the size
 	if bssSection != nil {
-		dataMemSize += bssSection.Size
+		dataMemSize += (bssSection.Addr - (dataSection.Addr + dataSection.Size)) + bssSection.Size
 	}
 
 	dataHeader := generateDataHeader(dataOffset, dataVaddr, dataSize, dataMemSize)

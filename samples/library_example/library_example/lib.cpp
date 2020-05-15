@@ -2,7 +2,8 @@
 
 #include "libexample.h"
 
-void testLibraryFunction()
+int testLibraryFunction()
 {
     printf("This is a print from a test library function!");
+    return 1337;
 }
