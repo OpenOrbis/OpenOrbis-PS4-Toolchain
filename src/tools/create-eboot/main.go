@@ -77,6 +77,7 @@ func main() {
 	paid := flag.Int64("paid", 0x3800000000000011, "program authentication ID")
 	appVer := flag.Int64("appversion", 0, "application version")
 	fwVer := flag.Int64("fwversion", 0, "firmware version")
+	libNamePtr := flag.String("libname", "", "library name (ignored in create-eboot)")
 
 	flag.Parse()
 
@@ -85,6 +86,7 @@ func main() {
 
 	inputFilePath := *inputFilePathPtr
 	outputFilePath := *outputFilePathPtr
+	libName := *libNamePtr
 
 	// Check for required flags
 	if inputFilePath == "" {
@@ -100,6 +102,6 @@ func main() {
 		outputFilePath = strings.Split(inputFilePath, ".")[0] + ".oelf"
 	}
 
-	buildOrbisElf(inputFilePath, outputFilePath, sdkVer)
+	buildOrbisElf(inputFilePath, outputFilePath, libName, sdkVer)
 	createFself(outputFilePath, *paid, *pType, *appVer, *fwVer, *authInfo)
 }

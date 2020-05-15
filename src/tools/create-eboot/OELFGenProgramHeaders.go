@@ -59,7 +59,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	sizeOfSceRelro := uint64(0)
 
 	if gotPltSection != nil {
-		sizeOfSceRelro += gotPltSection.Offset + gotPltSection.FileSize
+		if relroSection != nil {
+			sizeOfSceRelro += gotPltSection.Offset
+		}
+		
+		sizeOfSceRelro += gotPltSection.FileSize
 	}
 
 	if relroSection != nil {

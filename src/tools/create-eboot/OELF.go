@@ -12,7 +12,9 @@ import (
 // about the ELF file to convert to be accessed from OrbisElf's methods.
 type OrbisElf struct {
 	ProgramHeaders []elf.Prog64
+	SectionHeaders []elf.Section64
 
+	LibraryName 		   string
 	ElfToConvertName       string
 	ElfToConvert           *elf.File
 	ModuleSymbolDictionary *OrderedMap
@@ -41,7 +43,7 @@ func (orbisElf *OrbisElf) ValidateInputELF() error {
 
 // buildOrbisElf parses an ELF path from inputFile and writes an output Orbis ELF to outputFile. Returns an error if
 // an issue occurred during conversion, nil otherwise.
-func buildOrbisElf(inputFilePath string, outputFilePath string, sdkVer int) {
+func buildOrbisElf(inputFilePath string, outputFilePath string, libName string, sdkVer int) {
 	// Open the ELF file to be converted, and create a file for the final Orbis ELF
 	inputElf, err := elf.Open(inputFilePath)
 	check(err)
@@ -51,6 +53,7 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, sdkVer int) {
 	check(err)
 
 	orbisElf := OrbisElf{
+		LibraryName: 	  libName,
 		ElfToConvertName: inputFilePath,
 		ElfToConvert:     inputElf,
 		FinalFile:        outputElf,
@@ -87,7 +90,7 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, sdkVer int) {
 	// Generate updated program headers
 	err = orbisElf.GenerateProgramHeaders()
 	check(err)
-
+	
 	// Overwrite program header table
 	err = orbisElf.RewriteProgramHeaders()
 	check(err)

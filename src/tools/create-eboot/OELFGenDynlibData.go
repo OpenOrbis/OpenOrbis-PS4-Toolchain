@@ -235,7 +235,7 @@ func (orbisElf *OrbisElf) GenerateDynlibData(sizeOfFile uint64) error {
 
 	// Write linking tables
 	tableOffsets.stringTable = segmentSize
-	tableOffsets.stringTableSz = writeStringTable(orbisElf, orbisElf.ElfToConvertName, orbisElf.ModuleSymbolDictionary, &segmentData)
+	tableOffsets.stringTableSz = writeStringTable(orbisElf, orbisElf.ElfToConvertName, orbisElf.LibraryName, orbisElf.ModuleSymbolDictionary, &segmentData)
 	segmentSize += tableOffsets.stringTableSz
 
 	// Align to 0x8 byte boundary
@@ -295,7 +295,7 @@ func writeFingerprint(fingerprint string, segmentData *[]byte) uint64 {
 
 // writeStringTable writes the module table, project meta data, and NID table to segmentData. Returns the number of bytes
 // written.
-func writeStringTable(orbisElf *OrbisElf, projectName string, moduleSymbolDictionary *OrderedMap, segmentData *[]byte) uint64 {
+func writeStringTable(orbisElf *OrbisElf, projectName string, libName string, moduleSymbolDictionary *OrderedMap, segmentData *[]byte) uint64 {
 	sizeOfStrTable = 0
 	
 	// Write the first null module entry
@@ -304,7 +304,7 @@ func writeStringTable(orbisElf *OrbisElf, projectName string, moduleSymbolDictio
 	sizeOfStrTable += writeModuleTable(moduleSymbolDictionary, segmentData)
 	offsetOfProjectName = sizeOfStrTable + 1 // Account for null entry
 
-	sizeOfStrTable += writeProjectMetaData(projectName, segmentData)
+	sizeOfStrTable += writeProjectMetaData(projectName, libName, segmentData)
 	offsetOfNidTable = sizeOfStrTable + 1 // Account for null entry
 
 	sizeOfStrTable += writeNIDTable(orbisElf, segmentData)
@@ -368,10 +368,8 @@ func writeModuleTable(moduleSymbolDictionary *OrderedMap, segmentData *[]byte) u
 }
 
 // writeProjectMetaData writes the file name and project name to segmentData. Returns the number of bytes written.
-func writeProjectMetaData(fileName string, segmentData *[]byte) uint64 {
+func writeProjectMetaData(fileName string, libName string, segmentData *[]byte) uint64 {
 	projectMetaBuff := new(bytes.Buffer)
-	
-	libName := "test"
 
 	projectName := filepath.Base(fileName)
 	projectName = strings.Replace(projectName, filepath.Ext(fileName), "", -1)
@@ -449,11 +447,23 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 		}
 
 		// Build the NID and insert it into the table
-		nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleIndex))
+		nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleIndex, false))
 	}
 
 	// Add an additional symbol for Need_sceLibc
-	nidTableBuff.WriteString(buildNIDEntry("Need_sceLibc", libcModuleIndex))
+	nidTableBuff.WriteString(buildNIDEntry("Need_sceLibc", libcModuleIndex, false))
+
+	// Add exported symbols for libraries
+	if TOOL_MODE == "SPRX" {
+		moduleSymbols, _ := orbisElf.ElfToConvert.Symbols()
+
+		for _, symbol := range moduleSymbols {
+			// Only export global symbols that we have values for
+			if (symbol.Info >> 4 & uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+				nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleIndex + 1, true))
+			}
+		}
+	}
 
 	// Commit to segment data
 	*segmentData = append(*segmentData, nidTableBuff.Bytes()...)
@@ -461,13 +471,17 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 }
 
 // buildNIDEntry is a helper function that takes a symbolName and moduleIndex to construct an NID entry for the string table.
-// Returns the final constructed string of the NID entry.
-func buildNIDEntry(symbolName string, moduleIndex int) string {
+// If exported is set to true, the library index is overwritten with 0. Returns the final constructed string of the NID entry.
+func buildNIDEntry(symbolName string, moduleIndex int, exported bool) string {
 	nid := calculateNID(symbolName)
 
 	// Module index will always be the library index + 1, since module indexing is one-based where library indexing is
 	// zero-based.
 	libraryIndex := moduleIndex + 1
+
+	if exported {
+		libraryIndex = 0
+	}
 
 	// Format: [NID Hash] + '#' + [Module Index] + '#' + [Library Index]
 	moduleIndexChar := string(indexEncodingTable[moduleIndex])
@@ -522,12 +536,13 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 	// Add external symbol entries
 	numSymbols := 0
+	numExportedSymbols := 0
 	symbols, _ := orbisElf.ElfToConvert.DynamicSymbols()
 
-	for i, symbol := range symbols {
+	for _, symbol := range symbols {
 		if symbol.Name != "" {
 			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
-				Name: uint32(offsetOfNidTable + uint64(i*0x10)),
+				Name: uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
 				Info: symbol.Info,
 			})
 
@@ -542,10 +557,34 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 		Name: uint32(offsetOfNidTable + uint64((needSceLibcIndex)*0x10)),
 		Info: (uint8(elf.STB_GLOBAL) << 4) | uint8(elf.STT_OBJECT),
 	})
+	
+	numSymbols++
+
+	// Add exported symbols for libraries
+	if TOOL_MODE == "SPRX" {
+		moduleSymbols, _ := orbisElf.ElfToConvert.Symbols()
+
+		for _, symbol := range moduleSymbols {
+			// Only export global symbols that we have values for
+			if (symbol.Info >> 4 & uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+				_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
+					Name: uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
+					Info: symbol.Info,
+					Other: symbol.Other,
+					Value: symbol.Value,
+					Size: symbol.Size,
+					Shndx: uint16(symbol.Section),
+				})
+				
+				numSymbols++
+				numExportedSymbols++
+			}
+		}
+	}
 
 	// Add module weak symbols (libraries only)
 	if TOOL_MODE == "SPRX" {
-		moduleStopOffset := (needSceLibcIndex * 0x10) + 0x10
+		moduleStopOffset := ((numSymbols) * 0x10)
 		moduleStartOffset := moduleStopOffset + len("module_stop"+"\x00")
 
 		_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
@@ -557,16 +596,17 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 			Name: uint32(offsetOfNidTable + uint64(moduleStartOffset)),
 			Info: uint8(elf.STB_WEAK) << 4,
 		})
+
+		numExportedSymbols += 2
 	}
 
 	sizeOfTable := uint64(len(symbolTableBuff.Bytes()))
 	numHashEntries = int(sizeOfTable / 0x18)
 
-	// In the case of libraries, the last two weak symbol entries *do not* have hash entries for those two symbols, so
-	// we must account for this.
-	if TOOL_MODE == "SPRX" {
-		numHashEntries -= 2
-	}
+	// In the case of libraries, the exported symbols don't have hash entries, so we must account for this.
+	//if TOOL_MODE == "SPRX" {
+	//	//numHashEntries -= numExportedSymbols
+	//}
 
 	// Commit to segment data
 	*segmentData = append(*segmentData, symbolTableBuff.Bytes()...)
@@ -708,8 +748,11 @@ func writeDynamicTable(tableOffsets *TableOffsets, segmentData *[]byte) uint64 {
 
 	// Debugging-related tags
 	writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_DEBUG), 0)
-	writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_TEXTREL), 0)
-
+	
+	if TOOL_MODE == "SELF" {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_TEXTREL), 0)
+	}
+	
 	dtFlags := elf.DF_TEXTREL
 
 	if TOOL_MODE == "SPRX" {
