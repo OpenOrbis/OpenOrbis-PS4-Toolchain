@@ -502,7 +502,7 @@
 						<key>VALUE</key>
 						<dict>
 							<key>PATH</key>
-							<string>license.txt</string>
+							<string>../../LICENSE</string>
 							<key>PATH_TYPE</key>
 							<integer>1</integer>
 						</dict>
