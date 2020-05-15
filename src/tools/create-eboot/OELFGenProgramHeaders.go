@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"debug/elf"
 	"encoding/binary"
+	"math"
 	"sort"
 )
 
@@ -305,6 +306,7 @@ var progHeaderTypeOrder = []elf.ProgType{
 	PT_SCE_RELRO,
 	elf.PT_LOAD,
 	PT_SCE_PROC_PARAM,
+	PT_SCE_MODULE_PARAM,
 	elf.PT_DYNAMIC,
 	elf.PT_INTERP,
 	elf.PT_TLS,
@@ -326,7 +328,8 @@ func getProgramHeaderPriority(progHeaderOrder []elf.ProgType, progType uint32, p
 		}
 	}
 
-	return 0
+	// Force unknown program headers to the end
+	return math.MaxInt32
 }
 
 // programHeaderList.Len() is a standard function that just returns the length of the list.
