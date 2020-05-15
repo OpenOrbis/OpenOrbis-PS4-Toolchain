@@ -49,4 +49,9 @@ SECTIONS
 	.bss : {
 		*(.bss)
 	}
+
+	# Force .got.plt to appear, because SPRX requires a valid .got.plt.
+	/DISCARD/ : {
+		QUAD(_GLOBAL_OFFSET_TABLE_)
+	}
 }
