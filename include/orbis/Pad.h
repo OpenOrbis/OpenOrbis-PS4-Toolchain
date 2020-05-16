@@ -30,6 +30,7 @@ int scePadResetOrientation(int handle);
 int scePadSetVibration(int handle, const OrbisPadVibeParam *param);
 int scePadSetUserColor(int deviceId, uint32_t userColor); // 2nd param must be 0-3 (Blue, Red, Green, Pink respectively)
 int scePadSetLightBarBaseBrightness(int deviceId, uint32_t brightnessLevel); // 2nd param must be 0-2 (i.e. 0 = dim, 1 = medium, 2 = bright)
+int scePadIsLightBarBaseBrightnessControllable(int deviceId);
 
 // The below functions are currently not reversed
 void scePadConnectPort();
@@ -62,7 +63,6 @@ void scePadGetSphereRadius();
 void scePadGetVersionInfo();
 void scePadIsBlasterConnected();
 void scePadIsDS4Connected();
-void scePadIsLightBarBaseBrightnessControllable();
 void scePadIsMoveConnected();
 void scePadIsMoveReproductionModel();
 void scePadIsValidHandle();
