@@ -20,6 +20,8 @@
     <file targ_path="sce_sys/param.sfo" orig_path="sce_sys\param.sfo" />
   </files>
   <rootdir>
-    <dir targ_name="sce_sys" />
+    <dir targ_name="sce_sys">
+      <dir targ_name="about" />
+    </dir>
   </rootdir>
 </psproject>
