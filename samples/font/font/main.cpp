@@ -30,7 +30,6 @@ int main()
 {
     int rc;
     int video;
-    int curFrame = 0;
 
     // Set colors
     bgColor = { 0, 0, 0 };
