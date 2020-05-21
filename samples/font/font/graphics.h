@@ -41,7 +41,6 @@ extern int Depth;
 
 // Frame buffer size and count - initialized by allocateFrameBuffers()
 extern int FrameBufferSize;
-extern int FrameBufferCount;
 
 // Active frame buffer for swapping
 extern int ActiveFrameBufferIdx;
