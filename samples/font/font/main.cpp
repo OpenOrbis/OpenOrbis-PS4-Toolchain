@@ -20,7 +20,7 @@
 Color bgColor;
 Color fgColor;
 
- int frameID = 0
+ int frameID = 0;
      
 // Font faces
 FT_Face fontLarge;
