@@ -136,8 +136,6 @@ int allocateFrameBuffers(int video, int num)
     // Set SRGB pixel format
     sceVideoOutSetBufferAttribute(&Attr, 0x80000000, 1, 0, Width, Height, Width);
 
-    FrameBufferCount = num;
-
     // Register the buffers to the video handle
     return sceVideoOutRegisterBuffers(video, 0, FrameBuffers, num, &Attr);
 }
@@ -157,7 +155,7 @@ void *allocDisplayMem(size_t sz)
 void frameBufferSwap()
 {
     // Swap the frame buffer for some perf
-    ActiveFrameBufferIdx = ActiveFrameBufferIdx + 1 % (FrameBufferCount - 1);
+     ActiveFrameBufferIdx = (ActiveFrameBufferIdx + 1) %2;
 }
 
 // frameBufferClear fills the frame buffer with white pixels. Returns nothing.
