@@ -10,7 +10,7 @@ The tool is written in Golang. Commands should be the same between Windows and L
 
 Building is very easy, simply go to the root directory of the tool (`/src/tools/readelf/`) and run the `go build` command.
 
-There is a Linux build script to compile `readelf` on Linux, and cross-compile them for Windows. A batch script will be added at a later date.
+There is a shell build script to compile `readelf` on Linux and macOS, and cross-compile them for Windows. A batch script will be added at a later date.
 
 ### Usage
 The `readelf` tool requires one argument, being the file to evaluate.

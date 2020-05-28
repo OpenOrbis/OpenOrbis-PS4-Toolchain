@@ -38,7 +38,7 @@ for %%f in (%intdir%\\*.o.stub) do set stub_obj_files=!stub_obj_files! .\%%f
 clang++ -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% %stub_obj_files% -o "%outputStub%"
 
 Rem Create the prx
-%OO_PS4_TOOLCHAIN%\bin\windows\create-lib.exe -in "%outputElf%" --out "%outputPrx%" --paid 0x3800000000000011
+%OO_PS4_TOOLCHAIN%\bin\windows\create-lib.exe -in "%outputElf%" --out "%outputOelf%"
 
 Rem Cleanup
 copy "%outputPrx%" "%outputPath%\%targetname%.prx"

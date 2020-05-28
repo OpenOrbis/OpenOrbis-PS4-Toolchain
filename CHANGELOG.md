@@ -4,6 +4,19 @@
 
 ## Beta
 
+**v0.2 - May 15th, 2020**
+
+- Added macOS support (thanks Lord Friky).
+- Added package file sources for samples to make deploying samples easier, and to better demonstrate how packages should be constructed.
+- Fixed an issue where create-lib did not properly export NIDs and therefore dynamic resolving would fail (thanks IDC).
+- Fixed an issue where create-eboot/create-lib would occasionally calculate an incorrect data program size due to not accounting for the size of the `.sce_proc_param` section (thanks IDC).
+- Fixed an issue where create-eboot/create-lib would occasionally calculate an incorrect size of the string table due to an off by one via a subtle logic bug related to section padding (thanks IDC).
+- Fixed an issue where libraries would not have their Global Offset Table (GOT) / Procedure Linkage Table (PLT) aligned if no `.data.rel.ro` section was present (thanks IDC).
+- Added a build script for create-eboot/create-lib for Windows (thanks IDC).
+- Fixed an issue where the `__GNUC__` fix was being applied even if it was already defined, causing the compiler to complain if you manually defined it via compiler flags (thanks IDC).
+- Added `include/x86` directory for systems that don't have it.
+- Fixed an issue where even if there was no GOT/PLT, the PS4 would complain on libraries because it needs it for some silly reason. `.got.plt` is now forced into the build, even if there are no PLT entries (thanks IDC).
+
 **v0.1.1 - May 13th, 2020**
 
 - Added MiraLib C# library on Continuous Integration (CI).

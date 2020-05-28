@@ -20,7 +20,7 @@ void sceHidControlGetSparkState();
 // Empty Comment
 void sceHidControlSetApplicationFocus();
 // Empty Comment
-void sceHidControlSetUserColor();
+int sceHidControlSetUserColor(int deviceId, uint32_t userColor); // userColor must be 0-3, same as pad
 
 #endif
 
