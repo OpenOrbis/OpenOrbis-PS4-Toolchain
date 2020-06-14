@@ -440,9 +440,14 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 		}
 	}
 
-	// Each symbol will need an NID entry
+	// Each symbol might need an NID entry
 	for _, symbol := range symbols {
 		symbolModuleIndex := -1
+
+		// Skip symbols that have a valid section index - they're defined in the ELF and are not external
+		if symbol.Section != elf.SHN_UNDEF {
+			continue
+		}
 
 		// Check which library this symbol is from
 		for moduleIndex, module := range modules {
@@ -459,12 +464,12 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 		}
 
 		// Build the NID and insert it into the table
-		nidTableBuff.WriteString(buildNIDEntry(symbol.Name, 1 + symbolModuleIndex))
+		nidTableBuff.WriteString(buildNIDEntry(symbol.Name, 1+symbolModuleIndex))
 	}
 
 	if libcModuleIndex >= 0 {
 		// Add an additional symbol for Need_sceLibc
-		nidTableBuff.WriteString(buildNIDEntry("Need_sceLibc", 1 + libcModuleIndex))
+		nidTableBuff.WriteString(buildNIDEntry("Need_sceLibc", 1+libcModuleIndex))
 	}
 
 	// Add exported symbols for libraries
@@ -474,7 +479,7 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info >> 4 & uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
 				nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleId))
 			}
 		}
@@ -573,7 +578,7 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 	needSceLibcIndex = -1
 
-	if (libcModuleIndex >= 0) {
+	if libcModuleIndex >= 0 {
 		needSceLibcIndex = numSymbols
 
 		// Add Need_sceLibc entry
@@ -591,13 +596,13 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info >> 4 & uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
 				_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
-					Name: uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
-					Info: symbol.Info,
+					Name:  uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
+					Info:  symbol.Info,
 					Other: symbol.Other,
 					Value: symbol.Value,
-					Size: symbol.Size,
+					Size:  symbol.Size,
 					Shndx: uint16(symbol.Section),
 				})
 
@@ -729,7 +734,7 @@ func writeHashTable(segmentData *[]byte) uint64 {
 	// Write chain entries
 	if numHashEntries > 0 {
 		_ = binary.Write(hashTableBuff, binary.LittleEndian, uint32(0))
-		for i := 1; i < numHashEntries - 1; i++ {
+		for i := 1; i < numHashEntries-1; i++ {
 			// Each entry contains the index of the next entry, so add 1 for all entries except the last entry.
 			_ = binary.Write(hashTableBuff, binary.LittleEndian, uint32(i+1))
 		}
@@ -795,7 +800,7 @@ func writeDynamicTable(orbisElf *OrbisElf, tableOffsets *TableOffsets, segmentDa
 	writeDynamicEntry(dynamicTableBuff, DT_SCE_RELAENT, 0x18)
 
 	// PLT
-	if TOOL_MODE == "SPRX" && tableOffsets.linkingTable == 0 {
+	if tableOffsets.linkingTable == 0 {
 		gotPltSection := orbisElf.ElfToConvert.Section(".got.plt")
 		if gotPltSection == nil {
 			return 0, errors.New(".got.plt section must exist for SPRX")

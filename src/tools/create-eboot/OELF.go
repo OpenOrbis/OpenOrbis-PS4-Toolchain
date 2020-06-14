@@ -14,7 +14,7 @@ type OrbisElf struct {
 	ProgramHeaders []elf.Prog64
 	SectionHeaders []elf.Section64
 
-	LibraryName 		   string
+	LibraryName            string
 	ElfToConvertName       string
 	ElfToConvert           *elf.File
 	ModuleSymbolDictionary *OrderedMap
@@ -53,7 +53,7 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, libName string, 
 	check(err)
 
 	orbisElf := OrbisElf{
-		LibraryName: 	  libName,
+		LibraryName:      libName,
 		ElfToConvertName: inputFilePath,
 		ElfToConvert:     inputElf,
 		FinalFile:        outputElf,
@@ -77,12 +77,6 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, libName string, 
 	err = orbisElf.RewriteSDKVersion(sdkVer)
 	check(err)
 
-	// Overwrite the interpreter bytes (first 0x20) of .text
-	if TOOL_MODE == "SELF" {
-		err = orbisElf.RewriteInterpreter("/libexec/ld-elf.so.1")
-		check(err)
-	}
-
 	// Create the .sce_dynlib_data segment onto the end of the file
 	err = orbisElf.GenerateDynlibData(uint64(writtenBytes))
 	check(err)
@@ -90,7 +84,7 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, libName string, 
 	// Generate updated program headers
 	err = orbisElf.GenerateProgramHeaders()
 	check(err)
-	
+
 	// Overwrite program header table
 	err = orbisElf.RewriteProgramHeaders()
 	check(err)

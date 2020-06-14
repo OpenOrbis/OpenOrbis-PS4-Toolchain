@@ -1,8 +1,14 @@
 SECTIONS
 {
-	/* Combine text, rodata, and eh_frame stuff */
+	# Combine text, rodata, and eh_frame stuff
 	.text : ALIGN(0x4000) {
-		. += 0x20;
+		# "/libexec/ld-elf.so.1"
+		QUAD(0x6365786562696C2F);
+		QUAD(0x2E666C652D646C2F);
+		QUAD(0x00000000312E6F73);
+		QUAD(0x0000000000000000);
+
+		# original .text
 		*(.text)
 	}
 
