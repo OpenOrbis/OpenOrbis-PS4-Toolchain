@@ -20,6 +20,8 @@
 Color bgColor;
 Color fgColor;
 
+ int frameID = 0;
+     
 // Font faces
 FT_Face fontLarge;
 FT_Face fontSmall;
@@ -28,7 +30,6 @@ int main()
 {
     int rc;
     int video;
-    int curFrame = 0;
 
     // Set colors
     bgColor = { 0, 0, 0 };
@@ -119,13 +120,13 @@ int main()
     // Set the flip rate
     sceVideoOutSetFlipRate(video, 0);
 
-    // Blacken the background (easier on the eyes)
-    frameBufferFill(bgColor);
 
     // Draw loop
     for (;;)
     {
-        int frameID = curFrame ^ 1;
+       
+        // Blacken the background (easier on the eyes) Reset every loop
+        frameBufferFill(bgColor);
 
         // Draw the sample text
         const char *textLarge = "OpenOrbis Sample\nHello, World!";
@@ -137,12 +138,12 @@ int main()
         drawTextContainer((char *)textWrapContent, fontSmall, 0, 0, 500, 300, bgColor, fgColor);
         
         // Submit the frame buffer
-        sceVideoOutSubmitFlip(video, ActiveFrameBufferIdx, ORBIS_VIDEO_OUT_FLIP_VSYNC, curFrame);
-        frameWait(video, curFrame);
+        sceVideoOutSubmitFlip(video, ActiveFrameBufferIdx, ORBIS_VIDEO_OUT_FLIP_VSYNC, frameID);
+        frameWait(video, frameID);
 
         // Swap to the next buffer
         frameBufferSwap();
-        curFrame = frameID;
+        frameID++;
     }
 
     return 0;
