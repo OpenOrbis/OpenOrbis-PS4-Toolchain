@@ -1,67 +1,117 @@
-/*-
- * Copyright (c) 2001 Mike Barcroft <mike@FreeBSD.org>
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * $FreeBSD: release/9.0.0/sys/sys/stdint.h 221502 2011-05-05 14:45:24Z obrien $
- */
+#ifndef _STDINT_H
+#define _STDINT_H
 
-#ifndef _SYS_STDINT_H_
-#define _SYS_STDINT_H_
+#define __NEED_int8_t
+#define __NEED_int16_t
+#define __NEED_int32_t
+#define __NEED_int64_t
 
-#include <sys/cdefs.h>
-#include <sys/_types.h>
+#define __NEED_uint8_t
+#define __NEED_uint16_t
+#define __NEED_uint32_t
+#define __NEED_uint64_t
 
-#include <machine/_stdint.h>
-#include <sys/_stdint.h>
+#define __NEED_intptr_t
+#define __NEED_uintptr_t
 
-typedef	__int_least8_t		int_least8_t;
-typedef	__int_least16_t		int_least16_t;
-typedef	__int_least32_t		int_least32_t;
-typedef	__int_least64_t		int_least64_t;
+#define __NEED_intmax_t
+#define __NEED_uintmax_t
 
-typedef	__uint_least8_t		uint_least8_t;
-typedef	__uint_least16_t	uint_least16_t;
-typedef	__uint_least32_t	uint_least32_t;
-typedef	__uint_least64_t	uint_least64_t;
+#include <bits/alltypes.h>
 
-typedef	__int_fast8_t		int_fast8_t;
-typedef	__int_fast16_t		int_fast16_t;
-typedef	__int_fast32_t		int_fast32_t;
-typedef	__int_fast64_t		int_fast64_t;
+typedef int8_t int_fast8_t;
+typedef int64_t int_fast64_t;
 
-typedef	__uint_fast8_t		uint_fast8_t;
-typedef	__uint_fast16_t		uint_fast16_t;
-typedef	__uint_fast32_t		uint_fast32_t;
-typedef	__uint_fast64_t		uint_fast64_t;
+typedef int8_t  int_least8_t;
+typedef int16_t int_least16_t;
+typedef int32_t int_least32_t;
+typedef int64_t int_least64_t;
 
-#ifndef _INTMAX_T_DECLARED
-typedef	__intmax_t		intmax_t;
-#define	_INTMAX_T_DECLARED
+typedef uint8_t uint_fast8_t;
+typedef uint64_t uint_fast64_t;
+
+typedef uint8_t  uint_least8_t;
+typedef uint16_t uint_least16_t;
+typedef uint32_t uint_least32_t;
+typedef uint64_t uint_least64_t;
+
+#define INT8_MIN   (-1-0x7f)
+#define INT16_MIN  (-1-0x7fff)
+#define INT32_MIN  (-1-0x7fffffff)
+#define INT64_MIN  (-1-0x7fffffffffffffff)
+
+#define INT8_MAX   (0x7f)
+#define INT16_MAX  (0x7fff)
+#define INT32_MAX  (0x7fffffff)
+#define INT64_MAX  (0x7fffffffffffffff)
+
+#define UINT8_MAX  (0xff)
+#define UINT16_MAX (0xffff)
+#define UINT32_MAX (0xffffffffu)
+#define UINT64_MAX (0xffffffffffffffffu)
+
+#define INT_FAST8_MIN   INT8_MIN
+#define INT_FAST64_MIN  INT64_MIN
+
+#define INT_LEAST8_MIN   INT8_MIN
+#define INT_LEAST16_MIN  INT16_MIN
+#define INT_LEAST32_MIN  INT32_MIN
+#define INT_LEAST64_MIN  INT64_MIN
+
+#define INT_FAST8_MAX   INT8_MAX
+#define INT_FAST64_MAX  INT64_MAX
+
+#define INT_LEAST8_MAX   INT8_MAX
+#define INT_LEAST16_MAX  INT16_MAX
+#define INT_LEAST32_MAX  INT32_MAX
+#define INT_LEAST64_MAX  INT64_MAX
+
+#define UINT_FAST8_MAX  UINT8_MAX
+#define UINT_FAST64_MAX UINT64_MAX
+
+#define UINT_LEAST8_MAX  UINT8_MAX
+#define UINT_LEAST16_MAX UINT16_MAX
+#define UINT_LEAST32_MAX UINT32_MAX
+#define UINT_LEAST64_MAX UINT64_MAX
+
+#define INTMAX_MIN  INT64_MIN
+#define INTMAX_MAX  INT64_MAX
+#define UINTMAX_MAX UINT64_MAX
+
+#define WINT_MIN 0U
+#define WINT_MAX UINT32_MAX
+
+#if L'\0'-1 > 0
+#define WCHAR_MAX (0xffffffffu+L'\0')
+#define WCHAR_MIN (0+L'\0')
+#else
+#define WCHAR_MAX (0x7fffffff+L'\0')
+#define WCHAR_MIN (-1-0x7fffffff+L'\0')
 #endif
-#ifndef _UINTMAX_T_DECLARED
-typedef	__uintmax_t		uintmax_t;
-#define	_UINTMAX_T_DECLARED
+
+#define SIG_ATOMIC_MIN  INT32_MIN
+#define SIG_ATOMIC_MAX  INT32_MAX
+
+#include <bits/stdint.h>
+
+#define INT8_C(c)  c
+#define INT16_C(c) c
+#define INT32_C(c) c
+
+#define UINT8_C(c)  c
+#define UINT16_C(c) c
+#define UINT32_C(c) c ## U
+
+#if UINTPTR_MAX == UINT64_MAX
+#define INT64_C(c) c ## L
+#define UINT64_C(c) c ## UL
+#define INTMAX_C(c)  c ## L
+#define UINTMAX_C(c) c ## UL
+#else
+#define INT64_C(c) c ## LL
+#define UINT64_C(c) c ## ULL
+#define INTMAX_C(c)  c ## LL
+#define UINTMAX_C(c) c ## ULL
 #endif
 
-#endif /* !_SYS_STDINT_H_ */
+#endif

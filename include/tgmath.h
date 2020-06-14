@@ -1,167 +1,270 @@
-/*-
- * Copyright (c) 2004 Stefan Farfeleder.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * $FreeBSD: release/9.0.0/include/tgmath.h 166432 2007-02-02 18:30:23Z schweikh $
- */
-
-#ifndef _TGMATH_H_
-#define	_TGMATH_H_
-
-#include <complex.h>
-#include <math.h>
+#ifndef _TGMATH_H
+#define _TGMATH_H
 
 /*
- * This implementation of <tgmath.h> requires two implementation-dependent
- * macros to be defined:
- * __tg_impl_simple(x, y, z, fn, fnf, fnl, ...)
- *	Invokes fnl() if the corresponding real type of x, y or z is long
- *	double, fn() if it is double or any has an integer type, and fnf()
- *	otherwise.
- * __tg_impl_full(x, y, z, fn, fnf, fnl, cfn, cfnf, cfnl, ...)
- *	Invokes [c]fnl() if the corresponding real type of x, y or z is long
- *	double, [c]fn() if it is double or any has an integer type, and
- *	[c]fnf() otherwise.  The function with the 'c' prefix is called if
- *	any of x, y or z is a complex number.
- * Both macros call the chosen function with all additional arguments passed
- * to them, as given by __VA_ARGS__.
- *
- * Note that these macros cannot be implemented with C's ?: operator,
- * because the return type of the whole expression would incorrectly be long
- * double complex regardless of the argument types.
- */
+the return types are only correct with gcc (__GNUC__)
+otherwise they are long double or long double complex
 
-#if __GNUC_PREREQ__(3, 1)
-#define	__tg_type(e, t)	__builtin_types_compatible_p(__typeof__(e), t)
-#define	__tg_type3(e1, e2, e3, t)					\
-	(__tg_type(e1, t) || __tg_type(e2, t) || __tg_type(e3, t))
-#define	__tg_type_corr(e1, e2, e3, t)					\
-	(__tg_type3(e1, e2, e3, t) || __tg_type3(e1, e2, e3, t _Complex))
-#define	__tg_integer(e1, e2, e3)					\
-	(((__typeof__(e1))1.5 == 1) || ((__typeof__(e2))1.5 == 1) ||	\
-	    ((__typeof__(e3))1.5 == 1))
-#define	__tg_is_complex(e1, e2, e3)					\
-	(__tg_type3(e1, e2, e3, float _Complex) ||			\
-	    __tg_type3(e1, e2, e3, double _Complex) ||			\
-	    __tg_type3(e1, e2, e3, long double _Complex) ||		\
-	    __tg_type3(e1, e2, e3, __typeof__(_Complex_I)))
+the long double version of a function is never chosen when
+sizeof(double) == sizeof(long double)
+(but the return type is set correctly with gcc)
+*/
 
-#define	__tg_impl_simple(x, y, z, fn, fnf, fnl, ...)			\
-	__builtin_choose_expr(__tg_type_corr(x, y, z, long double),	\
-	    fnl(__VA_ARGS__), __builtin_choose_expr(			\
-		__tg_type_corr(x, y, z, double) || __tg_integer(x, y, z),\
-		fn(__VA_ARGS__), fnf(__VA_ARGS__)))
+#include <math.h>
+#include <complex.h>
 
-#define	__tg_impl_full(x, y, z, fn, fnf, fnl, cfn, cfnf, cfnl, ...)	\
-	__builtin_choose_expr(__tg_is_complex(x, y, z),			\
-	    __tg_impl_simple(x, y, z, cfn, cfnf, cfnl, __VA_ARGS__),	\
-	    __tg_impl_simple(x, y, z, fn, fnf, fnl, __VA_ARGS__))
+#define __IS_FP(x) (sizeof((x)+1ULL) == sizeof((x)+1.0f))
+#define __IS_CX(x) (__IS_FP(x) && sizeof(x) == sizeof((x)+I))
+#define __IS_REAL(x) (__IS_FP(x) && 2*sizeof(x) == sizeof((x)+I))
 
-#else	/* __GNUC__ */
-#error "<tgmath.h> not implemented for this compiler"
-#endif	/* !__GNUC__ */
+#define __FLT(x) (__IS_REAL(x) && sizeof(x) == sizeof(float))
+#define __LDBL(x) (__IS_REAL(x) && sizeof(x) == sizeof(long double) && sizeof(long double) != sizeof(double))
 
-/* Macros to save lots of repetition below */
-#define	__tg_simple(x, fn)						\
-	__tg_impl_simple(x, x, x, fn, fn##f, fn##l, x)
-#define	__tg_simple2(x, y, fn)						\
-	__tg_impl_simple(x, x, y, fn, fn##f, fn##l, x, y)
-#define	__tg_simplev(x, fn, ...)					\
-	__tg_impl_simple(x, x, x, fn, fn##f, fn##l, __VA_ARGS__)
-#define	__tg_full(x, fn)						\
-	__tg_impl_full(x, x, x, fn, fn##f, fn##l, c##fn, c##fn##f, c##fn##l, x)
+#define __FLTCX(x) (__IS_CX(x) && sizeof(x) == sizeof(float complex))
+#define __DBLCX(x) (__IS_CX(x) && sizeof(x) == sizeof(double complex))
+#define __LDBLCX(x) (__IS_CX(x) && sizeof(x) == sizeof(long double complex) && sizeof(long double) != sizeof(double))
 
-/* 7.22#4 -- These macros expand to real or complex functions, depending on
- * the type of their arguments. */
-#define	acos(x)		__tg_full(x, acos)
-#define	asin(x)		__tg_full(x, asin)
-#define	atan(x)		__tg_full(x, atan)
-#define	acosh(x)	__tg_full(x, acosh)
-#define	asinh(x)	__tg_full(x, asinh)
-#define	atanh(x)	__tg_full(x, atanh)
-#define	cos(x)		__tg_full(x, cos)
-#define	sin(x)		__tg_full(x, sin)
-#define	tan(x)		__tg_full(x, tan)
-#define	cosh(x)		__tg_full(x, cosh)
-#define	sinh(x)		__tg_full(x, sinh)
-#define	tanh(x)		__tg_full(x, tanh)
-#define	exp(x)		__tg_full(x, exp)
-#define	log(x)		__tg_full(x, log)
-#define	pow(x, y)	__tg_impl_full(x, x, y, pow, powf, powl,	\
-			    cpow, cpowf, cpowl, x, y)
-#define	sqrt(x)		__tg_full(x, sqrt)
+/* return type */
 
-/* "The corresponding type-generic macro for fabs and cabs is fabs." */
-#define	fabs(x)		__tg_impl_full(x, x, x, fabs, fabsf, fabsl,	\
-    			    cabs, cabsf, cabsl, x)
+#ifdef __GNUC__
+/*
+the result must be casted to the right type
+(otherwise the result type is determined by the conversion
+rules applied to all the function return types so it is long
+double or long double complex except for integral functions)
 
-/* 7.22#5 -- These macros are only defined for arguments with real type. */
-#define	atan2(x, y)	__tg_simple2(x, y, atan2)
-#define	cbrt(x)		__tg_simple(x, cbrt)
-#define	ceil(x)		__tg_simple(x, ceil)
-#define	copysign(x, y)	__tg_simple2(x, y, copysign)
-#define	erf(x)		__tg_simple(x, erf)
-#define	erfc(x)		__tg_simple(x, erfc)
-#define	exp2(x)		__tg_simple(x, exp2)
-#define	expm1(x)	__tg_simple(x, expm1)
-#define	fdim(x, y)	__tg_simple2(x, y, fdim)
-#define	floor(x)	__tg_simple(x, floor)
-#define	fma(x, y, z)	__tg_impl_simple(x, y, z, fma, fmaf, fmal, x, y, z)
-#define	fmax(x, y)	__tg_simple2(x, y, fmax)
-#define	fmin(x, y)	__tg_simple2(x, y, fmin)
-#define	fmod(x, y)	__tg_simple2(x, y, fmod)
-#define	frexp(x, y)	__tg_simplev(x, frexp, x, y)
-#define	hypot(x, y)	__tg_simple2(x, y, hypot)
-#define	ilogb(x)	__tg_simple(x, ilogb)
-#define	ldexp(x, y)	__tg_simplev(x, ldexp, x, y)
-#define	lgamma(x)	__tg_simple(x, lgamma)
-#define	llrint(x)	__tg_simple(x, llrint)
-#define	llround(x)	__tg_simple(x, llround)
-#define	log10(x)	__tg_simple(x, log10)
-#define	log1p(x)	__tg_simple(x, log1p)
-#define	log2(x)		__tg_simple(x, log2)
-#define	logb(x)		__tg_simple(x, logb)
-#define	lrint(x)	__tg_simple(x, lrint)
-#define	lround(x)	__tg_simple(x, lround)
-#define	nearbyint(x)	__tg_simple(x, nearbyint)
-#define	nextafter(x, y)	__tg_simple2(x, y, nextafter)
-#define	nexttoward(x, y) __tg_simplev(x, nexttoward, x, y)
-#define	remainder(x, y)	__tg_simple2(x, y, remainder)
-#define	remquo(x, y, z)	__tg_impl_simple(x, x, y, remquo, remquof,	\
-			    remquol, x, y, z)
-#define	rint(x)		__tg_simple(x, rint)
-#define	round(x)	__tg_simple(x, round)
-#define	scalbn(x, y)	__tg_simplev(x, scalbn, x, y)
-#define	scalbln(x, y)	__tg_simplev(x, scalbln, x, y)
-#define	tgamma(x)	__tg_simple(x, tgamma)
-#define	trunc(x)	__tg_simple(x, trunc)
+this cannot be done in c99, so the typeof gcc extension is
+used and that the type of ?: depends on wether an operand is
+a null pointer constant or not
+(in c11 _Generic can be used)
 
-/* 7.22#6 -- These macros always expand to complex functions. */
-#define	carg(x)		__tg_simple(x, carg)
-#define	cimag(x)	__tg_simple(x, cimag)
-#define	conj(x)		__tg_simple(x, conj)
-#define	cproj(x)	__tg_simple(x, cproj)
-#define	creal(x)	__tg_simple(x, creal)
+the c arguments below must be integer constant expressions
+so they can be in null pointer constants
+(__IS_FP above was carefully chosen this way)
+*/
+/* if c then t else void */
+#define __type1(c,t) __typeof__(*(0?(t*)0:(void*)!(c)))
+/* if c then t1 else t2 */
+#define __type2(c,t1,t2) __typeof__(*(0?(__type1(c,t1)*)0:(__type1(!(c),t2)*)0))
+/* cast to double when x is integral, otherwise use typeof(x) */
+#define __RETCAST(x) ( \
+	__type2(__IS_FP(x), __typeof__(x), double))
+/* 2 args case, should work for complex types (cpow) */
+#define __RETCAST_2(x, y) ( \
+	__type2(__IS_FP(x) && __IS_FP(y), \
+		__typeof__((x)+(y)), \
+		__typeof__((x)+(y)+1.0)))
+/* 3 args case (fma only) */
+#define __RETCAST_3(x, y, z) ( \
+	__type2(__IS_FP(x) && __IS_FP(y) && __IS_FP(z), \
+		__typeof__((x)+(y)+(z)), \
+		__typeof__((x)+(y)+(z)+1.0)))
+/* drop complex from the type of x */
+/* TODO: wrong when sizeof(long double)==sizeof(double) */
+#define __RETCAST_REAL(x) (  \
+	__type2(__IS_FP(x) && sizeof((x)+I) == sizeof(float complex), float, \
+	__type2(sizeof((x)+1.0+I) == sizeof(double complex), double, \
+		long double)))
+/* add complex to the type of x */
+#define __RETCAST_CX(x) (__typeof__(__RETCAST(x)0+I))
+#else
+#define __RETCAST(x)
+#define __RETCAST_2(x, y)
+#define __RETCAST_3(x, y, z)
+#define __RETCAST_REAL(x)
+#define __RETCAST_CX(x)
+#endif
 
-#endif /* !_TGMATH_H_ */
+/* function selection */
+
+#define __tg_real_nocast(fun, x) ( \
+	__FLT(x) ? fun ## f (x) : \
+	__LDBL(x) ? fun ## l (x) : \
+	fun(x) )
+
+#define __tg_real(fun, x) (__RETCAST(x)__tg_real_nocast(fun, x))
+
+#define __tg_real_2_1(fun, x, y) (__RETCAST(x)( \
+	__FLT(x) ? fun ## f (x, y) : \
+	__LDBL(x) ? fun ## l (x, y) : \
+	fun(x, y) ))
+
+#define __tg_real_2(fun, x, y) (__RETCAST_2(x, y)( \
+	__FLT(x) && __FLT(y) ? fun ## f (x, y) : \
+	__LDBL((x)+(y)) ? fun ## l (x, y) : \
+	fun(x, y) ))
+
+#define __tg_complex(fun, x) (__RETCAST_CX(x)( \
+	__FLTCX((x)+I) && __IS_FP(x) ? fun ## f (x) : \
+	__LDBLCX((x)+I) ? fun ## l (x) : \
+	fun(x) ))
+
+#define __tg_complex_retreal(fun, x) (__RETCAST_REAL(x)( \
+	__FLTCX((x)+I) && __IS_FP(x) ? fun ## f (x) : \
+	__LDBLCX((x)+I) ? fun ## l (x) : \
+	fun(x) ))
+
+#define __tg_real_complex(fun, x) (__RETCAST(x)( \
+	__FLTCX(x) ? c ## fun ## f (x) : \
+	__DBLCX(x) ? c ## fun (x) : \
+	__LDBLCX(x) ? c ## fun ## l (x) : \
+	__FLT(x) ? fun ## f (x) : \
+	__LDBL(x) ? fun ## l (x) : \
+	fun(x) ))
+
+/* special cases */
+
+#define __tg_real_remquo(x, y, z) (__RETCAST_2(x, y)( \
+	__FLT(x) && __FLT(y) ? remquof(x, y, z) : \
+	__LDBL((x)+(y)) ? remquol(x, y, z) : \
+	remquo(x, y, z) ))
+
+#define __tg_real_fma(x, y, z) (__RETCAST_3(x, y, z)( \
+	__FLT(x) && __FLT(y) && __FLT(z) ? fmaf(x, y, z) : \
+	__LDBL((x)+(y)+(z)) ? fmal(x, y, z) : \
+	fma(x, y, z) ))
+
+#define __tg_real_complex_pow(x, y) (__RETCAST_2(x, y)( \
+	__FLTCX((x)+(y)) && __IS_FP(x) && __IS_FP(y) ? cpowf(x, y) : \
+	__FLTCX((x)+(y)) ? cpow(x, y) : \
+	__DBLCX((x)+(y)) ? cpow(x, y) : \
+	__LDBLCX((x)+(y)) ? cpowl(x, y) : \
+	__FLT(x) && __FLT(y) ? powf(x, y) : \
+	__LDBL((x)+(y)) ? powl(x, y) : \
+	pow(x, y) ))
+
+#define __tg_real_complex_fabs(x) (__RETCAST_REAL(x)( \
+	__FLTCX(x) ? cabsf(x) : \
+	__DBLCX(x) ? cabs(x) : \
+	__LDBLCX(x) ? cabsl(x) : \
+	__FLT(x) ? fabsf(x) : \
+	__LDBL(x) ? fabsl(x) : \
+	fabs(x) ))
+
+/* suppress any macros in math.h or complex.h */
+
+#undef acos
+#undef acosh
+#undef asin
+#undef asinh
+#undef atan
+#undef atan2
+#undef atanh
+#undef carg
+#undef cbrt
+#undef ceil
+#undef cimag
+#undef conj
+#undef copysign
+#undef cos
+#undef cosh
+#undef cproj
+#undef creal
+#undef erf
+#undef erfc
+#undef exp
+#undef exp2
+#undef expm1
+#undef fabs
+#undef fdim
+#undef floor
+#undef fma
+#undef fmax
+#undef fmin
+#undef fmod
+#undef frexp
+#undef hypot
+#undef ilogb
+#undef ldexp
+#undef lgamma
+#undef llrint
+#undef llround
+#undef log
+#undef log10
+#undef log1p
+#undef log2
+#undef logb
+#undef lrint
+#undef lround
+#undef nearbyint
+#undef nextafter
+#undef nexttoward
+#undef pow
+#undef remainder
+#undef remquo
+#undef rint
+#undef round
+#undef scalbln
+#undef scalbn
+#undef sin
+#undef sinh
+#undef sqrt
+#undef tan
+#undef tanh
+#undef tgamma
+#undef trunc
+
+/* tg functions */
+
+#define acos(x)         __tg_real_complex(acos, (x))
+#define acosh(x)        __tg_real_complex(acosh, (x))
+#define asin(x)         __tg_real_complex(asin, (x))
+#define asinh(x)        __tg_real_complex(asinh, (x))
+#define atan(x)         __tg_real_complex(atan, (x))
+#define atan2(x,y)      __tg_real_2(atan2, (x), (y))
+#define atanh(x)        __tg_real_complex(atanh, (x))
+#define carg(x)         __tg_complex_retreal(carg, (x))
+#define cbrt(x)         __tg_real(cbrt, (x))
+#define ceil(x)         __tg_real(ceil, (x))
+#define cimag(x)        __tg_complex_retreal(cimag, (x))
+#define conj(x)         __tg_complex(conj, (x))
+#define copysign(x,y)   __tg_real_2(copysign, (x), (y))
+#define cos(x)          __tg_real_complex(cos, (x))
+#define cosh(x)         __tg_real_complex(cosh, (x))
+#define cproj(x)        __tg_complex(cproj, (x))
+#define creal(x)        __tg_complex_retreal(creal, (x))
+#define erf(x)          __tg_real(erf, (x))
+#define erfc(x)         __tg_real(erfc, (x))
+#define exp(x)          __tg_real_complex(exp, (x))
+#define exp2(x)         __tg_real(exp2, (x))
+#define expm1(x)        __tg_real(expm1, (x))
+#define fabs(x)         __tg_real_complex_fabs(x)
+#define fdim(x,y)       __tg_real_2(fdim, (x), (y))
+#define floor(x)        __tg_real(floor, (x))
+#define fma(x,y,z)      __tg_real_fma((x), (y), (z))
+#define fmax(x,y)       __tg_real_2(fmax, (x), (y))
+#define fmin(x,y)       __tg_real_2(fmin, (x), (y))
+#define fmod(x,y)       __tg_real_2(fmod, (x), (y))
+#define frexp(x,y)      __tg_real_2_1(frexp, (x), (y))
+#define hypot(x,y)      __tg_real_2(hypot, (x), (y))
+#define ilogb(x)        __tg_real_nocast(ilogb, (x))
+#define ldexp(x,y)      __tg_real_2_1(ldexp, (x), (y))
+#define lgamma(x)       __tg_real(lgamma, (x))
+#define llrint(x)       __tg_real_nocast(llrint, (x))
+#define llround(x)      __tg_real_nocast(llround, (x))
+#define log(x)          __tg_real_complex(log, (x))
+#define log10(x)        __tg_real(log10, (x))
+#define log1p(x)        __tg_real(log1p, (x))
+#define log2(x)         __tg_real(log2, (x))
+#define logb(x)         __tg_real(logb, (x))
+#define lrint(x)        __tg_real_nocast(lrint, (x))
+#define lround(x)       __tg_real_nocast(lround, (x))
+#define nearbyint(x)    __tg_real(nearbyint, (x))
+#define nextafter(x,y)  __tg_real_2(nextafter, (x), (y))
+#define nexttoward(x,y) __tg_real_2(nexttoward, (x), (y))
+#define pow(x,y)        __tg_real_complex_pow((x), (y))
+#define remainder(x,y)  __tg_real_2(remainder, (x), (y))
+#define remquo(x,y,z)   __tg_real_remquo((x), (y), (z))
+#define rint(x)         __tg_real(rint, (x))
+#define round(x)        __tg_real(round, (x))
+#define scalbln(x,y)    __tg_real_2_1(scalbln, (x), (y))
+#define scalbn(x,y)     __tg_real_2_1(scalbn, (x), (y))
+#define sin(x)          __tg_real_complex(sin, (x))
+#define sinh(x)         __tg_real_complex(sinh, (x))
+#define sqrt(x)         __tg_real_complex(sqrt, (x))
+#define tan(x)          __tg_real_complex(tan, (x))
+#define tanh(x)         __tg_real_complex(tanh, (x))
+#define tgamma(x)       __tg_real(tgamma, (x))
+#define trunc(x)        __tg_real(trunc, (x))
+
+#endif

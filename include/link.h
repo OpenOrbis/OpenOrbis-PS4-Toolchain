@@ -1,33 +1,53 @@
-/*
- * Copyright (c) 1993 Paul Kranenburg
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *      This product includes software developed by Paul Kranenburg.
- * 4. The name of the author may not be used to endorse or promote products
- *    derived from this software without specific prior written permission
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: release/9.0.0/include/link.h 103436 2002-09-17 01:49:00Z peter $
- */
+#ifndef _LINK_H
+#define _LINK_H
 
-#include <sys/link_elf.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include <elf.h>
+#define __NEED_size_t
+#define __NEED_uint32_t
+#include <bits/alltypes.h>
+
+#if UINTPTR_MAX > 0xffffffff
+#define ElfW(type) Elf64_ ## type
+#else
+#define ElfW(type) Elf32_ ## type
+#endif
+
+#include <bits/link.h>
+
+struct dl_phdr_info {
+	ElfW(Addr) dlpi_addr;
+	const char *dlpi_name;
+	const ElfW(Phdr) *dlpi_phdr;
+	ElfW(Half) dlpi_phnum;
+	unsigned long long int dlpi_adds;
+	unsigned long long int dlpi_subs;
+	size_t dlpi_tls_modid;
+	void *dlpi_tls_data;
+};
+
+struct link_map {
+	ElfW(Addr) l_addr;
+	char *l_name;
+	ElfW(Dyn) *l_ld;
+	struct link_map *l_next, *l_prev;
+};
+
+struct r_debug {
+	int r_version;
+	struct link_map *r_map;
+	ElfW(Addr) r_brk;
+	enum { RT_CONSISTENT, RT_ADD, RT_DELETE } r_state;
+	ElfW(Addr) r_ldbase;
+};
+
+int dl_iterate_phdr(int (*)(struct dl_phdr_info *, size_t, void *), void *);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

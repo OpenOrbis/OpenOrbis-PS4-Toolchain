@@ -1,233 +1,188 @@
-/*-
- * Copyright (c) 1982, 1986, 1993
- *	The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)mtio.h	8.1 (Berkeley) 6/2/93
- * $FreeBSD: release/9.0.0/sys/sys/mtio.h 139825 2005-01-07 02:29:27Z imp $
- */
+#ifndef _SYS_MTIO_H
+#define _SYS_MTIO_H
 
-#ifndef	_SYS_MTIO_H_
-#define	_SYS_MTIO_H_
-
-#ifndef _KERNEL
 #include <sys/types.h>
-#endif
-#include <sys/ioccom.h>
+#include <sys/ioctl.h>
 
-/*
- * Structures and definitions for mag tape io control commands
- */
-
-/* structure for MTIOCTOP - mag tape op command */
 struct mtop {
-	short	mt_op;		/* operations defined below */
-	int32_t	mt_count;	/* how many of them */
+	short mt_op;
+	int mt_count;
 };
 
-/* operations */
-#define MTWEOF		0	/* write an end-of-file record */
-#define MTFSF		1	/* forward space file */
-#define MTBSF		2	/* backward space file */
-#define MTFSR		3	/* forward space record */
-#define MTBSR		4	/* backward space record */
-#define MTREW		5	/* rewind */
-#define MTOFFL		6	/* rewind and put the drive offline */
-#define MTNOP		7	/* no operation, sets status only */
-#define MTCACHE		8	/* enable controller cache */
-#define MTNOCACHE	9	/* disable controller cache */
+#define _IOT_mtop _IOT (_IOTS (short), 1, _IOTS (int), 1, 0, 0)
+#define _IOT_mtget _IOT (_IOTS (long), 7, 0, 0, 0, 0)
+#define _IOT_mtpos _IOT_SIMPLE (long)
+#define _IOT_mtconfiginfo _IOT (_IOTS (long), 2, _IOTS (short), 3, _IOTS (long), 1)
 
-#if defined(__FreeBSD__)
-/* Set block size for device. If device is a variable size dev		*/
-/* a non zero parameter will change the device to a fixed block size	*/
-/* device with block size set to that of the parameter passed in.	*/
-/* Resetting the block size to 0 will restore the device to a variable	*/
-/* block size device. */
 
-#define MTSETBSIZ	10
-
-/* Set density values for device. Sets the value for the opened mode only. */
-
-#define MTSETDNSTY	11
-
-#define MTERASE		12	/* erase to EOM */
-#define MTEOD		13	/* Space to EOM */
-#define MTCOMP		14	/* select compression mode 0=off, 1=def */
-#define MTRETENS	15	/* re-tension tape */
-#define MTWSS		16	/* write setmark(s) */
-#define MTFSS		17	/* forward space setmark */
-#define MTBSS		18	/* backward space setmark */
-
-#define MT_COMP_ENABLE		0xffffffff
-#define MT_COMP_DISABLED	0xfffffffe
-#define MT_COMP_UNSUPP		0xfffffffd
-
-/*
- * Values in mt_dsreg that say what the device is doing
- */
-#define	MTIO_DSREG_NIL	0	/* Unknown */
-#define	MTIO_DSREG_REST	1	/* Doing Nothing */
-#define	MTIO_DSREG_RBSY	2	/* Communicating with tape (but no motion) */
-#define	MTIO_DSREG_WR	20	/* Writing */
-#define	MTIO_DSREG_FMK	21	/* Writing Filemarks */
-#define	MTIO_DSREG_ZER	22	/* Erasing */
-#define	MTIO_DSREG_RD	30	/* Reading */
-#define	MTIO_DSREG_FWD	40	/* Spacing Forward */
-#define	MTIO_DSREG_REV	41	/* Spacing Reverse */
-#define	MTIO_DSREG_POS	42	/* Hardware Positioning (direction unknown) */
-#define	MTIO_DSREG_REW	43	/* Rewinding */
-#define	MTIO_DSREG_TEN	44	/* Retensioning */
-#define	MTIO_DSREG_UNL	45	/* Unloading */
-#define	MTIO_DSREG_LD	46	/* Loading */
-
-#endif	/* __FreeBSD__ */
-
-/* structure for MTIOCGET - mag tape get status command */
+#define MTRESET 0
+#define MTFSF	1
+#define MTBSF	2
+#define MTFSR	3
+#define MTBSR	4
+#define MTWEOF	5
+#define MTREW	6
+#define MTOFFL	7
+#define MTNOP	8
+#define MTRETEN 9
+#define MTBSFM	10
+#define MTFSFM  11
+#define MTEOM	12
+#define MTERASE 13
+#define MTRAS1  14
+#define MTRAS2	15
+#define MTRAS3  16
+#define MTSETBLK 20
+#define MTSETDENSITY 21
+#define MTSEEK	22
+#define MTTELL	23
+#define MTSETDRVBUFFER 24
+#define MTFSS	25
+#define MTBSS	26
+#define MTWSM	27
+#define MTLOCK  28
+#define MTUNLOCK 29
+#define MTLOAD  30
+#define MTUNLOAD 31
+#define MTCOMPRESSION 32
+#define MTSETPART 33
+#define MTMKPART  34
 
 struct mtget {
-	short	mt_type;	/* type of magtape device */
-/* the following two registers are grossly device dependent */
-	short	mt_dsreg;	/* ``drive status'' register */
-	short	mt_erreg;	/* ``error'' register */
-/* end device-dependent registers */
-	/*
-	 * Note that the residual count, while maintained, may be
-	 * be nonsense because the size of the residual may (greatly)
-	 * exceed 32 K-bytes. Use the MTIOCERRSTAT ioctl to get a
-	 * more accurate count.
-	 */
-	short	mt_resid;	/* residual count */
-#if defined (__FreeBSD__)
-	int32_t mt_blksiz;	/* presently operating blocksize */
-	int32_t mt_density;	/* presently operating density */
-	u_int32_t mt_comp;	/* presently operating compression */
-	int32_t mt_blksiz0;	/* blocksize for mode 0 */
-	int32_t mt_blksiz1;	/* blocksize for mode 1 */
-	int32_t mt_blksiz2;	/* blocksize for mode 2 */
-	int32_t mt_blksiz3;	/* blocksize for mode 3 */
-	int32_t mt_density0;	/* density for mode 0 */
-	int32_t mt_density1;	/* density for mode 1 */
-	int32_t mt_density2;	/* density for mode 2 */
-	int32_t mt_density3;	/* density for mode 3 */
-/* the following are not yet implemented */
-	u_int32_t mt_comp0;	/* compression type for mode 0 */
-	u_int32_t mt_comp1;	/* compression type for mode 1 */
-	u_int32_t mt_comp2;	/* compression type for mode 2 */
-	u_int32_t mt_comp3;	/* compression type for mode 3 */
-/* end not yet implemented */
+	long mt_type;
+	long mt_resid;
+	long mt_dsreg;
+	long mt_gstat;
+	long mt_erreg;
+	int mt_fileno;
+	int mt_blkno;
+};
+
+#define MT_ISUNKNOWN		0x01
+#define MT_ISQIC02		0x02
+#define MT_ISWT5150		0x03
+#define MT_ISARCHIVE_5945L2	0x04
+#define MT_ISCMSJ500		0x05
+#define MT_ISTDC3610		0x06
+#define MT_ISARCHIVE_VP60I	0x07
+#define MT_ISARCHIVE_2150L	0x08
+#define MT_ISARCHIVE_2060L	0x09
+#define MT_ISARCHIVESC499	0x0A
+#define MT_ISQIC02_ALL_FEATURES	0x0F
+#define MT_ISWT5099EEN24	0x11
+#define MT_ISTEAC_MT2ST		0x12
+#define MT_ISEVEREX_FT40A	0x32
+#define MT_ISDDS1		0x51
+#define MT_ISDDS2		0x52
+#define MT_ISSCSI1		0x71
+#define MT_ISSCSI2		0x72
+#define MT_ISFTAPE_UNKNOWN	0x800000
+#define MT_ISFTAPE_FLAG		0x800000
+
+struct mt_tape_info {
+	long t_type;
+	char *t_name;
+};
+
+#define MT_TAPE_INFO \
+{									      \
+	{MT_ISUNKNOWN,		"Unknown type of tape device"},		      \
+	{MT_ISQIC02,		"Generic QIC-02 tape streamer"},	      \
+	{MT_ISWT5150,		"Wangtek 5150, QIC-150"},		      \
+	{MT_ISARCHIVE_5945L2,	"Archive 5945L-2"},			      \
+	{MT_ISCMSJ500,		"CMS Jumbo 500"},			      \
+	{MT_ISTDC3610,		"Tandberg TDC 3610, QIC-24"},		      \
+	{MT_ISARCHIVE_VP60I,	"Archive VP60i, QIC-02"},		      \
+	{MT_ISARCHIVE_2150L,	"Archive Viper 2150L"},			      \
+	{MT_ISARCHIVE_2060L,	"Archive Viper 2060L"},			      \
+	{MT_ISARCHIVESC499,	"Archive SC-499 QIC-36 controller"},	      \
+	{MT_ISQIC02_ALL_FEATURES, "Generic QIC-02 tape, all features"},	      \
+	{MT_ISWT5099EEN24,	"Wangtek 5099-een24, 60MB"},		      \
+	{MT_ISTEAC_MT2ST,	"Teac MT-2ST 155mb data cassette drive"},     \
+	{MT_ISEVEREX_FT40A,	"Everex FT40A, QIC-40"},		      \
+	{MT_ISSCSI1,		"Generic SCSI-1 tape"},			      \
+	{MT_ISSCSI2,		"Generic SCSI-2 tape"},			      \
+	{0, 0}								      \
+}
+
+struct mtpos {
+	long mt_blkno;
+};
+
+struct mtconfiginfo  {
+	long mt_type;
+	long ifc_type;
+	unsigned short irqnr;
+	unsigned short dmanr;
+	unsigned short port;
+	unsigned long debug;
+	unsigned have_dens:1;
+	unsigned have_bsf:1;
+	unsigned have_fsr:1;
+	unsigned have_bsr:1;
+	unsigned have_eod:1;
+	unsigned have_seek:1;
+	unsigned have_tell:1;
+	unsigned have_ras1:1;
+	unsigned have_ras2:1;
+	unsigned have_ras3:1;
+	unsigned have_qfa:1;
+	unsigned pad1:5;
+	char reserved[10];
+};
+
+#define	MTIOCTOP _IOW('m', 1, struct mtop)
+#define	MTIOCGET _IOR('m', 2, struct mtget)
+#define	MTIOCPOS _IOR('m', 3, struct mtpos)
+
+#define	MTIOCGETCONFIG	_IOR('m', 4, struct mtconfiginfo)
+#define	MTIOCSETCONFIG	_IOW('m', 5, struct mtconfiginfo)
+
+#define GMT_EOF(x)              ((x) & 0x80000000)
+#define GMT_BOT(x)              ((x) & 0x40000000)
+#define GMT_EOT(x)              ((x) & 0x20000000)
+#define GMT_SM(x)               ((x) & 0x10000000)
+#define GMT_EOD(x)              ((x) & 0x08000000)
+#define GMT_WR_PROT(x)          ((x) & 0x04000000)
+#define GMT_ONLINE(x)           ((x) & 0x01000000)
+#define GMT_D_6250(x)           ((x) & 0x00800000)
+#define GMT_D_1600(x)           ((x) & 0x00400000)
+#define GMT_D_800(x)            ((x) & 0x00200000)
+#define GMT_DR_OPEN(x)          ((x) & 0x00040000)
+#define GMT_IM_REP_EN(x)        ((x) & 0x00010000)
+
+#define MT_ST_BLKSIZE_SHIFT	0
+#define MT_ST_BLKSIZE_MASK	0xffffff
+#define MT_ST_DENSITY_SHIFT	24
+#define MT_ST_DENSITY_MASK	0xff000000
+#define MT_ST_SOFTERR_SHIFT	0
+#define MT_ST_SOFTERR_MASK	0xffff
+#define MT_ST_OPTIONS		0xf0000000
+#define MT_ST_BOOLEANS		0x10000000
+#define MT_ST_SETBOOLEANS	0x30000000
+#define MT_ST_CLEARBOOLEANS	0x40000000
+#define MT_ST_WRITE_THRESHOLD	0x20000000
+#define MT_ST_DEF_BLKSIZE	0x50000000
+#define MT_ST_DEF_OPTIONS	0x60000000
+#define MT_ST_BUFFER_WRITES	0x1
+#define MT_ST_ASYNC_WRITES	0x2
+#define MT_ST_READ_AHEAD	0x4
+#define MT_ST_DEBUGGING		0x8
+#define MT_ST_TWO_FM		0x10
+#define MT_ST_FAST_MTEOM	0x20
+#define MT_ST_AUTO_LOCK		0x40
+#define MT_ST_DEF_WRITES	0x80
+#define MT_ST_CAN_BSR		0x100
+#define MT_ST_NO_BLKLIMS	0x200
+#define MT_ST_CAN_PARTITIONS    0x400
+#define MT_ST_SCSI2LOGICAL      0x800
+#define MT_ST_CLEAR_DEFAULT	0xfffff
+#define MT_ST_DEF_DENSITY	(MT_ST_DEF_OPTIONS | 0x100000)
+#define MT_ST_DEF_COMPRESSION	(MT_ST_DEF_OPTIONS | 0x200000)
+#define MT_ST_DEF_DRVBUFFER	(MT_ST_DEF_OPTIONS | 0x300000)
+#define MT_ST_HPLOADER_OFFSET 10000
+#ifndef DEFTAPE
+# define DEFTAPE	"/dev/tape"
 #endif
-	int32_t	mt_fileno;	/* relative file number of current position */
-	int32_t	mt_blkno;	/* relative block number of current position */
-};
 
-/* structure for MTIOCERRSTAT - tape get error status command */
-/* really only supported for SCSI tapes right now */
-struct scsi_tape_errors {
-	/*
-	 * These are latched from the last command that had a SCSI
-	 * Check Condition noted for these operations. The act
-	 * of issuing an MTIOCERRSTAT unlatches and clears them.
-	 */
-	u_int8_t io_sense[32];	/* Last Sense Data For Data I/O */
-	int32_t io_resid;	/* residual count from last Data I/O */
-	u_int8_t io_cdb[16];	/* Command that Caused the Last Data Sense */
-	u_int8_t ctl_sense[32];	/* Last Sense Data For Control I/O */
-	int32_t ctl_resid;	/* residual count from last Control I/O */
-	u_int8_t ctl_cdb[16];	/* Command that Caused the Last Control Sense */
-	/*
-	 * These are the read and write cumulative error counters.
-	 * (how to reset cumulative error counters is not yet defined).
-	 * (not implemented as yet but space is being reserved for them)
-	 */
-	struct {
-		u_int32_t retries;	/* total # retries performed */
-		u_int32_t corrected;	/* total # corrections performed */
-		u_int32_t processed;	/* total # corrections successful */
-		u_int32_t failures;	/* total # corrections/retries failed */
-		u_int64_t nbytes;	/* total # bytes processed */
-	} wterr, rderr;
-};
-	
-union mterrstat {
-	struct scsi_tape_errors scsi_errstat;
-	char _reserved_padding[256];
-};
-
-/*
- * Constants for mt_type byte.  These are the same
- * for controllers compatible with the types listed.
- */
-#define	MT_ISTS		0x01		/* TS-11 */
-#define	MT_ISHT		0x02		/* TM03 Massbus: TE16, TU45, TU77 */
-#define	MT_ISTM		0x03		/* TM11/TE10 Unibus */
-#define	MT_ISMT		0x04		/* TM78/TU78 Massbus */
-#define	MT_ISUT		0x05		/* SI TU-45 emulation on Unibus */
-#define	MT_ISCPC	0x06		/* SUN */
-#define	MT_ISAR		0x07		/* SUN */
-#define	MT_ISTMSCP	0x08		/* DEC TMSCP protocol (TU81, TK50) */
-#define MT_ISCY		0x09		/* CCI Cipher */
-#define MT_ISCT		0x0a		/* HP 1/4 tape */
-#define MT_ISFHP	0x0b		/* HP 7980 1/2 tape */
-#define MT_ISEXABYTE	0x0c		/* Exabyte */
-#define MT_ISEXA8200	0x0c		/* Exabyte EXB-8200 */
-#define MT_ISEXA8500	0x0d		/* Exabyte EXB-8500 */
-#define MT_ISVIPER1	0x0e		/* Archive Viper-150 */
-#define MT_ISPYTHON	0x0f		/* Archive Python (DAT) */
-#define MT_ISHPDAT	0x10		/* HP 35450A DAT drive */
-#define MT_ISMFOUR	0x11		/* M4 Data 1/2 9track drive */
-#define MT_ISTK50	0x12		/* DEC SCSI TK50 */
-#define MT_ISMT02	0x13		/* Emulex MT02 SCSI tape controller */
-
-/* mag tape io control commands */
-#define	MTIOCTOP	_IOW('m', 1, struct mtop)	/* do a mag tape op */
-#define	MTIOCGET	_IOR('m', 2, struct mtget)	/* get tape status */
-/* these two do not appear to be used anywhere */
-#define MTIOCIEOT	_IO('m', 3)			/* ignore EOT error */
-#define MTIOCEEOT	_IO('m', 4)			/* enable EOT error */
-/*
- * When more SCSI-3 SSC (streaming device) devices are out there
- * that support the full 32 byte type 2 structure, we'll have to
- * rethink these ioctls to support all the entities they haul into
- * the picture (64 bit blocks, logical file record numbers, etc..).
- */
-#define	MTIOCRDSPOS	_IOR('m', 5, u_int32_t)	/* get logical blk addr */
-#define	MTIOCRDHPOS	_IOR('m', 6, u_int32_t)	/* get hardware blk addr */
-#define	MTIOCSLOCATE	_IOW('m', 5, u_int32_t)	/* seek to logical blk addr */
-#define	MTIOCHLOCATE	_IOW('m', 6, u_int32_t)	/* seek to hardware blk addr */
-#define	MTIOCERRSTAT	_IOR('m', 7, union mterrstat)	/* get tape errors */
-/*
- * Set EOT model- argument is number of filemarks to end a tape with.
- * Note that not all possible values will be accepted.
- */
-#define	MTIOCSETEOTMODEL	_IOW('m', 8, u_int32_t)
-/* Get current EOT model */
-#define	MTIOCGETEOTMODEL	_IOR('m', 8, u_int32_t)
-
-#ifndef _KERNEL
-#define	DEFTAPE	"/dev/nsa0"
 #endif
-
-#endif /* !_SYS_MTIO_H_ */

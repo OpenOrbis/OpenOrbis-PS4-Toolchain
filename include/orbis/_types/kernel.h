@@ -2,14 +2,20 @@
 
 #include <stdint.h>
 #include <sys/time.h>
-#include <sys/event.h>
 #include <sys/stat.h>
 
 #ifndef MAP_TYPE
 	#define MAP_TYPE 0x0f
 #endif
 
-
+struct kevent {
+	uintptr_t	ident;		/* identifier for this event */
+	short		filter;	/* filter for event */
+	u_short	flags;
+	u_int		fflags;
+	intptr_t	data;
+	void		*udata;	/* opaque user data identifier */
+};
 
 typedef struct OrbisKernelModuleSegmentInfo
 {

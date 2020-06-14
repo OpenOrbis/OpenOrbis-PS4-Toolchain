@@ -1,153 +1,72 @@
-/* $FreeBSD: release/9.0.0/sys/sys/sem.h 224016 2011-07-14 14:18:14Z bz $ */
-/*	$NetBSD: sem.h,v 1.5 1994/06/29 06:45:15 cgd Exp $	*/
+#ifndef _SYS_SEM_H
+#define _SYS_SEM_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/*
- * SVID compatible sem.h file
- *
- * Author:  Daniel Boulet
- */
+#include <features.h>
 
-#ifndef _SYS_SEM_H_
-#define _SYS_SEM_H_
+#define __NEED_size_t
+#define __NEED_pid_t
+#define __NEED_time_t
+#ifdef _GNU_SOURCE
+#define __NEED_struct_timespec
+#endif
+#include <bits/alltypes.h>
 
 #include <sys/ipc.h>
 
-#ifndef _PID_T_DECLARED
-typedef	__pid_t		pid_t;
-#define	_PID_T_DECLARED
-#endif
+#define SEM_UNDO	0x1000
+#define GETPID		11
+#define GETVAL		12
+#define GETALL		13
+#define GETNCNT		14
+#define GETZCNT		15
+#define SETVAL		16
+#define SETALL		17
 
-#ifndef _SIZE_T_DECLARED
-typedef	__size_t	size_t;
-#define	_SIZE_T_DECLARED
-#endif
+#include <bits/sem.h>
 
-#ifndef _TIME_T_DECLARED
-typedef	__time_t	time_t;
-#define	_TIME_T_DECLARED
-#endif
+#define _SEM_SEMUN_UNDEFINED 1
 
-#if defined(COMPAT_FREEBSD4) || defined(COMPAT_FREEBSD5) || \
-    defined(COMPAT_FREEBSD6) || defined(COMPAT_FREEBSD7)
-struct semid_ds_old {
-	struct ipc_perm_old sem_perm;	/* operation permission struct */
-	struct sem	*sem_base;	/* pointer to first semaphore in set */
-	unsigned short	sem_nsems;	/* number of sems in set */
-	time_t		sem_otime;	/* last operation time */
-	long		sem_pad1;	/* SVABI/386 says I need this here */
-	time_t		sem_ctime;	/* last change time */
-    					/* Times measured in secs since */
-    					/* 00:00:00 GMT, Jan. 1, 1970 */
-	long		sem_pad2;	/* SVABI/386 says I need this here */
-	long		sem_pad3[4];	/* SVABI/386 says I need this here */
-};
-#endif
+#define SEM_STAT (18 | (IPC_STAT & 0x100))
+#define SEM_INFO 19
+#define SEM_STAT_ANY (20 | (IPC_STAT & 0x100))
 
-struct semid_ds {
-	struct ipc_perm	sem_perm;	/* operation permission struct */
-	struct sem	*sem_base;	/* pointer to first semaphore in set */
-	unsigned short	sem_nsems;	/* number of sems in set */
-	time_t		sem_otime;	/* last operation time */
-	time_t		sem_ctime;	/* last change time */
-    					/* Times measured in secs since */
-    					/* 00:00:00 GMT, Jan. 1, 1970 */
+struct  seminfo {
+	int semmap;
+	int semmni;
+	int semmns;
+	int semmnu;
+	int semmsl;
+	int semopm;
+	int semume;
+	int semusz;
+	int semvmx;
+	int semaem;
 };
 
-/*
- * semop's sops parameter structure
- */
 struct sembuf {
-	unsigned short	sem_num;	/* semaphore # */
-	short		sem_op;		/* semaphore operation */
-	short		sem_flg;	/* operation flags */
-};
-#define SEM_UNDO	010000
-
-#if defined(COMPAT_FREEBSD4) || defined(COMPAT_FREEBSD5) || \
-    defined(COMPAT_FREEBSD6) || defined(COMPAT_FREEBSD7) || \
-    defined(_WANT_SEMUN_OLD)
-union semun_old {
-	int		val;		/* value for SETVAL */
-	struct		semid_ds_old *buf; /* buffer for IPC_STAT & IPC_SET */
-	unsigned short	*array;		/* array for GETALL & SETALL */
-};
-#endif
-
-/*
- * semctl's arg parameter structure
- */
-union semun {
-	int		val;		/* value for SETVAL */
-	struct		semid_ds *buf;	/* buffer for IPC_STAT & IPC_SET */
-	unsigned short	*array;		/* array for GETALL & SETALL */
+	unsigned short sem_num;
+	short sem_op;
+	short sem_flg;
 };
 
-/*
- * commands for semctl
- */
-#define GETNCNT	3	/* Return the value of semncnt {READ} */
-#define GETPID	4	/* Return the value of sempid {READ} */
-#define GETVAL	5	/* Return the value of semval {READ} */
-#define GETALL	6	/* Return semvals into arg.array {READ} */
-#define GETZCNT	7	/* Return the value of semzcnt {READ} */
-#define SETVAL	8	/* Set the value of semval to arg.val {ALTER} */
-#define SETALL	9	/* Set semvals from arg.array {ALTER} */
-#define SEM_STAT 10	/* Like IPC_STAT but treats semid as sema-index */
-#define SEM_INFO 11	/* Like IPC_INFO but treats semid as sema-index */
-
-/*
- * Permissions
- */
-#define SEM_A		IPC_W	/* alter permission */
-#define SEM_R		IPC_R	/* read permission */
-
-#ifdef _KERNEL
-
-/*
- * semaphore info struct
- */
-struct seminfo {
-	int	semmni,		/* # of semaphore identifiers */
-		semmns,		/* # of semaphores in system */
-		semmnu,		/* # of undo structures in system */
-		semmsl,		/* max # of semaphores per id */
-		semopm,		/* max # of operations per semop call */
-		semume,		/* max # of undo entries per process */
-		semusz,		/* size in bytes of undo structure */
-		semvmx,		/* semaphore maximum value */
-		semaem;		/* adjust on exit max value */
-};
-extern struct seminfo	seminfo;
-
-/*
- * Kernel wrapper for the user-level structure
- */
-struct semid_kernel {
-	struct	semid_ds u;
-	struct	label *label;	/* MAC framework label */
-	struct	ucred *cred;	/* creator's credentials */
-};
-
-/* internal "mode" bits */
-#define	SEM_ALLOC	01000	/* semaphore is allocated */
-#define	SEM_DEST	02000	/* semaphore will be destroyed on last detach */
-
-/*
- * Process sem_undo vectors at proc exit.
- */
-void	semexit(struct proc *p);
-
-#else /* ! _KERNEL */
-
-__BEGIN_DECLS
-#if __BSD_VISIBLE
-int semsys(int, ...);
-#endif
 int semctl(int, int, int, ...);
 int semget(key_t, int, int);
 int semop(int, struct sembuf *, size_t);
-__END_DECLS
 
-#endif /* !_KERNEL */
+#ifdef _GNU_SOURCE
+int semtimedop(int, struct sembuf *, size_t, const struct timespec *);
+#endif
 
-#endif /* !_SYS_SEM_H_ */
+#if _REDIR_TIME64
+#ifdef _GNU_SOURCE
+__REDIR(semtimedop, __semtimedop_time64);
+#endif
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+#endif

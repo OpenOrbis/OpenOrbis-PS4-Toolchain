@@ -1,92 +1,63 @@
-/*-
- * Copyright (c) 1998 John D. Polstra.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- * $FreeBSD: release/9.0.0/sys/sys/procfs.h 215679 2010-11-22 14:42:13Z attilio $
- */
+#ifndef _SYS_PROCFS_H
+#define _SYS_PROCFS_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#ifndef _SYS_PROCFS_H_
-#define _SYS_PROCFS_H_
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/user.h>
 
-#include <sys/param.h>
-#include <machine/reg.h>
+struct elf_siginfo {
+	int si_signo;
+	int si_code;
+	int si_errno;
+};
 
-typedef struct reg gregset_t;
-typedef struct fpreg fpregset_t;
+struct elf_prstatus {
+	struct elf_siginfo pr_info;
+	short int pr_cursig;
+	unsigned long int pr_sigpend;
+	unsigned long int pr_sighold;
+	pid_t pr_pid;
+	pid_t pr_ppid;
+	pid_t pr_pgrp;
+	pid_t pr_sid;
+	struct {
+		long tv_sec, tv_usec;
+	} pr_utime, pr_stime, pr_cutime, pr_cstime;
+	elf_gregset_t pr_reg;
+	int pr_fpvalid;
+};
 
-/*
- * These structures define an interface between core files and the debugger.
- * Never change or delete any elements.  If you add elements, add them to
- * the end of the structure, and increment the value of its version field.
- * This will help to ensure that today's core dump will still be usable
- * with next year's debugger.
- *
- * A lot more things should be added to these structures.  At present,
- * they contain the absolute bare minimum required to allow GDB to work
- * with ELF core dumps.
- */
+#define ELF_PRARGSZ 80
 
-/*
- * The parenthsized numbers like (1) indicate the minimum version number
- * for which each element exists in the structure.
- */
+struct elf_prpsinfo {
+	char pr_state;
+	char pr_sname;
+	char pr_zomb;
+	char pr_nice;
+	unsigned long int pr_flag;
+#if UINTPTR_MAX == 0xffffffff
+	unsigned short int pr_uid;
+	unsigned short int pr_gid;
+#else
+	unsigned int pr_uid;
+	unsigned int pr_gid;
+#endif
+	int pr_pid, pr_ppid, pr_pgrp, pr_sid;
+	char pr_fname[16];
+	char pr_psargs[ELF_PRARGSZ];
+};
 
-#define PRSTATUS_VERSION	1	/* Current version of prstatus_t */
+typedef void *psaddr_t;
+typedef elf_gregset_t prgregset_t;
+typedef elf_fpregset_t prfpregset_t;
+typedef pid_t lwpid_t;
+typedef struct elf_prstatus prstatus_t;
+typedef struct elf_prpsinfo prpsinfo_t;
 
-typedef struct prstatus {
-    int		pr_version;	/* Version number of struct (1) */
-    size_t	pr_statussz;	/* sizeof(prstatus_t) (1) */
-    size_t	pr_gregsetsz;	/* sizeof(gregset_t) (1) */
-    size_t	pr_fpregsetsz;	/* sizeof(fpregset_t) (1) */
-    int		pr_osreldate;	/* Kernel version (1) */
-    int		pr_cursig;	/* Current signal (1) */
-    pid_t	pr_pid;		/* Process ID (1) */
-    gregset_t	pr_reg;		/* General purpose registers (1) */
-} prstatus_t;
-
-typedef gregset_t prgregset_t[1];
-typedef fpregset_t prfpregset_t;
-
-#define PRFNAMESZ	16	/* Maximum command length saved */
-#define PRARGSZ		80	/* Maximum argument bytes saved */
-
-#define PRPSINFO_VERSION	1	/* Current version of prpsinfo_t */
-
-typedef struct prpsinfo {
-    int		pr_version;	/* Version number of struct (1) */
-    size_t	pr_psinfosz;	/* sizeof(prpsinfo_t) (1) */
-    char	pr_fname[PRFNAMESZ+1];	/* Command name, null terminated (1) */
-    char	pr_psargs[PRARGSZ+1];	/* Arguments, null terminated (1) */
-} prpsinfo_t;
-
-#define THRMISC_VERSION		1	/* Current version of thrmisc_t */
-
-typedef struct thrmisc {
-    char	pr_tname[MAXCOMLEN+1];	/* Thread name, null terminated (1) */
-    u_int	_pad;			/* Convenience pad, 0-filled (1) */
-} thrmisc_t;
-
-typedef uint64_t psaddr_t;	/* An address in the target process. */
-
-#endif /* _SYS_PROCFS_H_ */
+#ifdef __cplusplus
+}
+#endif
+#endif
