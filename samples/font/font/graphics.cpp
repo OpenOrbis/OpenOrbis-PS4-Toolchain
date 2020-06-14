@@ -201,7 +201,7 @@ void frameWait(int video, int frameID)
 }
 
 // drawPixel draws the given color to the given x-y coordinates in the frame buffer. Returns nothing.
-void drawPixel(int x, int y, Color color)
+__attribute__((always_inline)) void drawPixel(int x, int y, Color color)
 {
     // Get pixel location based on pitch
     int pixel = (y * Width) + x;
