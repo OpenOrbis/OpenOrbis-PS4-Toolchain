@@ -341,7 +341,7 @@ void sceUserServiceSetVolumeForMorpheusSidetone() { for(;;){} }
 void sceUserServiceSetVolumeForSidetone() { for(;;){} }
 void sceUserServiceTerminate() { for(;;){} }
 void sceUserServiceUnregisterEventCallback() { for(;;){} }
-
+void sceUserServiceInitializeForShellCore() { for(;;){} }
 
 void __attribute__ ((constructor)) initLibrary(void)
 {
