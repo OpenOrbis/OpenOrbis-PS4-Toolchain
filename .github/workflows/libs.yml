@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - name: Check out library code
+      uses: actions/checkout@v2
+
     - name: Build library stubs
       run: |
         cd src/lib
