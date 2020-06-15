@@ -1,236 +1,147 @@
-/*-
- * Copyright (c) 1996, 1997
- *      HD Associates, Inc.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. All advertising materials mentioning features or use of this software
- *    must display the following acknowledgement:
- *      This product includes software developed by HD Associates, Inc
- *      and Jukka Antero Ukkonen.
- * 4. Neither the name of the author nor the names of any co-contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY HD ASSOCIATES AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL HD ASSOCIATES OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- */
-
-/*-
- * Copyright (c) 2002-2008, Jeffrey Roberson <jeff@freebsd.org>
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice unmodified, this list of conditions, and the following
- *    disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- * $FreeBSD: release/9.0.0/sys/sys/sched.h 216791 2010-12-29 09:26:46Z davidxu $
- */
-
-#ifndef _SCHED_H_
-#define	_SCHED_H_
-
-#ifdef _KERNEL
-/*
- * General scheduling info.
- *
- * sched_load:
- *	Total runnable non-ithread threads in the system.
- *
- * sched_runnable:
- *	Runnable threads for this processor.
- */
-int	sched_load(void);
-int	sched_rr_interval(void);
-int	sched_runnable(void);
-
-/* 
- * Proc related scheduling hooks.
- */
-void	sched_exit(struct proc *p, struct thread *childtd);
-void	sched_fork(struct thread *td, struct thread *childtd);
-void	sched_fork_exit(struct thread *td);
-void	sched_class(struct thread *td, int class);
-void	sched_nice(struct proc *p, int nice);
-
-/*
- * Threads are switched in and out, block on resources, have temporary
- * priorities inherited from their procs, and use up cpu time.
- */
-void	sched_exit_thread(struct thread *td, struct thread *child);
-void	sched_fork_thread(struct thread *td, struct thread *child);
-void	sched_lend_prio(struct thread *td, u_char prio);
-void	sched_lend_user_prio(struct thread *td, u_char pri);
-fixpt_t	sched_pctcpu(struct thread *td);
-void	sched_prio(struct thread *td, u_char prio);
-void	sched_sleep(struct thread *td, int prio);
-void	sched_switch(struct thread *td, struct thread *newtd, int flags);
-void	sched_throw(struct thread *td);
-void	sched_unlend_prio(struct thread *td, u_char prio);
-void	sched_user_prio(struct thread *td, u_char prio);
-void	sched_userret(struct thread *td);
-void	sched_wakeup(struct thread *td);
-void	sched_preempt(struct thread *td);
-
-/*
- * Threads are moved on and off of run queues
- */
-void	sched_add(struct thread *td, int flags);
-void	sched_clock(struct thread *td);
-void	sched_rem(struct thread *td);
-void	sched_tick(int cnt);
-void	sched_relinquish(struct thread *td);
-struct thread *sched_choose(void);
-void	sched_idletd(void *);
-
-/*
- * Binding makes cpu affinity permanent while pinning is used to temporarily
- * hold a thread on a particular CPU.
- */
-void	sched_bind(struct thread *td, int cpu);
-static __inline void sched_pin(void);
-void	sched_unbind(struct thread *td);
-static __inline void sched_unpin(void);
-int	sched_is_bound(struct thread *td);
-void	sched_affinity(struct thread *td);
-
-/*
- * These procedures tell the process data structure allocation code how
- * many bytes to actually allocate.
- */
-int	sched_sizeof_proc(void);
-int	sched_sizeof_thread(void);
-
-/*
- * This routine provides a consistent thread name for use with KTR graphing
- * functions.
- */
-char	*sched_tdname(struct thread *td);
-
-static __inline void
-sched_pin(void)
-{
-	curthread->td_pinned++;
-}
-
-static __inline void
-sched_unpin(void)
-{
-	curthread->td_pinned--;
-}
-
-/* sched_add arguments (formerly setrunqueue) */
-#define	SRQ_BORING	0x0000		/* No special circumstances. */
-#define	SRQ_YIELDING	0x0001		/* We are yielding (from mi_switch). */
-#define	SRQ_OURSELF	0x0002		/* It is ourself (from mi_switch). */
-#define	SRQ_INTR	0x0004		/* It is probably urgent. */
-#define	SRQ_PREEMPTED	0x0008		/* has been preempted.. be kind */
-#define	SRQ_BORROWING	0x0010		/* Priority updated due to prio_lend */
-
-/* Scheduler stats. */
-#ifdef SCHED_STATS
-DPCPU_DECLARE(long, sched_switch_stats[SWT_COUNT]);
-
-#define	SCHED_STAT_DEFINE_VAR(name, ptr, descr)				\
-static void name ## _add_proc(void *dummy __unused)			\
-{									\
-									\
-	SYSCTL_ADD_PROC(NULL,						\
-	    SYSCTL_STATIC_CHILDREN(_kern_sched_stats), OID_AUTO,	\
-	    #name, CTLTYPE_LONG|CTLFLAG_RD|CTLFLAG_MPSAFE,		\
-	    ptr, 0, sysctl_dpcpu_long, "LU", descr);			\
-}									\
-SYSINIT(name, SI_SUB_RUN_SCHEDULER, SI_ORDER_MIDDLE, name ## _add_proc, NULL);
-
-#define	SCHED_STAT_DEFINE(name, descr)					\
-    DPCPU_DEFINE(unsigned long, name);					\
-    SCHED_STAT_DEFINE_VAR(name, &DPCPU_NAME(name), descr)
-/*
- * Sched stats are always incremented in critical sections so no atomic
- * is necesssary to increment them.
- */
-#define SCHED_STAT_INC(var)     DPCPU_GET(var)++;
-#else
-#define	SCHED_STAT_DEFINE_VAR(name, descr, ptr)
-#define	SCHED_STAT_DEFINE(name, descr)
-#define SCHED_STAT_INC(var)			(void)0
+#ifndef _SCHED_H
+#define _SCHED_H
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-/*
- * Fixup scheduler state for proc0 and thread0
- */
-void schedinit(void);
-#endif /* _KERNEL */
+#include <features.h>
 
-/* POSIX 1003.1b Process Scheduling */
+#define __NEED_struct_timespec
+#define __NEED_pid_t
+#define __NEED_time_t
 
-/*
- * POSIX scheduling policies
- */
-#define SCHED_FIFO      1
-#define SCHED_OTHER     2
-#define SCHED_RR        3
+#ifdef _GNU_SOURCE
+#define __NEED_size_t
+#endif
+
+#include <bits/alltypes.h>
 
 struct sched_param {
-        int     sched_priority;
+	int sched_priority;
+	int __reserved1;
+#if _REDIR_TIME64
+	long __reserved2[4];
+#else
+	struct {
+		time_t __reserved1;
+		long __reserved2;
+	} __reserved2[2];
+#endif
+	int __reserved3;
 };
 
-/*
- * POSIX scheduling declarations for userland.
- */
-#ifndef _KERNEL
-#include <sys/cdefs.h>
-#include <sys/_types.h>
-
-#ifndef _PID_T_DECLARED
-typedef __pid_t         pid_t;
-#define _PID_T_DECLARED
-#endif
-
-struct timespec;
-
-__BEGIN_DECLS
-int     sched_get_priority_max(int);
-int     sched_get_priority_min(int);
-int     sched_getparam(pid_t, struct sched_param *);
-int     sched_getscheduler(pid_t);
-int     sched_rr_get_interval(pid_t, struct timespec *);
-int     sched_setparam(pid_t, const struct sched_param *);
-int     sched_setscheduler(pid_t, int, const struct sched_param *);
+int    sched_get_priority_max(int);
+int    sched_get_priority_min(int);
+int    sched_getparam(pid_t, struct sched_param *);
+int    sched_getscheduler(pid_t);
+int    sched_rr_get_interval(pid_t, struct timespec *);
+int    sched_setparam(pid_t, const struct sched_param *);
+int    sched_setscheduler(pid_t, int, const struct sched_param *);
 int     sched_yield(void);
-__END_DECLS
+
+#define SCHED_OTHER 0
+#define SCHED_FIFO 1
+#define SCHED_RR 2
+#define SCHED_BATCH 3
+#define SCHED_IDLE 5
+#define SCHED_DEADLINE 6
+#define SCHED_RESET_ON_FORK 0x40000000
+
+#ifdef _GNU_SOURCE
+#define CSIGNAL		0x000000ff
+#define CLONE_VM	0x00000100
+#define CLONE_FS	0x00000200
+#define CLONE_FILES	0x00000400
+#define CLONE_SIGHAND	0x00000800
+#define CLONE_PIDFD	0x00001000
+#define CLONE_PTRACE	0x00002000
+#define CLONE_VFORK	0x00004000
+#define CLONE_PARENT	0x00008000
+#define CLONE_THREAD	0x00010000
+#define CLONE_NEWNS	0x00020000
+#define CLONE_SYSVSEM	0x00040000
+#define CLONE_SETTLS	0x00080000
+#define CLONE_PARENT_SETTID	0x00100000
+#define CLONE_CHILD_CLEARTID	0x00200000
+#define CLONE_DETACHED	0x00400000
+#define CLONE_UNTRACED	0x00800000
+#define CLONE_CHILD_SETTID	0x01000000
+#define CLONE_NEWCGROUP	0x02000000
+#define CLONE_NEWUTS	0x04000000
+#define CLONE_NEWIPC	0x08000000
+#define CLONE_NEWUSER	0x10000000
+#define CLONE_NEWPID	0x20000000
+#define CLONE_NEWNET	0x40000000
+#define CLONE_IO	0x80000000
+int clone (int (*)(void *), void *, int, void *, ...);
+int unshare(int);
+int setns(int, int);
+
+void *memcpy(void *__restrict, const void *__restrict, size_t);
+int memcmp(const void *, const void *, size_t);
+void *memset (void *, int, size_t);
+void *calloc(size_t, size_t);
+void free(void *);
+
+typedef struct cpu_set_t { unsigned long __bits[128/sizeof(long)]; } cpu_set_t;
+int __sched_cpucount(size_t, const cpu_set_t *);
+int sched_getcpu(void);
+int sched_getaffinity(pid_t, size_t, cpu_set_t *);
+int sched_setaffinity(pid_t, size_t, const cpu_set_t *);
+
+#define __CPU_op_S(i, size, set, op) ( (i)/8U >= (size) ? 0 : \
+	(((unsigned long *)(set))[(i)/8/sizeof(long)] op (1UL<<((i)%(8*sizeof(long))))) )
+
+#define CPU_SET_S(i, size, set) __CPU_op_S(i, size, set, |=)
+#define CPU_CLR_S(i, size, set) __CPU_op_S(i, size, set, &=~)
+#define CPU_ISSET_S(i, size, set) __CPU_op_S(i, size, set, &)
+
+#define __CPU_op_func_S(func, op) \
+static __inline void __CPU_##func##_S(size_t __size, cpu_set_t *__dest, \
+	const cpu_set_t *__src1, const cpu_set_t *__src2) \
+{ \
+	size_t __i; \
+	for (__i=0; __i<__size/sizeof(long); __i++) \
+		((unsigned long *)__dest)[__i] = ((unsigned long *)__src1)[__i] \
+			op ((unsigned long *)__src2)[__i] ; \
+}
+
+__CPU_op_func_S(AND, &)
+__CPU_op_func_S(OR, |)
+__CPU_op_func_S(XOR, ^)
+
+#define CPU_AND_S(a,b,c,d) __CPU_AND_S(a,b,c,d)
+#define CPU_OR_S(a,b,c,d) __CPU_OR_S(a,b,c,d)
+#define CPU_XOR_S(a,b,c,d) __CPU_XOR_S(a,b,c,d)
+
+#define CPU_COUNT_S(size,set) __sched_cpucount(size,set)
+#define CPU_ZERO_S(size,set) memset(set,0,size)
+#define CPU_EQUAL_S(size,set1,set2) (!memcmp(set1,set2,size))
+
+#define CPU_ALLOC_SIZE(n) (sizeof(long) * ( (n)/(8*sizeof(long)) \
+	+ ((n)%(8*sizeof(long)) + 8*sizeof(long)-1)/(8*sizeof(long)) ) )
+#define CPU_ALLOC(n) ((cpu_set_t *)calloc(1,CPU_ALLOC_SIZE(n)))
+#define CPU_FREE(set) free(set)
+
+#define CPU_SETSIZE 128
+
+#define CPU_SET(i, set) CPU_SET_S(i,sizeof(cpu_set_t),set)
+#define CPU_CLR(i, set) CPU_CLR_S(i,sizeof(cpu_set_t),set)
+#define CPU_ISSET(i, set) CPU_ISSET_S(i,sizeof(cpu_set_t),set)
+#define CPU_AND(d,s1,s2) CPU_AND_S(sizeof(cpu_set_t),d,s1,s2)
+#define CPU_OR(d,s1,s2) CPU_OR_S(sizeof(cpu_set_t),d,s1,s2)
+#define CPU_XOR(d,s1,s2) CPU_XOR_S(sizeof(cpu_set_t),d,s1,s2)
+#define CPU_COUNT(set) CPU_COUNT_S(sizeof(cpu_set_t),set)
+#define CPU_ZERO(set) CPU_ZERO_S(sizeof(cpu_set_t),set)
+#define CPU_EQUAL(s1,s2) CPU_EQUAL_S(sizeof(cpu_set_t),s1,s2)
 
 #endif
-#endif /* !_SCHED_H_ */
+
+#if _REDIR_TIME64
+__REDIR(sched_rr_get_interval, __sched_rr_get_interval_time64);
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+#endif

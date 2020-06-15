@@ -1,87 +1,130 @@
-/*-
- * Copyright (c) 1982, 1986, 1993
- *	The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)if_ether.h	8.3 (Berkeley) 5/2/95
- * $FreeBSD: release/9.0.0/sys/netinet/if_ether.h 196995 2009-09-08 21:17:17Z np $
- */
+#ifndef _NETINET_IF_ETHER_H
+#define _NETINET_IF_ETHER_H
 
-#ifndef _NETINET_IF_ETHER_H_
-#define _NETINET_IF_ETHER_H_
+#include <stdint.h>
+#include <sys/types.h>
+
+#define ETH_ALEN	6
+#define ETH_TLEN	2
+#define ETH_HLEN	14
+#define ETH_ZLEN	60
+#define ETH_DATA_LEN	1500
+#define ETH_FRAME_LEN	1514
+#define ETH_FCS_LEN	4
+#define ETH_MIN_MTU	68
+#define ETH_MAX_MTU	0xFFFFU
+
+#define ETH_P_LOOP	0x0060
+#define ETH_P_PUP	0x0200
+#define ETH_P_PUPAT	0x0201
+#define ETH_P_TSN	0x22F0
+#define ETH_P_ERSPAN2	0x22EB
+#define ETH_P_IP	0x0800
+#define ETH_P_X25	0x0805
+#define ETH_P_ARP	0x0806
+#define	ETH_P_BPQ	0x08FF
+#define ETH_P_IEEEPUP	0x0a00
+#define ETH_P_IEEEPUPAT	0x0a01
+#define ETH_P_BATMAN	0x4305
+#define ETH_P_DEC       0x6000
+#define ETH_P_DNA_DL    0x6001
+#define ETH_P_DNA_RC    0x6002
+#define ETH_P_DNA_RT    0x6003
+#define ETH_P_LAT       0x6004
+#define ETH_P_DIAG      0x6005
+#define ETH_P_CUST      0x6006
+#define ETH_P_SCA       0x6007
+#define ETH_P_TEB	0x6558
+#define ETH_P_RARP      0x8035
+#define ETH_P_ATALK	0x809B
+#define ETH_P_AARP	0x80F3
+#define ETH_P_8021Q	0x8100
+#define ETH_P_IPX	0x8137
+#define ETH_P_IPV6	0x86DD
+#define ETH_P_PAUSE	0x8808
+#define ETH_P_SLOW	0x8809
+#define ETH_P_WCCP	0x883E
+#define ETH_P_MPLS_UC	0x8847
+#define ETH_P_MPLS_MC	0x8848
+#define ETH_P_ATMMPOA	0x884c
+#define ETH_P_PPP_DISC	0x8863
+#define ETH_P_PPP_SES	0x8864
+#define ETH_P_LINK_CTL	0x886c
+#define ETH_P_ATMFATE	0x8884
+#define ETH_P_PAE	0x888E
+#define ETH_P_AOE	0x88A2
+#define ETH_P_8021AD	0x88A8
+#define ETH_P_802_EX1	0x88B5
+#define ETH_P_ERSPAN	0x88BE
+#define ETH_P_PREAUTH	0x88C7
+#define ETH_P_TIPC	0x88CA
+#define ETH_P_LLDP	0x88CC
+#define ETH_P_MACSEC	0x88E5
+#define ETH_P_8021AH	0x88E7
+#define ETH_P_MVRP	0x88F5
+#define ETH_P_1588	0x88F7
+#define ETH_P_NCSI	0x88F8
+#define ETH_P_PRP	0x88FB
+#define ETH_P_FCOE	0x8906
+#define ETH_P_TDLS	0x890D
+#define ETH_P_FIP	0x8914
+#define ETH_P_IBOE	0x8915
+#define ETH_P_80221	0x8917
+#define ETH_P_HSR	0x892F
+#define ETH_P_NSH	0x894F
+#define ETH_P_LOOPBACK	0x9000
+#define ETH_P_QINQ1	0x9100
+#define ETH_P_QINQ2	0x9200
+#define ETH_P_QINQ3	0x9300
+#define ETH_P_EDSA	0xDADA
+#define ETH_P_DSA_8021Q	0xDADB
+#define ETH_P_IFE	0xED3E
+#define ETH_P_AF_IUCV	0xFBFB
+
+#define ETH_P_802_3_MIN	0x0600
+
+#define ETH_P_802_3	0x0001
+#define ETH_P_AX25	0x0002
+#define ETH_P_ALL	0x0003
+#define ETH_P_802_2	0x0004
+#define ETH_P_SNAP	0x0005
+#define ETH_P_DDCMP     0x0006
+#define ETH_P_WAN_PPP   0x0007
+#define ETH_P_PPP_MP    0x0008
+#define ETH_P_LOCALTALK 0x0009
+#define ETH_P_CAN	0x000C
+#define ETH_P_CANFD	0x000D
+#define ETH_P_PPPTALK	0x0010
+#define ETH_P_TR_802_2	0x0011
+#define ETH_P_MOBITEX	0x0015
+#define ETH_P_CONTROL	0x0016
+#define ETH_P_IRDA	0x0017
+#define ETH_P_ECONET	0x0018
+#define ETH_P_HDLC	0x0019
+#define ETH_P_ARCNET	0x001A
+#define ETH_P_DSA	0x001B
+#define ETH_P_TRAILER	0x001C
+#define ETH_P_PHONET	0x00F5
+#define ETH_P_IEEE802154 0x00F6
+#define ETH_P_CAIF	0x00F7
+#define ETH_P_XDSA	0x00F8
+#define ETH_P_MAP	0x00F9
+
+struct ethhdr {
+	uint8_t h_dest[ETH_ALEN];
+	uint8_t h_source[ETH_ALEN];
+	uint16_t h_proto;
+};
 
 #include <net/ethernet.h>
 #include <net/if_arp.h>
 
-/*
- * Macro to map an IP multicast address to an Ethernet multicast address.
- * The high-order 25 bits of the Ethernet address are statically assigned,
- * and the low-order 23 bits are taken from the low end of the IP address.
- */
-#define ETHER_MAP_IP_MULTICAST(ipaddr, enaddr) \
-	/* struct in_addr *ipaddr; */ \
-	/* u_char enaddr[ETHER_ADDR_LEN];	   */ \
-{ \
-	(enaddr)[0] = 0x01; \
-	(enaddr)[1] = 0x00; \
-	(enaddr)[2] = 0x5e; \
-	(enaddr)[3] = ((u_char *)ipaddr)[1] & 0x7f; \
-	(enaddr)[4] = ((u_char *)ipaddr)[2]; \
-	(enaddr)[5] = ((u_char *)ipaddr)[3]; \
-}
-/*
- * Macro to map an IP6 multicast address to an Ethernet multicast address.
- * The high-order 16 bits of the Ethernet address are statically assigned,
- * and the low-order 32 bits are taken from the low end of the IP6 address.
- */
-#define ETHER_MAP_IPV6_MULTICAST(ip6addr, enaddr)			\
-/* struct	in6_addr *ip6addr; */					\
-/* u_char	enaddr[ETHER_ADDR_LEN]; */				\
-{                                                                       \
-	(enaddr)[0] = 0x33;						\
-	(enaddr)[1] = 0x33;						\
-	(enaddr)[2] = ((u_char *)ip6addr)[12];				\
-	(enaddr)[3] = ((u_char *)ip6addr)[13];				\
-	(enaddr)[4] = ((u_char *)ip6addr)[14];				\
-	(enaddr)[5] = ((u_char *)ip6addr)[15];				\
-}
-
-/*
- * Ethernet Address Resolution Protocol.
- *
- * See RFC 826 for protocol description.  Structure below is adapted
- * to resolving internet addresses.  Field names used correspond to
- * RFC 826.
- */
 struct	ether_arp {
-	struct	arphdr ea_hdr;	/* fixed-size header */
-	u_char	arp_sha[ETHER_ADDR_LEN];	/* sender hardware address */
-	u_char	arp_spa[4];	/* sender protocol address */
-	u_char	arp_tha[ETHER_ADDR_LEN];	/* target hardware address */
-	u_char	arp_tpa[4];	/* target protocol address */
+	struct	arphdr ea_hdr;
+	uint8_t arp_sha[ETH_ALEN];
+	uint8_t arp_spa[4];
+	uint8_t arp_tha[ETH_ALEN];
+	uint8_t arp_tpa[4];
 };
 #define	arp_hrd	ea_hdr.ar_hrd
 #define	arp_pro	ea_hdr.ar_pro
@@ -89,39 +132,16 @@ struct	ether_arp {
 #define	arp_pln	ea_hdr.ar_pln
 #define	arp_op	ea_hdr.ar_op
 
-struct sockaddr_inarp {
-	u_char	sin_len;
-	u_char	sin_family;
-	u_short sin_port;
-	struct	in_addr sin_addr;
-	struct	in_addr sin_srcaddr;
-	u_short	sin_tos;
-	u_short	sin_other;
-#define SIN_PROXY 1
-};
-/*
- * IP and ethernet specific routing flags
- */
-#define	RTF_USETRAILERS	RTF_PROTO1	/* use trailers */
-#define RTF_ANNOUNCE	RTF_PROTO2	/* announce new arp entry */
+#define ETHER_MAP_IP_MULTICAST(ipaddr, enaddr) \
+do { \
+	(enaddr)[0] = 0x01; \
+	(enaddr)[1] = 0x00; \
+	(enaddr)[2] = 0x5e; \
+	(enaddr)[3] = ((uint8_t *)ipaddr)[1] & 0x7f; \
+	(enaddr)[4] = ((uint8_t *)ipaddr)[2]; \
+	(enaddr)[5] = ((uint8_t *)ipaddr)[3]; \
+} while(0)
 
-#ifdef	_KERNEL
-extern u_char	ether_ipmulticast_min[ETHER_ADDR_LEN];
-extern u_char	ether_ipmulticast_max[ETHER_ADDR_LEN];
-
-struct llentry;
-struct ifaddr;
-
-int	arpresolve(struct ifnet *ifp, struct rtentry *rt,
-		    struct mbuf *m, struct sockaddr *dst, u_char *desten,
-		    struct llentry **lle);
-void	arp_ifinit(struct ifnet *, struct ifaddr *);
-void	arp_ifinit2(struct ifnet *, struct ifaddr *, u_char *);
-
-#include <sys/eventhandler.h>
-typedef void (*llevent_arp_update_fn)(void *, struct llentry *);
-EVENTHANDLER_DECLARE(arp_update_event, llevent_arp_update_fn);
-
-#endif
+#define __UAPI_DEF_ETHHDR       0
 
 #endif

@@ -7,15 +7,12 @@
 .global _start
 _start:
 	# Align the stack to 16-byte alignment for SSE
-    sub rsp, 0x28
-    
+	sub rsp, 0x28
+
 	# Back up important values to registers
 	mov r8, rsi # ???
 	mov r9d, dword ptr [rdi]   # argc = r9d
 	lea r10, qword ptr [rdi+8] # argv = r10
-
-	# Initialize the environment
-	call _init_env
 
 	mov rdi, r8
 	call atexit

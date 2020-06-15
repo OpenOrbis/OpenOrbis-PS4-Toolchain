@@ -3,7 +3,7 @@ PROJDIR   	:= $(shell basename $(CURDIR))
 INTDIR    	:= $(PROJDIR)/x64/Debug
 
 # Libraries linked into the ELF.
-LIBS 		:= -lc -lkernel
+LIBS 		:= -lc -lkernel -lScePad -lSceUserService
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)

@@ -1,188 +1,166 @@
-/*
- * Copyright (c) 1989, 1993
- *	The Regents of the University of California.  All rights reserved.
- * (c) UNIX System Laboratories, Inc.
- * All or some portions of this file are derived from material licensed
- * to the University of California by American Telephone and Telegraph
- * Co. or Unix System Laboratories, Inc. and are reproduced herein with
- * the permission of UNIX System Laboratories, Inc.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)time.h	8.3 (Berkeley) 1/21/94
- */
+#ifndef	_TIME_H
+#define _TIME_H
 
-/*
- * $FreeBSD: release/9.0.0/include/time.h 203964 2010-02-16 19:39:50Z imp $
- */
-
-#ifndef _TIME_H_
-#define	_TIME_H_
-
-#include <sys/cdefs.h>
-#include <sys/_null.h>
-#include <sys/_types.h>
-
-#if __POSIX_VISIBLE > 0 && __POSIX_VISIBLE < 200112 || __BSD_VISIBLE
-/*
- * Frequency of the clock ticks reported by times().  Deprecated - use
- * sysconf(_SC_CLK_TCK) instead.  (Removed in 1003.1-2001.)
- */
-#define	CLK_TCK		128
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-/* Frequency of the clock ticks reported by clock().  */
-#define	CLOCKS_PER_SEC	128
+#include <features.h>
 
-#ifndef _CLOCK_T_DECLARED
-typedef	__clock_t	clock_t;
-#define	_CLOCK_T_DECLARED
+#ifdef __cplusplus
+#define NULL 0L
+#else
+#define NULL ((void*)0)
 #endif
 
-#ifndef _TIME_T_DECLARED
-typedef	__time_t	time_t;
-#define	_TIME_T_DECLARED
+
+#define __NEED_size_t
+#define __NEED_time_t
+#define __NEED_clock_t
+#define __NEED_struct_timespec
+
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
+#define __NEED_clockid_t
+#define __NEED_timer_t
+#define __NEED_pid_t
+#define __NEED_locale_t
 #endif
 
-#ifndef _SIZE_T_DECLARED
-typedef	__size_t	size_t;
-#define	_SIZE_T_DECLARED
-#endif
+#include <bits/alltypes.h>
 
-#if __POSIX_VISIBLE >= 199309
-/*
- * New in POSIX 1003.1b-1993.
- */
-#ifndef _CLOCKID_T_DECLARED
-typedef	__clockid_t	clockid_t;
-#define	_CLOCKID_T_DECLARED
+#if defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
+#define __tm_gmtoff tm_gmtoff
+#define __tm_zone tm_zone
 #endif
-
-#ifndef _TIMER_T_DECLARED
-typedef	__timer_t	timer_t;
-#define	_TIMER_T_DECLARED
-#endif
-
-#include <sys/timespec.h>
-#endif /* __POSIX_VISIBLE >= 199309 */
-
-/* These macros are also in sys/time.h. */
-#if !defined(CLOCK_REALTIME) && __POSIX_VISIBLE >= 200112
-#define CLOCK_REALTIME	0
-#ifdef __BSD_VISIBLE
-#define CLOCK_VIRTUAL	1
-#define CLOCK_PROF	2
-#endif
-#define CLOCK_MONOTONIC	4
-#define CLOCK_UPTIME	5		/* FreeBSD-specific. */
-#define CLOCK_UPTIME_PRECISE	7	/* FreeBSD-specific. */
-#define CLOCK_UPTIME_FAST	8	/* FreeBSD-specific. */
-#define CLOCK_REALTIME_PRECISE	9	/* FreeBSD-specific. */
-#define CLOCK_REALTIME_FAST	10	/* FreeBSD-specific. */
-#define CLOCK_MONOTONIC_PRECISE	11	/* FreeBSD-specific. */
-#define CLOCK_MONOTONIC_FAST	12	/* FreeBSD-specific. */
-#define CLOCK_SECOND	13		/* FreeBSD-specific. */
-#define CLOCK_THREAD_CPUTIME_ID	14
-#endif /* !defined(CLOCK_REALTIME) && __POSIX_VISIBLE >= 200112 */
-
-#if !defined(TIMER_ABSTIME) && __POSIX_VISIBLE >= 200112
-#if __BSD_VISIBLE
-#define TIMER_RELTIME	0x0	/* relative timer */
-#endif
-#define TIMER_ABSTIME	0x1	/* absolute timer */
-#endif /* !defined(TIMER_ABSTIME) && __POSIX_VISIBLE >= 200112 */
 
 struct tm {
-	int	tm_sec;		/* seconds after the minute [0-60] */
-	int	tm_min;		/* minutes after the hour [0-59] */
-	int	tm_hour;	/* hours since midnight [0-23] */
-	int	tm_mday;	/* day of the month [1-31] */
-	int	tm_mon;		/* months since January [0-11] */
-	int	tm_year;	/* years since 1900 */
-	int	tm_wday;	/* days since Sunday [0-6] */
-	int	tm_yday;	/* days since January 1 [0-365] */
-	int	tm_isdst;	/* Daylight Savings Time flag */
-	long	tm_gmtoff;	/* offset from UTC in seconds */
-	char	*tm_zone;	/* timezone abbreviation */
+	int tm_sec;
+	int tm_min;
+	int tm_hour;
+	int tm_mday;
+	int tm_mon;
+	int tm_year;
+	int tm_wday;
+	int tm_yday;
+	int tm_isdst;
+	long __tm_gmtoff;
+	const char *__tm_zone;
 };
 
-#if __POSIX_VISIBLE
-extern char *tzname[];
-#endif
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *__restrict, size_t, const char *__restrict, const struct tm *__restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
 
-__BEGIN_DECLS
-char *asctime(const struct tm *);
-clock_t clock(void);
-char *ctime(const time_t *);
-double difftime(time_t, time_t);
-/* XXX missing: getdate() */
-struct tm *gmtime(const time_t *);
-struct tm *localtime(const time_t *);
-time_t mktime(struct tm *);
-size_t strftime(char * __restrict, size_t, const char * __restrict,
-    const struct tm * __restrict);
-time_t time(time_t *);
-#if __POSIX_VISIBLE >= 200112
+#define CLOCKS_PER_SEC 1000000L
+
+#define TIME_UTC 1
+
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
+
+size_t strftime_l (char *  __restrict, size_t, const char *  __restrict, const struct tm *  __restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *__restrict, struct tm *__restrict);
+struct tm *localtime_r (const time_t *__restrict, struct tm *__restrict);
+char *asctime_r (const struct tm *__restrict, char *__restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+	struct timespec it_interval;
+	struct timespec it_value;
+};
+
+#define CLOCK_REALTIME           0
+#define CLOCK_MONOTONIC          1
+#define CLOCK_PROCESS_CPUTIME_ID 2
+#define CLOCK_THREAD_CPUTIME_ID  3
+#define CLOCK_MONOTONIC_RAW      4
+#define CLOCK_REALTIME_COARSE    5
+#define CLOCK_MONOTONIC_COARSE   6
+#define CLOCK_BOOTTIME           7
+#define CLOCK_REALTIME_ALARM     8
+#define CLOCK_BOOTTIME_ALARM     9
+#define CLOCK_SGI_CYCLE         10
+#define CLOCK_TAI               11
+
+#define TIMER_ABSTIME 1
+
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
 struct sigevent;
-int timer_create(clockid_t, struct sigevent *__restrict, timer_t *__restrict);
-int timer_delete(timer_t);
-int timer_gettime(timer_t, struct itimerspec *);
-int timer_getoverrun(timer_t);
-int timer_settime(timer_t, int, const struct itimerspec *__restrict,
-	struct itimerspec *__restrict);
-#endif
-#if __POSIX_VISIBLE
-void tzset(void);
-#endif
+int timer_create (clockid_t, struct sigevent *__restrict, timer_t *__restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *__restrict, struct itimerspec *__restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
 
-#if __POSIX_VISIBLE >= 199309
-int clock_getres(clockid_t, struct timespec *);
-int clock_gettime(clockid_t, struct timespec *);
-int clock_settime(clockid_t, const struct timespec *);
-/* XXX missing: clock_nanosleep() */
-int nanosleep(const struct timespec *, struct timespec *);
-#endif /* __POSIX_VISIBLE >= 199309 */
+extern char *tzname[2];
 
-#if __POSIX_VISIBLE >= 199506
-char *asctime_r(const struct tm *, char *);
-char *ctime_r(const time_t *, char *);
-struct tm *gmtime_r(const time_t *, struct tm *);
-struct tm *localtime_r(const time_t *, struct tm *);
 #endif
 
-#if __XSI_VISIBLE
-char *strptime(const char * __restrict, const char * __restrict,
-    struct tm * __restrict);
+
+#if defined(_XOPEN_SOURCE) || defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
+char *strptime (const char *__restrict, const char *__restrict, struct tm *__restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
 #endif
 
-#if __BSD_VISIBLE
-char *timezone(int, int);	/* XXX XSI conflict */
-void tzsetwall(void);
-time_t timelocal(struct tm * const);
-time_t timegm(struct tm * const);
-#endif /* __BSD_VISIBLE */
-__END_DECLS
 
-#endif /* !_TIME_H_ */
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+int stime(const time_t *);
+time_t timegm(struct tm *);
+#endif
+
+#if _REDIR_TIME64
+__REDIR(time, __time64);
+__REDIR(difftime, __difftime64);
+__REDIR(mktime, __mktime64);
+__REDIR(gmtime, __gmtime64);
+__REDIR(localtime, __localtime64);
+__REDIR(ctime, __ctime64);
+__REDIR(timespec_get, __timespec_get_time64);
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
+__REDIR(gmtime_r, __gmtime64_r);
+__REDIR(localtime_r, __localtime64_r);
+__REDIR(ctime_r, __ctime64_r);
+__REDIR(nanosleep, __nanosleep_time64);
+__REDIR(clock_getres, __clock_getres_time64);
+__REDIR(clock_gettime, __clock_gettime64);
+__REDIR(clock_settime, __clock_settime64);
+__REDIR(clock_nanosleep, __clock_nanosleep_time64);
+__REDIR(timer_settime, __timer_settime64);
+__REDIR(timer_gettime, __timer_gettime64);
+#endif
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+__REDIR(stime, __stime64);
+__REDIR(timegm, __timegm_time64);
+#endif
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif

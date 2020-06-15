@@ -1,301 +1,216 @@
-/*-
- * Copyright (c) 1983, 1990, 1993
- *	The Regents of the University of California.  All rights reserved.
- * (c) UNIX System Laboratories, Inc.
- * All or some portions of this file are derived from material licensed
- * to the University of California by American Telephone and Telegraph
- * Co. or Unix System Laboratories, Inc. and are reproduced herein with
- * the permission of UNIX System Laboratories, Inc.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)fcntl.h	8.3 (Berkeley) 1/21/94
- * $FreeBSD: release/9.0.0/sys/sys/fcntl.h 220791 2011-04-18 16:32:22Z mdf $
- */
+#ifndef	_FCNTL_H
+#define	_FCNTL_H
 
-#ifndef _SYS_FCNTL_H_
-#define	_SYS_FCNTL_H_
-
-/*
- * This file includes the definitions for open and fcntl
- * described by POSIX for <fcntl.h>; it also includes
- * related kernel definitions.
- */
-
-#include <sys/cdefs.h>
-#include <sys/_types.h>
-
-#ifndef _MODE_T_DECLARED
-typedef	__mode_t	mode_t;
-#define	_MODE_T_DECLARED
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef _OFF_T_DECLARED
-typedef	__off_t		off_t;
-#define	_OFF_T_DECLARED
+#include <features.h>
+
+#define __NEED_off_t
+#define __NEED_pid_t
+#define __NEED_mode_t
+
+#ifdef _GNU_SOURCE
+#define __NEED_size_t
+#define __NEED_ssize_t
+#define __NEED_struct_iovec
 #endif
 
-#ifndef _PID_T_DECLARED
-typedef	__pid_t		pid_t;
-#define	_PID_T_DECLARED
-#endif
+#include <bits/alltypes.h>
 
-/*
- * File status flags: these are used by open(2), fcntl(2).
- * They are also used (indirectly) in the kernel file structure f_flags,
- * which is a superset of the open/fcntl flags.  Open flags and f_flags
- * are inter-convertible using OFLAGS(fflags) and FFLAGS(oflags).
- * Open/fcntl flags begin with O_; kernel-internal flags begin with F.
- */
-/* open-only flags */
-#define	O_RDONLY	0x0000		/* open for reading only */
-#define	O_WRONLY	0x0001		/* open for writing only */
-#define	O_RDWR		0x0002		/* open for reading and writing */
-#define	O_ACCMODE	0x0003		/* mask for above modes */
+#include <bits/fcntl.h>
 
-/*
- * Kernel encoding of open mode; separate read and write bits that are
- * independently testable: 1 greater than the above.
- *
- * XXX
- * FREAD and FWRITE are excluded from the #ifdef _KERNEL so that TIOCFLUSH,
- * which was documented to use FREAD/FWRITE, continues to work.
- */
-#if __BSD_VISIBLE
-#define	FREAD		0x0001
-#define	FWRITE		0x0002
-#endif
-#define	O_NONBLOCK	0x0004		/* no delay */
-#define	O_APPEND	0x0008		/* set append mode */
-#if __BSD_VISIBLE
-#define	O_SHLOCK	0x0010		/* open with shared file lock */
-#define	O_EXLOCK	0x0020		/* open with exclusive file lock */
-#define	O_ASYNC		0x0040		/* signal pgrp when data ready */
-#define	O_FSYNC		0x0080		/* synchronous writes */
-#endif
-#define	O_SYNC		0x0080		/* POSIX synonym for O_FSYNC */
-#if __BSD_VISIBLE
-#define	O_NOFOLLOW	0x0100		/* don't follow symlinks */
-#endif
-#define	O_CREAT		0x0200		/* create if nonexistent */
-#define	O_TRUNC		0x0400		/* truncate to zero length */
-#define	O_EXCL		0x0800		/* error if already exists */
-#ifdef _KERNEL
-#define	FHASLOCK	0x4000		/* descriptor holds advisory lock */
-#endif
-
-/* Defined by POSIX 1003.1; BSD default, but must be distinct from O_RDONLY. */
-#define	O_NOCTTY	0x8000		/* don't assign controlling terminal */
-
-#if __BSD_VISIBLE
-/* Attempt to bypass buffer cache */
-#define O_DIRECT	0x00010000
-#endif
-
-/* Defined by POSIX Extended API Set Part 2 */
-#if __BSD_VISIBLE
-#define	O_DIRECTORY	0x00020000	/* Fail if not directory */
-#define	O_EXEC		0x00040000	/* Open for execute only */
-#endif
-#ifdef	_KERNEL
-#define	FEXEC		O_EXEC
-#endif
-
-#if __POSIX_VISIBLE >= 200809
-/* Defined by POSIX 1003.1-2008; BSD default, but reserve for future use. */
-#define	O_TTY_INIT	0x00080000	/* Restore default termios attributes */
-
-#define	O_CLOEXEC	0x00100000
-#endif
-
-/*
- * XXX missing O_DSYNC, O_RSYNC.
- */
-
-#ifdef _KERNEL
-/* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */
-#define	FFLAGS(oflags)	((oflags) + 1)
-#define	OFLAGS(fflags)	((fflags) - 1)
-
-/* bits to save after open */
-#define	FMASK	(FREAD|FWRITE|FAPPEND|FASYNC|FFSYNC|FNONBLOCK|O_DIRECT|FEXEC)
-/* bits settable by fcntl(F_SETFL, ...) */
-#define	FCNTLFLAGS	(FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FRDAHEAD|O_DIRECT)
-
-#if defined(COMPAT_FREEBSD7) || defined(COMPAT_FREEBSD6) || \
-    defined(COMPAT_FREEBSD5) || defined(COMPAT_FREEBSD4)
-/*
- * Set by shm_open(3) in older libc's to get automatic MAP_ASYNC
- * behavior for POSIX shared memory objects (which are otherwise
- * implemented as plain files).
- */
-#define	FPOSIXSHM	O_NOFOLLOW
-#undef FCNTLFLAGS
-#define	FCNTLFLAGS	(FAPPEND|FASYNC|FFSYNC|FNONBLOCK|FPOSIXSHM|FRDAHEAD| \
-			 O_DIRECT)
-#endif
-#endif
-
-/*
- * The O_* flags used to have only F* names, which were used in the kernel
- * and by fcntl.  We retain the F* names for the kernel f_flag field
- * and for backward compatibility for fcntl.  These flags are deprecated.
- */
-#if __BSD_VISIBLE
-#define	FAPPEND		O_APPEND	/* kernel/compat */
-#define	FASYNC		O_ASYNC		/* kernel/compat */
-#define	FFSYNC		O_FSYNC		/* kernel */
-#define	FNONBLOCK	O_NONBLOCK	/* kernel */
-#define	FNDELAY		O_NONBLOCK	/* compat */
-#define	O_NDELAY	O_NONBLOCK	/* compat */
-#endif
-
-/*
- * We are out of bits in f_flag (which is a short).  However,
- * the flag bits not set in FMASK are only meaningful in the
- * initial open syscall.  Those bits can thus be given a
- * different meaning for fcntl(2).
- */
-#if __BSD_VISIBLE
-/* Read ahead */
-#define	FRDAHEAD	O_CREAT
-#endif
-
-/* Defined by POSIX Extended API Set Part 2 */
-#if __BSD_VISIBLE
-/*
- * Magic value that specify the use of the current working directory
- * to determine the target of relative file paths in the openat() and
- * similar syscalls.
- */
-#define	AT_FDCWD		-100
-
-/*
- * Miscellaneous flags for the *at() syscalls.
- */
-#define	AT_EACCESS		0x100	/* Check access using effective user and group ID */
-#define	AT_SYMLINK_NOFOLLOW	0x200   /* Do not follow symbolic links */
-#define	AT_SYMLINK_FOLLOW	0x400	/* Follow symbolic link */
-#define	AT_REMOVEDIR		0x800	/* Remove directory instead of file */
-#endif
-
-/*
- * Constants used for fcntl(2)
- */
-
-/* command values */
-#define	F_DUPFD		0		/* duplicate file descriptor */
-#define	F_GETFD		1		/* get file descriptor flags */
-#define	F_SETFD		2		/* set file descriptor flags */
-#define	F_GETFL		3		/* get file status flags */
-#define	F_SETFL		4		/* set file status flags */
-#if __BSD_VISIBLE || __XSI_VISIBLE || __POSIX_VISIBLE >= 200112
-#define	F_GETOWN	5		/* get SIGIO/SIGURG proc/pgrp */
-#define F_SETOWN	6		/* set SIGIO/SIGURG proc/pgrp */
-#endif
-#define	F_OGETLK	7		/* get record locking information */
-#define	F_OSETLK	8		/* set record locking information */
-#define	F_OSETLKW	9		/* F_SETLK; wait if blocked */
-#define	F_DUP2FD	10		/* duplicate file descriptor to arg */
-#define	F_GETLK		11		/* get record locking information */
-#define	F_SETLK		12		/* set record locking information */
-#define	F_SETLKW	13		/* F_SETLK; wait if blocked */
-#define	F_SETLK_REMOTE	14		/* debugging support for remote locks */
-#define	F_READAHEAD	15		/* read ahead */
-#define	F_RDAHEAD	16		/* Darwin compatible read ahead */
-
-/* file descriptor flags (F_GETFD, F_SETFD) */
-#define	FD_CLOEXEC	1		/* close-on-exec flag */
-
-/* record locking flags (F_GETLK, F_SETLK, F_SETLKW) */
-#define	F_RDLCK		1		/* shared or read lock */
-#define	F_UNLCK		2		/* unlock */
-#define	F_WRLCK		3		/* exclusive or write lock */
-#define	F_UNLCKSYS	4		/* purge locks for a given system ID */ 
-#define	F_CANCEL	5		/* cancel an async lock request */
-#ifdef _KERNEL
-#define	F_WAIT		0x010		/* Wait until lock is granted */
-#define	F_FLOCK		0x020	 	/* Use flock(2) semantics for lock */
-#define	F_POSIX		0x040	 	/* Use POSIX semantics for lock */
-#define	F_REMOTE	0x080		/* Lock owner is remote NFS client */
-#define F_NOINTR	0x100		/* Ignore signals when waiting */
-#endif
-
-/*
- * Advisory file segment locking data type -
- * information passed to system by user
- */
 struct flock {
-	off_t	l_start;	/* starting offset */
-	off_t	l_len;		/* len = 0 means until end of file */
-	pid_t	l_pid;		/* lock owner */
-	short	l_type;		/* lock type: read/write, etc. */
-	short	l_whence;	/* type of l_start */
-	int	l_sysid;	/* remote system id or zero for local */
+	short l_type;
+	short l_whence;
+	off_t l_start;
+	off_t l_len;
+	pid_t l_pid;
 };
 
-/*
- * Old advisory file segment locking data type,
- * before adding l_sysid.
- */
-struct oflock {
-	off_t	l_start;	/* starting offset */
-	off_t	l_len;		/* len = 0 means until end of file */
-	pid_t	l_pid;		/* lock owner */
-	short	l_type;		/* lock type: read/write, etc. */
-	short	l_whence;	/* type of l_start */
+int creat(const char *, mode_t);
+int fcntl(int, int, ...);
+int open(const char *, int, ...);
+int openat(int, const char *, int, ...);
+int posix_fadvise(int, off_t, off_t, int);
+int posix_fallocate(int, off_t, off_t);
+
+#define O_SEARCH   O_PATH
+#define O_EXEC     O_PATH
+#define O_TTY_INIT 0
+
+#define O_ACCMODE (03|O_SEARCH)
+#define O_RDONLY  00
+#define O_WRONLY  01
+#define O_RDWR    02
+
+#define F_OFD_GETLK 36
+#define F_OFD_SETLK 37
+#define F_OFD_SETLKW 38
+
+#define F_DUPFD_CLOEXEC 1030
+
+#define F_RDLCK 0
+#define F_WRLCK 1
+#define F_UNLCK 2
+
+#define FD_CLOEXEC 1
+
+#define AT_FDCWD (-100)
+#define AT_SYMLINK_NOFOLLOW 0x100
+#define AT_REMOVEDIR 0x200
+#define AT_SYMLINK_FOLLOW 0x400
+#define AT_EACCESS 0x200
+
+#define POSIX_FADV_NORMAL     0
+#define POSIX_FADV_RANDOM     1
+#define POSIX_FADV_SEQUENTIAL 2
+#define POSIX_FADV_WILLNEED   3
+#ifndef POSIX_FADV_DONTNEED
+#define POSIX_FADV_DONTNEED   4
+#define POSIX_FADV_NOREUSE    5
+#endif
+
+#undef SEEK_SET
+#undef SEEK_CUR
+#undef SEEK_END
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
+
+#ifndef S_IRUSR
+#define S_ISUID 04000
+#define S_ISGID 02000
+#define S_ISVTX 01000
+#define S_IRUSR 0400
+#define S_IWUSR 0200
+#define S_IXUSR 0100
+#define S_IRWXU 0700
+#define S_IRGRP 0040
+#define S_IWGRP 0020
+#define S_IXGRP 0010
+#define S_IRWXG 0070
+#define S_IROTH 0004
+#define S_IWOTH 0002
+#define S_IXOTH 0001
+#define S_IRWXO 0007
+#endif
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#define AT_NO_AUTOMOUNT 0x800
+#define AT_EMPTY_PATH 0x1000
+#define AT_STATX_SYNC_TYPE 0x6000
+#define AT_STATX_SYNC_AS_STAT 0x0000
+#define AT_STATX_FORCE_SYNC 0x2000
+#define AT_STATX_DONT_SYNC 0x4000
+#define AT_RECURSIVE 0x8000
+
+#define FAPPEND O_APPEND
+#define FFSYNC O_SYNC
+#define FASYNC O_ASYNC
+#define FNONBLOCK O_NONBLOCK
+#define FNDELAY O_NDELAY
+
+#define F_OK 0
+#define R_OK 4
+#define W_OK 2
+#define X_OK 1
+#define F_ULOCK 0
+#define F_LOCK  1
+#define F_TLOCK 2
+#define F_TEST  3
+
+#define F_SETLEASE	1024
+#define F_GETLEASE	1025
+#define F_NOTIFY	1026
+#define F_CANCELLK	1029
+#define F_SETPIPE_SZ	1031
+#define F_GETPIPE_SZ	1032
+#define F_ADD_SEALS	1033
+#define F_GET_SEALS	1034
+
+#define F_SEAL_SEAL	0x0001
+#define F_SEAL_SHRINK	0x0002
+#define F_SEAL_GROW	0x0004
+#define F_SEAL_WRITE	0x0008
+#define F_SEAL_FUTURE_WRITE	0x0010
+
+#define F_GET_RW_HINT		1035
+#define F_SET_RW_HINT		1036
+#define F_GET_FILE_RW_HINT	1037
+#define F_SET_FILE_RW_HINT	1038
+
+#define RWF_WRITE_LIFE_NOT_SET	0
+#define RWH_WRITE_LIFE_NONE	1
+#define RWH_WRITE_LIFE_SHORT	2
+#define RWH_WRITE_LIFE_MEDIUM	3
+#define RWH_WRITE_LIFE_LONG	4
+#define RWH_WRITE_LIFE_EXTREME	5
+
+#define DN_ACCESS	0x00000001
+#define DN_MODIFY	0x00000002
+#define DN_CREATE	0x00000004
+#define DN_DELETE	0x00000008
+#define DN_RENAME	0x00000010
+#define DN_ATTRIB	0x00000020
+#define DN_MULTISHOT	0x80000000
+
+int lockf(int, int, off_t);
+#endif
+
+#if defined(_GNU_SOURCE)
+#define F_OWNER_TID 0
+#define F_OWNER_PID 1
+#define F_OWNER_PGRP 2
+#define F_OWNER_GID 2
+struct file_handle {
+	unsigned handle_bytes;
+	int handle_type;
+	unsigned char f_handle[];
 };
-
-
-#if __BSD_VISIBLE
-/* lock operations for flock(2) */
-#define	LOCK_SH		0x01		/* shared file lock */
-#define	LOCK_EX		0x02		/* exclusive file lock */
-#define	LOCK_NB		0x04		/* don't block when locking */
-#define	LOCK_UN		0x08		/* unlock file */
+struct f_owner_ex {
+	int type;
+	pid_t pid;
+};
+#define FALLOC_FL_KEEP_SIZE 1
+#define FALLOC_FL_PUNCH_HOLE 2
+#define MAX_HANDLE_SZ 128
+#define SYNC_FILE_RANGE_WAIT_BEFORE 1
+#define SYNC_FILE_RANGE_WRITE 2
+#define SYNC_FILE_RANGE_WAIT_AFTER 4
+#define SPLICE_F_MOVE 1
+#define SPLICE_F_NONBLOCK 2
+#define SPLICE_F_MORE 4
+#define SPLICE_F_GIFT 8
+int fallocate(int, int, off_t, off_t);
+#define fallocate64 fallocate
+int name_to_handle_at(int, const char *, struct file_handle *, int *, int);
+int open_by_handle_at(int, struct file_handle *, int);
+ssize_t readahead(int, off_t, size_t);
+int sync_file_range(int, off_t, off_t, unsigned);
+ssize_t vmsplice(int, const struct iovec *, size_t, unsigned);
+ssize_t splice(int, off_t *, int, off_t *, size_t, unsigned);
+ssize_t tee(int, int, size_t, unsigned);
+#define loff_t off_t
 #endif
 
-/*
- * XXX missing posix_fadvise() and POSIX_FADV_* macros.
- */
-
-#ifndef _KERNEL
-__BEGIN_DECLS
-int	open(const char *, int, ...);
-int	creat(const char *, mode_t);
-int	fcntl(int, int, ...);
-#if __BSD_VISIBLE || __POSIX_VISIBLE >= 200809
-int	openat(int, const char *, int, ...);
-#endif
-#if __BSD_VISIBLE || __POSIX_VISIBLE >= 200112
-int	posix_fallocate(int, off_t, off_t);
-#endif
-#if __BSD_VISIBLE
-int	flock(int, int);
-#endif
-__END_DECLS
+#if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)
+#define F_GETLK64 F_GETLK
+#define F_SETLK64 F_SETLK
+#define F_SETLKW64 F_SETLKW
+#define flock64 flock
+#define open64 open
+#define openat64 openat
+#define creat64 creat
+#define lockf64 lockf
+#define posix_fadvise64 posix_fadvise
+#define posix_fallocate64 posix_fallocate
+#define off64_t off_t
 #endif
 
-#endif /* !_SYS_FCNTL_H_ */
+#ifdef __cplusplus
+}
+#endif
+
+#endif

@@ -1,589 +1,469 @@
-/*-
- * Copyright (c) 1991, 1993, 1994
- *	The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)unistd.h	8.12 (Berkeley) 4/27/95
- * $FreeBSD: release/9.0.0/include/unistd.h 228843 2011-12-23 15:00:37Z cperciva $
- */
+#ifndef	_UNISTD_H
+#define	_UNISTD_H
 
-#ifndef _UNISTD_H_
-#define	_UNISTD_H_
-
-#include <sys/cdefs.h>
-#include <sys/types.h>			/* XXX adds too much pollution. */
-#include <sys/unistd.h>
-#include <sys/_null.h>
-#include <sys/_types.h>
-
-#ifndef _GID_T_DECLARED
-typedef	__gid_t		gid_t;
-#define	_GID_T_DECLARED
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#ifndef _OFF_T_DECLARED
-typedef	__off_t		off_t;
-#define	_OFF_T_DECLARED
+#include <features.h>
+
+#define STDIN_FILENO  0
+#define STDOUT_FILENO 1
+#define STDERR_FILENO 2
+
+#define SEEK_SET 0
+#define SEEK_CUR 1
+#define SEEK_END 2
+
+#ifdef __cplusplus
+#define NULL 0L
+#else
+#define NULL ((void*)0)
 #endif
 
-#ifndef _PID_T_DECLARED
-typedef	__pid_t		pid_t;
-#define	_PID_T_DECLARED
-#endif
+#define __NEED_size_t
+#define __NEED_ssize_t
+#define __NEED_uid_t
+#define __NEED_gid_t
+#define __NEED_off_t
+#define __NEED_pid_t
+#define __NEED_intptr_t
+#define __NEED_useconds_t
 
-#ifndef _SIZE_T_DECLARED
-typedef	__size_t	size_t;
-#define	_SIZE_T_DECLARED
-#endif
+#include <bits/alltypes.h>
 
-#ifndef _SSIZE_T_DECLARED
-typedef	__ssize_t	ssize_t;
-#define	_SSIZE_T_DECLARED
-#endif
+int pipe(int [2]);
+int pipe2(int [2], int);
+int close(int);
+int posix_close(int, int);
+int dup(int);
+int dup2(int, int);
+int dup3(int, int, int);
+off_t lseek(int, off_t, int);
+int fsync(int);
+int fdatasync(int);
 
-#ifndef _UID_T_DECLARED
-typedef	__uid_t		uid_t;
-#define	_UID_T_DECLARED
-#endif
+ssize_t read(int, void *, size_t);
+ssize_t write(int, const void *, size_t);
+ssize_t pread(int, void *, size_t, off_t);
+ssize_t pwrite(int, const void *, size_t, off_t);
 
-#ifndef _USECONDS_T_DECLARED
-typedef	__useconds_t	useconds_t;
-#define	_USECONDS_T_DECLARED
-#endif
+int chown(const char *, uid_t, gid_t);
+int fchown(int, uid_t, gid_t);
+int lchown(const char *, uid_t, gid_t);
+int fchownat(int, const char *, uid_t, gid_t, int);
 
-#define	STDIN_FILENO	0	/* standard input file descriptor */
-#define	STDOUT_FILENO	1	/* standard output file descriptor */
-#define	STDERR_FILENO	2	/* standard error file descriptor */
+int link(const char *, const char *);
+int linkat(int, const char *, int, const char *, int);
+int symlink(const char *, const char *);
+int symlinkat(const char *, int, const char *);
+ssize_t readlink(const char *__restrict, char *__restrict, size_t);
+ssize_t readlinkat(int, const char *__restrict, char *__restrict, size_t);
+int unlink(const char *);
+int unlinkat(int, const char *, int);
+int rmdir(const char *);
+int truncate(const char *, off_t);
+int ftruncate(int, off_t);
 
-#if __XSI_VISIBLE || __POSIX_VISIBLE >= 200112
-#define	F_ULOCK		0	/* unlock locked section */
-#define	F_LOCK		1	/* lock a section for exclusive use */
-#define	F_TLOCK		2	/* test and lock a section for exclusive use */
-#define	F_TEST		3	/* test a section for locks by other procs */
-#endif
+#define F_OK 0
+#define R_OK 4
+#define W_OK 2
+#define X_OK 1
 
-/*
- * POSIX options and option groups we unconditionally do or don't
- * implement.  This list includes those options which are exclusively
- * implemented (or not) in user mode.  Please keep this list in
- * alphabetical order.
- *
- * Anything which is defined as zero below **must** have an
- * implementation for the corresponding sysconf() which is able to
- * determine conclusively whether or not the feature is supported.
- * Anything which is defined as other than -1 below **must** have
- * complete headers, types, and function declarations as specified by
- * the POSIX standard; however, if the relevant sysconf() function
- * returns -1, the functions may be stubbed out.
- */
-#define	_POSIX_BARRIERS			200112L
-#define	_POSIX_READER_WRITER_LOCKS	200112L
-#define	_POSIX_REGEXP			1
-#define	_POSIX_SHELL			1
-#define	_POSIX_SPAWN			200112L
-#define	_POSIX_SPIN_LOCKS		200112L
-#define	_POSIX_THREAD_ATTR_STACKADDR	200112L
-#define	_POSIX_THREAD_ATTR_STACKSIZE	200112L
-#define	_POSIX_THREAD_CPUTIME		200112L
-#define	_POSIX_THREAD_PRIO_INHERIT	200112L
-#define	_POSIX_THREAD_PRIO_PROTECT	200112L
-#define	_POSIX_THREAD_PRIORITY_SCHEDULING 200112L
-#define	_POSIX_THREAD_PROCESS_SHARED	-1
-#define	_POSIX_THREAD_SAFE_FUNCTIONS	-1
-#define	_POSIX_THREAD_SPORADIC_SERVER	-1
-#define	_POSIX_THREADS			200112L
-#define	_POSIX_TRACE			-1
-#define	_POSIX_TRACE_EVENT_FILTER	-1
-#define	_POSIX_TRACE_INHERIT		-1
-#define	_POSIX_TRACE_LOG		-1
-#define	_POSIX2_C_BIND			200112L	/* mandatory */
-#define	_POSIX2_C_DEV			-1 /* need c99 utility */
-#define	_POSIX2_CHAR_TERM		1
-#define	_POSIX2_FORT_DEV		-1 /* need fort77 utility */
-#define	_POSIX2_FORT_RUN		200112L
-#define	_POSIX2_LOCALEDEF		-1
-#define	_POSIX2_PBS			-1
-#define	_POSIX2_PBS_ACCOUNTING		-1
-#define	_POSIX2_PBS_CHECKPOINT		-1
-#define	_POSIX2_PBS_LOCATE		-1
-#define	_POSIX2_PBS_MESSAGE		-1
-#define	_POSIX2_PBS_TRACK		-1
-#define	_POSIX2_SW_DEV			-1 /* XXX ??? */
-#define	_POSIX2_UPE			200112L
-#define	_V6_ILP32_OFF32			-1
-#define	_V6_ILP32_OFFBIG		0
-#define	_V6_LP64_OFF64			0
-#define	_V6_LPBIG_OFFBIG		-1
+int access(const char *, int);
+int faccessat(int, const char *, int, int);
 
-#if __XSI_VISIBLE
-#define	_XOPEN_CRYPT			-1 /* XXX ??? */
-#define	_XOPEN_ENH_I18N			-1 /* mandatory in XSI */
-#define	_XOPEN_LEGACY			-1
-#define	_XOPEN_REALTIME			-1
-#define	_XOPEN_REALTIME_THREADS		-1
-#define	_XOPEN_UNIX			-1
-#endif
+int chdir(const char *);
+int fchdir(int);
+char *getcwd(char *, size_t);
 
-/* Define the POSIX.2 version we target for compliance. */
-#define	_POSIX2_VERSION		199212L
+unsigned alarm(unsigned);
+unsigned sleep(unsigned);
+int pause(void);
 
-/*
- * POSIX-style system configuration variable accessors (for the
- * sysconf function).  The kernel does not directly implement the
- * sysconf() interface; rather, a C library stub translates references
- * to sysconf() into calls to sysctl() using a giant switch statement.
- * Those that are marked `user' are implemented entirely in the C
- * library and never query the kernel.  pathconf() is implemented
- * directly by the kernel so those are not defined here.
- */
-#define	_SC_ARG_MAX		 1
-#define	_SC_CHILD_MAX		 2
-#define	_SC_CLK_TCK		 3
-#define	_SC_NGROUPS_MAX		 4
-#define	_SC_OPEN_MAX		 5
-#define	_SC_JOB_CONTROL		 6
-#define	_SC_SAVED_IDS		 7
-#define	_SC_VERSION		 8
-#define	_SC_BC_BASE_MAX		 9 /* user */
-#define	_SC_BC_DIM_MAX		10 /* user */
-#define	_SC_BC_SCALE_MAX	11 /* user */
-#define	_SC_BC_STRING_MAX	12 /* user */
-#define	_SC_COLL_WEIGHTS_MAX	13 /* user */
-#define	_SC_EXPR_NEST_MAX	14 /* user */
-#define	_SC_LINE_MAX		15 /* user */
-#define	_SC_RE_DUP_MAX		16 /* user */
-#define	_SC_2_VERSION		17 /* user */
-#define	_SC_2_C_BIND		18 /* user */
-#define	_SC_2_C_DEV		19 /* user */
-#define	_SC_2_CHAR_TERM		20 /* user */
-#define	_SC_2_FORT_DEV		21 /* user */
-#define	_SC_2_FORT_RUN		22 /* user */
-#define	_SC_2_LOCALEDEF		23 /* user */
-#define	_SC_2_SW_DEV		24 /* user */
-#define	_SC_2_UPE		25 /* user */
-#define	_SC_STREAM_MAX		26 /* user */
-#define	_SC_TZNAME_MAX		27 /* user */
+pid_t fork(void);
+int execve(const char *, char *const [], char *const []);
+int execv(const char *, char *const []);
+int execle(const char *, const char *, ...);
+int execl(const char *, const char *, ...);
+int execvp(const char *, char *const []);
+int execlp(const char *, const char *, ...);
+int fexecve(int, char *const [], char *const []);
+_Noreturn void _exit(int);
 
-#if __POSIX_VISIBLE >= 199309
-#define	_SC_ASYNCHRONOUS_IO	28
-#define	_SC_MAPPED_FILES	29
-#define	_SC_MEMLOCK		30
-#define	_SC_MEMLOCK_RANGE	31
-#define	_SC_MEMORY_PROTECTION	32
-#define	_SC_MESSAGE_PASSING	33
-#define	_SC_PRIORITIZED_IO	34
-#define	_SC_PRIORITY_SCHEDULING	35
-#define	_SC_REALTIME_SIGNALS	36
-#define	_SC_SEMAPHORES		37
-#define	_SC_FSYNC		38
-#define	_SC_SHARED_MEMORY_OBJECTS 39
-#define	_SC_SYNCHRONIZED_IO	40
-#define	_SC_TIMERS		41
-#define	_SC_AIO_LISTIO_MAX	42
-#define	_SC_AIO_MAX		43
-#define	_SC_AIO_PRIO_DELTA_MAX	44
-#define	_SC_DELAYTIMER_MAX	45
-#define	_SC_MQ_OPEN_MAX		46
-#define	_SC_PAGESIZE		47
-#define	_SC_RTSIG_MAX		48
-#define	_SC_SEM_NSEMS_MAX	49
-#define	_SC_SEM_VALUE_MAX	50
-#define	_SC_SIGQUEUE_MAX	51
-#define	_SC_TIMER_MAX		52
-#endif
+pid_t getpid(void);
+pid_t getppid(void);
+pid_t getpgrp(void);
+pid_t getpgid(pid_t);
+int setpgid(pid_t, pid_t);
+pid_t setsid(void);
+pid_t getsid(pid_t);
+char *ttyname(int);
+int ttyname_r(int, char *, size_t);
+int isatty(int);
+pid_t tcgetpgrp(int);
+int tcsetpgrp(int, pid_t);
 
-#if __POSIX_VISIBLE >= 200112
-#define	_SC_2_PBS		59 /* user */
-#define	_SC_2_PBS_ACCOUNTING	60 /* user */
-#define	_SC_2_PBS_CHECKPOINT	61 /* user */
-#define	_SC_2_PBS_LOCATE	62 /* user */
-#define	_SC_2_PBS_MESSAGE	63 /* user */
-#define	_SC_2_PBS_TRACK		64 /* user */
-#define	_SC_ADVISORY_INFO	65
-#define	_SC_BARRIERS		66 /* user */
-#define	_SC_CLOCK_SELECTION	67
-#define	_SC_CPUTIME		68
-#define	_SC_FILE_LOCKING	69
-#define	_SC_GETGR_R_SIZE_MAX	70 /* user */
-#define	_SC_GETPW_R_SIZE_MAX	71 /* user */
-#define	_SC_HOST_NAME_MAX	72
-#define	_SC_LOGIN_NAME_MAX	73
-#define	_SC_MONOTONIC_CLOCK	74
-#define	_SC_MQ_PRIO_MAX		75
-#define	_SC_READER_WRITER_LOCKS	76 /* user */
-#define	_SC_REGEXP		77 /* user */
-#define	_SC_SHELL		78 /* user */
-#define	_SC_SPAWN		79 /* user */
-#define	_SC_SPIN_LOCKS		80 /* user */
-#define	_SC_SPORADIC_SERVER	81
-#define	_SC_THREAD_ATTR_STACKADDR 82 /* user */
-#define	_SC_THREAD_ATTR_STACKSIZE 83 /* user */
-#define	_SC_THREAD_CPUTIME	84 /* user */
-#define	_SC_THREAD_DESTRUCTOR_ITERATIONS 85 /* user */
-#define	_SC_THREAD_KEYS_MAX	86 /* user */
-#define	_SC_THREAD_PRIO_INHERIT	87 /* user */
-#define	_SC_THREAD_PRIO_PROTECT	88 /* user */
-#define	_SC_THREAD_PRIORITY_SCHEDULING 89 /* user */
-#define	_SC_THREAD_PROCESS_SHARED 90 /* user */
-#define	_SC_THREAD_SAFE_FUNCTIONS 91 /* user */
-#define	_SC_THREAD_SPORADIC_SERVER 92 /* user */
-#define	_SC_THREAD_STACK_MIN	93 /* user */
-#define	_SC_THREAD_THREADS_MAX	94 /* user */
-#define	_SC_TIMEOUTS		95 /* user */
-#define	_SC_THREADS		96 /* user */
-#define	_SC_TRACE		97 /* user */
-#define	_SC_TRACE_EVENT_FILTER	98 /* user */
-#define	_SC_TRACE_INHERIT	99 /* user */
-#define	_SC_TRACE_LOG		100 /* user */
-#define	_SC_TTY_NAME_MAX	101 /* user */
-#define	_SC_TYPED_MEMORY_OBJECTS 102
-#define	_SC_V6_ILP32_OFF32	103 /* user */
-#define	_SC_V6_ILP32_OFFBIG	104 /* user */
-#define	_SC_V6_LP64_OFF64	105 /* user */
-#define	_SC_V6_LPBIG_OFFBIG	106 /* user */
-#define	_SC_IPV6		118
-#define	_SC_RAW_SOCKETS		119
-#define	_SC_SYMLOOP_MAX		120
-#endif
+uid_t getuid(void);
+uid_t geteuid(void);
+gid_t getgid(void);
+gid_t getegid(void);
+int getgroups(int, gid_t []);
+int setuid(uid_t);
+int seteuid(uid_t);
+int setgid(gid_t);
+int setegid(gid_t);
 
-#if __XSI_VISIBLE
-#define	_SC_ATEXIT_MAX		107 /* user */
-#define	_SC_IOV_MAX		56
-#define	_SC_PAGE_SIZE		_SC_PAGESIZE
-#define	_SC_XOPEN_CRYPT		108 /* user */
-#define	_SC_XOPEN_ENH_I18N	109 /* user */
-#define	_SC_XOPEN_LEGACY	110 /* user */
-#define	_SC_XOPEN_REALTIME	111
-#define	_SC_XOPEN_REALTIME_THREADS 112
-#define	_SC_XOPEN_SHM		113
-#define	_SC_XOPEN_STREAMS	114
-#define	_SC_XOPEN_UNIX		115
-#define	_SC_XOPEN_VERSION	116
-#define	_SC_XOPEN_XCU_VERSION	117 /* user */
-#endif
+char *getlogin(void);
+int getlogin_r(char *, size_t);
+int gethostname(char *, size_t);
+char *ctermid(char *);
 
-#if __BSD_VISIBLE
-#define	_SC_NPROCESSORS_CONF	57
-#define	_SC_NPROCESSORS_ONLN	58
-#define	_SC_CPUSET_SIZE		122
-#endif
-
-/* Extensions found in Solaris and Linux. */
-#define	_SC_PHYS_PAGES		121
-
-/* Keys for the confstr(3) function. */
-#if __POSIX_VISIBLE >= 199209
-#define	_CS_PATH		1	/* default value of PATH */
-#endif
-
-#if __POSIX_VISIBLE >= 200112
-#define	_CS_POSIX_V6_ILP32_OFF32_CFLAGS		2
-#define	_CS_POSIX_V6_ILP32_OFF32_LDFLAGS	3
-#define	_CS_POSIX_V6_ILP32_OFF32_LIBS		4
-#define	_CS_POSIX_V6_ILP32_OFFBIG_CFLAGS	5
-#define	_CS_POSIX_V6_ILP32_OFFBIG_LDFLAGS	6
-#define	_CS_POSIX_V6_ILP32_OFFBIG_LIBS		7
-#define	_CS_POSIX_V6_LP64_OFF64_CFLAGS		8
-#define	_CS_POSIX_V6_LP64_OFF64_LDFLAGS		9
-#define	_CS_POSIX_V6_LP64_OFF64_LIBS		10
-#define	_CS_POSIX_V6_LPBIG_OFFBIG_CFLAGS	11
-#define	_CS_POSIX_V6_LPBIG_OFFBIG_LDFLAGS	12
-#define	_CS_POSIX_V6_LPBIG_OFFBIG_LIBS		13
-#define	_CS_POSIX_V6_WIDTH_RESTRICTED_ENVS	14
-#endif
-
-__BEGIN_DECLS
-/* 1003.1-1990 */
-void	 _exit(int) __dead2;
-int	 access(const char *, int);
-unsigned int	 alarm(unsigned int);
-int	 chdir(const char *);
-int	 chown(const char *, uid_t, gid_t);
-int	 close(int);
-void	 closefrom(int);
-int	 dup(int);
-int	 dup2(int, int);
-int	 execl(const char *, const char *, ...);
-int	 execle(const char *, const char *, ...);
-int	 execlp(const char *, const char *, ...);
-int	 execv(const char *, char * const *);
-int	 execve(const char *, char * const *, char * const *);
-int	 execvp(const char *, char * const *);
-pid_t	 fork(void);
-long	 fpathconf(int, int);
-char	*getcwd(char *, size_t);
-gid_t	 getegid(void);
-uid_t	 geteuid(void);
-gid_t	 getgid(void);
-int	 getgroups(int, gid_t []);
-char	*getlogin(void);
-pid_t	 getpgrp(void);
-pid_t	 getpid(void);
-pid_t	 getppid(void);
-uid_t	 getuid(void);
-int	 isatty(int);
-int	 link(const char *, const char *);
-#ifndef _LSEEK_DECLARED
-#define	_LSEEK_DECLARED
-off_t	 lseek(int, off_t, int);
-#endif
-long	 pathconf(const char *, int);
-int	 pause(void);
-int	 pipe(int *);
-ssize_t	 read(int, void *, size_t);
-int	 rmdir(const char *);
-int	 setgid(gid_t);
-int	 setpgid(pid_t, pid_t);
-pid_t	 setsid(void);
-int	 setuid(uid_t);
-unsigned int	 sleep(unsigned int);
-long	 sysconf(int);
-pid_t	 tcgetpgrp(int);
-int	 tcsetpgrp(int, pid_t);
-char	*ttyname(int);
-int	ttyname_r(int, char *, size_t);
-int	 unlink(const char *);
-ssize_t	 write(int, const void *, size_t);
-
-/* 1003.2-1992 */
-#if __POSIX_VISIBLE >= 199209 || __XSI_VISIBLE
-size_t	 confstr(int, char *, size_t);
-#ifndef _GETOPT_DECLARED
-#define	_GETOPT_DECLARED
-int	 getopt(int, char * const [], const char *);
-
-extern char *optarg;			/* getopt(3) external variables */
+int getopt(int, char * const [], const char *);
+extern char *optarg;
 extern int optind, opterr, optopt;
-#endif /* _GETOPT_DECLARED */
+
+long pathconf(const char *, int);
+long fpathconf(int, int);
+long sysconf(int);
+size_t confstr(int, char *, size_t);
+
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#define F_ULOCK 0
+#define F_LOCK  1
+#define F_TLOCK 2
+#define F_TEST  3
+int setreuid(uid_t, uid_t);
+int setregid(gid_t, gid_t);
+int lockf(int, int, off_t);
+long gethostid(void);
+int nice(int);
+void sync(void);
+pid_t setpgrp(void);
+char *crypt(const char *, const char *);
+void encrypt(char *, int);
+void swab(const void *__restrict, void *__restrict, ssize_t);
 #endif
 
-/* ISO/IEC 9945-1: 1996 */
-#if __POSIX_VISIBLE >= 199506 || __XSI_VISIBLE
-int	 fsync(int);
-
-/*
- * ftruncate() was in the POSIX Realtime Extension (it's used for shared
- * memory), but truncate() was not.
- */
-#ifndef _FTRUNCATE_DECLARED
-#define	_FTRUNCATE_DECLARED
-int	 ftruncate(int, off_t);
-#endif
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE) \
+ || (defined(_XOPEN_SOURCE) && _XOPEN_SOURCE+0 < 700)
+int usleep(unsigned);
+unsigned ualarm(unsigned, unsigned);
 #endif
 
-#if __POSIX_VISIBLE >= 199506
-int	 getlogin_r(char *, int);
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#define L_SET 0
+#define L_INCR 1
+#define L_XTND 2
+int brk(void *);
+void *sbrk(intptr_t);
+pid_t vfork(void);
+int vhangup(void);
+int chroot(const char *);
+int getpagesize(void);
+int getdtablesize(void);
+int sethostname(const char *, size_t);
+int getdomainname(char *, size_t);
+int setdomainname(const char *, size_t);
+int setgroups(size_t, const gid_t *);
+char *getpass(const char *);
+int daemon(int, int);
+void setusershell(void);
+void endusershell(void);
+char *getusershell(void);
+int acct(const char *);
+long syscall(long, ...);
+int execvpe(const char *, char *const [], char *const []);
+int issetugid(void);
+int getentropy(void *, size_t);
+extern int optreset;
 #endif
 
-/* 1003.1-2001 */
-#if __POSIX_VISIBLE >= 200112 || __XSI_VISIBLE
-int	 fchown(int, uid_t, gid_t);
-ssize_t	 readlink(const char * __restrict, char * __restrict, size_t);
-#endif
-#if __POSIX_VISIBLE >= 200112
-int	 gethostname(char *, size_t);
-int	 setegid(gid_t);
-int	 seteuid(uid_t);
-#endif
-
-/* 1003.1-2008 */
-#if __POSIX_VISIBLE >= 200809 || __XSI_VISIBLE
-int	 getsid(pid_t _pid);
-int	 fchdir(int);
-int	 getpgid(pid_t _pid);
-int	 lchown(const char *, uid_t, gid_t);
-ssize_t	 pread(int, void *, size_t, off_t);
-ssize_t	 pwrite(int, const void *, size_t, off_t);
-
-/* See comment at ftruncate() above. */
-#ifndef _TRUNCATE_DECLARED
-#define	_TRUNCATE_DECLARED
-int	 truncate(const char *, off_t);
-#endif
-#endif /* __POSIX_VISIBLE >= 200809 || __XSI_VISIBLE */
-
-#if __POSIX_VISIBLE >= 200809 || __BSD_VISIBLE
-int	faccessat(int, const char *, int, int);
-int	fchownat(int, const char *, uid_t, gid_t, int);
-int	fexecve(int, char *const [], char *const []);
-int	linkat(int, const char *, int, const char *, int);
-ssize_t	readlinkat(int, const char * __restrict, char * __restrict, size_t);
-int	symlinkat(const char *, int, const char *);
-int	unlinkat(int, const char *, int);
-#endif /* __POSIX_VISIBLE >= 200809 || __BSD_VISIBLE */
-
-/*
- * symlink() was originally in POSIX.1a, which was withdrawn after
- * being overtaken by events (1003.1-2001).  It was in XPG4.2, and of
- * course has been in BSD since 4.2.
- */
-#if __POSIX_VISIBLE >= 200112 || __XSI_VISIBLE >= 402 || __BSD_VISIBLE
-int	 symlink(const char * __restrict, const char * __restrict);
+#ifdef _GNU_SOURCE
+extern char **environ;
+int setresuid(uid_t, uid_t, uid_t);
+int setresgid(gid_t, gid_t, gid_t);
+int getresuid(uid_t *, uid_t *, uid_t *);
+int getresgid(gid_t *, gid_t *, gid_t *);
+char *get_current_dir_name(void);
+int syncfs(int);
+int euidaccess(const char *, int);
+int eaccess(const char *, int);
+ssize_t copy_file_range(int, off_t *, int, off_t *, size_t, unsigned);
 #endif
 
-/* X/Open System Interfaces */
-#if __XSI_VISIBLE
-char	*crypt(const char *, const char *);
-/* char	*ctermid(char *); */		/* XXX ??? */
-int	 encrypt(char *, int);
-long	 gethostid(void);
-int	 lockf(int, int, off_t);
-int	 nice(int);
-int	 setpgrp(pid_t _pid, pid_t _pgrp); /* obsoleted by setpgid() */
-int	 setregid(gid_t, gid_t);
-int	 setreuid(uid_t, uid_t);
-
-#ifndef _SWAB_DECLARED
-#define _SWAB_DECLARED
-void	 swab(const void * __restrict, void * __restrict, ssize_t);
-#endif /* _SWAB_DECLARED */
-
-void	 sync(void);
-
-#endif /* __XSI_VISIBLE */
-
-#if (__XSI_VISIBLE && __XSI_VISIBLE <= 500) || __BSD_VISIBLE
-int	 brk(const void *);
-int	 chroot(const char *);
-int	 getdtablesize(void);
-int	 getpagesize(void) __pure2;
-char	*getpass(const char *);
-void	*sbrk(intptr_t);
+#if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)
+#define lseek64 lseek
+#define pread64 pread
+#define pwrite64 pwrite
+#define truncate64 truncate
+#define ftruncate64 ftruncate
+#define lockf64 lockf
+#define off64_t off_t
 #endif
 
-#if (__XSI_VISIBLE && __XSI_VISIBLE <= 600) || __BSD_VISIBLE
-char	*getwd(char *);			/* obsoleted by getcwd() */
-useconds_t
-	 ualarm(useconds_t, useconds_t);
-int	 usleep(useconds_t);
-pid_t	 vfork(void);
+#define POSIX_CLOSE_RESTART     0
+
+#define _XOPEN_VERSION          700
+#define _XOPEN_UNIX             1
+#define _XOPEN_ENH_I18N         1
+
+#define _POSIX_VERSION          200809L
+#define _POSIX2_VERSION         _POSIX_VERSION
+
+#define _POSIX_ADVISORY_INFO    _POSIX_VERSION
+#define _POSIX_CHOWN_RESTRICTED 1
+#define _POSIX_IPV6             _POSIX_VERSION
+#define _POSIX_JOB_CONTROL      1
+#define _POSIX_MAPPED_FILES     _POSIX_VERSION
+#define _POSIX_MEMLOCK          _POSIX_VERSION
+#define _POSIX_MEMLOCK_RANGE    _POSIX_VERSION
+#define _POSIX_MEMORY_PROTECTION _POSIX_VERSION
+#define _POSIX_MESSAGE_PASSING  _POSIX_VERSION
+#define _POSIX_FSYNC            _POSIX_VERSION
+#define _POSIX_NO_TRUNC         1
+#define _POSIX_RAW_SOCKETS      _POSIX_VERSION
+#define _POSIX_REALTIME_SIGNALS _POSIX_VERSION
+#define _POSIX_REGEXP           1
+#define _POSIX_SAVED_IDS        1
+#define _POSIX_SHELL            1
+#define _POSIX_SPAWN            _POSIX_VERSION
+#define _POSIX_VDISABLE         0
+
+#define _POSIX_THREADS          _POSIX_VERSION
+#define _POSIX_THREAD_PROCESS_SHARED _POSIX_VERSION
+#define _POSIX_THREAD_SAFE_FUNCTIONS _POSIX_VERSION
+#define _POSIX_THREAD_ATTR_STACKADDR _POSIX_VERSION
+#define _POSIX_THREAD_ATTR_STACKSIZE _POSIX_VERSION
+#define _POSIX_THREAD_PRIORITY_SCHEDULING _POSIX_VERSION
+#define _POSIX_THREAD_CPUTIME   _POSIX_VERSION
+#define _POSIX_TIMERS           _POSIX_VERSION
+#define _POSIX_TIMEOUTS         _POSIX_VERSION
+#define _POSIX_MONOTONIC_CLOCK  _POSIX_VERSION
+#define _POSIX_CPUTIME          _POSIX_VERSION
+#define _POSIX_CLOCK_SELECTION  _POSIX_VERSION
+#define _POSIX_BARRIERS         _POSIX_VERSION
+#define _POSIX_SPIN_LOCKS       _POSIX_VERSION
+#define _POSIX_READER_WRITER_LOCKS _POSIX_VERSION
+#define _POSIX_ASYNCHRONOUS_IO  _POSIX_VERSION
+#define _POSIX_SEMAPHORES       _POSIX_VERSION
+#define _POSIX_SHARED_MEMORY_OBJECTS _POSIX_VERSION
+
+#define _POSIX2_C_BIND          _POSIX_VERSION
+
+#include <bits/posix.h>
+
+
+
+#define _PC_LINK_MAX	0
+#define _PC_MAX_CANON	1
+#define _PC_MAX_INPUT	2
+#define _PC_NAME_MAX	3
+#define _PC_PATH_MAX	4
+#define _PC_PIPE_BUF	5
+#define _PC_CHOWN_RESTRICTED	6
+#define _PC_NO_TRUNC	7
+#define _PC_VDISABLE	8
+#define _PC_SYNC_IO	9
+#define _PC_ASYNC_IO	10
+#define _PC_PRIO_IO	11
+#define _PC_SOCK_MAXBUF	12
+#define _PC_FILESIZEBITS	13
+#define _PC_REC_INCR_XFER_SIZE	14
+#define _PC_REC_MAX_XFER_SIZE	15
+#define _PC_REC_MIN_XFER_SIZE	16
+#define _PC_REC_XFER_ALIGN	17
+#define _PC_ALLOC_SIZE_MIN	18
+#define _PC_SYMLINK_MAX	19
+#define _PC_2_SYMLINKS	20
+
+#define _SC_ARG_MAX	0
+#define _SC_CHILD_MAX	1
+#define _SC_CLK_TCK	2
+#define _SC_NGROUPS_MAX	3
+#define _SC_OPEN_MAX	4
+#define _SC_STREAM_MAX	5
+#define _SC_TZNAME_MAX	6
+#define _SC_JOB_CONTROL	7
+#define _SC_SAVED_IDS	8
+#define _SC_REALTIME_SIGNALS	9
+#define _SC_PRIORITY_SCHEDULING	10
+#define _SC_TIMERS	11
+#define _SC_ASYNCHRONOUS_IO	12
+#define _SC_PRIORITIZED_IO	13
+#define _SC_SYNCHRONIZED_IO	14
+#define _SC_FSYNC	15
+#define _SC_MAPPED_FILES	16
+#define _SC_MEMLOCK	17
+#define _SC_MEMLOCK_RANGE	18
+#define _SC_MEMORY_PROTECTION	19
+#define _SC_MESSAGE_PASSING	20
+#define _SC_SEMAPHORES	21
+#define _SC_SHARED_MEMORY_OBJECTS	22
+#define _SC_AIO_LISTIO_MAX	23
+#define _SC_AIO_MAX	24
+#define _SC_AIO_PRIO_DELTA_MAX	25
+#define _SC_DELAYTIMER_MAX	26
+#define _SC_MQ_OPEN_MAX	27
+#define _SC_MQ_PRIO_MAX	28
+#define _SC_VERSION	29
+#define _SC_PAGE_SIZE	30
+#define _SC_PAGESIZE	30 /* !! */
+#define _SC_RTSIG_MAX	31
+#define _SC_SEM_NSEMS_MAX	32
+#define _SC_SEM_VALUE_MAX	33
+#define _SC_SIGQUEUE_MAX	34
+#define _SC_TIMER_MAX	35
+#define _SC_BC_BASE_MAX	36
+#define _SC_BC_DIM_MAX	37
+#define _SC_BC_SCALE_MAX	38
+#define _SC_BC_STRING_MAX	39
+#define _SC_COLL_WEIGHTS_MAX	40
+#define _SC_EXPR_NEST_MAX	42
+#define _SC_LINE_MAX	43
+#define _SC_RE_DUP_MAX	44
+#define _SC_2_VERSION	46
+#define _SC_2_C_BIND	47
+#define _SC_2_C_DEV	48
+#define _SC_2_FORT_DEV	49
+#define _SC_2_FORT_RUN	50
+#define _SC_2_SW_DEV	51
+#define _SC_2_LOCALEDEF	52
+#define _SC_UIO_MAXIOV	60 /* !! */
+#define _SC_IOV_MAX	60
+#define _SC_THREADS	67
+#define _SC_THREAD_SAFE_FUNCTIONS	68
+#define _SC_GETGR_R_SIZE_MAX	69
+#define _SC_GETPW_R_SIZE_MAX	70
+#define _SC_LOGIN_NAME_MAX	71
+#define _SC_TTY_NAME_MAX	72
+#define _SC_THREAD_DESTRUCTOR_ITERATIONS	73
+#define _SC_THREAD_KEYS_MAX	74
+#define _SC_THREAD_STACK_MIN	75
+#define _SC_THREAD_THREADS_MAX	76
+#define _SC_THREAD_ATTR_STACKADDR	77
+#define _SC_THREAD_ATTR_STACKSIZE	78
+#define _SC_THREAD_PRIORITY_SCHEDULING	79
+#define _SC_THREAD_PRIO_INHERIT	80
+#define _SC_THREAD_PRIO_PROTECT	81
+#define _SC_THREAD_PROCESS_SHARED	82
+#define _SC_NPROCESSORS_CONF	83
+#define _SC_NPROCESSORS_ONLN	84
+#define _SC_PHYS_PAGES	85
+#define _SC_AVPHYS_PAGES	86
+#define _SC_ATEXIT_MAX	87
+#define _SC_PASS_MAX	88
+#define _SC_XOPEN_VERSION	89
+#define _SC_XOPEN_XCU_VERSION	90
+#define _SC_XOPEN_UNIX	91
+#define _SC_XOPEN_CRYPT	92
+#define _SC_XOPEN_ENH_I18N	93
+#define _SC_XOPEN_SHM	94
+#define _SC_2_CHAR_TERM	95
+#define _SC_2_UPE	97
+#define _SC_XOPEN_XPG2	98
+#define _SC_XOPEN_XPG3	99
+#define _SC_XOPEN_XPG4	100
+#define _SC_NZERO	109
+#define _SC_XBS5_ILP32_OFF32	125
+#define _SC_XBS5_ILP32_OFFBIG	126
+#define _SC_XBS5_LP64_OFF64	127
+#define _SC_XBS5_LPBIG_OFFBIG	128
+#define _SC_XOPEN_LEGACY	129
+#define _SC_XOPEN_REALTIME	130
+#define _SC_XOPEN_REALTIME_THREADS	131
+#define _SC_ADVISORY_INFO	132
+#define _SC_BARRIERS	133
+#define _SC_CLOCK_SELECTION	137
+#define _SC_CPUTIME	138
+#define _SC_THREAD_CPUTIME	139
+#define _SC_MONOTONIC_CLOCK	149
+#define _SC_READER_WRITER_LOCKS	153
+#define _SC_SPIN_LOCKS	154
+#define _SC_REGEXP	155
+#define _SC_SHELL	157
+#define _SC_SPAWN	159
+#define _SC_SPORADIC_SERVER	160
+#define _SC_THREAD_SPORADIC_SERVER	161
+#define _SC_TIMEOUTS	164
+#define _SC_TYPED_MEMORY_OBJECTS	165
+#define _SC_2_PBS	168
+#define _SC_2_PBS_ACCOUNTING	169
+#define _SC_2_PBS_LOCATE	170
+#define _SC_2_PBS_MESSAGE	171
+#define _SC_2_PBS_TRACK	172
+#define _SC_SYMLOOP_MAX	173
+#define _SC_STREAMS	174
+#define _SC_2_PBS_CHECKPOINT	175
+#define _SC_V6_ILP32_OFF32	176
+#define _SC_V6_ILP32_OFFBIG	177
+#define _SC_V6_LP64_OFF64	178
+#define _SC_V6_LPBIG_OFFBIG	179
+#define _SC_HOST_NAME_MAX	180
+#define _SC_TRACE	181
+#define _SC_TRACE_EVENT_FILTER	182
+#define _SC_TRACE_INHERIT	183
+#define _SC_TRACE_LOG	184
+
+#define _SC_IPV6	235
+#define _SC_RAW_SOCKETS	236
+#define _SC_V7_ILP32_OFF32	237
+#define _SC_V7_ILP32_OFFBIG	238
+#define _SC_V7_LP64_OFF64	239
+#define _SC_V7_LPBIG_OFFBIG	240
+#define _SC_SS_REPL_MAX	241
+#define _SC_TRACE_EVENT_NAME_MAX	242
+#define _SC_TRACE_NAME_MAX	243
+#define _SC_TRACE_SYS_MAX	244
+#define _SC_TRACE_USER_EVENT_MAX	245
+#define _SC_XOPEN_STREAMS	246
+#define _SC_THREAD_ROBUST_PRIO_INHERIT	247
+#define _SC_THREAD_ROBUST_PRIO_PROTECT	248
+
+#define _CS_PATH	0
+#define _CS_POSIX_V6_WIDTH_RESTRICTED_ENVS	1
+#define _CS_GNU_LIBC_VERSION	2
+#define _CS_GNU_LIBPTHREAD_VERSION	3
+#define _CS_POSIX_V5_WIDTH_RESTRICTED_ENVS	4
+#define _CS_POSIX_V7_WIDTH_RESTRICTED_ENVS	5
+
+#define _CS_POSIX_V6_ILP32_OFF32_CFLAGS	1116
+#define _CS_POSIX_V6_ILP32_OFF32_LDFLAGS	1117
+#define _CS_POSIX_V6_ILP32_OFF32_LIBS	1118
+#define _CS_POSIX_V6_ILP32_OFF32_LINTFLAGS	1119
+#define _CS_POSIX_V6_ILP32_OFFBIG_CFLAGS	1120
+#define _CS_POSIX_V6_ILP32_OFFBIG_LDFLAGS	1121
+#define _CS_POSIX_V6_ILP32_OFFBIG_LIBS	1122
+#define _CS_POSIX_V6_ILP32_OFFBIG_LINTFLAGS	1123
+#define _CS_POSIX_V6_LP64_OFF64_CFLAGS	1124
+#define _CS_POSIX_V6_LP64_OFF64_LDFLAGS	1125
+#define _CS_POSIX_V6_LP64_OFF64_LIBS	1126
+#define _CS_POSIX_V6_LP64_OFF64_LINTFLAGS	1127
+#define _CS_POSIX_V6_LPBIG_OFFBIG_CFLAGS	1128
+#define _CS_POSIX_V6_LPBIG_OFFBIG_LDFLAGS	1129
+#define _CS_POSIX_V6_LPBIG_OFFBIG_LIBS	1130
+#define _CS_POSIX_V6_LPBIG_OFFBIG_LINTFLAGS	1131
+#define _CS_POSIX_V7_ILP32_OFF32_CFLAGS	1132
+#define _CS_POSIX_V7_ILP32_OFF32_LDFLAGS	1133
+#define _CS_POSIX_V7_ILP32_OFF32_LIBS	1134
+#define _CS_POSIX_V7_ILP32_OFF32_LINTFLAGS	1135
+#define _CS_POSIX_V7_ILP32_OFFBIG_CFLAGS	1136
+#define _CS_POSIX_V7_ILP32_OFFBIG_LDFLAGS	1137
+#define _CS_POSIX_V7_ILP32_OFFBIG_LIBS	1138
+#define _CS_POSIX_V7_ILP32_OFFBIG_LINTFLAGS	1139
+#define _CS_POSIX_V7_LP64_OFF64_CFLAGS	1140
+#define _CS_POSIX_V7_LP64_OFF64_LDFLAGS	1141
+#define _CS_POSIX_V7_LP64_OFF64_LIBS	1142
+#define _CS_POSIX_V7_LP64_OFF64_LINTFLAGS	1143
+#define _CS_POSIX_V7_LPBIG_OFFBIG_CFLAGS	1144
+#define _CS_POSIX_V7_LPBIG_OFFBIG_LDFLAGS	1145
+#define _CS_POSIX_V7_LPBIG_OFFBIG_LIBS	1146
+#define _CS_POSIX_V7_LPBIG_OFFBIG_LINTFLAGS	1147
+#define _CS_V6_ENV	1148
+#define _CS_V7_ENV	1149
+
+#ifdef __cplusplus
+}
 #endif
 
-#if __BSD_VISIBLE
-struct timeval;				/* select(2) */
-int	 acct(const char *);
-int	 async_daemon(void);
-int	 check_utility_compat(const char *);
-const char *
-	 crypt_get_format(void);
-int	 crypt_set_format(const char *);
-int	 des_cipher(const char *, char *, long, int);
-int	 des_setkey(const char *key);
-int	 eaccess(const char *, int);
-void	 endusershell(void);
-int	 exect(const char *, char * const *, char * const *);
-int	 execvP(const char *, const char *, char * const *);
-int	 feature_present(const char *);
-char	*fflagstostr(u_long);
-int	 getdomainname(char *, int);
-int	 getgrouplist(const char *, gid_t, gid_t *, int *);
-int	 getloginclass(char *, size_t);
-mode_t	 getmode(const void *, mode_t);
-int	 getosreldate(void);
-int	 getpeereid(int, uid_t *, gid_t *);
-int	 getresgid(gid_t *, gid_t *, gid_t *);
-int	 getresuid(uid_t *, uid_t *, uid_t *);
-char	*getusershell(void);
-int	 initgroups(const char *, gid_t);
-int	 iruserok(unsigned long, int, const char *, const char *);
-int	 iruserok_sa(const void *, int, int, const char *, const char *);
-int	 issetugid(void);
-void	__FreeBSD_libc_enter_restricted_mode(void);
-long	 lpathconf(const char *, int);
-#ifndef _MKDTEMP_DECLARED
-char	*mkdtemp(char *);
-#define	_MKDTEMP_DECLARED
 #endif
-#ifndef	_MKNOD_DECLARED
-int	 mknod(const char *, mode_t, dev_t);
-#define	_MKNOD_DECLARED
-#endif
-#ifndef _MKSTEMP_DECLARED
-int	 mkstemp(char *);
-#define	_MKSTEMP_DECLARED
-#endif
-int	 mkstemps(char *, int);
-#ifndef _MKTEMP_DECLARED
-char	*mktemp(char *);
-#define	_MKTEMP_DECLARED
-#endif
-int	 nfssvc(int, void *);
-int	 nlm_syscall(int, int, int, char **);
-int	 profil(char *, size_t, vm_offset_t, int);
-int	 rcmd(char **, int, const char *, const char *, const char *, int *);
-int	 rcmd_af(char **, int, const char *,
-		const char *, const char *, int *, int);
-int	 rcmdsh(char **, int, const char *,
-		const char *, const char *, const char *);
-char	*re_comp(const char *);
-int	 re_exec(const char *);
-int	 reboot(int);
-int	 revoke(const char *);
-pid_t	 rfork(int);
-pid_t	 rfork_thread(int, void *, int (*)(void *), void *);
-int	 rresvport(int *);
-int	 rresvport_af(int *, int);
-int	 ruserok(const char *, int, const char *, const char *);
-#if __BSD_VISIBLE
-#ifndef _SELECT_DECLARED
-#define	_SELECT_DECLARED
-int	 select(int, fd_set *, fd_set *, fd_set *, struct timeval *);
-#endif
-#endif
-int	 setdomainname(const char *, int);
-int	 setgroups(int, const gid_t *);
-void	 sethostid(long);
-int	 sethostname(const char *, int);
-#ifndef _SETKEY_DECLARED
-int	 setkey(const char *);
-#define	_SETKEY_DECLARED
-#endif
-int	 setlogin(const char *);
-int	 setloginclass(const char *);
-void	*setmode(const char *);
-void	 setproctitle(const char *_fmt, ...) __printf0like(1, 2);
-int	 setresgid(gid_t, gid_t, gid_t);
-int	 setresuid(uid_t, uid_t, uid_t);
-int	 setrgid(gid_t);
-int	 setruid(uid_t);
-void	 setusershell(void);
-int	 strtofflags(char **, u_long *, u_long *);
-int	 swapon(const char *);
-int	 swapoff(const char *);
-int	 syscall(int, ...);
-off_t	 __syscall(quad_t, ...);
-int	 undelete(const char *);
-int	 unwhiteout(const char *);
-void	*valloc(size_t);			/* obsoleted by malloc() */
-
-#ifndef _OPTRESET_DECLARED
-#define	_OPTRESET_DECLARED
-extern int optreset;			/* getopt(3) external variable */
-#endif
-#endif /* __BSD_VISIBLE */
-__END_DECLS
-
-#endif /* !_UNISTD_H_ */

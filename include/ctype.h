@@ -1,129 +1,75 @@
-/*
- * Copyright (c) 1989, 1993
- *	The Regents of the University of California.  All rights reserved.
- * (c) UNIX System Laboratories, Inc.
- * All or some portions of this file are derived from material licensed
- * to the University of California by American Telephone and Telegraph
- * Co. or Unix System Laboratories, Inc. and are reproduced herein with
- * the permission of UNIX System Laboratories, Inc.
- *
- * This code is derived from software contributed to Berkeley by
- * Paul Borman at Krystal Technologies.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)ctype.h	8.4 (Berkeley) 1/21/94
- *      $FreeBSD: release/9.0.0/include/ctype.h 203964 2010-02-16 19:39:50Z imp $
- */
+#ifndef	_CTYPE_H
+#define	_CTYPE_H
 
-#ifndef _CTYPE_H_
-#define	_CTYPE_H_
-
-#include <sys/cdefs.h>
-#include <sys/_types.h>
-#include <_ctype.h>
-
-__BEGIN_DECLS
-int	isalnum(int);
-int	isalpha(int);
-int	iscntrl(int);
-int	isdigit(int);
-int	isgraph(int);
-int	islower(int);
-int	isprint(int);
-int	ispunct(int);
-int	isspace(int);
-int	isupper(int);
-int	isxdigit(int);
-int	tolower(int);
-int	toupper(int);
-
-#if __XSI_VISIBLE
-int	isascii(int);
-int	toascii(int);
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#if __ISO_C_VISIBLE >= 1999
-int	isblank(int);
+#include <features.h>
+
+int   isalnum(int);
+int   isalpha(int);
+int   isblank(int);
+int   iscntrl(int);
+int   isdigit(int);
+int   isgraph(int);
+int   islower(int);
+int   isprint(int);
+int   ispunct(int);
+int   isspace(int);
+int   isupper(int);
+int   isxdigit(int);
+int   tolower(int);
+int   toupper(int);
+
+#ifndef __cplusplus
+static __inline int __isspace(int _c)
+{
+	return _c == ' ' || (unsigned)_c-'\t' < 5;
+}
+
+#define isalpha(a) (0 ? isalpha(a) : (((unsigned)(a)|32)-'a') < 26)
+#define isdigit(a) (0 ? isdigit(a) : ((unsigned)(a)-'0') < 10)
+#define islower(a) (0 ? islower(a) : ((unsigned)(a)-'a') < 26)
+#define isupper(a) (0 ? isupper(a) : ((unsigned)(a)-'A') < 26)
+#define isprint(a) (0 ? isprint(a) : ((unsigned)(a)-0x20) < 0x5f)
+#define isgraph(a) (0 ? isgraph(a) : ((unsigned)(a)-0x21) < 0x5e)
+#define isspace(a) __isspace(a)
 #endif
 
-#if __BSD_VISIBLE
-int	digittoint(int);
-int	ishexnumber(int);
-int	isideogram(int);
-int	isnumber(int);
-int	isphonogram(int);
-int	isrune(int);
-int	isspecial(int);
-#endif
-__END_DECLS
 
-#define	isalnum(c)	__sbistype((c), _CTYPE_A|_CTYPE_D)
-#define	isalpha(c)	__sbistype((c), _CTYPE_A)
-#define	iscntrl(c)	__sbistype((c), _CTYPE_C)
-#define	isdigit(c)	__isctype((c), _CTYPE_D) /* ANSI -- locale independent */
-#define	isgraph(c)	__sbistype((c), _CTYPE_G)
-#define	islower(c)	__sbistype((c), _CTYPE_L)
-#define	isprint(c)	__sbistype((c), _CTYPE_R)
-#define	ispunct(c)	__sbistype((c), _CTYPE_P)
-#define	isspace(c)	__sbistype((c), _CTYPE_S)
-#define	isupper(c)	__sbistype((c), _CTYPE_U)
-#define	isxdigit(c)	__isctype((c), _CTYPE_X) /* ANSI -- locale independent */
-#define	tolower(c)	__sbtolower(c)
-#define	toupper(c)	__sbtoupper(c)
+#if defined(_POSIX_SOURCE) || defined(_POSIX_C_SOURCE) \
+ || defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) \
+ || defined(_BSD_SOURCE)
 
-#if __XSI_VISIBLE
-/*
- * POSIX.1-2001 specifies _tolower() and _toupper() to be macros equivalent to
- * tolower() and toupper() respectively, minus extra checking to ensure that
- * the argument is a lower or uppercase letter respectively.  We've chosen to
- * implement these macros with the same error checking as tolower() and
- * toupper() since this doesn't violate the specification itself, only its
- * intent.  We purposely leave _tolower() and _toupper() undocumented to
- * discourage their use.
- *
- * XXX isascii() and toascii() should similarly be undocumented.
- */
-#define	_tolower(c)	__sbtolower(c)
-#define	_toupper(c)	__sbtoupper(c)
-#define	isascii(c)	(((c) & ~0x7F) == 0)
-#define	toascii(c)	((c) & 0x7F)
+#define __NEED_locale_t
+#include <bits/alltypes.h>
+
+int   isalnum_l(int, locale_t);
+int   isalpha_l(int, locale_t);
+int   isblank_l(int, locale_t);
+int   iscntrl_l(int, locale_t);
+int   isdigit_l(int, locale_t);
+int   isgraph_l(int, locale_t);
+int   islower_l(int, locale_t);
+int   isprint_l(int, locale_t);
+int   ispunct_l(int, locale_t);
+int   isspace_l(int, locale_t);
+int   isupper_l(int, locale_t);
+int   isxdigit_l(int, locale_t);
+int   tolower_l(int, locale_t);
+int   toupper_l(int, locale_t);
+
+int   isascii(int);
+int   toascii(int);
+#define _tolower(a) ((a)|0x20)
+#define _toupper(a) ((a)&0x5f)
+#define isascii(a) (0 ? isascii(a) : (unsigned)(a) < 128)
+
 #endif
 
-#if __ISO_C_VISIBLE >= 1999
-#define	isblank(c)	__sbistype((c), _CTYPE_B)
+#ifdef __cplusplus
+}
 #endif
 
-#if __BSD_VISIBLE
-#define	digittoint(c)	__sbmaskrune((c), 0xFF)
-#define	ishexnumber(c)	__sbistype((c), _CTYPE_X)
-#define	isideogram(c)	__sbistype((c), _CTYPE_I)
-#define	isnumber(c)	__sbistype((c), _CTYPE_D)
-#define	isphonogram(c)	__sbistype((c), _CTYPE_Q)
-#define	isrune(c)	__sbistype((c), 0xFFFFFF00L)
-#define	isspecial(c)	__sbistype((c), _CTYPE_T)
 #endif
-
-#endif /* !_CTYPE_H_ */

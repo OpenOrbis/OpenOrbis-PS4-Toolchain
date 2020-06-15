@@ -1,122 +1,75 @@
-/*-
- * Copyright (c) 1989, 1993
- *	The Regents of the University of California.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 3. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)dirent.h	8.2 (Berkeley) 7/28/94
- * $FreeBSD: release/9.0.0/include/dirent.h 203964 2010-02-16 19:39:50Z imp $
- */
+#ifndef	_DIRENT_H
+#define	_DIRENT_H
 
-#ifndef _DIRENT_H_
-#define _DIRENT_H_
-
-/*
- * The kernel defines the format of directory entries returned by
- * the getdirentries(2) system call.
- */
-#include <sys/cdefs.h>
-#include <sys/dirent.h>
-
-#if __BSD_VISIBLE || __XSI_VISIBLE
-/*
- * XXX this is probably illegal in the __XSI_VISIBLE case, but brings us closer
- * to the specification.
- */
-#define	d_ino		d_fileno	/* backward and XSI compatibility */
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-#if __BSD_VISIBLE
+#include <features.h>
 
-#include <sys/_null.h>
-
-/* definitions for library routines operating on directories. */
-#define	DIRBLKSIZ	1024
-
-struct _telldir;		/* see telldir.h */
-struct pthread_mutex;
-
-/* structure describing an open directory. */
-typedef struct _dirdesc {
-	int	dd_fd;		/* file descriptor associated with directory */
-	long	dd_loc;		/* offset in current buffer */
-	long	dd_size;	/* amount of data returned by getdirentries */
-	char	*dd_buf;	/* data buffer */
-	int	dd_len;		/* size of data buffer */
-	long	dd_seek;	/* magic cookie returned by getdirentries */
-	long	dd_rewind;	/* magic cookie for rewinding */
-	int	dd_flags;	/* flags for readdir */
-	struct pthread_mutex	*dd_lock;	/* lock */
-	struct _telldir *dd_td;	/* telldir position recording */
-} DIR;
-
-#define	dirfd(dirp)	((dirp)->dd_fd)
-
-/* flags for opendir2 */
-#define DTF_HIDEW	0x0001	/* hide whiteout entries */
-#define DTF_NODUP	0x0002	/* don't return duplicate names */
-#define DTF_REWIND	0x0004	/* rewind after reading union stack */
-#define __DTF_READALL	0x0008	/* everything has been read */
-
-#else /* !__BSD_VISIBLE */
-
-typedef	void *	DIR;
-
-#endif /* __BSD_VISIBLE */
-
-#ifndef _KERNEL
-
-__BEGIN_DECLS
-#if __POSIX_VISIBLE >= 200809 || __XSI_VISIBLE >= 700
-int	 alphasort(const struct dirent **, const struct dirent **);
+#define __NEED_ino_t
+#define __NEED_off_t
+#if defined(_BSD_SOURCE) || defined(_GNU_SOURCE)
+#define __NEED_size_t
 #endif
-#if __BSD_VISIBLE
-DIR	*__opendir2(const char *, int);
-int	 getdents(int, char *, int);
-int	 getdirentries(int, char *, int, long *);
-#endif
-DIR	*opendir(const char *);
-DIR	*fdopendir(int);
-struct dirent *
-	 readdir(DIR *);
-#if __POSIX_VISIBLE >= 199506 || __XSI_VISIBLE >= 500
-int	 readdir_r(DIR *, struct dirent *, struct dirent **);
-#endif
-void	 rewinddir(DIR *);
-#if __POSIX_VISIBLE >= 200809 || __XSI_VISIBLE >= 700
-int	 scandir(const char *, struct dirent ***,
-	    int (*)(const struct dirent *), int (*)(const struct dirent **,
-	    const struct dirent **));
-#endif
-#if __XSI_VISIBLE
-void	 seekdir(DIR *, long);
-long	 telldir(DIR *);
-#endif
-int	 closedir(DIR *);
-__END_DECLS
 
-#endif /* !_KERNEL */
+#include <bits/alltypes.h>
 
-#endif /* !_DIRENT_H_ */
+#include <bits/dirent.h>
+
+typedef struct __dirstream DIR;
+
+#define d_fileno d_ino
+
+int            closedir(DIR *);
+DIR           *fdopendir(int);
+DIR           *opendir(const char *);
+struct dirent *readdir(DIR *);
+int            readdir_r(DIR *__restrict, struct dirent *__restrict, struct dirent **__restrict);
+void           rewinddir(DIR *);
+int            dirfd(DIR *);
+
+int alphasort(const struct dirent **, const struct dirent **);
+int scandir(const char *, struct dirent ***, int (*)(const struct dirent *), int (*)(const struct dirent **, const struct dirent **));
+
+#if defined(_XOPEN_SOURCE) || defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+void           seekdir(DIR *, long);
+long           telldir(DIR *);
+#endif
+
+#if defined(_GNU_SOURCE) || defined(_BSD_SOURCE)
+#define DT_UNKNOWN 0
+#define DT_FIFO 1
+#define DT_CHR 2
+#define DT_DIR 4
+#define DT_BLK 6
+#define DT_REG 8
+#define DT_LNK 10
+#define DT_SOCK 12
+#define DT_WHT 14
+#define IFTODT(x) ((x)>>12 & 017)
+#define DTTOIF(x) ((x)<<12)
+int getdents(int, struct dirent *, size_t);
+#endif
+
+#ifdef _GNU_SOURCE
+int versionsort(const struct dirent **, const struct dirent **);
+#endif
+
+#if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)
+#define dirent64 dirent
+#define readdir64 readdir
+#define readdir64_r readdir_r
+#define scandir64 scandir
+#define alphasort64 alphasort
+#define versionsort64 versionsort
+#define off64_t off_t
+#define ino64_t ino_t
+#define getdents64 getdents
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

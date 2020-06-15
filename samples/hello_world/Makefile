@@ -9,7 +9,7 @@ LIBS 		:= -lc -lkernel
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
 		CC  	:= clang++
-		LD 		:= ld.lld
+		LD 	    := ld.lld
 		CDIR	:= linux
 endif
 ifeq ($(UNAME_S),Darwin)

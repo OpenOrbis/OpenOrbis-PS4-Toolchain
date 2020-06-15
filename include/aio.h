@@ -1,144 +1,73 @@
-/*-
- * Copyright (c) 1997 John S. Dyson.  All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. John S. Dyson's name may not be used to endorse or promote products
- *    derived from this software without specific prior written permission.
- *
- * DISCLAIMER:  This code isn't warranted to do anything useful.  Anything
- * bad that happens because of using this software isn't the responsibility
- * of the author.  This software is distributed AS-IS.
- *
- * $FreeBSD: release/9.0.0/sys/sys/aio.h 189822 2009-03-14 19:17:00Z das $
- */
+#ifndef _AIO_H
+#define _AIO_H
 
-#ifndef _SYS_AIO_H_
-#define	_SYS_AIO_H_
-
-#include <sys/types.h>
-#include <sys/signal.h>
-
-/*
- * Returned by aio_cancel:
- */
-#define	AIO_CANCELED		0x1
-#define	AIO_NOTCANCELED		0x2
-#define	AIO_ALLDONE		0x3
-
-/*
- * LIO opcodes
- */
-#define	LIO_NOP			0x0
-#define LIO_WRITE		0x1
-#define	LIO_READ		0x2
-#ifdef _KERNEL
-#define	LIO_SYNC		0x3
+#ifdef __cplusplus
+extern "C" {
 #endif
 
-/*
- * LIO modes
- */
-#define	LIO_NOWAIT		0x0
-#define	LIO_WAIT		0x1
+#include <features.h>
+#include <signal.h>
+#include <time.h>
 
-/*
- * Maximum number of allowed LIO operations
- */
-#define	AIO_LISTIO_MAX		16
+#define __NEED_ssize_t
+#define __NEED_off_t
 
-/*
- * Private members for aiocb -- don't access
- * directly.
- */
-struct __aiocb_private {
-	long	status;
-	long	error;
-	void	*kernelinfo;
+#include <bits/alltypes.h>
+
+struct aiocb {
+	int aio_fildes, aio_lio_opcode, aio_reqprio;
+	volatile void *aio_buf;
+	size_t aio_nbytes;
+	struct sigevent aio_sigevent;
+	void *__td;
+	int __lock[2];
+	volatile int __err;
+	ssize_t __ret;
+	off_t aio_offset;
+	void *__next, *__prev;
+	char __dummy4[32-2*sizeof(void *)];
 };
 
-/*
- * I/O control block
- */
-typedef struct aiocb {
-	int	aio_fildes;		/* File descriptor */
-	off_t	aio_offset;		/* File offset for I/O */
-	volatile void *aio_buf;         /* I/O buffer in process space */
-	size_t	aio_nbytes;		/* Number of bytes for I/O */
-	int	__spare__[2];
-	void	*__spare2__;
-	int	aio_lio_opcode;		/* LIO opcode */
-	int	aio_reqprio;		/* Request priority -- ignored */
-	struct	__aiocb_private	_aiocb_private;
-	struct	sigevent aio_sigevent;	/* Signal to deliver */
-} aiocb_t;
+#define AIO_CANCELED 0
+#define AIO_NOTCANCELED 1
+#define AIO_ALLDONE 2
 
-#ifndef _KERNEL
+#define LIO_READ 0
+#define LIO_WRITE 1
+#define LIO_NOP 2
 
-struct timespec;
+#define LIO_WAIT 0
+#define LIO_NOWAIT 1
 
-__BEGIN_DECLS
-/*
- * Asynchronously read from a file
- */
-int	aio_read(struct aiocb *);
+int aio_read(struct aiocb *);
+int aio_write(struct aiocb *);
+int aio_error(const struct aiocb *);
+ssize_t aio_return(struct aiocb *);
+int aio_cancel(int, struct aiocb *);
+int aio_suspend(const struct aiocb *const [], int, const struct timespec *);
+int aio_fsync(int, struct aiocb *);
 
-/*
- * Asynchronously write to file
- */
-int	aio_write(struct aiocb *);
+int lio_listio(int, struct aiocb *__restrict const *__restrict, int, struct sigevent *__restrict);
 
-/*
- * List I/O Asynchronously/synchronously read/write to/from file
- *	"lio_mode" specifies whether or not the I/O is synchronous.
- *	"acb_list" is an array of "nacb_listent" I/O control blocks.
- *	when all I/Os are complete, the optional signal "sig" is sent.
- */
-int	lio_listio(int, struct aiocb * const [], int, struct sigevent *);
-
-/*
- * Get completion status
- *	returns EINPROGRESS until I/O is complete.
- *	this routine does not block.
- */
-int	aio_error(const struct aiocb *);
-
-/*
- * Finish up I/O, releasing I/O resources and returns the value
- *	that would have been associated with a synchronous I/O request.
- *	This routine must be called once and only once for each
- *	I/O control block who has had I/O associated with it.
- */
-ssize_t	aio_return(struct aiocb *);
-
-/*
- * Cancel I/O
- */
-int	aio_cancel(int, struct aiocb *);
-
-/*
- * Suspend until all specified I/O or timeout is complete.
- */
-int	aio_suspend(const struct aiocb * const[], int, const struct timespec *);
-
-#ifdef __BSD_VISIBLE
-int	aio_waitcomplete(struct aiocb **, struct timespec *);
+#if defined(_LARGEFILE64_SOURCE) || defined(_GNU_SOURCE)
+#define aiocb64 aiocb
+#define aio_read64 aio_read
+#define aio_write64 aio_write
+#define aio_error64 aio_error
+#define aio_return64 aio_return
+#define aio_cancel64 aio_cancel
+#define aio_suspend64 aio_suspend
+#define aio_fsync64 aio_fsync
+#define lio_listio64 lio_listio
+#define off64_t off_t
 #endif
 
-int	aio_fsync(int op, struct aiocb *aiocbp);
-__END_DECLS
+#if _REDIR_TIME64
+__REDIR(aio_suspend, __aio_suspend_time64);
+#endif
 
-#else
-
-/* Forward declarations for prototypes below. */
-struct socket;
-struct sockbuf;
-
-extern void (*aio_swake)(struct socket *, struct sockbuf *);
-
+#ifdef __cplusplus
+}
 #endif
 
 #endif

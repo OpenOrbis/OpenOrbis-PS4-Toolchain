@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <sys/types.h>
-#include <sys/event.h>
 #include <orbis/_types/kernel.h>
 #include <orbis/_types/pthread.h>
 

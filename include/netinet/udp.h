@@ -1,67 +1,45 @@
-/*-
- * Copyright (c) 1982, 1986, 1993
- *	The Regents of the University of California.
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- * 4. Neither the name of the University nor the names of its contributors
- *    may be used to endorse or promote products derived from this software
- *    without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
- * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
- * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- *
- *	@(#)udp.h	8.1 (Berkeley) 6/10/93
- * $FreeBSD: release/9.0.0/sys/netinet/udp.h 217126 2011-01-07 21:40:34Z jhb $
- */
+#ifndef _NETINET_UDP_H
+#define _NETINET_UDP_H
 
-#ifndef _NETINET_UDP_H_
-#define	_NETINET_UDP_H_
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/*
- * UDP protocol header.
- * Per RFC 768, September, 1981.
- */
+#include <features.h>
+#include <stdint.h>
+
+#ifdef _GNU_SOURCE
+#define uh_sport source
+#define uh_dport dest
+#define uh_ulen len
+#define uh_sum check
+#endif
+
 struct udphdr {
-	u_short	uh_sport;		/* source port */
-	u_short	uh_dport;		/* destination port */
-	u_short	uh_ulen;		/* udp length */
-	u_short	uh_sum;			/* udp checksum */
+	uint16_t uh_sport;
+	uint16_t uh_dport;
+	uint16_t uh_ulen;
+	uint16_t uh_sum;
 };
 
-/* 
- * User-settable options (used with setsockopt).
- */
-#define	UDP_ENCAP			0x01
+#define UDP_CORK	1
+#define UDP_ENCAP	100
+#define UDP_NO_CHECK6_TX 101
+#define UDP_NO_CHECK6_RX 102
+#define UDP_SEGMENT	103
+#define UDP_GRO		104
 
+#define UDP_ENCAP_ESPINUDP_NON_IKE 1
+#define UDP_ENCAP_ESPINUDP	2
+#define UDP_ENCAP_L2TPINUDP	3
+#define UDP_ENCAP_GTP0		4
+#define UDP_ENCAP_GTP1U		5
+#define UDP_ENCAP_RXRPC		6
 
-/*
- * UDP Encapsulation of IPsec Packets options.
- */
-/* Encapsulation types. */
-#define	UDP_ENCAP_ESPINUDP_NON_IKE	1 /* draft-ietf-ipsec-nat-t-ike-00/01 */
-#define	UDP_ENCAP_ESPINUDP		2 /* draft-ietf-ipsec-udp-encaps-02+ */
+#define SOL_UDP            17
 
-/* Default ESP in UDP encapsulation port. */
-#define	UDP_ENCAP_ESPINUDP_PORT		500
-
-/* Maximum UDP fragment size for ESP over UDP. */
-#define	UDP_ENCAP_ESPINUDP_MAXFRAGLEN	552
+#ifdef __cplusplus
+}
+#endif
 
 #endif

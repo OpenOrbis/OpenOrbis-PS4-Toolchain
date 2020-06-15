@@ -4,12 +4,19 @@ import (
 	"bytes"
 	"debug/elf"
 	"encoding/binary"
+	"io"
+	"os"
 )
 
 // OrbisElf.RewriteELFHeader will overwrite the existing ELF header to be compatible with the PS4's expectations. This
 // includes an adjusted program header count, an ET_SCE_EXEC_ASLR type, and an updated identifier. Returns an error
 // if the write failed, nil otherwise.
 func (orbisElf *OrbisElf) RewriteELFHeader() error {
+	var (
+		inputFile *os.File
+		err       error
+	)
+
 	elfHeaderBuff := new(bytes.Buffer)
 	programHeaderCount := uint16(0x8)
 
@@ -23,6 +30,21 @@ func (orbisElf *OrbisElf) RewriteELFHeader() error {
 	if TOOL_MODE == "SPRX" {
 		elfType = ET_SCE_DYNAMIC
 		elfEntry = 0
+	}
+
+	// Get the section header offset info from the original file
+	inputHdr := new(elf.Header64)
+
+	if inputFile, err = os.Open(orbisElf.ElfToConvertName); err != nil {
+		return err
+	}
+
+	if _, err = inputFile.Seek(0, io.SeekStart); err != nil {
+		return err
+	}
+
+	if err = binary.Read(inputFile, orbisElf.ElfToConvert.ByteOrder, inputHdr); err != nil {
+		return err
 	}
 
 	// Create the header
@@ -44,10 +66,10 @@ func (orbisElf *OrbisElf) RewriteELFHeader() error {
 		Phoff:     0x40,
 		Phentsize: 0x38,
 		Phnum:     programHeaderCount,
-		Shoff:     0,
-		Shentsize: 0,
-		Shnum:     0,
-		Shstrndx:  0,
+		Shoff:     inputHdr.Shoff,
+		Shentsize: inputHdr.Shentsize,
+		Shnum:     inputHdr.Shnum,
+		Shstrndx:  inputHdr.Shstrndx,
 		Flags:     0,
 	}
 
