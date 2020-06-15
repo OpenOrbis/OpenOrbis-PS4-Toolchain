@@ -1,0 +1,62 @@
+#pragma once
+
+// Params should go here....
+
+// code goes here
+// example ABI_SYSV int test(int input);
+void sceNpWebApiAbortHandle();
+void sceNpWebApiAbortRequest();
+void sceNpWebApiAddHttpRequestHeader();
+void sceNpWebApiAddMultipartPart();
+void sceNpWebApiCheckTimeout();
+void sceNpWebApiClearAllUnusedConnection();
+void sceNpWebApiClearUnusedConnection();
+void sceNpWebApiCreateContext();
+void sceNpWebApiCreateContextA();
+void sceNpWebApiCreateExtdPushEventFilter();
+void sceNpWebApiCreateHandle();
+void sceNpWebApiCreateMultipartRequest();
+void sceNpWebApiCreatePushEventFilter();
+void sceNpWebApiCreateRequest();
+void sceNpWebApiCreateServicePushEventFilter();
+void sceNpWebApiDeleteContext();
+void sceNpWebApiDeleteExtdPushEventFilter();
+void sceNpWebApiDeleteHandle();
+void sceNpWebApiDeletePushEventFilter();
+void sceNpWebApiDeleteRequest();
+void sceNpWebApiDeleteServicePushEventFilter();
+void sceNpWebApiGetConnectionStats();
+void sceNpWebApiGetErrorCode();
+void sceNpWebApiGetHttpResponseHeaderValue();
+void sceNpWebApiGetHttpResponseHeaderValueLength();
+void sceNpWebApiGetHttpStatusCode();
+void sceNpWebApiGetMemoryPoolStats();
+void sceNpWebApiInitialize();
+void sceNpWebApiInitializeForPresence();
+void sceNpWebApiIntCreateCtxIndExtdPushEventFilter();
+void sceNpWebApiIntCreateRequest();
+void sceNpWebApiIntCreateServicePushEventFilter();
+void sceNpWebApiIntInitialize();
+void sceNpWebApiIntRegisterServicePushEventCallback();
+void sceNpWebApiIntRegisterServicePushEventCallbackA();
+void sceNpWebApiReadData();
+void sceNpWebApiRegisterExtdPushEventCallback();
+void sceNpWebApiRegisterExtdPushEventCallbackA();
+void sceNpWebApiRegisterNotificationCallback();
+void sceNpWebApiRegisterPushEventCallback();
+void sceNpWebApiRegisterServicePushEventCallback();
+void sceNpWebApiSendMultipartRequest();
+void sceNpWebApiSendMultipartRequest2();
+void sceNpWebApiSendRequest();
+void sceNpWebApiSendRequest2();
+void sceNpWebApiSetHandleTimeout();
+void sceNpWebApiSetMaxConnection();
+void sceNpWebApiSetMultipartContentType();
+void sceNpWebApiSetRequestTimeout();
+void sceNpWebApiTerminate();
+void sceNpWebApiUnregisterExtdPushEventCallback();
+void sceNpWebApiUnregisterNotificationCallback();
+void sceNpWebApiUnregisterPushEventCallback();
+void sceNpWebApiUnregisterServicePushEventCallback();
+void sceNpWebApiUtilityParseNpId();
+void sceNpWebApiVshInitialize();
