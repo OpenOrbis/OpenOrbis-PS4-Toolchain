@@ -350,8 +350,8 @@ void sceUserServiceSetVolumeForMorpheusSidetone();
 void sceUserServiceSetVolumeForSidetone();
 void sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
-
-
+void sceUserServiceInitializeForShellCore();
+  
 #endif
 
 #ifdef __cplusplus
