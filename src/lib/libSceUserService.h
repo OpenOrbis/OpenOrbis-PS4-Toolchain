@@ -1,7 +1,5 @@
 #pragma once
 
-// code goes here
-// example ABI_SYSV int test(int input);
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
 void sceUserServiceGetAccessibilityKeyremapEnable();
