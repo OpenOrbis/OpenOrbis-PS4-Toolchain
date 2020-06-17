@@ -4,6 +4,18 @@
 
 ## Beta
 
+**v0.3 - June 17th, 2020**
+
+- Added MUSL libc support, removed old BSD headers, and reworked samples to use MUSL.
+- Added libraries sources for Continuous Integration (CI).
+- Added debugging info via section header table into OELFs via create-eboot.
+- Fixed an issue in create-eboot where NIDs were written for local symbols when they shouldn't be.
+- Fixed an issue where `drawPixel()` in the font, graphics, and pngdec samples were not inlined, causing performance slowdown (thanks m0rph3us1987).
+- Added interpreter string write to linker script and removed it from create-eboot.
+- Removed condition from create-eboot where requiring a `.got.plt` section was only checked for SPRX libraries and not SELF eboots; all binaries need this section.
+- Removed sample package files to reduce bloat. They will later be available as separate releases.
+- Disabled buffering on stdout on various samples for MUSL.
+
 **v0.2 - May 15th, 2020**
 
 - Added macOS support (thanks Lord Friky).
