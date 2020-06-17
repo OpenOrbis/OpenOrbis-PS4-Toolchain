@@ -14,6 +14,9 @@ void threadedFunction()
 
 int main()
 {
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     printf("Pthread example\n-\n");
 
     scePthreadCreate(&myThread, NULL, (void *)threadedFunction, NULL, "example_pthread");
@@ -24,8 +27,5 @@ int main()
         sceKernelUsleep(2 * 100000);
     }
 
-    sceKernelUsleep(3 * 1000000);
-    scePthreadCancel(myThread);
-
-    return 0;
+    for (;;);
 }

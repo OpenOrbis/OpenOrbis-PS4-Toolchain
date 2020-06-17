@@ -65,6 +65,9 @@ int main()
     int curFrame = 0;
     void *surfaceBuff = 0;
 
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     // Set colors
     bgColor = { 0, 0, 0 };
 

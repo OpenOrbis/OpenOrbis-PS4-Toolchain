@@ -131,11 +131,9 @@ int main()
         // Draw the sample text
         const char *textLarge = "OpenOrbis Sample\nHello, World!";
         const char *textSmall = "Built with the OpenOrbis toolchain...";
-        const char *textWrapContent = "text wrapping example, it breaks line based on width of container";
         
         drawText((char *)textLarge, fontLarge, 150, 400, bgColor, fgColor);
         drawText((char *)textSmall, fontSmall, 150, 750, bgColor, fgColor);
-        drawTextContainer((char *)textWrapContent, fontSmall, 0, 0, 500, 300, bgColor, fgColor);
         
         // Submit the frame buffer
         sceVideoOutSubmitFlip(video, ActiveFrameBufferIdx, ORBIS_VIDEO_OUT_FLIP_VSYNC, frameID);

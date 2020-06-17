@@ -12,6 +12,9 @@ int main()
 {
     int rv;
 
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     // Open the library and resolve symbols
     exampleLib = sceKernelLoadStartModule("/app0/libExample.prx", 0, NULL, 0, 0, 0);
     rv = sceKernelDlsym(exampleLib, "_Z19testLibraryFunctionv", (void**)&testLibraryFunction);

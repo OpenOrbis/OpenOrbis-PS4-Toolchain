@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "libexample.h"
+#include "libExample.h"
 
 int testLibraryFunction()
 {

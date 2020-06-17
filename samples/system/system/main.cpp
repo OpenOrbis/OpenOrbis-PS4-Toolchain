@@ -7,6 +7,9 @@ int main(void)
     int userID;
     char username[32];
 
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     // Get the user ID
     OrbisUserServiceInitializeParams param;
     param.priority = ORBIS_KERNEL_PRIO_FIFO_LOWEST;

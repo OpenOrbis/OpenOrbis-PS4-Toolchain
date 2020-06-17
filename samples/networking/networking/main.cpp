@@ -13,6 +13,9 @@ int main(void)
     const char *msg = "ping";
     struct sockaddr_in addr;
 
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     (void)memset(&addr, 0, sizeof(struct sockaddr_in));
 
     int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -23,13 +26,13 @@ int main(void)
     if (inet_pton(AF_INET, IP, &addr.sin_addr) <= 0)
     {
         printf("[DEBUG] [ERROR] IP Address not supported.\n");
-        return -1;
+        for (;;);
     }
 
     if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         printf("[DEBUG] [ERROR] Failed to connect to %s:%d.\n", IP, PORT);
-        return -1;
+        for (;;);
     }
 
     printf("[DEBUG] Sending message to %s:%d.\n", IP, PORT);
@@ -37,5 +40,5 @@ int main(void)
     printf("[DEBUG] Message sent. Closing and infinitely looping.\n");
 
     close(sock);
-    for (;;) {}
+    for (;;);
 }

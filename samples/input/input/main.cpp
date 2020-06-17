@@ -34,6 +34,9 @@ int main(void)
     unsigned int prevButtons = 0;
     OrbisPadData padData;
 
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
     // Initialize the Pad library
     if (scePadInit() != 0)
     {
