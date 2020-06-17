@@ -1,7 +1,7 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Libraries to link in
-set libraries=-lSceLibcInternal -lkernel -lSceVideoOut -lSceSysmodule -lSceFreeType
+set libraries=-lc -lkernel -lSceVideoOut -lSceSysmodule -lSceFreeType
 
 Rem Read the script arguments into local vars
 set intdir=%1

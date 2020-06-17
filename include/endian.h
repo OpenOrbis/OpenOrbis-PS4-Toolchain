@@ -28,7 +28,7 @@ static __inline uint32_t __bswap32(uint32_t __x)
 
 static __inline uint64_t __bswap64(uint64_t __x)
 {
-	return __bswap32(__x)+0ULL<<32 | __bswap32(__x>>32);
+	return (__bswap32(__x)+0ULL)<<32 | __bswap32(__x>>32);
 }
 
 #if __BYTE_ORDER == __LITTLE_ENDIAN
