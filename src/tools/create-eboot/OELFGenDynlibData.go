@@ -821,6 +821,31 @@ func writeDynamicTable(orbisElf *OrbisElf, tableOffsets *TableOffsets, segmentDa
 	writeDynamicEntry(dynamicTableBuff, DT_SCE_PLTRELSZ, tableOffsets.jumpTableSz)
 	writeDynamicEntry(dynamicTableBuff, DT_SCE_PLTREL, uint64(elf.DT_RELA))
 
+	// Check for init, fini, init_array, and fini_array, and add them if needed
+	if val, _ := orbisElf.getDynamicTag(elf.DT_INIT_ARRAY); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_INIT_ARRAY), val)
+	}
+
+	if val, _ := orbisElf.getDynamicTag(elf.DT_INIT_ARRAYSZ); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_INIT_ARRAYSZ), val)
+	}
+
+	if val, _ := orbisElf.getDynamicTag(elf.DT_INIT); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_INIT), val)
+	}
+
+	if val, _ := orbisElf.getDynamicTag(elf.DT_FINI_ARRAY); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_FINI_ARRAY), val)
+	}
+
+	if val, _ := orbisElf.getDynamicTag(elf.DT_FINI_ARRAYSZ); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_FINI_ARRAYSZ), val)
+	}
+
+	if val, _ := orbisElf.getDynamicTag(elf.DT_FINI); val != 0 {
+		writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_FINI), val)
+	}
+
 	// Debugging-related tags
 	writeDynamicEntry(dynamicTableBuff, uint64(elf.DT_DEBUG), 0)
 
