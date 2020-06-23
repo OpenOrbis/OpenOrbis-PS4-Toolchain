@@ -22,7 +22,11 @@ cp ${OO_PS4_TOOLCHAIN_PREBUILT}/macos/PkgTool.Core ${OO_PS4_TOOLCHAIN}/bin/macos
 cd ${OO_PS4_TOOLCHAIN}/src/lib
 make
 
-cp ${OO_PS4_TOOLCHAIN}/src/lib/build/* ${OO_PS4_TOOLCHAIN}/lib
+cp ${OO_PS4_TOOLCHAIN}/src/lib/build/lib/* ${OO_PS4_TOOLCHAIN}/lib
 
 # Copy libc and libc++ libraries to /lib
 cp ${OO_PS4_TOOLCHAIN_PREBUILT}/libs/* ${OO_PS4_TOOLCHAIN}/lib
+
+# Remove library build files
+rm -r ${OO_PS4_TOOLCHAIN}/src/lib/build/lib/*.so
+rm -r ${OO_PS4_TOOLCHAIN}/src/lib/build/*.o
