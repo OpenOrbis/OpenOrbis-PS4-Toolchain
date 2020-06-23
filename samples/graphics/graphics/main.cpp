@@ -3,10 +3,21 @@
 #include <errno.h>
 #include <math.h>
 
-#include "graphics.h"
+#include "../../_common/graphics.h"
+#include "../../_common/log.h"
+
+// Dimensions
+#define FRAME_WIDTH     1920
+#define FRAME_HEIGHT    1080
+#define FRAME_DEPTH        4
+
+// Logging
+std::stringstream debugLogStream;
+
+int frameID = 0;
 
 // drawMandelbrot runs the Mandelbrot algorithm and draws pixels to the frame buffer accordingly. Returns nothing, called every loop iteration.
-void drawMandelbrot()
+void drawMandelbrot(Scene2D *scene)
 {
     /* screen (integer) coordinate */
     int iX, iY;
@@ -72,7 +83,7 @@ void drawMandelbrot()
                 color[2] = (int)((255 * Iteration) / 20);
 
             Color pixelColor = { color[0], color[1], color[2] };
-            drawPixel(iX, iY, pixelColor);
+            scene->DrawPixel(iX, iY, pixelColor);
         }
     }
 }
@@ -84,68 +95,37 @@ int main()
     int curFrame = 0;
     void *surfaceBuff = 0;
 
-    // Open a handle to video out
-    video = sceVideoOutOpen(ORBIS_VIDEO_USER_MAIN, ORBIS_VIDEO_OUT_BUS_MAIN, 0, 0);
-
-    if (video < 0)
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+    
+    // Create a 2D scene
+    DEBUGLOG << "Creating a scene";
+    
+    auto scene = new Scene2D(FRAME_WIDTH, FRAME_HEIGHT, FRAME_DEPTH);
+    
+    if(!scene->Init(0xC000000, 2))
     {
-        printf("[ERROR] Failed to open a video out handle\n");
-        return video;
+    	DEBUGLOG << "Failed to initialize 2D scene";
+    	for(;;);
     }
 
-    // Create a queue for flip events
-    if (initializeFlipQueue(video) < 0)
-    {
-        sceVideoOutClose(video);
-
-        printf("[ERROR] Failed to create an event queue\n");
-        return rc;
-    }
-
-    setDimensions(1920, 1080, 4);
-
-    // Allocate direct memory for the frame buffers
-    rc = allocateVideoMem(0xC000000, 0x200000);
-
-    if (rc < 0)
-    {
-        sceVideoOutClose(video);
-
-        printf("[ERROR] Failed to allocate video memory\n");
-        return rc;
-    }
-
-    // Set the frame buffers
-    rc = allocateFrameBuffers(video, 2);
-
-    if (rc < 0)
-    {
-        deallocateVideoMem();
-        sceVideoOutClose(video);
-
-        printf("[ERROR] Failed to allocate frame buffers from video memory\n");
-        return rc;
-    }
-
-    setActiveFrameBuffer(0);
-
-    // Set the flip rate
-    sceVideoOutSetFlipRate(video, 0);
-
-    frameBufferClear();
+    scene->FrameBufferClear();
+    
+    DEBUGLOG << "Entering draw loop...";
 
     // Draw loop
     for (;;)
     {
-        int frameID = curFrame ^ 1;
+        // Draw the mandelbrot
+        drawMandelbrot(scene);
 
-        drawMandelbrot();
-        sceVideoOutSubmitFlip(video, ActiveFrameBufferIdx, ORBIS_VIDEO_OUT_FLIP_VSYNC, curFrame);
-        frameWait(video, curFrame);
+        // Submit the frame buffer
+        scene->SubmitFlip(frameID);
+        scene->FrameWait(frameID);
 
-        frameBufferSwap();
-
-        curFrame = frameID;
+        // Swap to the next buffer
+        scene->FrameBufferSwap();
+        frameID++;
     }
 
     return 0;

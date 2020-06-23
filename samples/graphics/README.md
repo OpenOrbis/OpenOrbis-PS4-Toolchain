@@ -15,8 +15,6 @@ samples/graphics
     |-- x64
         |-- Debug               // Object files / intermediate directory
     |-- build.bat               // Batch file for building on Windows
-    |-- graphics.cpp            // Source code related to graphics / interfacing with SceVideoOut
-    |-- graphics.h              // Header file for graphics helper functions
     |-- graphics.vcxproj        // Visual studio project files
     |-- graphics.vcxproj.filters
     |-- graphics.cvxproj.user
@@ -33,6 +31,7 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
+- libc++
 - libSceVideoOut
 
 
@@ -61,5 +60,8 @@ make
 
 - Specter
 
+
+
 ## Additional credit
+
 - [Oleksii](https://github.com/lialkaas) for the base of the [Mandelbrot set implementation](https://github.com/lialkaas/ican-c/blob/master/math/mandelbrot.c).

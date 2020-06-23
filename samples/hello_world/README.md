@@ -29,6 +29,7 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
+- libc++
 
 
 

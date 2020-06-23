@@ -1,3 +1,5 @@
+# MiraLib C# RPC Listing
+
 The MiraConnection RPC classes are used for interfacing with Mira's plugins. This includes the debugger and file explorer. Each `Console` class will have it's own public instance of the `MiraConnection` class initialized when the console's `Connect()` method is called. Attached to this class are the noted RPC classes. Below is a listing of these classes and their methods. This listing has been pulled into a separate file as it's much larger than the class listings, so it's notable enough for it's own file.
 
 ## Debugger

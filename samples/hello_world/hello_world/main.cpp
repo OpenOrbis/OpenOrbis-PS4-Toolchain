@@ -1,13 +1,22 @@
-#include <stdio.h>
+#include <sstream>
+#include <iostream>
 #include <orbis/libkernel.h>
+
+#include "../../_common/log.h"
+
+// Logging
+std::stringstream debugLogStream;
 
 int main(void)
 {
-    printf("Hello world! Waiting 2 seconds...\n");
-
+    int sleepSeconds = 2;
+    
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+    
+    DEBUGLOG << "Hello world! Waiting " << sleepSeconds << " seconds!";
     sceKernelUsleep(2 * 1000000);
-
-    printf("Done. Infinitely looping...\n");
+    DEBUGLOG << "Done. Infinitely looping...";
 
     for (;;) {}
 }

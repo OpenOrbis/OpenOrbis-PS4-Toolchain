@@ -1,25 +1,27 @@
-# Sample: pthread
+# Sample: threading
 
 [![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code for running pthreads for concurrent programming.
+This project contains example code for running pthreads for concurrent programming. Writes to the screen with 2 threads in a loop.
+
+![screenshot](screenshot.jpg)
 
 
 
 ## Directory structure
 ```
-samples/pthread
-|-- pthread
+samples/threading
+|-- threading
     |-- x64
-        |-- Debug           // Object files / intermediate directory
-    |-- build.bat           // Batch file for building on Windows
-    |-- main.cpp            // main source file
-    |-- pthread.vcxproj     // Visual studio project files
-    |-- pthread.vcxproj.filters
-    |-- pthread.cvxproj.user
-|-- eboot.bin               // final eboot (not present until built)
-|-- pthread.sln             // Visual studio solution file
-|-- Makefile                // Make rules for building on Linux
+        |-- Debug             // Object files / intermediate directory
+    |-- build.bat             // Batch file for building on Windows
+    |-- main.cpp              // main source file
+    |-- threading.vcxproj     // Visual studio project files
+    |-- threading.vcxproj.filters
+    |-- threading.cvxproj.user
+|-- eboot.bin                 // final eboot (not present until built)
+|-- threading.sln             // Visual studio solution file
+|-- Makefile                  // Make rules for building on Linux
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 
@@ -29,6 +31,10 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
+- libc++
+- libSceVideoOut
+- libSceSysmodule
+- libSceFreeType
 
 
 

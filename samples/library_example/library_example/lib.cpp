@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-#include "libExample.h"
-
 int testLibraryFunction()
 {
     printf("This is a print from a test library function!");

@@ -15,8 +15,6 @@ samples/pngdec
     |-- x64
         |-- Debug               // Object files / intermediate directory
     |-- build.bat               // Batch file for building on Windows
-    |-- graphics.cpp            // Source code related to graphics / interfacing with SceVideoOut
-    |-- graphics.h              // Header file for graphics helper functions
     |-- main.cpp                // main source file
     |-- pngdec.vcxproj          // Visual studio project files
     |-- pngdec.vcxproj.filters
@@ -34,6 +32,7 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
+- libc++
 - libSceVideoOut
 
 

@@ -26,3 +26,16 @@ COPY /Y build\create-eboot %OO_PS4_TOOLCHAIN%\bin\linux\create-eboot
 REM create-lib
 go.exe build -ldflags "-X main.TOOL_MODE=SPRX" -o build\create-lib
 COPY /Y build\create-lib %OO_PS4_TOOLCHAIN%\bin\linux\create-lib
+
+REM MacOS
+SET GOOS=darwin
+
+IF NOT EXIST "%OO_PS4_TOOLCHAIN%\bin\macos" MKDIR %OO_PS4_TOOLCHAIN%\bin\macos
+
+REM create-eboot
+go.exe build -ldflags "-X main.TOOL_MODE=SELF" -o build\create-eboot
+COPY /Y build\create-eboot %OO_PS4_TOOLCHAIN%\bin\macos\create-eboot
+
+REM create-lib
+go.exe build -ldflags "-X main.TOOL_MODE=SPRX" -o build\create-lib
+COPY /Y build\create-lib %OO_PS4_TOOLCHAIN%\bin\macos\create-lib

@@ -1,77 +1,163 @@
-#include <stdio.h>
-#include <orbis/libkernel.h>
-#include <orbis/Pad.h>
-#include <orbis/UserService.h>
+#include <sstream>
 
-void printButtonsPressed(unsigned int buttons)
-{
-    printf("Pressed: ");
+#include "../../_common/graphics.h"
+#include "../../_common/png.h"
+#include "../../_common/log.h"
+#include "controller.h"
 
-    if (buttons & PAD_BUTTON_TRIANGLE)   printf("Triangle ");
-    if (buttons & PAD_BUTTON_CIRCLE)     printf("Circle ");
-    if (buttons & PAD_BUTTON_X)          printf("X ");
-    if (buttons & PAD_BUTTON_SQUARE)     printf("Square ");
-    if (buttons & PAD_BUTTON_L1)         printf("L1 ");
-    if (buttons & PAD_BUTTON_R1)         printf("R1 ");
-    if (buttons & PAD_BUTTON_L2)         printf("L2 ");
-    if (buttons & PAD_BUTTON_R2)         printf("R2 ");
-    if (buttons & PAD_BUTTON_L3)         printf("L3 ");
-    if (buttons & PAD_BUTTON_R3)         printf("R3 ");
-    if (buttons & PAD_BUTTON_START)      printf("Start ");
-    if (buttons & PAD_BUTTON_DPAD_UP)    printf("DPAD Up ");
-    if (buttons & PAD_BUTTON_DPAD_RIGHT) printf("DPAD Right ");
-    if (buttons & PAD_BUTTON_DPAD_DOWN)  printf("DPAD Down ");
-    if (buttons & PAD_BUTTON_DPAD_LEFT)  printf("DPAD Left ");
-    if (buttons & PAD_BUTTON_TOUCHPAD)   printf("Touch-Pad ");
+// Dimensions
+#define FRAME_WIDTH     1920
+#define FRAME_HEIGHT    1080
+#define FRAME_DEPTH        4
 
-    printf("\n");
-}
+// Logging
+std::stringstream debugLogStream;
+
+int frameID = 0;
+Color bgColor;
 
 int main(void)
 {
-    int userID;
-    unsigned int curButtons = 0;
-    unsigned int prevButtons = 0;
-    OrbisPadData padData;
+    int rc;
+    int video;
+    int curFrame = 0;
 
     // No buffering
     setvbuf(stdout, NULL, _IONBF, 0);
-
-    // Initialize the Pad library
-    if (scePadInit() != 0)
+    
+    // Create a 2D scene
+    DEBUGLOG << "Creating a scene";
+    
+    auto scene = new Scene2D(FRAME_WIDTH, FRAME_HEIGHT, FRAME_DEPTH);
+    
+    if(!scene->Init(0xC000000, 2))
     {
-        printf("[DEBUG] [ERROR] Failed to initialize pad library!\n");
-        return -1;
+    	DEBUGLOG << "Failed to initialize 2D scene";
+    	for(;;);
     }
-
-    // Get the user ID
-    OrbisUserServiceInitializeParams param;
-    param.priority = ORBIS_KERNEL_PRIO_FIFO_LOWEST;
-    sceUserServiceInitialize(&param);
-    sceUserServiceGetInitialUser(&userID);
-
-    // Open a handle for the controller
-    int pad = scePadOpen(userID, 0, 0, NULL);
-
-    if (pad < 0)
+    
+    // Create a controller
+    DEBUGLOG << "Initializing controller";
+    
+    auto controller = new Controller();
+    
+    if(!controller->Init(-1))
     {
-        printf("[DEBUG] Failed to open pad!\n");
-        return -1;
+    	DEBUGLOG << "Failed to initialize controller";
+    	for(;;);
     }
+    
+    // Create PNG instances for all the sprites
+    auto controllerBackground = new PNG("/app0/assets/controller.png");
+    auto thumbstick = new PNG("/app0/assets/thumbstick.png");
+    auto touchpad = new PNG("/app0/assets/touchpad.png");
+    auto dpadUp = new PNG("/app0/assets/dpad-up.png");
+    auto dpadRight = new PNG("/app0/assets/dpad-right.png");
+    auto dpadDown = new PNG("/app0/assets/dpad-down.png");
+    auto dpadLeft = new PNG("/app0/assets/dpad-left.png");
+    auto triangleBtn = new PNG("/app0/assets/triangle.png");
+    auto circleBtn = new PNG("/app0/assets/circle.png");
+    auto xBtn = new PNG("/app0/assets/x.png");
+    auto squareBtn = new PNG("/app0/assets/square.png");
+    auto startBtn = new PNG("/app0/assets/start.png");
+    auto l1Trigger = new PNG("/app0/assets/l1.png");
+    auto l2Trigger = new PNG("/app0/assets/l2.png");
+    auto r1Trigger = new PNG("/app0/assets/r1.png");
+    auto r2Trigger = new PNG("/app0/assets/r2.png");
 
-    // Poll the controller state and print the buttons that are currently being pressed. Sleep every 0.05s
-    // to lighten the CPU load.
+    DEBUGLOG << "Entering draw loop...";
+    
+    // Draw loop
     for (;;)
     {
-        scePadReadState(pad, &padData);
-        curButtons = padData.buttons;
-
-        if (curButtons != prevButtons)
+        controllerBackground->Draw(scene, 0, 0);
+    	
+        if(controller->TrianglePressed())
         {
-            printButtonsPressed(curButtons);
-            prevButtons = curButtons;
+        	triangleBtn->Draw(scene, 1187, 359);
+        }
+        
+        if(controller->CirclePressed())
+        {
+        	circleBtn->Draw(scene, 1244, 416);
+        }
+        
+        if(controller->XPressed())
+        {
+        	xBtn->Draw(scene, 1187, 472);
+        }
+        
+        if(controller->SquarePressed())
+        {
+        	squareBtn->Draw(scene, 1131, 416);
+        }
+        
+        if(controller->L1Pressed())
+        {
+        	l1Trigger->Draw(scene, 653, 139);
+        }
+        
+        if(controller->L2Pressed())
+        {
+        	l2Trigger->Draw(scene, 653, 181);
+        }
+        
+        if(controller->R1Pressed())
+        {
+        	r1Trigger->Draw(scene, 1150, 139);
+        }
+        
+        if(controller->R2Pressed())
+        {
+        	r2Trigger->Draw(scene, 1150, 181);
+        }
+        
+        if(controller->L3Pressed())
+        {
+        	thumbstick->Draw(scene, 780, 516);
+        }
+        
+        if(controller->R3Pressed())
+        {
+        	thumbstick->Draw(scene, 1037, 516);
+        }
+        
+        if(controller->StartPressed())
+        {
+        	startBtn->Draw(scene, 1094, 334);
+        }
+        
+        if(controller->DpadUpPressed())
+        {
+        	dpadUp->Draw(scene, 687, 377);
+        }
+        
+	if(controller->DpadRightPressed())
+        {
+        	dpadRight->Draw(scene, 722, 422);
+        }
+        
+        if(controller->DpadDownPressed())
+        {
+        	dpadDown->Draw(scene, 687, 458);
+        }
+        
+        if(controller->DpadLeftPressed())
+        {
+        	dpadLeft->Draw(scene, 641, 422);
+        }
+        
+        if(controller->TouchpadPressed())
+        {
+        	touchpad->Draw(scene, 854, 323);
         }
 
-        sceKernelUsleep(50000);
+        // Submit the frame buffer
+        scene->SubmitFlip(frameID);
+        scene->FrameWait(frameID);
+
+        // Swap to the next buffer
+        scene->FrameBufferSwap();
+        frameID++;
     }
 }
