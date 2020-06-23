@@ -2,7 +2,9 @@
 
 [![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code that gets the logged in user's ID and username and prints it via printf.
+This project contains example code that gets the logged in user's ID and username and prints it to the screen.
+
+![screenshot](screenshot.jpg)
 
 
 
@@ -29,6 +31,10 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
+- libc++
+- libSceVideoOut
+- libSceSysmodule
+- libSceFreeType
 - libSceUserService
 
 
