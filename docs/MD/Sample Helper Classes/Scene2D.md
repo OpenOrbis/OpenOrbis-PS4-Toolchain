@@ -185,7 +185,7 @@ scene->DrawRectangle(50, 50, 200, 200, red);
 
 
 ### InitFont method
-*Note: Only available if compiled with the `GRAPHICS_USES_FONT` macro defined.
+*Note: Only available if compiled with the `GRAPHICS_USES_FONT` macro defined.*
 
 ```cpp
 bool Scene2D::InitFont(FT_Face *face, const char *fontPath, int fontSize)
@@ -207,7 +207,7 @@ if(!scene->InitFont(&fontTxt, "/app0/arial.ttf", 42))
 
 
 ### DrawText method
-*Note: Only available if compiled with the `GRAPHICS_USES_FONT` macro defined.
+*Note: Only available if compiled with the `GRAPHICS_USES_FONT` macro defined.*
 
 ```cpp
 void Scene2D::DrawText(char *txt, FT_Face face, int startX, int startY, Color bgColor, Color fgColor)
