@@ -1,6 +1,7 @@
 #ifndef _SCE_USER_SERVICE_H_
 #define _SCE_USER_SERVICE_H_
 
+#include <stddef.h>
 #include <stdint.h>
 #include <orbis/_types/user.h>
 
@@ -350,10 +351,9 @@ void sceUserServiceSetVolumeForMorpheusSidetone();
 void sceUserServiceSetVolumeForSidetone();
 void sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
-void sceUserServiceInitializeForShellCore();
-  
-#endif
 
 #ifdef __cplusplus
 }
 #endif
+#endif
+

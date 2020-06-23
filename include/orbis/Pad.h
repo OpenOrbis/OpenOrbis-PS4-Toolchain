@@ -106,8 +106,7 @@ void scePadVirtualDeviceDeleteDevice();
 void scePadVirtualDeviceGetRemoteSetting();
 void scePadVirtualDeviceInsertData();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
 #endif

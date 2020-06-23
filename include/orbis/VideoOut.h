@@ -149,9 +149,7 @@ void sceVideoOutUnlockBuffer();
 void sceVideoOutUnregisterBufferAttribute();
 void sceVideoOutWaitVblank();
 
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
 #endif

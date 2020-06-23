@@ -47,9 +47,8 @@ void sceSysmoduleUnloadModuleInternal();
 // Undocumented Function... Need to reverse
 void sceSysmoduleUnloadModuleInternalWithArg();
 
-
-#endif
-
 #ifdef __cplusplus
 }
 #endif
+#endif
+

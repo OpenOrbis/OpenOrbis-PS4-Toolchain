@@ -8,6 +8,9 @@ extern "C" {
 #include <features.h>
 
 #ifdef __cplusplus
+#ifdef NULL
+#undef NULL
+#endif
 #define NULL 0L
 #else
 #define NULL ((void*)0)

@@ -2,7 +2,6 @@
 
 #include <stdint.h>
 
-
 #define ORBIS_PTHREAD_DESTRUCTOR_ITERATIONS	4
 #define ORBIS_PTHREAD_KEYS_MAX			256
 #define ORBIS_PTHREAD_STACK_MIN			PTHREAD_STACK_MIN
@@ -36,6 +35,10 @@
 #define ORBIS_PTHREAD_PRIO_PROTECT        2
 #define ORBIS_PTHREAD_MUTEX_DEFAULT		ORBIS_PTHREAD_MUTEX_ERRORCHECK
 
+#if defined(__cplusplus)
+extern "C" {
+#endif
+
 typedef enum OrbisPthreadMutextype {
 	PTHREAD_MUTEX_ERRORCHECK = 1,	
 	PTHREAD_MUTEX_RECURSIVE = 2,	
@@ -63,4 +66,9 @@ typedef pthread_condattr_t        OrbisPthreadCondattr;
 typedef pthread_cond_t            OrbisPthreadCond;
 typedef pthread_t                 OrbisPthread;
 typedef pthread_mutexattr_t       OrbisPthreadMutexattr;
+
+#ifdef __cplusplus
+}
+#endif
+
 
