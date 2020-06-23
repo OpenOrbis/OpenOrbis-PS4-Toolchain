@@ -1,32 +1,35 @@
-TOOLCHAIN 	:= $(OO_PS4_TOOLCHAIN)
-PROJDIR   	:= $(shell basename $(CURDIR))
-INTDIR    	:= $(PROJDIR)/x64/Debug
+TOOLCHAIN   := $(OO_PS4_TOOLCHAIN)
+PROJDIR     := $(shell basename $(CURDIR))
+COMMONDIR   := $(TOOLCHAIN)/samples/_common
+INTDIR      := $(PROJDIR)/x64/Debug
 
 # Libraries linked into the ELF.
-LIBS 		:= -lc -lkernel -lScePad -lSceUserService
+LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lScePad -lSceUserService
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-		CC  	:= clang++
-		LD 		:= ld.lld
-		CDIR	:= linux
+		CC      := clang++
+		LD      := ld.lld
+		CDIR    := linux
 endif
 ifeq ($(UNAME_S),Darwin)
-		CC 		:= /usr/local/opt/llvm/bin/clang++
-		LD 		:= /usr/local/opt/llvm/bin/ld.lld
-		CDIR	:= macos
+		CC      := /usr/local/opt/llvm/bin/clang++
+		LD      := /usr/local/opt/llvm/bin/ld.lld
+		CDIR    := macos
 endif
-ODIR 		:= $(INTDIR)
-SDIR 		:= $(PROJDIR)
-IDIRS 		:= -I$(TOOLCHAIN)/include
-LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -emit-obj
-LFLAGS 		:= -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crt1.o
+ODIR        := $(INTDIR)
+SDIR        := $(PROJDIR)
+COMMONDIR   := $(COMMONDIR)
+IDIRS       := -I$(TOOLCHAIN)/include -I$(TOOLCHAIN)/include/c++/v1
+LDIRS       := -L$(TOOLCHAIN)/lib
+CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS) -fuse-init-array -emit-obj
+LFLAGS      := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
-CFILES 		:= $(wildcard $(SDIR)/*.c)
-CPPFILES 	:= $(wildcard $(SDIR)/*.cpp)
-OBJS 		:= $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(CFILES)) $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(CPPFILES))
+CFILES      := $(wildcard $(SDIR)/*.c)
+CPPFILES    := $(wildcard $(SDIR)/*.cpp)
+COMMONFILES := $(wildcard $(COMMONDIR)/*.cpp)
+OBJS        := $(patsubst $(SDIR)/%.c, $(ODIR)/%.o, $(CFILES)) $(patsubst $(SDIR)/%.cpp, $(ODIR)/%.o, $(CPPFILES)) $(patsubst $(COMMONDIR)/%.cpp, $(ODIR)/%.o, $(COMMONFILES))
 
 TARGET = eboot.bin
 
@@ -42,6 +45,9 @@ $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
+	$(CC) $(CFLAGS) -o $@ $<
+	
+$(ODIR)/%.o: $(COMMONDIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR):

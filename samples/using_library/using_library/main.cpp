@@ -11,7 +11,7 @@ int (*testLibraryFunction)() = NULL;
 int main()
 {
     int rv;
-
+    
     // No buffering
     setvbuf(stdout, NULL, _IONBF, 0);
 

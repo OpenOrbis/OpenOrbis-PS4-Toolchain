@@ -20,4 +20,9 @@
     </ClCompile>
     <ClCompile Include="build.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\_common\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

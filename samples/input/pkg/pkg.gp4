@@ -16,12 +16,26 @@
   <files img_no="0">
     <file targ_path="sce_sys/icon0.png" orig_path="sce_sys\icon0.png" />
     <file targ_path="sce_sys/param.sfo" orig_path="sce_sys\param.sfo" />
-    <file targ_path="sce_sys/about/right.sprx" orig_path="..\..\..\bin\data\right.sprx" />
     <file targ_path="eboot.bin" orig_path="eboot.bin" />
+    <file targ_path="assets/circle.png" orig_path="assets\circle.png" />
+    <file targ_path="assets/controller.png" orig_path="assets\controller.png" />
+    <file targ_path="assets/dpad-down.png" orig_path="assets\dpad-down.png" />
+    <file targ_path="assets/dpad-left.png" orig_path="assets\dpad-left.png" />
+    <file targ_path="assets/dpad-right.png" orig_path="assets\dpad-right.png" />
+    <file targ_path="assets/dpad-up.png" orig_path="assets\dpad-up.png" />
+    <file targ_path="assets/l1.png" orig_path="assets\l1.png" />
+    <file targ_path="assets/l2.png" orig_path="assets\l2.png" />
+    <file targ_path="assets/r1.png" orig_path="assets\r1.png" />
+    <file targ_path="assets/r2.png" orig_path="assets\r2.png" />
+    <file targ_path="assets/square.png" orig_path="assets\square.png" />
+    <file targ_path="assets/start.png" orig_path="assets\start.png" />
+    <file targ_path="assets/thumbstick.png" orig_path="assets\thumbstick.png" />
+    <file targ_path="assets/touchpad.png" orig_path="assets\touchpad.png" />
+    <file targ_path="assets/triangle.png" orig_path="assets\triangle.png" />
+    <file targ_path="assets/x.png" orig_path="assets\x.png" />
   </files>
   <rootdir>
-    <dir targ_name="sce_sys">
-      <dir targ_name="about" />
-    </dir>
+    <dir targ_name="sce_sys" />
+    <dir targ_name="assets" />
   </rootdir>
 </psproject>

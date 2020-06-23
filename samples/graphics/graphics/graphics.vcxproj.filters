@@ -19,11 +19,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="build.bat" />
-    <ClCompile Include="graphics.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="..\..\_common\graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\_common\graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\_common\log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

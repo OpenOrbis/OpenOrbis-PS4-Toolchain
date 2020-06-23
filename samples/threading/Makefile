@@ -4,7 +4,7 @@ COMMONDIR   := $(TOOLCHAIN)/samples/_common
 INTDIR      := $(PROJDIR)/x64/Debug
 
 # Libraries linked into the ELF.
-LIBS        := -lc -lkernel -lc++ -lSceVideoOut
+LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lSceSysmodule -lSceFreeType
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
@@ -23,7 +23,7 @@ SDIR        := $(PROJDIR)
 COMMONDIR   := $(COMMONDIR)
 IDIRS       := -I$(TOOLCHAIN)/include -I$(TOOLCHAIN)/include/c++/v1
 LDIRS       := -L$(TOOLCHAIN)/lib
-CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS)  -fuse-init-array -emit-obj
+CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS) -fuse-init-array -DGRAPHICS_USES_FONT -emit-obj
 LFLAGS      := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
 CFILES      := $(wildcard $(SDIR)/*.c)

@@ -63,6 +63,9 @@ del /s /q /f $(IntDir)\*.oelf</NMakeCleanCommandLine>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="build.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\_common\log.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

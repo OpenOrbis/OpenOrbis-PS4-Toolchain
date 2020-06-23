@@ -1,9 +1,6 @@
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
-#include <math.h>
-
 #include <sstream>
+#include <iostream>
+#include <orbis/libkernel.h>
 
 #include "../../_common/graphics.h"
 #include "../../_common/log.h"
@@ -14,8 +11,7 @@
 #define FRAME_DEPTH        4
 
 // Font information
-#define FONT_SIZE_LARGE  128
-#define FONT_SIZE_SMALL   64
+#define FONT_SIZE   	   42
 
 // Logging
 std::stringstream debugLogStream;
@@ -25,10 +21,32 @@ Color bgColor;
 Color fgColor;
 
 // Font faces
-FT_Face fontLarge;
-FT_Face fontSmall;
+FT_Face fontTxt;
 
 int frameID = 0;
+
+// Threading stuff
+std::stringstream screenTextStream;
+OrbisPthread myThreadA;
+OrbisPthread myThreadB;
+
+void threadedFunctionA()
+{
+    for (int count = 0; count < 10; count++)
+    {
+        screenTextStream << "Thread A is running: " << count << "\n";
+        sceKernelUsleep(2 * 100000);
+    }
+}
+
+void threadedFunctionB()
+{
+    for (int count = 0; count < 10; count++)
+    {
+        screenTextStream << "Thread B is running: " << count << "\n";
+        sceKernelUsleep(2 * 110000);
+    }
+}
 
 int main()
 {
@@ -59,29 +77,23 @@ int main()
     
     DEBUGLOG << "Initializing font (" << font << ")";
 
-    if(!scene->InitFont(&fontLarge, font, FONT_SIZE_LARGE))
+    if(!scene->InitFont(&fontTxt, font, FONT_SIZE))
     {
-    	DEBUGLOG << "Failed to initialize large font '" << font << "'";
+    	DEBUGLOG << "Failed to initialize font '" << font << "'";
     	for(;;);
     }
-
-    if(!scene->InitFont(&fontSmall, font, FONT_SIZE_SMALL))
-    {
-    	DEBUGLOG << "Failed to initialize small font '" << font << "'";
-    	for(;;);
-    }
+    
+    // Setup threads
+    scePthreadCreate(&myThreadA, NULL, (void *)threadedFunctionA, NULL, "example_pthread_a");
+    
+    scePthreadCreate(&myThreadB, NULL, (void *)threadedFunctionB, NULL, "example_pthread_b");
     
     DEBUGLOG << "Entering draw loop...";
 
     // Draw loop
     for (;;)
     {
-        // Draw the sample text
-        const char *textLarge = "OpenOrbis Sample\nHello, World!";
-        const char *textSmall = "Built with the OpenOrbis toolchain (in C++!)";
-        
-        scene->DrawText((char *)textLarge, fontLarge, 150, 400, bgColor, fgColor);
-        scene->DrawText((char *)textSmall, fontSmall, 150, 750, bgColor, fgColor);
+        scene->DrawText((char *)screenTextStream.str().c_str(), fontTxt, 150, 150, bgColor, fgColor);
 
         // Submit the frame buffer
         scene->SubmitFlip(frameID);
@@ -94,3 +106,4 @@ int main()
 
     return 0;
 }
+
