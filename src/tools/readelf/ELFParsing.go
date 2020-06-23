@@ -33,20 +33,20 @@ const DT_SCE_STUB_MODULE_NAME = 0x6100001D  // Module name for the associated st
 const DT_SCE_STUB_MODULE_VER = 0x6100001F   // Module version for the associated stub
 const DT_SCE_STUB_LIBRARY_NAME = 0x61000021 // ???
 const DT_SCE_STUB_LIBRARY_VER = 0x61000023  // ???
-const DT_SCE_HASH = 0x61000025     // Symbol hash table (NID's?)
-const DT_SCE_PLTGOT = 0x61000027   // Address associated with the SCE linkage table
-const DT_SCE_JMPREL = 0x61000029   // Address of relocations associated with SCE PLT
-const DT_SCE_PLTREL = 0x6100002b   // Type of relocation entry used for linking (SCE)
-const DT_SCE_PLTRELSZ = 0x6100002d // Size of relocation entries in SCE PLT
-const DT_SCE_RELA = 0x6100002f     // Address of SCE relocation table
-const DT_SCE_RELASZ = 0x61000031   // Size of SCE Rela relocation table
-const DT_SCE_RELAENT = 0x61000033  // Size of SCE Rela relocation table entries
-const DT_SCE_STRTAB = 0x61000035   // Address of SCE dynamic string table
-const DT_SCE_STRSZ = 0x61000037    // Total size of SCE dynamic string table
-const DT_SCE_SYMTAB = 0x61000039   // Address of SCE dynamic symbol table
-const DT_SCE_SYMENT = 0x6100003b   // Total size of SCE dynamic symbol table entry
-const DT_SCE_HASHSZ = 0x6100003d   // Total size of SCE symbol hash table (NID's?)
-const DT_SCE_SYMTABSZ = 0x6100003f // Total size of SCE dynamic symbol table
+const DT_SCE_HASH = 0x61000025              // Symbol hash table (NID's?)
+const DT_SCE_PLTGOT = 0x61000027            // Address associated with the SCE linkage table
+const DT_SCE_JMPREL = 0x61000029            // Address of relocations associated with SCE PLT
+const DT_SCE_PLTREL = 0x6100002b            // Type of relocation entry used for linking (SCE)
+const DT_SCE_PLTRELSZ = 0x6100002d          // Size of relocation entries in SCE PLT
+const DT_SCE_RELA = 0x6100002f              // Address of SCE relocation table
+const DT_SCE_RELASZ = 0x61000031            // Size of SCE Rela relocation table
+const DT_SCE_RELAENT = 0x61000033           // Size of SCE Rela relocation table entries
+const DT_SCE_STRTAB = 0x61000035            // Address of SCE dynamic string table
+const DT_SCE_STRSZ = 0x61000037             // Total size of SCE dynamic string table
+const DT_SCE_SYMTAB = 0x61000039            // Address of SCE dynamic symbol table
+const DT_SCE_SYMENT = 0x6100003b            // Total size of SCE dynamic symbol table entry
+const DT_SCE_HASHSZ = 0x6100003d            // Total size of SCE symbol hash table (NID's?)
+const DT_SCE_SYMTABSZ = 0x6100003f          // Total size of SCE dynamic symbol table
 
 // getString takes a given slice and starting index, and returns the string at that index in the table, as well as bool
 // indicating whether or not the index actually contains a valid string.
@@ -54,13 +54,13 @@ func getString(section []byte, start int) (string, bool) {
 	if start < 0 || start >= len(section) {
 		return "", false
 	}
-	
+
 	for end := start; end < len(section); end++ {
 		if section[end] == 0 {
 			return string(section[start:end]), true
 		}
 	}
-	
+
 	return "", false
 }
 
@@ -90,7 +90,7 @@ func encodeToHexString(src uint64, pad bool) string {
 	if pad {
 		return fmt.Sprintf("%#016x", src)
 	}
-	
+
 	return fmt.Sprintf("%#x", src)
 }
 
@@ -116,65 +116,65 @@ func convertProgramHeaderTypeToString(progType elf.ProgType) string {
 	case PT_SCE_RELRO:
 		return "SCE_RELRO"
 	}
-	
+
 	return "Unknown"
 }
 
 // getSectionFlags takes a given set of section flags and constructs a string of one letter representations for each flag.
 func getSectionFlags(sectionFlags elf.SectionFlag) string {
 	finalFlags := ""
-	
-	if sectionFlags & elf.SHF_WRITE != 0 {
+
+	if sectionFlags&elf.SHF_WRITE != 0 {
 		finalFlags += "W"
 	}
-	
-	if sectionFlags & elf.SHF_ALLOC != 0 {
+
+	if sectionFlags&elf.SHF_ALLOC != 0 {
 		finalFlags += "A"
 	}
-	
-	if sectionFlags & elf.SHF_EXECINSTR != 0 {
+
+	if sectionFlags&elf.SHF_EXECINSTR != 0 {
 		finalFlags += "X"
 	}
-	
-	if sectionFlags & elf.SHF_MERGE != 0 {
+
+	if sectionFlags&elf.SHF_MERGE != 0 {
 		finalFlags += "M"
 	}
-	
-	if sectionFlags & elf.SHF_STRINGS != 0 {
+
+	if sectionFlags&elf.SHF_STRINGS != 0 {
 		finalFlags += "S"
 	}
-	
-	if sectionFlags & elf.SHF_INFO_LINK != 0 {
+
+	if sectionFlags&elf.SHF_INFO_LINK != 0 {
 		finalFlags += "I"
 	}
-	
-	if sectionFlags & elf.SHF_LINK_ORDER != 0 {
+
+	if sectionFlags&elf.SHF_LINK_ORDER != 0 {
 		finalFlags += "L"
 	}
-	
-	if sectionFlags & elf.SHF_OS_NONCONFORMING != 0 {
+
+	if sectionFlags&elf.SHF_OS_NONCONFORMING != 0 {
 		finalFlags += "O"
 	}
-	
-	if sectionFlags & elf.SHF_GROUP != 0 {
+
+	if sectionFlags&elf.SHF_GROUP != 0 {
 		finalFlags += "G"
 	}
-	
-	if sectionFlags & elf.SHF_TLS != 0 {
+
+	if sectionFlags&elf.SHF_TLS != 0 {
 		finalFlags += "T"
 	}
-	
-	if sectionFlags & elf.SHF_COMPRESSED != 0 {
+
+	if sectionFlags&elf.SHF_COMPRESSED != 0 {
 		finalFlags += "C"
 	}
-	
+
 	return finalFlags
 }
 
 // getDynamicTagType takes a given tag and returns a string representation of the tag type.
 func getDynamicTagType(tag elf.DynTag) string {
 	var tagLiteral string
-	
+
 	switch tag {
 	// Standard ELF stuff
 	case elf.DT_NULL:
@@ -232,9 +232,9 @@ func getDynamicTagType(tag elf.DynTag) string {
 	case elf.DT_FINI_ARRAY:
 		tagLiteral = "FINI_ARRAY"
 	case elf.DT_INIT_ARRAYSZ:
-		tagLiteral = "INIT_ARRAY"
+		tagLiteral = "INIT_ARRAYSZ"
 	case elf.DT_FINI_ARRAYSZ:
-		tagLiteral = "FINI_ARRAY"
+		tagLiteral = "FINI_ARRAYSZ"
 	case elf.DT_RUNPATH:
 		tagLiteral = "RUNPATH"
 	case elf.DT_FLAGS:
@@ -243,7 +243,7 @@ func getDynamicTagType(tag elf.DynTag) string {
 		tagLiteral = "PREINIT_ARRAY"
 	case elf.DT_PREINIT_ARRAYSZ:
 		tagLiteral = "PREINIT_ARRAYSZ"
-		
+
 	// Sony stuff
 	case DT_SCE_FINGERPRINT:
 		tagLiteral = "SCE_FINGERPRINT"
@@ -303,7 +303,7 @@ func getDynamicTagType(tag elf.DynTag) string {
 	default:
 		tagLiteral = "UNKNOWN"
 	}
-	
+
 	return "(" + tagLiteral + ")"
 }
 
@@ -331,7 +331,7 @@ func getDynamicTagVal(tag elf.DynTag, val uint64, stringTable []byte) string {
 		filename, _ := getString(stringTable, int(val))
 		return fmt.Sprintf("File name: [%s]", filename)
 	}
-	
+
 	// Fall back on just returning the hex encoded value
 	return encodeToHexString(val, false)
 }
@@ -366,7 +366,7 @@ func getSymbolType(info uint8) string {
 	case uint8(elf.STT_SECTION):
 		return "SECTION"
 	}
-	
+
 	return "NOTYPE"
 }
 
@@ -380,7 +380,7 @@ func getSymbolBind(info uint8) string {
 	case uint8(elf.STB_WEAK):
 		return "WEAK"
 	}
-	
+
 	return "UNK"
 }
 
@@ -394,23 +394,23 @@ func printFileHeader(inputFile *os.File, inputElf *elf.File) {
 
 	err = binary.Read(inputFile, inputElf.ByteOrder, hdr)
 	check(err)
-	
+
 	// Get magic
 	magicBuff := make([]byte, 0x10)
-	
+
 	_, err = inputFile.ReadAt(magicBuff, 0)
 	check(err)
-	
+
 	// Get data type
 	dataStr := "2's complement, little endian"
-	
+
 	if inputElf.Data == elf.ELFDATA2MSB {
 		dataStr = "2's complement, big endian"
 	}
 
 	// Get ELF type
 	typeStr := "Unknown"
-	
+
 	switch inputElf.Type {
 	case 0xFE00:
 		typeStr = "SCE Executable (no ASLR) - 0xFE00"
@@ -441,7 +441,7 @@ func printFileHeader(inputFile *os.File, inputElf *elf.File) {
 	outputLines += fmt.Sprintf("  Size of section headers: %10s%s (bytes)\n", "", strconv.Itoa(int(hdr.Shentsize)))
 	outputLines += fmt.Sprintf("  Number of section headers: %8s%s\n", "", strconv.Itoa(int(hdr.Shnum)))
 	outputLines += fmt.Sprintf("  Section header string table index: %s\n\n", strconv.Itoa(int(hdr.Shstrndx)))
-	
+
 	fmt.Print(outputLines)
 }
 
@@ -452,22 +452,22 @@ func printSectionHeaders(inputElf *elf.File) {
 		fmt.Printf("There are no sections in this file.\n\n")
 		return
 	}
-	
+
 	// Header
 	outputLines := "Section Headers:\n"
 	outputLines += "  [Nr] Name                      Type                Address               Offset\n"
 	outputLines += "       Size                      EntSize             Flags    Link  Info   Align\n"
-	
+
 	for i, sectionHeader := range inputElf.Sections {
 		// Row 1 (nr, name, type, address, offset)
-		outputLines += fmt.Sprintf("  [%2d] %-24s  %-18s  %-18s  %-18s\n", 
+		outputLines += fmt.Sprintf("  [%2d] %-24s  %-18s  %-18s  %-18s\n",
 			i,
 			sectionHeader.Name,
 			sectionHeader.Type.String(),
 			encodeToHexString(sectionHeader.Addr, true),
 			encodeToHexString(sectionHeader.Offset, true),
 		)
-		
+
 		// Row 2 (size, entsize, flags, link, info, align)
 		outputLines += fmt.Sprintf("       %-24s  %-18s  %3s      %4d  %4d   %d\n",
 			encodeToHexString(sectionHeader.FileSize, true),
@@ -477,7 +477,7 @@ func printSectionHeaders(inputElf *elf.File) {
 			sectionHeader.Info,
 			sectionHeader.Addralign)
 	}
-	
+
 	outputLines += "\n"
 	fmt.Print(outputLines)
 }
@@ -489,30 +489,30 @@ func printProgramHeaders(inputElf *elf.File) {
 		fmt.Printf("There are no segments in this file.\n\n")
 		return
 	}
-	
+
 	// Header
 	outputLines := "Program Headers:\n"
 	outputLines += "  Type             Offset             VirtAddr           PhysAddr\n"
 	outputLines += "                   FileSiz            MemSiz             Flags  Align\n"
-	
+
 	for _, progHeader := range inputElf.Progs {
 		// Compile the flags string
 		flagRead := ' '
 		flagWrite := ' '
 		flagExec := ' '
 
-		if progHeader.Flags & elf.PF_R != 0 {
+		if progHeader.Flags&elf.PF_R != 0 {
 			flagRead = 'R'
 		}
 
-		if progHeader.Flags & elf.PF_W != 0 {
+		if progHeader.Flags&elf.PF_W != 0 {
 			flagWrite = 'W'
 		}
 
-		if progHeader.Flags & elf.PF_X != 0 {
+		if progHeader.Flags&elf.PF_X != 0 {
 			flagExec = 'E'
 		}
-		
+
 		// Row 1 (type, offset, virtual address, physical address)
 		outputLines += fmt.Sprintf("  %-16s %-18s %-18s %-18s\n",
 			convertProgramHeaderTypeToString(progHeader.Type),
@@ -520,7 +520,7 @@ func printProgramHeaders(inputElf *elf.File) {
 			encodeToHexString(progHeader.Vaddr, true),
 			encodeToHexString(progHeader.Paddr, true),
 		)
-		
+
 		// Row 2 (file size, mem size, flags, align)
 		outputLines += fmt.Sprintf("                   %-18s %-18s %c%c%c    %s\n",
 			encodeToHexString(progHeader.Filesz, true),
@@ -529,7 +529,7 @@ func printProgramHeaders(inputElf *elf.File) {
 			encodeToHexString(progHeader.Align, false),
 		)
 	}
-	
+
 	outputLines += "\n"
 	fmt.Print(outputLines)
 }
@@ -538,50 +538,50 @@ func printProgramHeaders(inputElf *elf.File) {
 func printDynamicEntries(inputFile *os.File, inputElf *elf.File) {
 	var dynamicSegment *elf.Prog
 	var dynlibDataSegment *elf.Prog
-	
+
 	// Check if dynamic segment and the SCE_DynlibData segment exists
-	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R | elf.PF_W); dynamicSegment == nil {
+	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R|elf.PF_W); dynamicSegment == nil {
 		fmt.Printf("There are no dynamic entries in this file.\n\n")
 		return
 	}
-	
+
 	if dynlibDataSegment = getProgramHeader(inputElf.Progs, PT_SCE_DYNLIBDATA, elf.PF_R); dynlibDataSegment == nil {
 		fmt.Printf("Non-Sony ELF's are not supported by this version of readelf for reading dynamic entries.\n\n")
 		return
 	}
-	
+
 	// Get the entry count based on the class. Technically, the class should **always** be ELFCLASS64, but once again, we
 	// cover our bases.
 	var entries float64
-	
+
 	switch inputElf.Class {
 	case elf.ELFCLASS32:
 		entries = float64(dynamicSegment.Filesz) / 8
 	case elf.ELFCLASS64:
 		entries = float64(dynamicSegment.Filesz) / 16
 	}
-	
+
 	// Ensure it's a whole number, because if it's not something's messed up
 	if entries != float64(int64(entries)) {
 		// Guaranteed to exit
 		check(errors.New("dynamic section is not divisible by the dynamic entry size"))
 	}
-	
+
 	// Header
 	outputLines := fmt.Sprintf("Dynamic section at offset %#x contains %d entries:\n", dynamicSegment.Off, int(entries))
 	outputLines += "  Tag (Type)                                 Name/Value\n"
-	
+
 	// We have to do dynamic table parsing manually because for some reason debug/elf doesn't provide that capability
 	data := make([]byte, dynamicSegment.Filesz)
 	_, _ = inputFile.ReadAt(data[0:], int64(dynamicSegment.Off))
-	
+
 	var stringTable []byte
 	var stringTableAddr int64
-	
+
 	for len(data) > 0 {
 		var tag elf.DynTag
 		var val uint64
-		
+
 		// Get dynamic tag info based on arch
 		switch inputElf.Class {
 		case elf.ELFCLASS32:
@@ -594,20 +594,20 @@ func printDynamicEntries(inputFile *os.File, inputElf *elf.File) {
 			val = inputElf.ByteOrder.Uint64(data[8:16])
 			data = data[16:]
 		}
-		
+
 		// At least in OpenOrbis SDK-built ELFs, the string table tag will always precede any tags that link to strings,
 		// and the string table size tag will always proceed the string table tag. We can take advantage of this to set
 		// the string table while iterating the dynamic table, specifically on the size tag.
 		if tag == DT_SCE_STRTAB {
 			stringTableAddr = int64(dynlibDataSegment.Off + val)
 		}
-		
+
 		if tag == DT_SCE_STRSZ {
 			// Set the string table
 			stringTable = make([]byte, val)
 			_, _ = inputFile.ReadAt(stringTable, stringTableAddr)
 		}
-		
+
 		// Row (tag, tag (string), value)
 		outputLines += fmt.Sprintf("  %-18s %-23s %s\n",
 			encodeToHexString(uint64(tag), true),
@@ -615,7 +615,7 @@ func printDynamicEntries(inputFile *os.File, inputElf *elf.File) {
 			getDynamicTagVal(tag, val, stringTable),
 		)
 	}
-	
+
 	outputLines += "\n"
 	fmt.Print(outputLines)
 }
@@ -623,18 +623,18 @@ func printDynamicEntries(inputFile *os.File, inputElf *elf.File) {
 // printRelocations parses the given inputFile and inputElf, and prints out all the relocation table entries to stdout.
 func printRelocations(inputFile *os.File, inputElf *elf.File) {
 	// First we have to parse the dynamic table to get relocation table information via dynamic tags
-	var(
-		dynamicSegment *elf.Prog
+	var (
+		dynamicSegment    *elf.Prog
 		dynlibDataSegment *elf.Prog
-		
+
 		relaDynOffset uint64
-		relaDynSize uint64
+		relaDynSize   uint64
 		relaPltOffset uint64
-		relaPltSize uint64
+		relaPltSize   uint64
 	)
 
 	// Check if dynamic segment and the SCE_DynlibData segment exists
-	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R | elf.PF_W); dynamicSegment == nil {
+	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R|elf.PF_W); dynamicSegment == nil {
 		fmt.Printf("There are no relocations in this file.\n\n")
 		return
 	}
@@ -664,7 +664,7 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 			val = inputElf.ByteOrder.Uint64(data[8:16])
 			data = data[16:]
 		}
-		
+
 		switch tag {
 		case DT_SCE_RELA:
 			relaDynOffset = val
@@ -676,7 +676,7 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 			relaPltSize = val
 		}
 	}
-	
+
 	// Print .rela.dyn entries. Ensure .rela.dyn is existant before printing any information related to it.
 	if relaDynOffset > 0 && relaDynSize > 0 {
 		// These offsets are relative to .sce_dynlib_data, they're not file offsets *yet*, we must make them file offsets
@@ -699,7 +699,7 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 			// Guaranteed to exit
 			check(errors.New(".rela.dyn section is not divisible by the rela entry size"))
 		}
-		
+
 		// Header
 		outputLines := fmt.Sprintf("Relocation section '.rela.dyn' at offset %#x contains %d entries:\n", relaDynOffset, int(entries))
 		outputLines += "  Offset             Info               Type                 Sym.      Addend\n"
@@ -732,11 +732,11 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 				encodeToHexString(offset, true),
 				encodeToHexString(info, true),
 				getRelaType(info),
-				encodeToHexString(info >> 32, false),
+				encodeToHexString(info>>32, false),
 				encodeToHexString(addend, true),
 			)
 		}
-	
+
 		outputLines += "\n"
 		fmt.Print(outputLines)
 	} else {
@@ -798,7 +798,7 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 				encodeToHexString(offset, true),
 				encodeToHexString(info, true),
 				getRelaType(info),
-				encodeToHexString(info >> 32, false),
+				encodeToHexString(info>>32, false),
 				encodeToHexString(addend, true),
 			)
 		}
@@ -813,16 +813,16 @@ func printRelocations(inputFile *os.File, inputElf *elf.File) {
 // printDynamicSymbols parses the given inputFile and inputElf, and prints out all the dynamic symbol table entries to stdout.
 func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 	// First we have to parse the dynamic table to get relocation table information via dynamic tags
-	var(
-		dynamicSegment *elf.Prog
+	var (
+		dynamicSegment    *elf.Prog
 		dynlibDataSegment *elf.Prog
 
 		symTabOffset uint64
-		symTabSize uint64
+		symTabSize   uint64
 	)
 
 	// Check if dynamic segment and the SCE_DynlibData segment exists
-	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R | elf.PF_W); dynamicSegment == nil {
+	if dynamicSegment = getProgramHeader(inputElf.Progs, elf.PT_DYNAMIC, elf.PF_R|elf.PF_W); dynamicSegment == nil {
 		fmt.Printf("There are no symbols in this file.\n\n")
 		return
 	}
@@ -835,7 +835,7 @@ func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 	// We have to do dynamic table parsing manually because for some reason debug/elf doesn't provide that capability
 	data := make([]byte, dynamicSegment.Filesz)
 	_, _ = inputFile.ReadAt(data[0:], int64(dynamicSegment.Off))
-	
+
 	var stringTable []byte
 	var stringTableAddr int64
 
@@ -868,7 +868,7 @@ func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 			_, _ = inputFile.ReadAt(stringTable, stringTableAddr)
 		}
 	}
-	
+
 	if symTabOffset > 0 && symTabSize > 0 {
 		// These offsets are relative to .sce_dynlib_data, they're not file offsets *yet*, we must make them file offsets
 		// by adding the file offset of .sce_dynlib_data to them. We do this post-check as to not incur logic bugs.
@@ -897,7 +897,7 @@ func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 
 		data := make([]byte, symTabSize)
 		_, _ = inputFile.ReadAt(data[0:], int64(symTabOffset))
-		
+
 		i := 0
 
 		for len(data) > 0 {
@@ -922,7 +922,7 @@ func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 				size = inputElf.ByteOrder.Uint64(data[0x10:0x18])
 				data = data[0x18:]
 			}
-			
+
 			symbolName, _ := getString(stringTable, int(name))
 
 			// Row (num, value, size, type, bind, vis, ndx, name)
@@ -930,13 +930,13 @@ func printDynamicSymbols(inputFile *os.File, inputElf *elf.File) {
 				strconv.Itoa(i),
 				encodeToHexString(val, true),
 				strconv.Itoa(int(size)),
-				getSymbolType(info & 0xF),
-				getSymbolBind(info >> 4),
+				getSymbolType(info&0xF),
+				getSymbolBind(info>>4),
 				"DEFAULT",
 				"UND",
 				symbolName,
 			)
-			
+
 			i++
 		}
 
