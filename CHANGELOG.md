@@ -4,6 +4,28 @@
 
 ## Beta
 
+**v0.4 - June 23rd, 2020**
+
+- Added C++ support via `include/c++/v1` headers and statically built libcxx.
+- Added support for C++ init_array/fini_array dynamic tags in create-eboot / create-lib.
+- Remade a new fancy windows installer.
+- Created a script to streamline the release creation process.
+- Added initial PS4 library documentation into `/docs` for libkernel, pad, sysmodule, userservice, and videoout.
+- Common functionality between samples (graphics and logging as well as PNG decoding) have been moved into `/samples/_common`.
+- Font sample has been rewritten to use C++.
+- Hello world sample has been rewritten to use C++.
+- Input sample has been rewritten to use C++ and now has a visual component to make the sample more obvious in what it does.
+- PNG decoding sample has been rewritten to use C++.
+- System sample has been rewritten to use C++ and now prints to the screen instead of stdout to better demonstrate what it does.
+- Threading sample has been rewritten to use C++ and similar to system sample, now prints to the screen.
+- Fixed an issue where the create-eboot/lib and readelf build scripts were not building for macOS.
+- Fixed a minor typo in readelf which caused `DT_INIT_ARRAY_SZ` and `DT_FINI_ARRAY_SZ` tags to be incorrectly identified as `DT_INIT_ARRAY` and `DT_FINI_ARRAY` tags.
+- Updated various sample readmes to account for reworked samples.
+- Removed old installer NSIS script.
+
+*Known Issues*
+- iostream's std::cout does not function properly and will cease to work after one write. For writing to stdout, use the `DEBUGLOG` macro in `samples/_uncommon/log.h`. We hope to address this in the future.
+
 **v0.3 - June 17th, 2020**
 
 - Added MUSL libc support, removed old BSD headers, and reworked samples to use MUSL.
