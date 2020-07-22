@@ -1,5 +1,5 @@
-#ifndef _SCE_HTTP_H_
-#define _SCE_HTTP_H_
+#ifndef _ORBIS_HTTP_H_
+#define _ORBIS_HTTP_H_
 
 #include <stdint.h>
 
@@ -7,22 +7,151 @@
 extern "C" {
 #endif
 
+
+typedef void* OrbisHttpEpollHandle;
+
+#define	ORBIS_HTTP_NB_EVENT_IN			0x00000001
+#define	ORBIS_HTTP_NB_EVENT_OUT			0x00000002
+#define	ORBIS_HTTP_NB_EVENT_SOCK_ERR		0x00000008
+#define	ORBIS_HTTP_NB_EVENT_HUP			0x00000010
+#define ORBIS_HTTP_NB_EVENT_ICM			0x00000020
+#define	ORBIS_HTTP_NB_EVENT_RESOLVED		0x00010000
+#define	ORBIS_HTTP_NB_EVENT_RESOLVER_ERR	0x00020000
+
+typedef struct OrbisHttpNBEvent {
+	uint32_t	events;
+	uint32_t	eventDetail;
+	int			id;
+	void*		userArg;
+} OrbisHttpNBEvent;
+
+
+#define ORBIS_HTTP_DEFAULT_RESOLVER_TIMEOUT		(0)	// libnet default
+#define ORBIS_HTTP_DEFAULT_RESOLVER_RETRY			(0)	// libnet default
+#define ORBIS_HTTP_DEFAULT_CONNECT_TIMEOUT		(30* 1000 * 1000U)
+#define ORBIS_HTTP_DEFAULT_SEND_TIMEOUT			(120* 1000 * 1000U)
+#define ORBIS_HTTP_DEFAULT_RECV_TIMEOUT			(120* 1000 * 1000U)
+#define ORBIS_HTTP_DEFAULT_RECV_BLOCK_SIZE		(1500U)
+#define ORBIS_HTTP_DEFAULT_RESPONSE_HEADER_MAX	(5000U)
+#define ORBIS_HTTP_DEFAULT_REDIRECT_MAX			(6U)
+#define ORBIS_HTTP_DEFAULT_TRY_AUTH_MAX			(6U)
+
+#define ORBIS_HTTP_TRUE				(int)(1)
+#define ORBIS_HTTP_FALSE				(int)(0)
+
+#define ORBIS_HTTP_ENABLE				ORBIS_HTTP_TRUE
+#define ORBIS_HTTP_DISABLE			ORBIS_HTTP_FALSE
+
+#define ORBIS_HTTP_USERNAME_MAX_SIZE	256
+#define ORBIS_HTTP_PASSWORD_MAX_SIZE	256
+
+
+#define ORBIS_HTTP_TRUE				(int)(1)
+#define ORBIS_HTTP_FALSE				(int)(0)
+
+#define ORBIS_HTTP_ENABLE				ORBIS_HTTP_TRUE
+#define ORBIS_HTTP_DISABLE			ORBIS_HTTP_FALSE
+
+#define ORBIS_HTTP_USERNAME_MAX_SIZE	256
+#define ORBIS_HTTP_PASSWORD_MAX_SIZE	256
+
+
+typedef enum{
+	ORBIS_HTTP_VERSION_1_0=1,
+	ORBIS_HTTP_VERSION_1_1
+} OrbisHttpHttpVersion;
+
+typedef enum{
+	ORBIS_HTTP_PROXY_AUTO,
+	ORBIS_HTTP_PROXY_MANUAL
+} OrbisHttpProxyMode;
+
+typedef enum{
+	ORBIS_HTTP_HEADER_OVERWRITE,
+	ORBIS_HTTP_HEADER_ADD
+} OrbisHttpAddHeaderMode;
+
+typedef enum{
+	ORBIS_HTTP_AUTH_BASIC,
+	ORBIS_HTTP_AUTH_DIGEST,
+	ORBIS_HTTP_AUTH_RESERVED0,
+	ORBIS_HTTP_AUTH_RESERVED1,
+	ORBIS_HTTP_AUTH_RESERVED2
+} OrbisHttpAuthType;
+
+typedef enum {
+	ORBIS_HTTP_CONTENTLEN_EXIST,
+	ORBIS_HTTP_CONTENTLEN_NOT_FOUND,
+	ORBIS_HTTP_CONTENTLEN_CHUNK_ENC
+} OrbisHttpContentLengthType;
+
+typedef enum {
+	ORBIS_HTTP_REQUEST_STATUS_CONNECTION_RESERVED,
+	ORBIS_HTTP_REQUEST_STATUS_RESOLVING_NAME,
+	ORBIS_HTTP_REQUEST_STATUS_NAME_RESOLVED,
+	ORBIS_HTTP_REQUEST_STATUS_CONNECTING,
+	ORBIS_HTTP_REQUEST_STATUS_CONNECTED,
+	ORBIS_HTTP_REQUEST_STATUS_TLS_CONNECTING,
+	ORBIS_HTTP_REQUEST_STATUS_TLS_CONNECTED,
+	ORBIS_HTTP_REQUEST_STATUS_SENDING_REQUEST,
+	ORBIS_HTTP_REQUEST_STATUS_REQUEST_SENT,
+	ORBIS_HTTP_REQUEST_STATUS_RECEIVING_HEADER,
+	ORBIS_HTTP_REQUEST_STATUS_HEADER_RECEIVED,
+} OrbisHttpRequestStatus;
+
+
+#define ORBIS_HTTP_INVALID_ID	0
+
+
+typedef int (*OrbisHttpAuthInfoCallback)(
+	int request,
+	OrbisHttpAuthType authType,
+	const char *realm,
+	char *username,
+	char *password,
+	int  isNeedEntity,
+	uint8_t **entityBody,
+	size_t *entitySize,
+	int *isSave,
+	void *userArg);
+
+typedef int (*OrbisHttpRedirectCallback)(
+	int request,
+	int32_t statusCode,
+	int32_t *method,
+	const char *location,
+	void *userArg);
+
+typedef void (*OrbisHttpRequestStatusCallback)(
+	int request,
+	OrbisHttpRequestStatus requestStatus,
+	void *userArg);
+
+typedef struct OrbisHttpMemoryPoolStats{
+	size_t		poolSize;
+	size_t		maxInuseSize;
+	size_t		currentInuseSize;
+	int32_t	reserved;
+} OrbisHttpMemoryPoolStats;
+
+
+
 // Empty Comment
-void sceHttpAbortRequest();
+int sceHttpAbortRequest(int reqId);
 // Empty Comment
 void sceHttpAbortRequestForce();
 // Empty Comment
-void sceHttpAbortWaitRequest();
+int sceHttpAbortWaitRequest(OrbisHttpEpollHandle eh);
 // Empty Comment
 void sceHttpAddCookie();
 // Empty Comment
-void sceHttpAddRequestHeader();
+int sceHttpAddRequestHeader(int id, const char *name, const char *value, uint32_t mode);
 // Empty Comment
 void sceHttpAddRequestHeaderRaw();
 // Empty Comment
 void sceHttpAuthCacheExport();
 // Empty Comment
-void sceHttpAuthCacheFlush();
+int sceHttpAuthCacheFlush(int libhttpCtxId);
 // Empty Comment
 void sceHttpAuthCacheImport();
 // Empty Comment
@@ -32,21 +161,21 @@ void sceHttpCookieFlush();
 // Empty Comment
 void sceHttpCookieImport();
 // Empty Comment
-void sceHttpCreateConnection();
+int sceHttpCreateConnection(int tmplId, const char *serverName, const char *scheme, uint16_t port, int isEnableKeepalive);
 // Empty Comment
-void sceHttpCreateConnectionWithURL();
+int sceHttpCreateConnectionWithURL(int tmplId, const char *url, int isEnableKeepalive);
 // Empty Comment
-void sceHttpCreateEpoll();
+int sceHttpCreateEpoll(int libhttpCtxId, OrbisHttpEpollHandle* eh);
 // Empty Comment
-void sceHttpCreateRequest();
+int sceHttpCreateRequest(int connId, int method, const char *path, uint64_t	contentLength);
 // Empty Comment
-void sceHttpCreateRequest2();
+int sceHttpCreateRequest2(int connId, const char* method, const char *path, uint64_t contentLength);
 // Empty Comment
-void sceHttpCreateRequestWithURL();
+int sceHttpCreateRequestWithURL(int connId, int method, const char *url, uint64_t contentLength);
 // Empty Comment
-void sceHttpCreateRequestWithURL2();
+int sceHttpCreateRequestWithURL2(int connId, const char* method, const char *url, uint64_t contentLength);
 // Empty Comment
-void sceHttpCreateTemplate();
+int sceHttpCreateTemplate(int libhttpCtxId, const char *userAgent, int httpVer, int isAutoProxyConf);
 // Empty Comment
 void sceHttpDbgGetConnectionStat();
 // Empty Comment
@@ -62,21 +191,21 @@ void sceHttpDbgShowRequestStat();
 // Empty Comment
 void sceHttpDbgShowStat();
 // Empty Comment
-void sceHttpDeleteConnection();
+int sceHttpDeleteConnection(int connId);
 // Empty Comment
-void sceHttpDeleteRequest();
+int sceHttpDeleteRequest(int reqId);
 // Empty Comment
-void sceHttpDeleteTemplate();
+int sceHttpDeleteTemplate(int tmplId);
 // Empty Comment
-void sceHttpDestroyEpoll();
+int sceHttpDestroyEpoll(int libhttpCtxId, OrbisHttpEpollHandle eh);
 // Empty Comment
 void sceHttpGetAcceptEncodingGZIPEnabled();
 // Empty Comment
-void sceHttpGetAllResponseHeaders();
+int sceHttpGetAllResponseHeaders(int reqId, char **header, size_t *headerSize);
 // Empty Comment
-void sceHttpGetAuthEnabled();
+int sceHttpGetAuthEnabled(int id, int *isEnable);
 // Empty Comment
-void sceHttpGetAutoRedirect();
+int sceHttpGetAutoRedirect(int id, int *isEnable);
 // Empty Comment
 void sceHttpGetCookie();
 // Empty Comment
@@ -84,31 +213,31 @@ void sceHttpGetCookieEnabled();
 // Empty Comment
 void sceHttpGetCookieStats();
 // Empty Comment
-void sceHttpGetEpoll();
+int sceHttpGetEpoll(int id, OrbisHttpEpollHandle* eh, void **userArg);
 // Empty Comment
 void sceHttpGetEpollId();
 // Empty Comment
-void sceHttpGetLastErrno();
+int sceHttpGetLastErrno(int reqId, int* errNum);
 // Empty Comment
-void sceHttpGetMemoryPoolStats();
+int sceHttpGetMemoryPoolStats(int libhttpCtxId, OrbisHttpMemoryPoolStats* currentStat);
 // Empty Comment
-void sceHttpGetNonblock();
+int sceHttpGetNonblock(int id, int *isEnable);
 // Empty Comment
-void sceHttpGetResponseContentLength();
+int sceHttpGetResponseContentLength(int reqId, int* result, uint64_t *contentLength);
 // Empty Comment
-void sceHttpGetStatusCode();
+int sceHttpGetStatusCode(int reqId, int *statusCode);
 // Empty Comment
-void sceHttpInit();
+int sceHttpInit(int libnetMemId, int libsslCtxId, size_t poolSize);
 // Empty Comment
-void sceHttpParseResponseHeader();
+int sceHttpParseResponseHeader(const char *header, size_t headerLen, const char *fieldStr, const char **fieldValue, size_t *valueLen);
 // Empty Comment
-void sceHttpParseStatusLine();
+int sceHttpParseStatusLine(const char *statusLine, size_t lineLen, int *httpMajorVer, int *httpMinorVer, int *responseCode, const char **reasonPhras);
 // Empty Comment
-void sceHttpReadData();
+int sceHttpReadData(int reqId, void *data, size_t size);
 // Empty Comment
-void sceHttpRedirectCacheFlush();
+int sceHttpRedirectCacheFlush(int libhttpCtxId);
 // Empty Comment
-void sceHttpRemoveRequestHeader();
+int sceHttpRemoveRequestHeader(int id, const char *name);
 // Empty Comment
 void sceHttpRequestGetAllHeaders();
 // Empty Comment
@@ -120,19 +249,19 @@ void sceHttpsEnableOption();
 // Empty Comment
 void sceHttpsEnableOptionPrivate();
 // Empty Comment
-void sceHttpSendRequest();
+int sceHttpSendRequest(int reqId, const void *postData, size_t size);
 // Empty Comment
 void sceHttpSetAcceptEncodingGZIPEnabled();
 // Empty Comment
-void sceHttpSetAuthEnabled();
+int sceHttpSetAuthEnabled(int id, int isEnable);
 // Empty Comment
-void sceHttpSetAuthInfoCallback();
+sceHttpSetAuthInfoCallback(int id, OrbisHttpAuthInfoCallback cbfunc, void *userArg);
 // Empty Comment
-void sceHttpSetAutoRedirect();
+int sceHttpSetAutoRedirect(int id, int isEnable);
 // Empty Comment
-void sceHttpSetChunkedTransferEnabled();
+int sceHttpSetChunkedTransferEnabled(int id, int isEnable);
 // Empty Comment
-void sceHttpSetConnectTimeOut();
+int sceHttpSetConnectTimeOut(int id, uint32_t usec);
 // Empty Comment
 void sceHttpSetCookieEnabled();
 // Empty Comment
@@ -154,9 +283,9 @@ void sceHttpSetEpoll();
 // Empty Comment
 void sceHttpSetEpollId();
 // Empty Comment
-void sceHttpSetInflateGZIPEnabled();
+int sceHttpSetInflateGZIPEnabled(int id, int isEnable);
 // Empty Comment
-void sceHttpSetNonblock();
+int sceHttpSetNonblock(int id, int isEnable);
 // Empty Comment
 void sceHttpSetPolicyOption();
 // Empty Comment
@@ -166,19 +295,19 @@ void sceHttpSetProxy();
 // Empty Comment
 void sceHttpSetRecvBlockSize();
 // Empty Comment
-void sceHttpSetRecvTimeOut();
+int sceHttpSetRecvTimeOut(int id, uint32_t usec);
 // Empty Comment
-void sceHttpSetRedirectCallback();
+int sceHttpSetRedirectCallback(int id, OrbisHttpRedirectCallback cbfunc, void *userArg);
 // Empty Comment
-void sceHttpSetRequestContentLength();
+int sceHttpSetRequestContentLength(int id, uint64_t contentLength);
 // Empty Comment
-void sceHttpSetResolveRetry();
+int sceHttpSetResolveRetry(int id, int retry);
 // Empty Comment
-void sceHttpSetResolveTimeOut();
+int sceHttpSetResolveTimeOut(int id, uint32_t usec);
 // Empty Comment
-void sceHttpSetResponseHeaderMaxSize();
+int sceHttpSetResponseHeaderMaxSize(int id, size_t headerSize);
 // Empty Comment
-void sceHttpSetSendTimeOut();
+int sceHttpSetSendTimeOut(int id, uint32_t usec);
 // Empty Comment
 void sceHttpsFreeCaList();
 // Empty Comment
@@ -194,13 +323,13 @@ void sceHttpsSetSslVersion();
 // Empty Comment
 void sceHttpsUnloadCert();
 // Empty Comment
-void sceHttpTerm();
+int sceHttpTerm(int libhttpCtxId);
 // Empty Comment
-void sceHttpTryGetNonblock();
+int sceHttpTryGetNonblock(int id, int *isEnable);
 // Empty Comment
-void sceHttpTrySetNonblock();
+int sceHttpTrySetNonblock(int id, int isEnable);
 // Empty Comment
-void sceHttpUnsetEpoll();
+int sceHttpUnsetEpoll(int id);
 // Empty Comment
 void sceHttpUriBuild();
 // Empty Comment
@@ -216,7 +345,7 @@ void sceHttpUriSweepPath();
 // Empty Comment
 void sceHttpUriUnescape();
 // Empty Comment
-void sceHttpWaitRequest();
+int sceHttpWaitRequest(OrbisHttpEpollHandle eh, OrbisHttpNBEvent* nbev, int maxevents, int timeout);
 
 
 #endif
