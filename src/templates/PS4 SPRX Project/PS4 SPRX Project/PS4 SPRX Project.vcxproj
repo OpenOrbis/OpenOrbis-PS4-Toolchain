@@ -66,7 +66,7 @@ del /s /q /f $(IntDir)\*.oelf</NMakeCleanCommandLine>
     <ClCompile Include="lib.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libExample.h" />
+    <ClInclude Include="lib.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />

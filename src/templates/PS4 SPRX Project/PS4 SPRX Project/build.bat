@@ -1,7 +1,7 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Libraries to link in
-set libraries=-lc -lkernel
+set libraries=-lSceLibcInternal -lkernel
 
 Rem Read the script arguments into local vars
 set intdir=%1
@@ -23,7 +23,7 @@ set obj_files=
 for %%f in (%intdir%\\*.o) do set obj_files=!obj_files! .\%%f
 
 Rem Link the input ELF
-ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" -lc -lkernel --verbose "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" %obj_files%
+ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% --verbose "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" %obj_files%
 
 Rem Create stub shared libraries
 for %%f in (*.cpp) do (
