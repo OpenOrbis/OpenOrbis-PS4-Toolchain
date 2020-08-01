@@ -108,7 +108,7 @@ struct linger {
 #define PF_BRIDGE       7
 #define PF_ATMPVC       8
 #define PF_X25          9
-#define PF_INET6        10
+#define PF_INET6        28 // PS4
 #define PF_ROSE         11
 #define PF_DECnet       12
 #define PF_NETBEUI      13
