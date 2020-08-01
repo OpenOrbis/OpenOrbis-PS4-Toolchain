@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <orbis/_types/audio_out.h>
 #include <orbis/_types/user.h>
+#include <orbis/_types/errors.h>
 
 #if defined(__cplusplus)
 extern "C" {

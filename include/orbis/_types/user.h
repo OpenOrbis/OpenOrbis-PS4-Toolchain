@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+
+
 #define ORBIS_USER_SERVICE_USER_ID_SYSTEM 0xFF
 
 typedef int OrbisUserServiceUserId;
@@ -13,3 +15,7 @@ typedef int OrbisUserServiceUserId;
 typedef struct OrbisUserServiceInitializeParams {
 	uint32_t priority;
 } OrbisUserServiceInitializeParams;
+
+typedef struct OrbisUserServiceLoginUserIdList {
+	OrbisUserServiceUserId userId[4];
+} OrbisUserServiceLoginUserIdList;

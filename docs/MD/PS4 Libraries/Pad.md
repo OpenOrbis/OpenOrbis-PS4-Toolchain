@@ -2,47 +2,50 @@
 The pad library is used for controller input to the Playstation 4. This includes operations such as opening a handle to a controller, reading the state, setting the light color, vibration settings, and other various actions.
 
 ### Known Macros
-The state of buttons pressed after a poll is stored in an integer. By dumping this integer after pressing each button on the controller and recording it, we were able to get a listing of which buttons map to which values. Below is a set of macros defined in the header that map buttons to bits.
+The state of buttons pressed after a poll is stored in an integer. Below is a set of macros defined in the header that map buttons to bits.
 
 ```c
-#define PAD_BUTTON_L3           0x0002
-#define PAD_BUTTON_R3           0x0004
-#define PAD_BUTTON_START        0x0008
-#define PAD_BUTTON_DPAD_UP      0x0010
-#define PAD_BUTTON_DPAD_RIGHT   0x0020
-#define PAD_BUTTON_DPAD_DOWN    0x0040
-#define PAD_BUTTON_DPAD_LEFT    0x0080
+#define ORBIS_PAD_BUTTON_L3           0x0002
+#define ORBIS_PAD_BUTTON_R3           0x0004
+#define ORBIS_PAD_BUTTON_OPTIONS      0x0008
+#define ORBIS_PAD_BUTTON_UP           0x0010
+#define ORBIS_PAD_BUTTON_RIGHT        0x0020
+#define ORBIS_PAD_BUTTON_DOWN         0x0040
+#define ORBIS_PAD_BUTTON_LEFT         0x0080
 
-#define PAD_BUTTON_L2           0x0100
-#define PAD_BUTTON_R2           0x0200
-#define PAD_BUTTON_L1           0x0400
-#define PAD_BUTTON_R1           0x0800
+#define ORBIS_PAD_BUTTON_L2           0x0100
+#define ORBIS_PAD_BUTTON_R2           0x0200
+#define ORBIS_PAD_BUTTON_L1           0x0400
+#define ORBIS_PAD_BUTTON_R1           0x0800
 
-#define PAD_BUTTON_TRIANGLE     0x1000
-#define PAD_BUTTON_CIRCLE       0x2000
-#define PAD_BUTTON_X            0x4000
-#define PAD_BUTTON_SQUARE       0x8000
+#define ORBIS_PAD_BUTTON_TRIANGLE     0x1000
+#define ORBIS_PAD_BUTTON_CIRCLE       0x2000
+#define ORBIS_PAD_BUTTON_CROSS        0x4000
+#define ORBIS_PAD_BUTTON_SQUARE       0x8000
 
-#define PAD_BUTTON_TOUCHPAD     0x100000
+#define ORBIS_PAD_BUTTON_TOUCH_PAD
 ```
 
-It appears the only button on the controller not tracked through this state is the share button. Presumably this button is special and can only be handled directly by internal processes such as Shellcore.
+It appears the only buttons on the controller not tracked through this state is the share button and the PS button. Presumably these buttons are special and can only be handled directly by internal processes such as Shellcore.
 
 ### Known Structures
 #### OrbisPadData
 The pad data structure is what the Pad library gives you when you poll for controller state. This includes the button state mentioned earlier, analogue positional data for thumbsticks, the touchpad, and gyro, and other data.
 
 - **unsigned int buttons**: Button state
-- **uint8_t lx**: Left joystick X coordinate
-- **uint8_t ly**: Left joystick Y coordinate
-- **uint8_t rx**: Right joystick X coordinate
-- **uint8_t ry**: Right joystick Y coordinate
-- **uint8_t l2**: L2 trigger pressure
-- **uint8_t r2**: R2 trigger pressure
+- **stick leftStick**
+  - **uint8_t x**: Left joystick X coordinate
+  - **uint8_t y**: Left joystick Y coordinate
+- **stick rightStick**
+  - **uint8_t x**: Right joystick X coordinate
+  - **uint8_t y**: Right joystick Y coordinate
+- **analog analogButtons**
+  - **uint8_t l2**: L2 trigger pressure
+  - **uint8_t r2**: R2 trigger pressure
 - **uint16_t padding**: N/A
 - **vec_float4 orientation**: Gyroscope orientation as a quaternion
-- **vec_float3 acceleration**: Accelerometer reading
 - **vec_float3 velocity**: Gyroscope velocity
+- **vec_float3 acceleration**: Accelerometer reading
 - **uint8_t touch[24]**: Touchpad data
 - **uint8_t connected**: Whether the controller is on and connected or not
 - **uint64_t timestamp**: Timestamp at time of poll

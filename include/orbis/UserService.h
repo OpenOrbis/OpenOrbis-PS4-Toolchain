@@ -4,15 +4,16 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <orbis/_types/user.h>
+#include <orbis/_types/errors.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
 
-
-void sceUserServiceGetInitialUser(int *);
+int sceUserServiceGetInitialUser(int *);
 int sceUserServiceGetUserName(int, char *, const size_t);
-void sceUserServiceInitialize(void *);
+int sceUserServiceInitialize(void *);
+int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -116,7 +117,6 @@ void sceUserServiceGetKratosPrimaryUser();
 void sceUserServiceGetLastLoginOrder();
 void sceUserServiceGetLightBarBaseBrightness();
 void sceUserServiceGetLoginFlag();
-void sceUserServiceGetLoginUserIdList();
 void sceUserServiceGetMicLevel();
 void sceUserServiceGetMouseHandType();
 void sceUserServiceGetMousePointerSpeed();

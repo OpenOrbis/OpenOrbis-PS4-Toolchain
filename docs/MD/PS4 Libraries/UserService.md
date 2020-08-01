@@ -22,9 +22,18 @@ One can also set priority levels on users. The lowest priority is `0x2FF` where 
 The service initialize parameters structure is used to initialize the user service library. The parameters only include one known parameter, being the priority.
 
 ```c
-struct OrbisUserServiceInitializeParams {
+typedef struct OrbisUserServiceInitializeParams {
 	uint32_t priority;
-}
+} OrbisUserServiceInitializeParams;
+```
+
+#### OrbisUserServiceLoginUserIdList
+The service login user ID list structure is used as a container for a list of 4 potential user IDs currently logged in on the system.
+
+```c
+typedef struct OrbisUserServiceLoginUserIdList {
+	OrbisUserServiceUserId userId[4];
+} OrbisUserServiceLoginUserIdList;
 ```
 
 ### Known Functions
@@ -32,7 +41,7 @@ struct OrbisUserServiceInitializeParams {
 **sceUserServiceInitialize(OrbisUserServiceInitializeParams \*params)**
 
 ```c
-void sceUserServiceInitialize(OrbisUserServiceInitializeParams *params)
+int sceUserServiceInitialize(OrbisUserServiceInitializeParams *params)
 ```
 
 Initializes the user service library with the given `params`.
@@ -52,6 +61,14 @@ int sceUserServiceGetUserName(int userID, char *outName, size_t maxSize)
 ```
 
 Gets the username of `userID` and writes it to `outName` to a maximum of `maxSize` bytes.
+
+**sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList \*)**
+
+```c
+int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
+```
+
+Returns a listing of currently logged in users.
 
 ## Reversing Credits
 - Various scene developers
