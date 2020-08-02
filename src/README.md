@@ -5,6 +5,8 @@ This directory contains source files for all the tools included in the OpenOrbis
 | Directory | Project | Lead Author/Maintainer |
 |--|--|--|
 | `./crt` | C-Runtime Library | Specter |
+| `./lib` | Library stub files | Auto-generated via orbislibgen |
+| `./modules` | Empty library source | Specter |
 | `./templates` | Visual Studio Templates | Specter |
 | `./tools/create-eboot` | `create-eboot` / `create-lib` | Specter |
 | `./tools/miralib` | MiraLib library | Specter |
@@ -28,6 +30,17 @@ Games/apps should *always* link against the `crt1` stub, and libraries should *a
 
 
 
+## Library Stubs
+`./lib`
+
+This directory is populated with auto-generated files from orbislibgen, however, additions / modifications should be made here for missed functions and such.
+
+
+
+## Module Stubs
+`./modules`
+
+This directory contains the source for empty stub modules for `libc` and `libSceFios2`, which are needed in packages. Generally this source shouldn't need to be touched.
 ## Templates
 `./templates`
 
