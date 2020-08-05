@@ -16,7 +16,7 @@
   <files img_no="0">
     <file targ_path="sce_sys/icon0.png" orig_path="sce_sys\icon0.png" />
     <file targ_path="sce_sys/param.sfo" orig_path="sce_sys\param.sfo" />
-    <file targ_path="eboot.bin" orig_path="eboot.bin" />
+    <file targ_path="eboot.bin" orig_path="..\eboot.bin" />
     <file targ_path="assets/circle.png" orig_path="assets\circle.png" />
     <file targ_path="assets/controller.png" orig_path="assets\controller.png" />
     <file targ_path="assets/dpad-down.png" orig_path="assets\dpad-down.png" />
@@ -33,9 +33,15 @@
     <file targ_path="assets/touchpad.png" orig_path="assets\touchpad.png" />
     <file targ_path="assets/triangle.png" orig_path="assets\triangle.png" />
     <file targ_path="assets/x.png" orig_path="assets\x.png" />
+    <file targ_path="sce_sys/about/right.sprx" orig_path="sce_sys\about\right.sprx" />
+    <file targ_path="sce_module/libc.prx" orig_path="sce_module\libc.prx" />
+    <file targ_path="sce_module/libSceFios2.prx" orig_path="sce_module\libSceFios2.prx" />
   </files>
   <rootdir>
-    <dir targ_name="sce_sys" />
+    <dir targ_name="sce_sys">
+      <dir targ_name="about" />
+    </dir>
     <dir targ_name="assets" />
+    <dir targ_name="sce_module" />
   </rootdir>
 </psproject>
