@@ -8,12 +8,6 @@
 #include "graphics.h"
 #include "log.h"
 
-// Linearly interpolate x with y over s
-inline float lerp(float x, float y, float s)
-{
-    return x * (1.0f - s) + y * s;
-}
-
 Scene2D::Scene2D(int w, int h, int pixelDepth)
 {
 	this->width = w;
@@ -313,9 +307,9 @@ void Scene2D::DrawText(char *txt, FT_Face face, int startX, int startY, Color bg
                 int y = startY + yPos + yOffset - slot->bitmap_top;
 
                 // Linearly interpolate between the foreground and background for smoother rendering
-                uint8_t r = lerp(float(fgColor.r), float(bgColor.r), 255.0f);
-                uint8_t g = lerp(float(fgColor.g), float(bgColor.g), 255.0f);
-                uint8_t b = lerp(float(fgColor.b), float(bgColor.b), 255.0f);
+				uint8_t r = (pixel * fgColor.r) / 255;
+				uint8_t g = (pixel * fgColor.g) / 255;
+				uint8_t b = (pixel * fgColor.b) / 255;
 
                 // Create new color struct with lerp'd values
                 Color finalColor = { r, g, b };
