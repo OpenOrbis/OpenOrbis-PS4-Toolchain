@@ -2,7 +2,7 @@
 
 #include <proto-include.h>
 
-#include "game.h"
+#include "Game.h"
 
 extern FT_Library ftLib;
 

@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "game.h"
+#include "Game.h"
 
 // Font faces
 FT_Face fontDebug;

@@ -1,7 +1,5 @@
 #include "TTF.h"
 
-#include "game.h"
-
 #include <stdio.h>
 
 FT_Library ftLib;

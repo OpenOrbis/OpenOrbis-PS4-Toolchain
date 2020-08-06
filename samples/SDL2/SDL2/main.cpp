@@ -2,7 +2,7 @@
 #include <orbis/libkernel.h>
 #include <orbis/Sysmodule.h>
 
-#include "game.h"
+#include "Game.h"
 
 #include "../../_common/log.h"
 
