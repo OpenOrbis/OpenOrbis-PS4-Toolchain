@@ -86,8 +86,8 @@ func (orbisElf *OrbisElf) getProgramHeader(headerType elf.ProgType, headerFlags 
 // returns a boolean of whether or not that library contains that symbol, as well as error. If we cannot get a libraries
 // symbol list, false and an error is returned. Otherwise, the true or false and nil are returned.
 func checkIfLibraryContainsSymbol(librarySymbols []elf.Symbol, symbolName string) bool {
-	for _, sym := range librarySymbols {
-		if sym.Name == symbolName {
+	for _, symbol := range librarySymbols {
+		if symbol.Name == symbolName {
 			return true
 		}
 	}

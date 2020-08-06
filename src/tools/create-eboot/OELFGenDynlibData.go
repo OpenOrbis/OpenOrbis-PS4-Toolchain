@@ -163,7 +163,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 		orbisElf.ModuleSymbolDictionary.Set(purifiedLibrary, []string{})
 	}
 
-	// Create a cache of libraries to symbols
+	// Create a cache of libraries to symbols for better performance
 	librarySymbolCache := make(map[*elf.File][]elf.Symbol)
 
 	for _, libraryObj := range libraryObjs {
