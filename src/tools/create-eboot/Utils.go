@@ -85,18 +85,14 @@ func (orbisElf *OrbisElf) getProgramHeader(headerType elf.ProgType, headerFlags 
 // checkIfLibraryContainsSymbol takes a given library and symbol name, and checks if the library contains that symbol. It
 // returns a boolean of whether or not that library contains that symbol, as well as error. If we cannot get a libraries
 // symbol list, false and an error is returned. Otherwise, the true or false and nil are returned.
-func checkIfLibraryContainsSymbol(library *elf.File, symbolName string) (bool, error) {
-	if librarySymbols, err := library.Symbols(); err == nil {
-		for _, sym := range librarySymbols {
-			if sym.Name == symbolName {
-				return true, nil
-			}
+func checkIfLibraryContainsSymbol(librarySymbols []elf.Symbol, symbolName string) bool {
+	for _, sym := range librarySymbols {
+		if sym.Name == symbolName {
+			return true
 		}
-	} else {
-		return false, err
 	}
 
-	return false, nil
+	return false
 }
 
 // intToByteArray takes a given integer and writes it into a byte array (little endian) and returns it.
