@@ -40,7 +40,8 @@ Types:
 #pragma GCC system_header
 #endif
 
-#include <stddef.h>
+// Don't include our own <stddef.h>; we don't want to declare ::nullptr_t.
+#include_next <stddef.h>
 #include <__nullptr>
 
 _LIBCPP_BEGIN_NAMESPACE_STD
