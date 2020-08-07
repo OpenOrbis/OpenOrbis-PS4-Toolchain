@@ -27,9 +27,6 @@
 #define ORBIS_PTHREAD_ADAPTIVE_MUTEX_INITIALIZER	((pthread_mutex_t)1)
 #define ORBIS_PTHREAD_COND_INITIALIZER	NULL
 #define ORBIS_PTHREAD_RWLOCK_INITIALIZER	NULL
-#define pthread_condattr_default    NULL
-#define pthread_mutexattr_default   NULL
-#define pthread_attr_default        NULL
 #define ORBIS_PTHREAD_PRIO_NONE           0
 #define ORBIS_PTHREAD_PRIO_INHERIT        1
 #define ORBIS_PTHREAD_PRIO_PROTECT        2
@@ -38,21 +35,6 @@
 #if defined(__cplusplus)
 extern "C" {
 #endif
-
-typedef enum OrbisPthreadMutextype {
-	PTHREAD_MUTEX_ERRORCHECK = 1,	
-	PTHREAD_MUTEX_RECURSIVE = 2,	
-	PTHREAD_MUTEX_NORMAL = 3,	
-	PTHREAD_MUTEX_ADAPTIVE = 4,	
-	PTHREAD_MUTEX_TYPE_MAX
-} OrbisPthreadMutextype;
-
-typedef enum ScePthreadRwlocktype {
-	PTHREAD_RWLOCK_NORMAL = 1,
-	PTHREAD_RWLOCK_PREFER_READER = 2,
-	PTHREAD_RWLOCK_TYPE_MAX
-} OrbisPthreadRwlocktype;
-
 
 typedef pthread_once_t            OrbisPthreadOnce;
 typedef pthread_barrierattr_t     OrbisPthreadBarrierattr;

@@ -805,19 +805,19 @@ _Tp __do_strtod(const char* __a, char** __p2);
 template <>
 inline _LIBCPP_INLINE_VISIBILITY
 float __do_strtod<float>(const char* __a, char** __p2) {
-    return strtof_l(__a, __p2, _LIBCPP_GET_C_LOCALE);
+    return strtof(__a, __p2);
 }
 
 template <>
 inline _LIBCPP_INLINE_VISIBILITY
 double __do_strtod<double>(const char* __a, char** __p2) {
-    return strtod_l(__a, __p2, _LIBCPP_GET_C_LOCALE);
+    return strtod(__a, __p2);
 }
 
 template <>
 inline _LIBCPP_INLINE_VISIBILITY
 long double __do_strtod<long double>(const char* __a, char** __p2) {
-    return strtold_l(__a, __p2, _LIBCPP_GET_C_LOCALE);
+    return strtold(__a, __p2);
 }
 
 template <class _Tp>

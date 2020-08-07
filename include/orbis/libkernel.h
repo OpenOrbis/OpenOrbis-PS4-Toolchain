@@ -15,6 +15,7 @@ extern uint64_t sceLibcHeapSize;
 extern uint32_t sce_libc_heap_delayed_alloc;
 extern uint32_t sce_libc_heap_extended_alloc;
 
+int sceKernelGetCpuFrequency();
 // Empty Comment
 int sceKernelAddFileEvent(OrbisKernelEqueue, int, int, void*);
 // Empty Comment - need to port OrbisKernelTimespec
