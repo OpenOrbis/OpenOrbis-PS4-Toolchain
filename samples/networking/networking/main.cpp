@@ -63,7 +63,7 @@ int main(void)
     addr.sin_port = htons(PORT);
     
     // Wait on X
-    waitOnButton(pad, PAD_BUTTON_X);
+    waitOnButton(pad, ORBIS_PAD_BUTTON_CROSS);
 
     if (inet_pton(AF_INET, IP, &addr.sin_addr) <= 0)
     {
