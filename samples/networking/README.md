@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code for a basic TCP client that connects to a given IP address, sends a ping packet, and closes the connection.
+This project contains example code for a basic TCP server that runs on `0.0.0.0:9025` and sends "Hello" to any client that connects to it before terminating the connection.
 
 
 

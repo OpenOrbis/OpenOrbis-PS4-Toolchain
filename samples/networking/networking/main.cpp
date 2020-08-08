@@ -1,86 +1,79 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <errno.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
 #include <orbis/libkernel.h>
-#include <orbis/Pad.h>
-#include <orbis/UserService.h>
 
-#define IP "192.168.0.10"
-#define PORT 9030
+#include "../../_common/log.h"
 
-void waitOnButton(int pad, unsigned int button)
-{
-	OrbisPadData padData;
-	
-	for(;;)
-	{
-		scePadReadState(pad, &padData);
-		
-		if(padData.buttons & button) {
-			return;
-		}
-	}
-}	
+#define PORT 9025
+
+// Logging
+std::stringstream debugLogStream;
 
 int main(void)
 {
-    int userID;
-    const char *msg = "ping";
-    struct sockaddr_in addr;
+    int sockfd;
+    int connfd;
+    socklen_t addrLen;
 
-    // Initialize the Pad library
-    if (scePadInit() != 0)
+    struct sockaddr_in serverAddr;
+    struct sockaddr_in clientAddr;
+
+    // No buffering
+    setvbuf(stdout, NULL, _IONBF, 0);
+
+    // Create a server socket
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+
+    if (sockfd < 0)
     {
-        printf("[DEBUG] [ERROR] Failed to initialize pad library!\n");
-        return -1;
-    }
-    
-    // Get the user ID
-    OrbisUserServiceInitializeParams param;
-    param.priority = ORBIS_KERNEL_PRIO_FIFO_LOWEST;
-    sceUserServiceInitialize(&param);
-    sceUserServiceGetInitialUser(&userID);
-
-    // Open a handle for the controller
-    int pad = scePadOpen(userID, 0, 0, NULL);
-
-    if (pad < 0)
-    {
-        printf("[DEBUG] Failed to open pad!\n");
-        return -1;
-    }
-    
-    // Setup the socket
-    (void)memset(&addr, 0, sizeof(struct sockaddr_in));
-
-    int sock = socket(AF_INET, SOCK_STREAM, 0);
-
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(PORT);
-    
-    // Wait on X
-    waitOnButton(pad, ORBIS_PAD_BUTTON_CROSS);
-
-    if (inet_pton(AF_INET, IP, &addr.sin_addr) <= 0)
-    {
-        printf("[DEBUG] [ERROR] IP Address not supported.\n");
-        return -1;
+        DEBUGLOG << "Failed to create socket: " << strerror(errno);
+        for (;;);
     }
 
-    if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+    // Bind to 0.0.0.0:PORT
+    memset(&serverAddr, 0, sizeof(serverAddr));
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_addr.s_addr = htonl(INADDR_ANY);
+    serverAddr.sin_port = htons(PORT);
+
+    if (bind(sockfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr)) != 0)
     {
-        printf("[DEBUG] [ERROR] Failed to connect to %s:%d.\n", IP, PORT);
-        return -1;
+        DEBUGLOG << "Failed to bind to 0.0.0.0:" << PORT << ": " << strerror(errno);
+        for (;;);
     }
 
-    printf("[DEBUG] Sending message to %s:%d.\n", IP, PORT);
-    send(sock, msg, strlen(msg), 0);
-    printf("[DEBUG] Message sent. Closing and infinitely looping.\n");
+    // Listen and accept clients
+    addrLen = sizeof(clientAddr);
 
-    close(sock);
-    for (;;) {}
+    if (listen(sockfd, 5) != 0)
+    {
+        DEBUGLOG << "Failed to listen: " << strerror(errno);
+        for (;;);
+    }
+
+    for (;;)
+    {
+        connfd = accept(sockfd, (struct sockaddr*)&clientAddr, &addrLen);
+
+        if (connfd < 0)
+        {
+            DEBUGLOG << "Failed to accept client: " << strerror(errno);
+            for (;;);
+        }
+
+        DEBUGLOG << "Accepted client '" << connfd << "'";
+
+        // Write a "hello" message then terminate the connection
+        const char msg[] = "hello\n";
+        write(connfd, msg, sizeof(msg));
+        close(connfd);
+
+        DEBUGLOG << "Closed client '" << connfd << "'";
+    }
 }

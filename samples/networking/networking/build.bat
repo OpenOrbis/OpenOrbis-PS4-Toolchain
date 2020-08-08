@@ -1,7 +1,7 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Libraries to link in
-set libraries=-lc -lkernel -lc++ -lScePad -lSceUserService
+set libraries=-lc -lkernel -lc++
 
 Rem Read the script arguments into local vars
 set intdir=%1
