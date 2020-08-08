@@ -1,6 +1,6 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.3-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
+[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.5-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
 
 [![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
@@ -10,15 +10,13 @@ This repository contains the source code and documentation for the OpenOrbis PS4
 
 The header files as well as the library stubs may need updating to support yet undiscovered functions, so feel free to fork the repository and make pull requests to update support.
 
-All Visual Studio solution files are assumed VS2017 *for now*. This will change when the .NET core-based projects drop, which will be VS2019 to allow usage of .NET core 3.1.
-
 <p align="center">
 	<img src="logo.png" width="200px" height="200px">
 </p>
 
 ## Notes
 
-The following projects will be added to this repo within the next few days:
+The following projects will be added to this repo soon:
 - Debugger
 - MiraLib
 
@@ -107,8 +105,8 @@ The `create-lib` tool is similar to the `create-eboot` tool, however it produces
 
 Author: Specter + flatz (fself stuff)
 
-### create-pkg
-The `create-pkg` tool takes a set of files that applications are expected to have (`eboot.bin`, `param.sfo`, necessary modules, etc.) and creates a package file (pkg) for them to install on the PS4.
+### liborbispkg
+The `liborbispkg` tool takes a set of files that applications are expected to have (`eboot.bin`, `param.sfo`, necessary modules, etc.) and creates a package file (pkg) for them to install on the PS4.
 
 Author: maxton
 
@@ -165,13 +163,15 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - Specter: Create-eboot/lib relinker, miralib, assistant suite, readelf, samples and documentation
 - CrazyVoid: Stub generator, headers, samples and documentation
 - maxton: Create-pkg pkg and SFO generation tools
-- Kiwidog: Mira stuff, documentation
+- Kiwidog: Mira, assistance, documentation
 - IDC: Lots of help with libraries and other bug fixes
 - flatz: Homebrew research and writeups, SELF reversing and documentation
 - m0rph3us1987: Help with debugging stuff
 - bigboss / psxdev: Library research and reverse engineering, used for reference by various samples
 - LightningMods / LM: Testing via APP_HOME and lib loading help on the Mira side
 - Lord Friky: Proper macOS support
+- sleirsgoevy: Bug fixes and support
+- ChendoChap: Bug fixes and support
 - MrSlick: Awesome logo <3
 - OpenOrbis Team
 - Other anonymous contributors
