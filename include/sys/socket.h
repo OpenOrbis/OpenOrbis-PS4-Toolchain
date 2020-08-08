@@ -365,7 +365,8 @@ struct linger {
 #define SCM_CREDENTIALS 0x02
 
 struct sockaddr {
-	sa_family_t sa_family;
+	uint8_t sa_len;
+	uint8_t sa_family;
 	char sa_data[14];
 };
 
