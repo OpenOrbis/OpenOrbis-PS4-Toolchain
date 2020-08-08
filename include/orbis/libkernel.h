@@ -2,6 +2,7 @@
 #include <sys/types.h>
 #include <orbis/_types/kernel.h>
 #include <orbis/_types/pthread.h>
+#include <orbis/_types/errors.h>
 
 #ifndef _SCE_KERNEL_H_
 #define _SCE_KERNEL_H_
@@ -10,38 +11,11 @@
 extern "C" {
 #endif
 
-#define ORBIS_KERNEL_EVFILT_TIMER    EVFILT_TIMER
-#define ORBIS_KERNEL_EVFILT_READ     EVFILT_READ
-#define ORBIS_KERNEL_EVFILT_WRITE    EVFILT_WRITE
-#define ORBIS_KERNEL_EVFILT_USER     EVFILT_USER
-#define ORBIS_KERNEL_EVFILT_FILE     EVFILT_VNODE
-#define ORBIS_KERNEL_EVFILT_GNM      EVFILT_GRAPHICS_CORE
-#define ORBIS_KERNEL_EVFILT_VIDEO_OUT      EVFILT_DISPLAY
-#define ORBIS_KERNEL_EVFILT_HRTIMER  EVFILT_HRTIMER
-#define ORBIS_KERNEL_EVNOTE_DELETE   NOTE_DELETE
-#define ORBIS_KERNEL_EVNOTE_WRITE    NOTE_WRITE
-#define ORBIS_KERNEL_EVNOTE_EXTEND   NOTE_EXTEND
-#define ORBIS_KERNEL_EVNOTE_ATTRIB   NOTE_ATTRIB
-#define ORBIS_KERNEL_EVNOTE_RENAME   NOTE_RENAME
-#define ORBIS_KERNEL_EVNOTE_REVOKE   NOTE_REVOKE
-#define ORBIS_KERNEL_EVFLAG_EOF       EV_EOF
-#define ORBIS_KERNEL_EVFLAG_ERROR     EV_ERROR
-#define ORBIS_KERNEL_EVF_ATTR_TH_FIFO   0x01
-#define ORBIS_KERNEL_EVF_ATTR_TH_PRIO   0x02
-#define ORBIS_KERNEL_EVF_ATTR_SINGLE    0x10
-#define ORBIS_KERNEL_EVF_ATTR_MULTI     0x20
-#define ORBIS_KERNEL_EVF_WAITMODE_AND        0x01
-#define ORBIS_KERNEL_EVF_WAITMODE_OR         0x02
-#define ORBIS_KERNEL_EVF_WAITMODE_CLEAR_ALL  0x10
-#define ORBIS_KERNEL_EVF_WAITMODE_CLEAR_PAT  0x20
-//#define SCE_KERNEL_EVF_ID_INVALID     ((OrbisKernelEventFlag)-1)
-#define ORBIS_KERNEL_SEMA_ATTR_TH_FIFO   0x01
-#define ORBIS_KERNEL_SEMA_ATTR_TH_PRIO   0x02
-
 extern uint64_t sceLibcHeapSize;
 extern uint32_t sce_libc_heap_delayed_alloc;
 extern uint32_t sce_libc_heap_extended_alloc;
 
+int sceKernelGetCpuFrequency();
 // Empty Comment
 int sceKernelAddFileEvent(OrbisKernelEqueue, int, int, void*);
 // Empty Comment - need to port OrbisKernelTimespec

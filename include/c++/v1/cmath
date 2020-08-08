@@ -307,6 +307,7 @@ constexpr long double lerp(long double a, long double b, long double t) noexcept
 #include <__config>
 #include <math.h>
 #include <version>
+#include <limits>
 #include <type_traits>
 
 #if !defined(_LIBCPP_HAS_NO_PRAGMA_SYSTEM_HEADER)
@@ -317,20 +318,6 @@ _LIBCPP_PUSH_MACROS
 #include <__undef_macros>
 
 _LIBCPP_BEGIN_NAMESPACE_STD
-
-using ::signbit;
-using ::fpclassify;
-using ::isfinite;
-using ::isinf;
-using ::isnan;
-using ::isnormal;
-using ::isgreater;
-using ::isgreaterequal;
-using ::isless;
-using ::islessequal;
-using ::islessgreater;
-using ::isunordered;
-using ::isunordered;
 
 using ::float_t;
 using ::double_t;

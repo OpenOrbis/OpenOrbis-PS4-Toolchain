@@ -163,6 +163,15 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 		orbisElf.ModuleSymbolDictionary.Set(purifiedLibrary, []string{})
 	}
 
+	// Create a cache of libraries to symbols for better performance
+	librarySymbolCache := make(map[*elf.File][]elf.Symbol)
+
+	for _, libraryObj := range libraryObjs {
+		if symbols, err := libraryObj.Symbols(); err == nil {
+			librarySymbolCache[libraryObj] = symbols
+		}
+	}
+
 	// Iterate the symbol table and cross-reference the shared object files to find which library they belong to, and
 	// add them to the dictionary.
 	symbols, err := orbisElf.ElfToConvert.Symbols()
@@ -182,13 +191,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 
 		// Check all linked libraries for the symbol
 		for i, libraryObj := range libraryObjs {
-			foundSymbol, err := checkIfLibraryContainsSymbol(libraryObj, symbolName)
-
-			// We need to check error because if we just let it slide, we could end up with mis-alignments later, which
-			// would cause really shitty bugs that would be hard to debug.
-			if err != nil {
-				return err
-			}
+			foundSymbol := checkIfLibraryContainsSymbol(librarySymbolCache[libraryObj], symbolName)
 
 			// Found it? Add it
 			if foundSymbol {

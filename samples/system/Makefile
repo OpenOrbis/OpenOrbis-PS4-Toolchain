@@ -23,7 +23,7 @@ SDIR        := $(PROJDIR)
 COMMONDIR   := $(COMMONDIR)
 IDIRS       := -I$(TOOLCHAIN)/include -I$(TOOLCHAIN)/include/c++/v1
 LDIRS       := -L$(TOOLCHAIN)/lib
-CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS) -fuse-init-array -DGRAPHICS_USES_FONT -emit-obj
+CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS) -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -DGRAPHICS_USES_FONT -emit-obj
 LFLAGS      := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
 CFILES      := $(wildcard $(SDIR)/*.c)

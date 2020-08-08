@@ -14,15 +14,18 @@
     </chunk_info>
   </volume>
   <files img_no="0">
-    <file targ_path="sce_sys/icon0.png" orig_path="sce_sys\icon0.png" />
-    <file targ_path="sce_sys/param.sfo" orig_path="sce_sys\param.sfo" />
-    <file targ_path="sce_sys/about/right.sprx" orig_path="..\..\..\bin\data\right.sprx" />
-    <file targ_path="eboot.bin" orig_path="eboot.bin" />
+    <file targ_path="sce_sys/icon0.png" orig_path="sce_sys/icon0.png" />
+    <file targ_path="sce_sys/param.sfo" orig_path="sce_sys/param.sfo" />
+    <file targ_path="eboot.bin" orig_path="../eboot.bin" />
     <file targ_path="libExample.prx" orig_path="libExample.prx" />
+    <file targ_path="sce_sys/about/right.sprx" orig_path="sce_sys/about/right.sprx" />
+    <file targ_path="sce_module/libc.prx" orig_path="sce_module/libc.prx" />
+    <file targ_path="sce_module/libSceFios2.prx" orig_path="sce_module/libSceFios2.prx" />
   </files>
   <rootdir>
     <dir targ_name="sce_sys">
       <dir targ_name="about" />
     </dir>
+    <dir targ_name="sce_module" />
   </rootdir>
 </psproject>

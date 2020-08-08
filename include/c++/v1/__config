@@ -19,11 +19,11 @@
 /* #undef _LIBCPP_HAS_NO_GLOBAL_FILESYSTEM_NAMESPACE */
 /* #undef _LIBCPP_HAS_NO_STDIN */
 /* #undef _LIBCPP_HAS_NO_STDOUT */
-#define _LIBCPP_HAS_NO_THREADS
+/* #undef _LIBCPP_HAS_NO_THREADS */
 /* #undef _LIBCPP_HAS_NO_MONOTONIC_CLOCK */
 /* #undef _LIBCPP_HAS_NO_THREAD_UNSAFE_C_FUNCTIONS */
 #define _LIBCPP_HAS_MUSL_LIBC
-/* #undef _LIBCPP_HAS_THREAD_API_PTHREAD */
+#define _LIBCPP_HAS_THREAD_API_PTHREAD
 /* #undef _LIBCPP_HAS_THREAD_API_EXTERNAL */
 /* #undef _LIBCPP_HAS_THREAD_API_WIN32 */
 /* #undef _LIBCPP_HAS_THREAD_LIBRARY_EXTERNAL */
@@ -282,19 +282,6 @@
 #    define _LIBCPP_BIG_ENDIAN
 #  endif // __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
 #endif // __BYTE_ORDER__
-
-#ifdef __FreeBSD__
-#  include <sys/endian.h>
-#  include <osreldate.h>
-#  if _BYTE_ORDER == _LITTLE_ENDIAN
-#    define _LIBCPP_LITTLE_ENDIAN
-#  else  // _BYTE_ORDER == _LITTLE_ENDIAN
-#    define _LIBCPP_BIG_ENDIAN
-#  endif  // _BYTE_ORDER == _LITTLE_ENDIAN
-#  ifndef __LONG_LONG_SUPPORTED
-#    define _LIBCPP_HAS_NO_LONG_LONG
-#  endif  // __LONG_LONG_SUPPORTED
-#endif  // __FreeBSD__
 
 #ifdef __NetBSD__
 #  include <sys/endian.h>

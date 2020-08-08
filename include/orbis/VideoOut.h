@@ -5,14 +5,7 @@
 #include <orbis/_types/kernel.h>
 #include <orbis/_types/user.h>
 #include <orbis/_types/video.h>
-
-#define ORBIS_VIDEO_USER_MAIN		0xFF
-
-#define ORBIS_VIDEO_OUT_BUS_MAIN	0
-#define ORBIS_VIDEO_OUT_BUS_SOCIAL	5
-#define ORBIS_VIDEO_OUT_BUS_LIVE	6
-
-#define ORBIS_VIDEO_OUT_FLIP_VSYNC  1
+#include <orbis/_types/errors.h>
 
 #ifdef __cplusplus 
 extern "C" {
@@ -28,6 +21,8 @@ void sceVideoOutSetBufferAttribute(void *, unsigned int, unsigned int, unsigned 
 int sceVideoOutSetFlipRate(int, int);
 int sceVideoOutAddFlipEvent(OrbisKernelEqueue, int, void *);
 int sceVideoOutGetFlipStatus(int, OrbisVideoOutFlipStatus *);
+int sceVideoOutIsFlipPending(int);
+int sceVideoOutGetResolutionStatus(int, OrbisVideoOutResolutionStatus *status);
 
 void sceVideoOutAddBuffer();
 void sceVideoOutAddBuffer4k2kPrivilege();
@@ -86,13 +81,11 @@ void sceVideoOutGetHdmiMonitorInfo_();
 void sceVideoOutGetHdmiMonitorInfoNoMask_();
 void sceVideoOutGetPortStatusInfo_();
 void sceVideoOutGetPortStatusInfoByBusSpecifier_();
-void sceVideoOutGetResolutionStatus();
 void sceVideoOutGetStatusForWebcore();
 void sceVideoOutGetVblankStatus();
 void sceVideoOutGetVideoOutModeByBusSpecifier_();
 void sceVideoOutHdmiMonitorInfoIsSupportedHdcpVersion_();
 void sceVideoOutHdmiMonitorInfoIsSupportedVideoOutMode_();
-void sceVideoOutIsFlipPending();
 void sceVideoOutLockBuffer();
 void sceVideoOutModeSetAny_();
 void sceVideoOutRazorAddCallback();

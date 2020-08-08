@@ -36,6 +36,10 @@
 # include <threads.h>
 #endif
 
+#if defined(PS4)
+# include <orbis/libkernel.h>
+#endif
+
 #if defined(_LIBCPP_HAS_THREAD_LIBRARY_EXTERNAL) || \
     defined(_LIBCPP_BUILDING_THREAD_LIBRARY_EXTERNAL) || \
     defined(_LIBCPP_HAS_THREAD_API_WIN32)

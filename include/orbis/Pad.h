@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include <orbis/_types/pad.h>
+#include <orbis/_types/errors.h>
 
 
 #ifdef __cplusplus 

@@ -54,37 +54,37 @@ bool Controller::CheckButtonsPressed(int stateToCheck)
 	scePadReadState(this->pad, &this->padData);
 	setButtonState(this->padData.buttons);
         
-	if (stateToCheck & PAD_BUTTON_TRIANGLE && !(this->buttonState & PAD_BUTTON_TRIANGLE))
+	if (stateToCheck & ORBIS_PAD_BUTTON_TRIANGLE && !(this->buttonState & ORBIS_PAD_BUTTON_TRIANGLE))
 		return false;
-	if (stateToCheck & PAD_BUTTON_CIRCLE && !(this->buttonState & PAD_BUTTON_CIRCLE))
+	if (stateToCheck & ORBIS_PAD_BUTTON_CIRCLE && !(this->buttonState & ORBIS_PAD_BUTTON_CIRCLE))
 		return false;
-	if (stateToCheck & PAD_BUTTON_X && !(this->buttonState & PAD_BUTTON_X))
+	if (stateToCheck & ORBIS_PAD_BUTTON_CROSS && !(this->buttonState & ORBIS_PAD_BUTTON_CROSS))
 		return false;
-	if (stateToCheck & PAD_BUTTON_SQUARE && !(this->buttonState & PAD_BUTTON_SQUARE))
+	if (stateToCheck & ORBIS_PAD_BUTTON_SQUARE && !(this->buttonState & ORBIS_PAD_BUTTON_SQUARE))
 		return false;
-	if (stateToCheck & PAD_BUTTON_L1 && !(this->buttonState & PAD_BUTTON_L1))
+	if (stateToCheck & ORBIS_PAD_BUTTON_L1 && !(this->buttonState & ORBIS_PAD_BUTTON_L1))
 		return false;
-	if (stateToCheck & PAD_BUTTON_R1 && !(this->buttonState & PAD_BUTTON_R1))
+	if (stateToCheck & ORBIS_PAD_BUTTON_R1 && !(this->buttonState & ORBIS_PAD_BUTTON_R1))
 		return false;
-	if (stateToCheck & PAD_BUTTON_L2 && !(this->buttonState & PAD_BUTTON_L2))
+	if (stateToCheck & ORBIS_PAD_BUTTON_L2 && !(this->buttonState & ORBIS_PAD_BUTTON_L2))
 		return false;
-	if (stateToCheck & PAD_BUTTON_R2 && !(this->buttonState & PAD_BUTTON_R2))
+	if (stateToCheck & ORBIS_PAD_BUTTON_R2 && !(this->buttonState & ORBIS_PAD_BUTTON_R2))
 		return false;
-	if (stateToCheck & PAD_BUTTON_L3 && !(this->buttonState & PAD_BUTTON_L3))
+	if (stateToCheck & ORBIS_PAD_BUTTON_L3 && !(this->buttonState & ORBIS_PAD_BUTTON_L3))
 		return false;
-	if (stateToCheck & PAD_BUTTON_R3 && !(this->buttonState & PAD_BUTTON_R3))
+	if (stateToCheck & ORBIS_PAD_BUTTON_R3 && !(this->buttonState & ORBIS_PAD_BUTTON_R3))
 		return false;
-	if (stateToCheck & PAD_BUTTON_START && !(this->buttonState & PAD_BUTTON_START))
+	if (stateToCheck & ORBIS_PAD_BUTTON_OPTIONS && !(this->buttonState & ORBIS_PAD_BUTTON_OPTIONS))
 		return false;
-	if (stateToCheck & PAD_BUTTON_DPAD_UP && !(this->buttonState & PAD_BUTTON_DPAD_UP))
+	if (stateToCheck & ORBIS_PAD_BUTTON_UP && !(this->buttonState & ORBIS_PAD_BUTTON_UP))
 		return false;
-	if (stateToCheck & PAD_BUTTON_DPAD_RIGHT && !(this->buttonState & PAD_BUTTON_DPAD_RIGHT))
+	if (stateToCheck & ORBIS_PAD_BUTTON_RIGHT && !(this->buttonState & ORBIS_PAD_BUTTON_RIGHT))
 		return false;
-	if (stateToCheck & PAD_BUTTON_DPAD_DOWN && !(this->buttonState & PAD_BUTTON_DPAD_DOWN))
+	if (stateToCheck & ORBIS_PAD_BUTTON_DOWN && !(this->buttonState & ORBIS_PAD_BUTTON_DOWN))
 		return false;
-	if (stateToCheck & PAD_BUTTON_DPAD_LEFT && !(this->buttonState & PAD_BUTTON_DPAD_LEFT))
+	if (stateToCheck & ORBIS_PAD_BUTTON_LEFT && !(this->buttonState & ORBIS_PAD_BUTTON_LEFT))
 		return false;
-	if (stateToCheck & PAD_BUTTON_TOUCHPAD && !(this->buttonState & PAD_BUTTON_TOUCHPAD))
+	if (stateToCheck & ORBIS_PAD_BUTTON_TOUCH_PAD && !(this->buttonState & ORBIS_PAD_BUTTON_TOUCH_PAD))
 		return false;
 
 	return true;
@@ -92,81 +92,81 @@ bool Controller::CheckButtonsPressed(int stateToCheck)
 
 bool Controller::TrianglePressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_TRIANGLE);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_TRIANGLE);
 }
 
 bool Controller::CirclePressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_CIRCLE);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_CIRCLE);
 }
 
 bool Controller::XPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_X);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_CROSS);
 }
 
 bool Controller::SquarePressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_SQUARE);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_SQUARE);
 }
 
 bool Controller::L1Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_L1);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_L1);
 }
 
 bool Controller::L2Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_L2);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_L2);
 }
 
 bool Controller::R1Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_R1);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_R1);
 }
 
 bool Controller::R2Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_R2);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_R2);
 }
 
 bool Controller::L3Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_L3);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_L3);
 }
 
 bool Controller::R3Pressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_R3);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_R3);
 }
 
 bool Controller::StartPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_START);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_OPTIONS);
 }
 
 bool Controller::DpadUpPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_DPAD_UP);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_UP);
 }
 
 bool Controller::DpadRightPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_DPAD_RIGHT);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_RIGHT);
 }
 
 bool Controller::DpadDownPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_DPAD_DOWN);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_DOWN);
 }
 
 bool Controller::DpadLeftPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_DPAD_LEFT);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_LEFT);
 }
 
 bool Controller::TouchpadPressed()
 {
-	return CheckButtonsPressed(PAD_BUTTON_TOUCHPAD);
+	return CheckButtonsPressed(ORBIS_PAD_BUTTON_TOUCH_PAD);
 }
 

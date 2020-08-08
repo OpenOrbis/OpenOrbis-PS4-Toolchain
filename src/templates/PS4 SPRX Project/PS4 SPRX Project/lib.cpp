@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "libexample.h"
+#include "lib.h"
 
 // Your library definitions here...
 

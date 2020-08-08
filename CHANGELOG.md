@@ -1,8 +1,34 @@
 # Changelog
 
-
-
 ## Beta
+
+**v0.5 - August 7th, 2020**
+
+- The toolchain now includes stub/empty libc and libSceFios2 modules to avoid breaking non-homebrew games and applications!
+  - *Note: This change works in conjunction with Mira, meaning you'll want to update the version of Mira you're loading as well.*
+  - *Additional note: these modules can be found in /bin/data/modules/libc.prx and /bin/data/modules/libSceFios2.prx, and should be placed in `sce_module/` in your homebrew's package file.*
+- SDL2 headers as well as a mini game sample have now been added (thanks znullptr for the original SDL port)!
+- C++ threading (std::thread) support has been added!
+- C++ locking / synchronization support has been added!
+- Fixed a performance issue in create-eboot, giving it a 7858% performance boost (measured with the SDL sample)!
+- Visual studio project templates now support and link with C++ by default.
+- Added various macros and function definitions to libkernel, libScePad, libSceUserService, and libSceVideoOut, as well as documentation for these additions.
+- Added right.prx by IDC to all samples (thanks IDC for right.prx).
+- Slightly adjusted sample pkg gp4 files to use the same eboot.bin created by build scripts instead of unnecessarily using a copy.
+- Fixed jagged text rendering in `/samples/_common/graphics.cpp` due to not factoring in the freetype greyscale bitmap alpha properly.
+- Buffering is now disabled on stdout automatically due to it not handling buffering well.
+- Updated pthread header to use PS4/BSD-specific values.
+- Samples now have DWARF / debug symbols included by default (thanks sleirsgoevy).
+- Reworked the threading sample to use std::thread and std::mutex now that C++ threading is supported.
+- Reworked the networking sample to a TCP server instead of a TCP client.
+- Fixed an issue where a really silly FreeBSD change broke any networking functions that need to use the sockaddr struct such as bind.
+- Fixed an issue where GP4 project files were using non-portable windows-style path separators (thanks sleirsgoevy).
+- Fixed an issue where the non-sce sleep() function didn't work due to a MUSL-related issues (thanks LM, ChendoChap).
+- Fixed an issue where SPRX visual studio projects contained a typo in an include statement and an incorrect set of libraries for the build script.
+- Fixed the cmath c++ header, which included `using` statements for functions that are macros on FreeBSD targets (thanks kiwidog).
+- Fixed an issue where the `sockaddr_in` structure was incorrect due to a discrepancy between Linux and FreeBSD (thanks kiwidog).
+- Fixed an issue where the pipe() function didn't work due to a discrepancy between Linux and FreeBSD (thanks sleirsgoevy).
+- Fixed an issue where AF_INET6 was erroneously set to 10 due to a discrepancy between Linux and FreeBSD (thanks sleirsgoevy).
 
 **v0.4 - June 23rd, 2020**
 

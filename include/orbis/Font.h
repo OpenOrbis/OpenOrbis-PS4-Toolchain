@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <orbis/_types/font.h>
+#include <orbis/_types/errors.h>
 
 #if defined(__cplusplus)
 extern "C" {

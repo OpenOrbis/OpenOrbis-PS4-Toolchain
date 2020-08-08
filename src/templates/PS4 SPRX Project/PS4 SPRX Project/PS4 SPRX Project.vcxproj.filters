@@ -20,11 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libExample.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.bat" />
+    <ClInclude Include="lib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

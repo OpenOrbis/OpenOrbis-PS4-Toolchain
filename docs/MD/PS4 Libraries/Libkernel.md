@@ -58,8 +58,40 @@ Semaphore attributes.
 #define ORBIS_KERNEL_SEMA_ATTR_TH_PRIO   0x02
 ```
 
+Direct memory attributes.
+
+```c
+#define ORBIS_KERNEL_MAIN_DMEM_SIZE 0x180000000u
+```
+
+Memory types.
+
+```c
+#define ORBIS_KERNEL_WB_ONION  0x0
+#define ORBIS_KERNEL_WC_GARLIC 0x3 // Garlic+?
+#define ORBIS_KERNEL_WB_GARLIC 0xA
+```
+
+Memory protections.
+
+```c
+// CPU
+#define ORBIS_KERNEL_PROT_CPU_READ  0x01
+#define ORBIS_KERNEL_PROT_CPU_WRITE 0x02
+#define ORBIS_KERNEL_PROT_CPU_RW    (ORBIS_KERNEL_PROT_CPU_READ | ORBIS_KERNEL_PROT_CPU_WRITE)
+#define ORBIS_KERNEL_PROT_CPU_EXEC  0x04
+#define ORBIS_KERNEL_PROT_CPU_ALL   (ORBIS_KERNEL_PROT_CPU_RW | ORBIS_KERNEL_PROT_CPU_EXEC)
+
+// GPU
+#define ORBIS_KERNEL_PROT_GPU_READ  0x10
+#define ORBIS_KERNEL_PROT_GPU_WRITE 0x20
+#define ORBIS_KERNEL_PROT_GPU_RW    (ORBIS_KERNEL_PROT_GPU_READ | ORBIS_KERNEL_PROT_GPU_WRITE)
+#define ORBIS_KERNEL_PROT_GPU_ALL   ORBIS_KERNEL_PROT_GPU_RW
+```
+
 ### Known Globals
-Libkernel also contains globals, among which is heap settings for libc. These are usually initialized by the CRT and are often used in homebrew because by default the PS4 heap is extremely limited (14mb or so cap).
+
+Libkernel also contains globals, among which is heap settings for libc. ~~These are usually initialized by the CRT and are often used in homebrew because by default the PS4 heap is extremely limited (14mb or so cap).~~ This is no longer the case since MUSL has been ported; these globals are ignored.
 
 **uint64_t sceLibcHeapSize**: Maximum heap size libc can use
 **uint32_t sce_libc_heap_delayed_alloc**: Unknown?
@@ -169,3 +201,4 @@ Sleeps the calling thread for `usecs` microseconds.
 
 ### Reversing Credits
 - Various scene developers + BSD documentation
+- alexaltea

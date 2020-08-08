@@ -15,11 +15,11 @@ set outputOelf=%intdir%\%targetname%.oelf
 
 Rem Compile object files for all the source files
 for %%f in (*.cpp) do (
-    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array -DGRAPHICS_USES_FONT -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -DGRAPHICS_USES_FONT -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 for %%f in (..\..\_common\*.cpp) do (
-    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array -DGRAPHICS_USES_FONT -emit-obj -o %intdir%\%%~nf.o ..\..\_common\%%~nf.cpp
+    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -DGRAPHICS_USES_FONT -emit-obj -o %intdir%\%%~nf.o ..\..\_common\%%~nf.cpp
 )
 
 Rem Get a list of object files for linking

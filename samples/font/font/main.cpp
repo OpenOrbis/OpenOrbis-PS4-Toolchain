@@ -55,7 +55,7 @@ int main()
     fgColor = { 255, 255, 255 };
 
     // Initialize the font faces with arial (must be included in the package root!)
-    const char *font = "/app0/arial.ttf";
+    const char *font = "/app0/Gontserrat-Regular.ttf";
     
     DEBUGLOG << "Initializing font (" << font << ")";
 

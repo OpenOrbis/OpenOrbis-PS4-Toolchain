@@ -3,7 +3,7 @@ PROJDIR   	:= $(shell basename $(CURDIR))
 INTDIR    	:= $(PROJDIR)/x64/Debug
 
 # Libraries linked into the ELF.
-LIBS 		:= -lc -lkernel -lScePad -lSceUserService
+LIBS 		:= -lc -lkernel -lc++
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
@@ -19,9 +19,9 @@ ifeq ($(UNAME_S),Darwin)
 endif
 ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
-IDIRS 		:= -I$(TOOLCHAIN)/include
+IDIRS 		:= -I$(TOOLCHAIN)/include -I$(TOOLCHAIN)/include/c++/v1
 LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -emit-obj
+CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -emit-obj
 LFLAGS 		:= -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
 CFILES 		:= $(wildcard $(SDIR)/*.c)
@@ -42,6 +42,9 @@ $(ODIR)/%.o: $(SDIR)/%.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR)/%.o: $(SDIR)/%.cpp
+	$(CC) $(CFLAGS) -o $@ $<
+	
+$(ODIR)/%.o: $(COMMONDIR)/%.cpp
 	$(CC) $(CFLAGS) -o $@ $<
 
 $(ODIR):

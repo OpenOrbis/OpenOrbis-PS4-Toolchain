@@ -13,7 +13,7 @@ set outputOelf=%intdir%%targetname%.oelf
 
 Rem Compile object files for all the source files
 for %%f in (*.cpp) do (
-    clang++ -cc1 -triple x86_64-scei-ps4-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ -cc1 -triple x86_64-scei-ps4-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 Rem Get a list of object files for linking

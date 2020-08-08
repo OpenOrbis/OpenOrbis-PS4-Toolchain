@@ -1,7 +1,7 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Libraries to link in
-set libraries=-lc -lkernel -lScePad -lSceUserService
+set libraries=-lc -lkernel -lc++
 
 Rem Read the script arguments into local vars
 set intdir=%1
@@ -15,7 +15,7 @@ set outputOelf=%intdir%\%targetname%.oelf
 
 Rem Compile object files for all the source files
 for %%f in (*.cpp) do (
-    clang++ -cc1 -triple x86_64-scei-ps4-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 Rem Get a list of object files for linking

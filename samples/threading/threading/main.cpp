@@ -1,5 +1,7 @@
 #include <sstream>
 #include <iostream>
+#include <thread>
+#include <mutex>
 #include <orbis/libkernel.h>
 
 #include "../../_common/graphics.h"
@@ -27,14 +29,16 @@ int frameID = 0;
 
 // Threading stuff
 std::stringstream screenTextStream;
-OrbisPthread myThreadA;
-OrbisPthread myThreadB;
+std::mutex mtx;
 
 void threadedFunctionA()
 {
     for (int count = 0; count < 10; count++)
     {
+        mtx.lock();
         screenTextStream << "Thread A is running: " << count << "\n";
+        mtx.unlock();
+
         sceKernelUsleep(2 * 100000);
     }
 }
@@ -43,8 +47,11 @@ void threadedFunctionB()
 {
     for (int count = 0; count < 10; count++)
     {
+        mtx.lock();
         screenTextStream << "Thread B is running: " << count << "\n";
-        sceKernelUsleep(2 * 110000);
+        mtx.unlock();
+
+        sceKernelUsleep(2 * 100000);
     }
 }
 
@@ -73,7 +80,7 @@ int main()
     fgColor = { 255, 255, 255 };
 
     // Initialize the font faces with arial (must be included in the package root!)
-    const char *font = "/app0/arial.ttf";
+    const char *font = "/app0/Gontserrat-Regular.ttf";
     
     DEBUGLOG << "Initializing font (" << font << ")";
 
@@ -82,13 +89,12 @@ int main()
     	DEBUGLOG << "Failed to initialize font '" << font << "'";
     	for(;;);
     }
+
+    DEBUGLOG << "Entering draw loop...";
     
     // Setup threads
-    scePthreadCreate(&myThreadA, NULL, (void *)threadedFunctionA, NULL, "example_pthread_a");
-    
-    scePthreadCreate(&myThreadB, NULL, (void *)threadedFunctionB, NULL, "example_pthread_b");
-    
-    DEBUGLOG << "Entering draw loop...";
+    std::thread t1(threadedFunctionA);
+    std::thread t2(threadedFunctionB);
 
     // Draw loop
     for (;;)
