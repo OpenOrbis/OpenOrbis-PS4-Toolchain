@@ -503,6 +503,8 @@ func buildNIDEntry(symbolName string, moduleId int) string {
 	// Allow unknown symbols and allow arbitrary NIDs if the prefix is `__PS4_NID_`
 	if strings.HasPrefix(symbolName, "__PS4_NID_") {
 		nid = strings.Split(symbolName, "_NID_")[1]
+		nid = strings.Replace(nid, "_plus", "+", -1)
+		nid = strings.Replace(nid, "_minus", "-", -1)
 	} else {
 		nid = calculateNID(symbolName)
 	}
