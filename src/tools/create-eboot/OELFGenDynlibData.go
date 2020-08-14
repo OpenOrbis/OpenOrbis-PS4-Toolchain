@@ -572,7 +572,9 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 				Info: symbol.Info,
 			})
 
-			numSymbols++
+			numSymbols++ // should it go outside?
+		} else {
+			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{})
 		}
 	}
 
@@ -694,6 +696,8 @@ func writeRelocationTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 			rAddend := orbisElf.ElfToConvert.ByteOrder.Uint64(oldRelaDynTableData[0x10:0x18])
 
 			oldRelaDynTableData = oldRelaDynTableData[0x18:]
+
+			rInfo += 0x100000000 // increment symbol idx to account for SECTION
 
 			_ = binary.Write(relocationTableBuff, binary.LittleEndian, elf.Rela64{
 				Off:    rOffset,
