@@ -697,11 +697,9 @@ func writeRelocationTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 			oldRelaDynTableData = oldRelaDynTableData[0x18:]
 
-			rInfo += 0x100000000 // increment symbol idx to account for SECTION
-
 			_ = binary.Write(relocationTableBuff, binary.LittleEndian, elf.Rela64{
 				Off:    rOffset,
-				Info:   rInfo,
+				Info:   rInfo + (1 << 32), // Add one to the symbol index to account for STT_SECTION
 				Addend: int64(rAddend),
 			})
 		}
