@@ -63,7 +63,7 @@ brew install llvm
 
 In the future, we may include pre-built binaries for clang/lld, however for the present, it is required for you to install these separately.
 
-The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, this can be done using the environment variables control panel. On linux and macOS, the following command can be added to `~/.bashrc` (Debian/Ubuntu), `~/.bash_profile` (macOS Mojave and lover) or `~/.zshrc` (macOS Catalina):
+The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, this can be done using the environment variables control panel. On linux and macOS, the following command can be added to `~/.bashrc` (Debian/Ubuntu), `~/.bash_profile` (macOS Mojave and lower) or `~/.zshrc` (macOS Catalina):
 
 ```
 export OO_PS4_TOOLCHAIN=[directory of installation]
