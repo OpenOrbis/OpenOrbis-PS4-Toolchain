@@ -1,4 +1,4 @@
-OpenOrbis PS4 Toolchain will be installed at /opt/OpenOrbis-PS4-Toolchain and the installer will automatically set the OO_PS4_TOOLCHAIN environment variable for you in both bash (Mojave and lover) and zsh (Catalina) shells. If you use another shell you will need to set the environment variable for yourself.
+OpenOrbis PS4 Toolchain will be installed at /opt/OpenOrbis-PS4-Toolchain and the installer will automatically set the OO_PS4_TOOLCHAIN environment variable for you in both bash (Mojave and lower) and zsh (Catalina) shells. If you use another shell you will need to set the environment variable for yourself.
 
 Some samples are included in /OpenOrbis-PS4-Toolchain/samples and you can find some docs too at /OpenOrbis-PS4-Toolchain/docs.
 
