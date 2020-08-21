@@ -28,6 +28,11 @@ SECTIONS
 		*(.data.rel.ro)
 	}
 
+	.tls : ALIGN(0x4000) {
+		*(.tdata);
+		*(.tbss);
+	}
+
 	# Align .got to 0x4000 if .data.rel.ro doesn't exist
 	. = (SIZEOF(.data.rel.ro) > 0 ? . : ALIGN(.,0x4000));
 	.got : {
