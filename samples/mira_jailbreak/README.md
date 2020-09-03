@@ -1,24 +1,24 @@
-# Sample: hello_world
+# Sample: Mira Jailbreak sample
 
 [![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code for calling printf to print a hello world string to the console, as well as calling SCE's usleep from libkernel. This project is mostly meant as an example for what the build scripts and what not look like for using the toolchain.
+This project contains example code for calling the Mira Driver to jailbreak a given process.
 
 
 
 ## Directory structure
 ```
-samples/hello_world
-|-- hello_world 
+samples/mira_jailbreak
+|-- mira_jailbreak 
     |-- x64
         |-- Debug                      // Object files / intermediate directory
     |-- build.bat                      // Batch file for building on Windows
-    |-- hello_world.vcxproj            // Visual studio project files
-    |-- hello_world.vcxproj.filters
-    |-- hello_world.cvxproj.user
+    |-- mira_jailbreak.vcxproj            // Visual studio project files
+    |-- mira_jailbreak.vcxproj.filters
+    |-- mira_jailbreak.cvxproj.user
     |-- main.cpp                       // main source file
 |-- eboot.bin                          // final eboot (not present until built)
-|-- hello_world.sln                    // Visual studio solution file
+|-- mira_jailbreak.sln                    // Visual studio solution file
 |-- Makefile                           // Make rules for building on Linux
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
@@ -56,3 +56,5 @@ make
 ## Author(s)
 
 - Specter
+- LM
+- Kiwi
