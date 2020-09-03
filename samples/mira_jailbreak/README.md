@@ -17,6 +17,7 @@ samples/mira_jailbreak
     |-- mira_jailbreak.vcxproj.filters
     |-- mira_jailbreak.cvxproj.user
     |-- main.cpp                       // main source file
+    |-- mira_header.h                       // Mira IOCTL Structs and enums
 |-- eboot.bin                          // final eboot (not present until built)
 |-- mira_jailbreak.sln                    // Visual studio solution file
 |-- Makefile                           // Make rules for building on Linux
