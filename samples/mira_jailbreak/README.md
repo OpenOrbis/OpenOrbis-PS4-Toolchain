@@ -43,7 +43,7 @@ To build this project, the developer will need clang, which is provided in the t
 __Windows__
 Open the Visual Studio project and build, or run the batch file from command prompt or powershell with the following command:
 ```
-.\build.bat .\x64\Debug "hello_world" "%OO_PS4_TOOLCHAIN%\\samples\\hello_world"
+.\build.bat .\x64\Debug "mira_jailbreak" "%OO_PS4_TOOLCHAIN%\\samples\\mira_jailbreak"
 ```
 
 __Linux__
