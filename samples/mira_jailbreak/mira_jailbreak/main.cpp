@@ -51,29 +51,17 @@ int jailbreak()
 			if (ret >= 0)
 			{
 				close(ret);
+				close(mira_fd);
 				unlink("/user/.test");
 
 				printf("Jailbreak Successfully\n");
 				return SUCCESS;
 			}
-			else
-			{
-
-				close(ret);
-				return JAILBREAK_FAILED;
-			}
-
-
-		}
-		else
-		{
-			return JAILBREAK_FAILED;
+			close(mira_fd);
+		
 		}
 	}
-	else
-	{
-		return JAILBREAK_FAILED;
-	}
+
 	return JAILBREAK_FAILED;
 }//
 
