@@ -23,7 +23,7 @@ static __inline uint16_t __bswap16(uint16_t __x)
 
 static __inline uint32_t __bswap32(uint32_t __x)
 {
-	return __x>>24 | __x>>8&0xff00 | __x<<8&0xff0000 | __x<<24;
+	return __x>>24 | (__x>>8&0xff00) | (__x<<8&0xff0000) | __x<<24;
 }
 
 static __inline uint64_t __bswap64(uint64_t __x)
