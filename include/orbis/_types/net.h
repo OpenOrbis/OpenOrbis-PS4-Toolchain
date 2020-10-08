@@ -51,6 +51,6 @@ typedef struct OrbisNetUdpSndOnSuspend {
 } OrbisNetUdpSndOnSuspend;
 
 typedef struct OrbisNetDnsInfo {
-	in_addr_t primary_dns;
-	in_addr_t secondary_dns;
+	OrbisNetInAddr_t primary_dns;
+	OrbisNetInAddr_t secondary_dns;
 } OrbisNetDnsInfo;
