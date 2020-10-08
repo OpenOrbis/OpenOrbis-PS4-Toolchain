@@ -49,3 +49,8 @@ typedef struct OrbisNetUdpSndOnSuspend {
 	void *data;
 	OrbisNetSocklen_t datalen;
 } OrbisNetUdpSndOnSuspend;
+
+typedef struct OrbisNetDnsInfo {
+	in_addr_t primary_dns;
+	in_addr_t secondary_dns;
+} OrbisNetDnsInfo;

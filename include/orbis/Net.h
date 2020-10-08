@@ -202,7 +202,7 @@ void sceNetFreeAllRouteInfo();
 // Empty Comment
 void sceNetGetArpInfo();
 // Empty Comment
-void sceNetGetDnsInfo();
+int sceNetGetDnsInfo(OrbisNetDnsInfo*);
 // Empty Comment
 void sceNetGetIfList();
 // Empty Comment
