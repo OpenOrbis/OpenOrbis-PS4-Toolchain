@@ -38,7 +38,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	}
 
 	// PT_TLS - Empty TLS header. Unsure if it's needed, but we'll add it anyways as it's not hard to generate.
-	tlsHeader := generateTLSHeader()
+	oldTlsHeader := orbisElf.getProgramHeader(elf.PT_TLS, elf.PF_R)
+	tlsHeader := generateEmptyTLSHeader()
+	if oldTlsHeader != nil {
+		tlsHeader = generateTLSHeader(oldTlsHeader)
+	}
 	orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, tlsHeader)
 
 	// PT_LOAD - The text segment.
@@ -169,8 +173,8 @@ func generateInterpreterHeader(interpreterOffset uint64) elf.Prog64 {
 	}
 }
 
-// generateTLSHeader creates a program header for TLS. Returns the final program header.
-func generateTLSHeader() elf.Prog64 {
+// generateEmptyTLSHeader creates an empty program header for TLS. Returns the final program header.
+func generateEmptyTLSHeader() elf.Prog64 {
 	return elf.Prog64{
 		Type:   uint32(elf.PT_TLS),
 		Flags:  uint32(elf.PF_R),
@@ -195,6 +199,18 @@ func generateTextHeader(originalTextHeader *elf.Prog) elf.Prog64 {
 		Filesz: originalTextHeader.Filesz,
 		Memsz:  originalTextHeader.Memsz,
 		Align:  0x4000,
+	}
+}
+func generateTLSHeader(originalTLSHeader *elf.Prog) elf.Prog64 {
+	return elf.Prog64{
+		Type:   uint32(originalTLSHeader.Type),
+		Flags:  uint32(originalTLSHeader.Flags),
+		Vaddr:  originalTLSHeader.Vaddr,
+		Paddr:  originalTLSHeader.Paddr,
+		Off:    originalTLSHeader.Off,
+		Filesz: originalTLSHeader.Filesz,
+		Memsz:  originalTLSHeader.Memsz,
+		Align:  1,
 	}
 }
 
