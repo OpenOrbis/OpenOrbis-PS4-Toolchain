@@ -4,6 +4,7 @@ name: Build and Push to Docker Hub
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   main:
