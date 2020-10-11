@@ -17,30 +17,30 @@ The most common use case for each method is as follows:
 Windows:
 
 ```shell
-docker run -w /build -v "%cd%":/build openorbis/toolchain:latest make
+docker run -w /workspace -v "%cd%":/workspace openorbis/toolchain:latest make
 ```
 
 Linux/OSX/BSD:
 
 ```shell
-docker run -w /build -v "$(pwd)":/build openorbis/toolchain:latest make
+docker run -w /workspace -v "$(pwd)":/workspace openorbis/toolchain:latest make
 ```
 
 This one-liner will run the `make` command from your current working directory as if it were on a machine with the latest Open Orbis Toolchain installed and working as expected. You can use this to launch a custom script as necessary. See the [Build Script] section for some caveats.
 
 ### Github Actions
 
-The following action will use the Open Orbis Toolchain v0.5 to run `make` in the projects `hello_world` directory, then use `pkg/pkg.gp4` to build a PKG file.
+The following action will use the Open Orbis Toolchain v0.5 to run `make` in the project's `hello_world` directory, then use `PkgTool.Core pkg_build pkg/pkg.gp4 .` to build a PKG file.
 
 ```yml
 - name: Run Open Orbis Toolchain
         uses: OpenOrbis/toolchain-action@main
         with:
           version: v0.5
-          command: cd hello_world; make; PkgTool.Core pkg/pkg.gp4 .
+          command: cd hello_world; make; PkgTool.Core pkg_build pkg/pkg.gp4 .
 ```
 
-You could also run the build script `action.sh` from the projects root directory with the latest Open Orbis Toolchain release with the following action:
+You could also run the [Build Script] `action.sh` from the project's root directory with the latest Open Orbis Toolchain release with the following action:
 
 ```yml
 - name: Run Open Orbis Toolchain
@@ -57,20 +57,24 @@ You can open an interactive shell within the container with the following comman
 Windows:
 
 ```shell
-docker run -it --entrypoint=/bin/sh -v "%cd%":/build openorbis/toolchain
+docker run -it --entrypoint=/bin/bash -v "%cd%":/workspace openorbis/toolchain
 ```
 
 Linux/OSX/BSD:
 
 ```shell
-docker run -it --entrypoint=/bin/sh -v "$(pwd)":/build openorbis/toolchain
+docker run -it --entrypoint=/bin/bash -v "$(pwd)":/workspace openorbis/toolchain
 ```
 
-**Note:** In the above commands only changes made in the `/build` directory will remain as it is the mounted directory and is actually on the host machine.
+**Note:** In the above commands only changes made in the `/workspace` directory will remain as it is the mounted directory and is actually on the host machine.
 
-## Docker
+## Docker Requirement
 
 To use the "[CLI Access]" and "[Single Line Build]" method you must have [Docker] installed locally.
+
+### Building Docker Image
+
+When manually building a Docker image based on the Dockerfile you must specify the version of the toolcahin to build for with `--build-arg OO_TOOLCHAIN_VERSION=` ex. `docker build -t "ootoolchain:v0.5" . --build-arg OO_TOOLCHAIN_VERSION=v0.5`
 
 ## Build Script
 
@@ -102,7 +106,8 @@ Additional support will be provided in the [Open Orbis Discord] server.
    [Single Line Build]: <#single-line-build>
    [Github Actions]: <#github-actions>
    [CLI Access]: <#cli-access>
-   [Docker]: <#docker>
+   [Docker Requirement]: <#docker-requirement>
+   [Building Docker Image]: <#building-docker-image>
    [Build Script]: <#build-script>
    [Other Tips]: <#other-tips>
    [Docker Development]: <#docker-development>
