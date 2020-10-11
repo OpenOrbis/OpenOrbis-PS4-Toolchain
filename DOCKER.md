@@ -30,21 +30,21 @@ This one-liner will run the `make` command from your current working directory a
 
 ### Github Actions
 
-The following action will use the Open Orbis Toolchain v0.5 to run `make` in the projects `hello_world` directory.
+The following action will use the Open Orbis Toolchain v0.5 to run `make` in the projects `hello_world` directory, then use `pkg/pkg.gp4` to build a PKG file.
 
 ```yml
 - name: Run Open Orbis Toolchain
-        uses: openorbis/toolchain-action@v1
+        uses: OpenOrbis/toolchain-action@main
         with:
           version: v0.5
-          command: cd hello_world; make
+          command: cd hello_world; make; PkgTool.Core pkg/pkg.gp4 .
 ```
 
-You could also run the [Build Script] `action.sh` from the projects root directory with the latest Open Orbis Toolchain release with the following action:
+You could also run the build script `action.sh` from the projects root directory with the latest Open Orbis Toolchain release with the following action:
 
 ```yml
 - name: Run Open Orbis Toolchain
-        uses: openorbis/toolchain-action@v1
+        uses: OpenOrbis/toolchain-action@main
         with:
           version: latest
           command: bash action.sh
@@ -77,8 +77,8 @@ To use the "[CLI Access]" and "[Single Line Build]" method you must have [Docker
 Some notes to keep in mind:
 
 - This is a minimal Ubuntu 20.04  installation. You'll need to install other applications as necessary
-- The working directory will be the directory the script is located in
-- Use should use relative paths for locations for files within the mounted folder
+- The working directory will be the repo's root directory
+- Use relative paths for locations within the repo's directory
 - **ANY error should stop the Github Action immediately**
 
 ## Other Tips
