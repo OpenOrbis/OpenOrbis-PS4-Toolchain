@@ -9,6 +9,7 @@ RUN apt-get update && \
       build-essential=12.8ubuntu1 \
       clang=1:10.0-50~exp1 \
       libicu66=66.1-2ubuntu2 \
+      libssl1.1=1.1.1f-1ubuntu2 \
       lld=1:10.0-50~exp1 && \
     rm -rf /var/lib/apt/lists/*
 
@@ -32,8 +33,8 @@ ARG OO_TOOLCHAIN_VERSION
 # Download the latest Linux release and extract to the $OO_PS4_TOOLCHAIN directory
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN mkdir -p $OO_PS4_TOOLCHAIN/ && \
-    curl -sL https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/$OO_TOOLCHAIN_VERSION/$OO_TOOLCHAIN_VERSION.tar.gz | \
-    tar -xz -C $OO_PS4_TOOLCHAIN/ bin/data bin/linux include lib scripts LICENSE link.x
+    curl -L https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/download/$OO_TOOLCHAIN_VERSION/$OO_TOOLCHAIN_VERSION.tar.gz | \
+    tar -xz -C $OO_PS4_TOOLCHAIN bin/data bin/linux include lib scripts LICENSE link.x
 
 # RUNTIME STAGE: The final stage where the magic happens
 FROM base as runtime
@@ -48,3 +49,8 @@ ENV OO_TOOLCHAIN_VERSION=$OO_TOOLCHAIN_VERSION
 
 # Copy the SDK from the setup stage to this stage
 COPY --from=setup ${OO_PS4_TOOLCHAIN} ${OO_PS4_TOOLCHAIN}
+
+# Create non-root user to use by default
+RUN groupadd -g 1000 orbis && \
+    useradd -r -u 1000 -g orbis orbis
+USER orbis

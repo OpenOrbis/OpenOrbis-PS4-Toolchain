@@ -50,6 +50,8 @@ You could also run the [Build Script] `action.sh` from the project's root direct
           command: bash action.sh
 ```
 
+**Note:** The provided action uses the root user as it runs on Github’s infrastructure and not your local machine. You do not need to do anything special to use privileged functions.
+
 ### CLI Access
 
 You can open an interactive shell within the container with the following command:
@@ -57,16 +59,18 @@ You can open an interactive shell within the container with the following comman
 Windows:
 
 ```shell
-docker run -it --entrypoint=/bin/bash -v "%cd%":/workspace openorbis/toolchain
+docker run -it -w /workspace --entrypoint=/bin/bash -v "%cd%":/workspace openorbis/toolchain
 ```
 
 Linux/OSX/BSD:
 
 ```shell
-docker run -it --entrypoint=/bin/bash -v "$(pwd)":/workspace openorbis/toolchain
+docker run -it -w /workspace --entrypoint=/bin/bash -v "$(pwd)":/workspace openorbis/toolchain
 ```
 
-**Note:** In the above commands only changes made in the `/workspace` directory will remain as it is the mounted directory and is actually on the host machine.
+**Note 1:** In the above commands only changes made in the `/workspace` directory will remain as it is the mounted directory and is actually on the host machine.
+
+**Note 2:** The default user used is the unprivileged "orbis" user. If you need to use privileged functions add `--user root` or `--user 0` to the command.
 
 ## Docker Requirement
 
