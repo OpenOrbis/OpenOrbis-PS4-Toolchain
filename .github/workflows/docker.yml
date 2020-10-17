@@ -2,8 +2,7 @@
 name: Build and Push to Docker Hub
 
 on:
-  release:
-    types: [published]
+  workflow_dispatch:
 
 jobs:
   main:
@@ -13,7 +12,7 @@ jobs:
       - name: Prepare Metadata
         id: prep
         run: |
-          DOCKER_IMAGE=openorbis/toolchain
+          DOCKER_IMAGE=alazif/toolchain
           VERSION=${GITHUB_REF#refs/tags/}
 
           TAGS="${DOCKER_IMAGE}:${VERSION}"
