@@ -8,6 +8,7 @@
 - Added Docker container support (thanks alazif)!
 - Added proper TLS support (thanks sleirsgoevy)!
 - Added a battery of unit tests for issues addressed in v0.5.1. These tests will be kept up to date with future additions to attempt to improve release qualities.
+- Fixed an issue where MUSL was not thread-safe due to custom CRT.
 - Added support '+' and '-' escaping in NIDs (thanks sleirsgoevy).
 - Fixed an issue where relocations could refer to incorrect symbols due to not accounting for an additional `SECTION` entry (thanks sleirsgoevy).
 - Fixed copy/paste induced bugs in the autobuild.py script (thanks alazif).
