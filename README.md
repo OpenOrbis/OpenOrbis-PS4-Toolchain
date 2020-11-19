@@ -1,6 +1,6 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.5-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
+[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.5.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
 
 [![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
@@ -172,6 +172,7 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - Lord Friky: Proper macOS support
 - sleirsgoevy: Bug fixes and support
 - ChendoChap: Bug fixes and support
+- astrelsky: Bug fixes and support
 - MrSlick: Awesome logo <3
 - OpenOrbis Team
 - Other anonymous contributors
