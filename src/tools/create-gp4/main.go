@@ -23,7 +23,9 @@ func parseFilesToTags(files []string) []string {
 	var fileTags []string
 
 	for _, file := range files {
-		fileTags = append(fileTags, fmt.Sprintf("\t\t<file targ_path=\"%s\" orig_path=\"%s\" />", file, file))
+		if file != "" {
+			fileTags = append(fileTags, fmt.Sprintf("\t\t<file targ_path=\"%s\" orig_path=\"%s\" />", file, file))
+		}
 	}
 
 	return fileTags
