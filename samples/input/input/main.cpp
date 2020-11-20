@@ -48,22 +48,22 @@ int main(void)
     }
     
     // Create PNG instances for all the sprites
-    auto controllerBackground = new PNG("/app0/assets/controller.png");
-    auto thumbstick = new PNG("/app0/assets/thumbstick.png");
-    auto touchpad = new PNG("/app0/assets/touchpad.png");
-    auto dpadUp = new PNG("/app0/assets/dpad-up.png");
-    auto dpadRight = new PNG("/app0/assets/dpad-right.png");
-    auto dpadDown = new PNG("/app0/assets/dpad-down.png");
-    auto dpadLeft = new PNG("/app0/assets/dpad-left.png");
-    auto triangleBtn = new PNG("/app0/assets/triangle.png");
-    auto circleBtn = new PNG("/app0/assets/circle.png");
-    auto xBtn = new PNG("/app0/assets/x.png");
-    auto squareBtn = new PNG("/app0/assets/square.png");
-    auto startBtn = new PNG("/app0/assets/start.png");
-    auto l1Trigger = new PNG("/app0/assets/l1.png");
-    auto l2Trigger = new PNG("/app0/assets/l2.png");
-    auto r1Trigger = new PNG("/app0/assets/r1.png");
-    auto r2Trigger = new PNG("/app0/assets/r2.png");
+    auto controllerBackground = new PNG("/app0/assets/images/controller.png");
+    auto thumbstick = new PNG("/app0/assets/images/thumbstick.png");
+    auto touchpad = new PNG("/app0/assets/images/touchpad.png");
+    auto dpadUp = new PNG("/app0/assets/images/dpad-up.png");
+    auto dpadRight = new PNG("/app0/assets/images/dpad-right.png");
+    auto dpadDown = new PNG("/app0/assets/images/dpad-down.png");
+    auto dpadLeft = new PNG("/app0/assets/images/dpad-left.png");
+    auto triangleBtn = new PNG("/app0/assets/images/triangle.png");
+    auto circleBtn = new PNG("/app0/assets/images/circle.png");
+    auto xBtn = new PNG("/app0/assets/images/x.png");
+    auto squareBtn = new PNG("/app0/assets/images/square.png");
+    auto startBtn = new PNG("/app0/assets/images/start.png");
+    auto l1Trigger = new PNG("/app0/assets/images/l1.png");
+    auto l2Trigger = new PNG("/app0/assets/images/l2.png");
+    auto r1Trigger = new PNG("/app0/assets/images/r1.png");
+    auto r2Trigger = new PNG("/app0/assets/images/r2.png");
 
     DEBUGLOG << "Entering draw loop...";
     

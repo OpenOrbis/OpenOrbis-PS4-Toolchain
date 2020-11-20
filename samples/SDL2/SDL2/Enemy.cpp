@@ -3,7 +3,7 @@
 Enemy::Enemy(SDL_Renderer* renderer, DifficultySpeedModifier difficultyLevel)
 {
     // Load the ship texture
-    SDL_Surface* shipSurface = IMG_Load("/app0/enemy.tga");
+    SDL_Surface* shipSurface = IMG_Load("/app0/assets/images/enemy.tga");
     this->texture = SDL_CreateTextureFromSurface(renderer, shipSurface);
 
     // Default x and y
