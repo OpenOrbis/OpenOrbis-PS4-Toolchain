@@ -9,7 +9,7 @@ This directory contains source files for all the tools included in the OpenOrbis
 | `./modules` | Empty library source | Specter |
 | `./templates` | Visual Studio Templates | Specter |
 | `./tools/create-eboot` | `create-eboot` / `create-lib` | Specter |
-| `./tools/create-gp4` | `create-gp4` | Specter |
+| `./tools/create-gp4` | `create-gp4` | Specter + John Tornblom |
 | `./tools/miralib` | MiraLib library | Specter |
 | `./tools/orbisLibGen` | Library stub generator | CrazyVoid |
 | `./tools/readelf` | Readelf replacement | Specter |
