@@ -28,6 +28,8 @@ docker run --rm -w /workspace -v "$(pwd)":/workspace openorbisofficial/toolchain
 
 This one-liner will run the `make` command from your current working directory as if it were on a machine with the latest Open Orbis Toolchain installed and working as expected. You can use this to launch a custom script as necessary. See the [Build Script] section for some caveats.
 
+Note: You can use `bash -c` to make a script a one liner. Example: `docker run --rm -w /workspace -v "%cd%":/workspace openorbisofficial/toolchain:latest bash -c "cd hello_world; make; PkgTool.Core pkg_build pkg/pkg.gp4 ."`
+
 ### Github Actions
 
 The following action will use the Open Orbis Toolchain v0.5 to run `make` in the project's `hello_world` directory, then use `PkgTool.Core pkg_build pkg/pkg.gp4 .` to build a PKG file.
