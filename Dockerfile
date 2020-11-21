@@ -19,7 +19,7 @@ FROM ubuntu:20.04 as setup
 # Install needed applications for downloading/setting up the SDK
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      ca-certificates=20190110ubuntu1.1 \
+      ca-certificates \
       curl=7.68.0-1ubuntu2.2 \
       tar=1.30+dfsg-7 && \
     rm -rf /var/lib/apt/lists/*
