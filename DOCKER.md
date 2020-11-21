@@ -85,6 +85,7 @@ When manually building a Docker image based on the Dockerfile you must specify t
 Some notes to keep in mind:
 
 - This is a minimal Ubuntu 20.04  installation. You'll need to install other applications as necessary
+- The default user used is the unprivileged "orbis" user. If you need to use privileged functions add `--user root` or `--user 0` to the command
 - The working directory will be the repo's root directory
 - Use relative paths for locations within the repo's directory
 - **ANY error should stop the Github Action immediately**
