@@ -281,7 +281,7 @@ void sceSslGetSslError();
 // Empty Comment
 void sceSslGetSubjectName();
 // Empty Comment
-void sceSslInit();
+int sceSslInit(size_t poolSize);
 // Empty Comment
 void sceSslLoadCert();
 // Empty Comment
