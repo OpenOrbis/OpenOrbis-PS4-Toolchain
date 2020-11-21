@@ -13,7 +13,7 @@ jobs:
       - name: Prepare Metadata
         id: prep
         run: |
-          DOCKER_IMAGE=openorbis/toolchain
+          DOCKER_IMAGE=openorbisofficial/toolchain
           VERSION=${GITHUB_REF#refs/tags/}
 
           TAGS="${DOCKER_IMAGE}:${VERSION}"
