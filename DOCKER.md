@@ -17,13 +17,13 @@ The most common use case for each method is as follows:
 Windows:
 
 ```shell
-docker run --rm -w /workspace -v "%cd%":/workspace openorbis/toolchain:latest make
+docker run --rm -w /workspace -v "%cd%":/workspace openorbisofficial/toolchain:latest make
 ```
 
 Linux/OSX/BSD:
 
 ```shell
-docker run --rm -w /workspace -v "$(pwd)":/workspace openorbis/toolchain:latest make
+docker run --rm -w /workspace -v "$(pwd)":/workspace openorbisofficial/toolchain:latest make
 ```
 
 This one-liner will run the `make` command from your current working directory as if it were on a machine with the latest Open Orbis Toolchain installed and working as expected. You can use this to launch a custom script as necessary. See the [Build Script] section for some caveats.
@@ -59,13 +59,13 @@ You can open an interactive shell within the container with the following comman
 Windows:
 
 ```shell
-docker run --rm -it -w /workspace --entrypoint=/bin/bash -v "%cd%":/workspace openorbis/toolchain
+docker run --rm -it -w /workspace --entrypoint=/bin/bash -v "%cd%":/workspace openorbisofficial/toolchain
 ```
 
 Linux/OSX/BSD:
 
 ```shell
-docker run --rm -it -w /workspace --entrypoint=/bin/bash -v "$(pwd)":/workspace openorbis/toolchain
+docker run --rm -it -w /workspace --entrypoint=/bin/bash -v "$(pwd)":/workspace openorbisofficial/toolchain
 ```
 
 **Note 1:** In the above commands only changes made in the `/workspace` directory will remain as it is the mounted directory and is actually on the host machine.
