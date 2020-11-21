@@ -38,7 +38,7 @@ The following action will use the Open Orbis Toolchain v0.5 to run `make` in the
 - name: Run Open Orbis Toolchain
         uses: OpenOrbis/toolchain-action@main
         with:
-          version: v0.5
+          version: v0.5.1
           command: cd hello_world; make; PkgTool.Core pkg_build pkg/pkg.gp4 .
 ```
 
@@ -80,7 +80,7 @@ To use the "[CLI Access]" and "[Single Line Build]" method you must have [Docker
 
 ### Building Docker Image
 
-When manually building a Docker image based on the Dockerfile you must specify the version of the toolcahin to build for with `--build-arg OO_TOOLCHAIN_VERSION=` ex. `docker build -t "ootoolchain:v0.5" . --build-arg OO_TOOLCHAIN_VERSION=v0.5`
+When manually building a Docker image based on the Dockerfile you must specify the version of the toolcahin to build for with `--build-arg OO_TOOLCHAIN_VERSION=` ex. `docker build -t "ootoolchain:v0.5.1" . --build-arg OO_TOOLCHAIN_VERSION=v0.5.1`
 
 ## Build Script
 
@@ -94,8 +94,8 @@ Some notes to keep in mind:
 
 ## Other Tips
 
-- It is possible to specify why Toolchain version to use by specifying the version in the commands. ex. `openorbis/toolchain:v0.5`, you can also use `latest` to use the most recent build.
-- `docker pull openorbis/toolchain` will update your Docker container to the latest release or `docker pull openorbis/toolchain:v0.5` to pull a specific version's update.
+- It is possible to specify why Toolchain version to use by specifying the version in the commands. ex. `openorbis/toolchain:v0.5.1`, you can also use `latest` to use the most recent build.
+- `docker pull openorbis/toolchain` will update your Docker container to the latest release or `docker pull openorbis/toolchain:v0.5.1` to pull a specific version's update.
 - Always pull the new container's data before deleting old containers as there may be overlap/cached data and will save you download time
 
 ## Docker Development
