@@ -1,6 +1,6 @@
 # Sample: library_example
 
-[![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
+[![Version](https://img.shields.io/badge/Version-1.00-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
 This project contains example code for creating a library with a dummy function. It will generate an output .prx (Playstation Relocatable Executable) for the PS4, as well as a stub .so shared object file for linking on the PC side.
 

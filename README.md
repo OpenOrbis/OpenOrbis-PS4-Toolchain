@@ -105,6 +105,11 @@ The `create-lib` tool is similar to the `create-eboot` tool, however it produces
 
 Author: Specter + flatz (fself stuff)
 
+### create-gp4
+The `create-gp4` tool generates .GP4 project files for package (pkg) generation.
+
+Author: Specter + John Tornblom (wrote python prototype the tool is based on)
+
 ### liborbispkg
 The `liborbispkg` tool takes a set of files that applications are expected to have (`eboot.bin`, `param.sfo`, necessary modules, etc.) and creates a package file (pkg) for them to install on the PS4.
 
@@ -168,6 +173,7 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - flatz: Homebrew research and writeups, SELF reversing and documentation
 - m0rph3us1987: Help with debugging stuff
 - bigboss / psxdev: Library research and reverse engineering, used for reference by various samples
+- John Tormblom: Build system prototyping
 - LightningMods / LM: Testing via APP_HOME and lib loading help on the Mira side
 - Lord Friky: Proper macOS support
 - sleirsgoevy: Bug fixes and support

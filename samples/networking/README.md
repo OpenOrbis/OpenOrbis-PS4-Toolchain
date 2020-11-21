@@ -1,14 +1,18 @@
 # Sample: networking
 
-[![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
+[![Version](https://img.shields.io/badge/Version-1.01-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
 This project contains example code for a basic TCP server that runs on `0.0.0.0:9025` and sends "Hello" to any client that connects to it before terminating the connection.
+
+- **Title ID**: BREW00085
+- **Content ID**: IV0000-BREW00085_00-NETWORKKEX000000
 
 
 
 ## Directory structure
 ```
 samples/networking
+|-- assets                            // Empty assets directory
 |-- networking
     |-- x64
         |-- Debug                     // Object files / intermediate directory
@@ -17,9 +21,18 @@ samples/networking
     |-- networking.vcxproj.filters
     |-- networking.cvxproj.user
     |-- main.cpp                      // main source file
+|-- sce_module                        // Dependency modules for the pkg
+    |-- libSceFios2.prx
+    |-- libc.prx
+|-- sce_sys                           // Package materials (metadata)
+    |-- about
+        |-- right.prx
+    |-- icon0.png
+    |-- param.sfo
 |-- eboot.bin                         // final eboot (not present until built)
-|-- networking.sln                    // Visual studio solution file
 |-- Makefile                          // Make rules for building on Linux
+|-- networking.sln                    // Visual studio solution file
+|-- pkg.gp4                           // Package project file
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 
