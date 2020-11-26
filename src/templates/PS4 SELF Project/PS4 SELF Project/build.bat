@@ -24,11 +24,11 @@ set outputOelf=%intdir%\%targetname%.oelf
 
 Rem Compile object files for all the source files
 for %%f in (*.c) do (
-    clang -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.c
+    clang -c -target x86_64-pc-freebsd-elf -funwind-tables -fPIC -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -o %intdir%\%%~nf.o %%~nf.c
 )
 
 for %%f in (*.cpp) do (
-    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ -c -target x86_64-pc-freebsd-elf -funwind-tables -fPIC -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 Rem Get a list of object files for linking
