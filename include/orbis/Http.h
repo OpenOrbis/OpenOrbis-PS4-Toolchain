@@ -1,26 +1,12 @@
+#include <stdint.h>
+#include <orbis/_types/http.h>
+
 #ifndef _SCE_HTTP_H_
 #define _SCE_HTTP_H_
-
-#include <stdint.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
-
-#define SSL_POOLSIZE 	(128 * 1024U)
-#define LIBHTTP_POOLSIZE 	(128 * 1024)
-
-typedef enum{
-	ORBIS_METHOD_GET,
-	ORBIS_METHOD_POST,
-	ORBIS_METHOD_HEAD,
-	ORBIS_METHOD_OPTIONS,
-	ORBIS_METHOD_PUT,
-	ORBIS_METHOD_DELETE,
-	ORBIS_METHOD_TRACE,
-	ORBIS_CONNECT
-} OrbisMethods;
-
 
 // Empty Comment
 void sceHttpAbortRequest();
