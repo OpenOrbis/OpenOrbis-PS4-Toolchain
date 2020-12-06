@@ -680,6 +680,8 @@ void scePthreadTestcancel(void);
 void scePthreadTimedjoin();
 // Empty Comment
 void scePthreadYield(void);
+// Empty Comment
+int ioctl(int fd, unsigned long request, ...);
 
 #ifdef __cplusplus
 }

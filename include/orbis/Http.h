@@ -7,6 +7,21 @@
 extern "C" {
 #endif
 
+#define SSL_POOLSIZE 	(128 * 1024U)
+#define LIBHTTP_POOLSIZE 	(128 * 1024)
+
+typedef enum{
+	ORBIS_METHOD_GET,
+	ORBIS_METHOD_POST,
+	ORBIS_METHOD_HEAD,
+	ORBIS_METHOD_OPTIONS,
+	ORBIS_METHOD_PUT,
+	ORBIS_METHOD_DELETE,
+	ORBIS_METHOD_TRACE,
+	ORBIS_CONNECT
+} OrbisMethods;
+
+
 // Empty Comment
 void sceHttpAbortRequest();
 // Empty Comment
@@ -16,7 +31,7 @@ void sceHttpAbortWaitRequest();
 // Empty Comment
 void sceHttpAddCookie();
 // Empty Comment
-void sceHttpAddRequestHeader();
+int sceHttpAddRequestHeader(int id, const char *name, const char *value, int mode);
 // Empty Comment
 void sceHttpAddRequestHeaderRaw();
 // Empty Comment
@@ -34,7 +49,7 @@ void sceHttpCookieImport();
 // Empty Comment
 void sceHttpCreateConnection();
 // Empty Comment
-void sceHttpCreateConnectionWithURL();
+int sceHttpCreateConnectionWithURL(int templateId, const char *url, bool isKeepalive);
 // Empty Comment
 void sceHttpCreateEpoll();
 // Empty Comment
@@ -42,11 +57,11 @@ void sceHttpCreateRequest();
 // Empty Comment
 void sceHttpCreateRequest2();
 // Empty Comment
-void sceHttpCreateRequestWithURL();
+int sceHttpCreateRequestWithURL(int conectId, int method, const char *url, unsigned long long contentLength);
 // Empty Comment
 void sceHttpCreateRequestWithURL2();
 // Empty Comment
-void sceHttpCreateTemplate();
+int sceHttpCreateTemplate(int httpCtxId, const char*userAgent, int httpVer, int proxy);
 // Empty Comment
 void sceHttpDbgGetConnectionStat();
 // Empty Comment
@@ -62,11 +77,11 @@ void sceHttpDbgShowRequestStat();
 // Empty Comment
 void sceHttpDbgShowStat();
 // Empty Comment
-void sceHttpDeleteConnection();
+int sceHttpDeleteConnection(int connId);
 // Empty Comment
-void sceHttpDeleteRequest();
+int sceHttpDeleteRequest(int reqId);
 // Empty Comment
-void sceHttpDeleteTemplate();
+int sceHttpDeleteTemplate(int templateId);
 // Empty Comment
 void sceHttpDestroyEpoll();
 // Empty Comment
@@ -94,17 +109,17 @@ void sceHttpGetMemoryPoolStats();
 // Empty Comment
 void sceHttpGetNonblock();
 // Empty Comment
-void sceHttpGetResponseContentLength();
+int sceHttpGetResponseContentLength(int reqId, int *result, size_t *contentLength);
 // Empty Comment
 void sceHttpGetStatusCode();
 // Empty Comment
-void sceHttpInit();
+int sceHttpInit(int memId, int sslId, size_t poolSize);
 // Empty Comment
 void sceHttpParseResponseHeader();
 // Empty Comment
 void sceHttpParseStatusLine();
 // Empty Comment
-void sceHttpReadData();
+int sceHttpReadData(int reqId, void *data, unsigned int size);
 // Empty Comment
 void sceHttpRedirectCacheFlush();
 // Empty Comment
@@ -112,15 +127,15 @@ void sceHttpRemoveRequestHeader();
 // Empty Comment
 void sceHttpRequestGetAllHeaders();
 // Empty Comment
-void sceHttpsDisableOption();
+int sceHttpsDisableOption(int id, unsigned int flags);
 // Empty Comment
 void sceHttpsDisableOptionPrivate();
 // Empty Comment
-void sceHttpsEnableOption();
+int sceHttpsEnableOption(int id, unsigned int flags);
 // Empty Comment
 void sceHttpsEnableOptionPrivate();
 // Empty Comment
-void sceHttpSendRequest();
+int sceHttpSendRequest(int reqId, const void *postData, size_t size);
 // Empty Comment
 void sceHttpSetAcceptEncodingGZIPEnabled();
 // Empty Comment
@@ -132,7 +147,7 @@ void sceHttpSetAutoRedirect();
 // Empty Comment
 void sceHttpSetChunkedTransferEnabled();
 // Empty Comment
-void sceHttpSetConnectTimeOut();
+int sceHttpSetConnectTimeOut(int id, unsigned int usec);
 // Empty Comment
 void sceHttpSetCookieEnabled();
 // Empty Comment
@@ -170,15 +185,15 @@ void sceHttpSetRecvTimeOut();
 // Empty Comment
 void sceHttpSetRedirectCallback();
 // Empty Comment
-void sceHttpSetRequestContentLength();
+int sceHttpSetRequestContentLength(int id, uint64_t contentLength);
 // Empty Comment
 void sceHttpSetResolveRetry();
 // Empty Comment
-void sceHttpSetResolveTimeOut();
+int sceHttpSetResolveTimeOut(int id, unsigned int usec);
 // Empty Comment
 void sceHttpSetResponseHeaderMaxSize();
 // Empty Comment
-void sceHttpSetSendTimeOut();
+int sceHttpSetSendTimeOut(int id, unsigned int usec);
 // Empty Comment
 void sceHttpsFreeCaList();
 // Empty Comment
@@ -186,7 +201,7 @@ void sceHttpsGetCaList();
 // Empty Comment
 void sceHttpsGetSslError();
 // Empty Comment
-void sceHttpsLoadCert();
+int sceHttpsLoadCert(int httpId, int nbr, void* cert_list, void* cert, void* private_key);
 // Empty Comment
 void sceHttpsSetSslCallback();
 // Empty Comment
@@ -194,7 +209,7 @@ void sceHttpsSetSslVersion();
 // Empty Comment
 void sceHttpsUnloadCert();
 // Empty Comment
-void sceHttpTerm();
+int sceHttpTerm(int httpCtxId);
 // Empty Comment
 void sceHttpTryGetNonblock();
 // Empty Comment

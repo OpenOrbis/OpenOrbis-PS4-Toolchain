@@ -11,6 +11,10 @@ extern "C" {
 void sceBgftServiceDownloadQueryTask();
 // Empty Comment
 void sceBgftServiceDownloadStopTask();
+// Empty Comment
+int sceBgftInitialize(void* parameters);
+// Empty Comment
+int sceBgftFinalize();
 
 #endif
 
