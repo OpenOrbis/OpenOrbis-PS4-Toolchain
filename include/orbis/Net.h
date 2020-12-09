@@ -264,7 +264,7 @@ uint64_t sceNetNtohll(uint64_t);
 // Empty Comment
 uint16_t sceNetNtohs(uint16_t);
 // Empty Comment
-void sceNetPoolCreate();
+int sceNetPoolCreate(const char *name, int size, int flags);
 // Empty Comment
 void sceNetPoolDestroy();
 // Empty Comment

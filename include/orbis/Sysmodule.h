@@ -35,7 +35,7 @@ void sceSysmoduleIsLoadedInternal();
 // Undocumented Function... Need to reverse
 void sceSysmoduleLoadModuleByNameInternal();
 // Undocumented Function... Need to reverse
-void sceSysmoduleLoadModuleInternal();
+uint32_t sceSysmoduleLoadModuleInternal(uint32_t);
 // Undocumented Function... Need to reverse
 void sceSysmoduleLoadModuleInternalWithArg();
 // Undocumented Function... Need to reverse
