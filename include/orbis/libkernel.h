@@ -205,7 +205,7 @@ void sceKernelGetSubsysId();
 // Empty Comment
 void sceKernelGetSystemSwBeta();
 // Empty Comment
-void sceKernelGetSystemSwVersion();
+int sceKernelGetSystemSwVersion(OrbisKernelSwVersion *version);
 // Empty Comment
 int sceKernelGettimeofday(OrbisKernelTimeval *timeValue);
 // Empty Comment
