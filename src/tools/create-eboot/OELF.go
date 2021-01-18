@@ -70,19 +70,19 @@ func buildOrbisElf(inputFilePath string, outputFilePath string, libName string, 
 	writtenBytes, err := orbisElf.FinalFile.Write(inputFileBytes)
 	check(err)
 
-	// Overwrite ELF file header with PS4-ified values, as well as the SDK version in .sce_process_param/.sce_module_param
-	err = orbisElf.RewriteELFHeader()
-	check(err)
-
-	err = orbisElf.RewriteSDKVersion(sdkVer)
-	check(err)
-
 	// Create the .sce_dynlib_data segment onto the end of the file
 	err = orbisElf.GenerateDynlibData(uint64(writtenBytes))
 	check(err)
 
 	// Generate updated program headers
 	err = orbisElf.GenerateProgramHeaders()
+	check(err)
+
+	// Overwrite ELF file header with PS4-ified values, as well as the SDK version in .sce_process_param/.sce_module_param
+	err = orbisElf.RewriteELFHeader()
+	check(err)
+
+	err = orbisElf.RewriteSDKVersion(sdkVer)
 	check(err)
 
 	// Overwrite program header table
