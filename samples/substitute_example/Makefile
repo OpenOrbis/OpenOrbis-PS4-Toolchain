@@ -3,17 +3,17 @@ PROJDIR   	:= $(shell basename $(CURDIR))
 INTDIR    	:= $(PROJDIR)/x64/Debug
 
 # Libraries linked into the ELF.
-LIBS 		:= -lSceLibcInternal -lkernel
+LIBS 		:= -lSceLibcInternal -lkernel -lsubstitute
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-		CC  	:= clang++
+		CC  	:= clang
 		LD 		:= ld.lld
 		CDIR	:= linux
 endif
 ifeq ($(UNAME_S),Darwin)
-		CC 		:= /usr/local/opt/llvm/bin/clang++
+		CC 		:= /usr/local/opt/llvm/bin/clang
 		LD 		:= /usr/local/opt/llvm/bin/ld.lld
 		CDIR	:= macos
 endif
@@ -65,5 +65,5 @@ $(ODIR):
 all: $(TARGET) $(TARGETSTUB)
 
 clean:
-	rm -f $(TARGET) $(ODIR)/*.o
-	rm -f $(TARGET) $(ODIR)/*.o.stub
+	rm -f $(TARGET) $(TARGETSTUB) $(ODIR)/*.o
+	rm -f $(TARGET) $(TARGETSTUB) $(ODIR)/*.o.stub

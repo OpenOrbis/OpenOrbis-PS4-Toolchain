@@ -205,7 +205,7 @@ void sceKernelGetSubsysId();
 // Empty Comment
 void sceKernelGetSystemSwBeta();
 // Empty Comment
-void sceKernelGetSystemSwVersion();
+int sceKernelGetSystemSwVersion(OrbisKernelSwVersion *version);
 // Empty Comment
 int sceKernelGettimeofday(OrbisKernelTimeval *timeValue);
 // Empty Comment
@@ -680,6 +680,8 @@ void scePthreadTestcancel(void);
 void scePthreadTimedjoin();
 // Empty Comment
 void scePthreadYield(void);
+// Empty Comment
+int ioctl(int fd, unsigned long request, ...);
 
 #ifdef __cplusplus
 }

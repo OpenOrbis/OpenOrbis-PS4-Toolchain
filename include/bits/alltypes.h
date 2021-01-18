@@ -164,12 +164,12 @@ typedef _Int64 off_t;
 #endif
 
 #if defined(__NEED_ino_t) && !defined(__DEFINED_ino_t)
-typedef unsigned _Int64 ino_t;
+typedef unsigned int ino_t;
 #define __DEFINED_ino_t
 #endif
 
 #if defined(__NEED_dev_t) && !defined(__DEFINED_dev_t)
-typedef unsigned _Int64 dev_t;
+typedef unsigned int dev_t;
 #define __DEFINED_dev_t
 #endif
 

@@ -2,15 +2,16 @@
 #define _SCE_COMMON_DIALOG_H_
 
 #include <stdint.h>
+#include <orbis/_types/common_dialog.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
 
-// Empty Comment
-void sceCommonDialogInitialize();
-// Empty Comment
-void sceCommonDialogIsUsed();
+// Initialize system dialog.
+int32_t sceCommonDialogInitialize();
+// Check if a system dialog is currently running.
+bool sceCommonDialogIsUsed();
 
 #endif
 

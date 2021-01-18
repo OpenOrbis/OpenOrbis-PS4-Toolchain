@@ -14,6 +14,7 @@ int sceUserServiceGetInitialUser(int *);
 int sceUserServiceGetUserName(int, char *, const size_t);
 int sceUserServiceInitialize(void *);
 int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
+int sceUserServiceGetForegroundUser(int* user_id);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -44,7 +45,6 @@ void sceUserServiceGetFileBrowserSortTitle();
 void sceUserServiceGetFileSelectorFilter();
 void sceUserServiceGetFileSelectorSortContent();
 void sceUserServiceGetFileSelectorSortTitle();
-void sceUserServiceGetForegroundUser();
 void sceUserServiceGetFriendCustomListLastFocus();
 void sceUserServiceGetFriendFlag();
 void sceUserServiceGetGlsAccessTokenNiconicoLive();
@@ -349,7 +349,7 @@ void sceUserServiceSetVolumeForController();
 void sceUserServiceSetVolumeForGenericUSB();
 void sceUserServiceSetVolumeForMorpheusSidetone();
 void sceUserServiceSetVolumeForSidetone();
-void sceUserServiceTerminate();
+int sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
 
 #ifdef __cplusplus
