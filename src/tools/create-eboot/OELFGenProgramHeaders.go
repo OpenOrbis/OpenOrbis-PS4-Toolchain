@@ -58,32 +58,21 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 		orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, gnuEhFrameHeader)
 	}
 
-	// PT_SCE_RELRO - This segment is a little weird because we have to combine sizes from adjacent sections. We'll take
-	// the start offset of .data.rel.ro, and the start offset + size of .got.plt to determine the size of the segment.
-	// This is because there are additional sections sandwiched between these that are unlabelled in the section header
-	// table.
-	sizeOfSceRelro := uint64(0)
+	// PT_SCE_RELRO - This segment is a little weird since we have to generate it from multiple segments, and it *must*
+	// be contiguous with the data LOAD segment, so we need to connect the in-memory size. To do that, we'll use the
+	// offset for the first section we find for relro, and subtract it from the data LOAD segment offset.
+	dataSegmentOffset := procParamSection.Offset
+	dataSegmentAddr := procParamSection.Addr
 
-	if gotPltSection != nil {
-		if relroSection != nil {
-			sizeOfSceRelro += gotPltSection.Offset
-		}
-
-		sizeOfSceRelro += gotPltSection.FileSize
-	}
-
-	if relroSection != nil {
-		sizeOfSceRelro -= relroSection.Offset
-	}
-
-	if sizeOfSceRelro != 0 {
+	// Check for the existence of relro-related sections
+	if gotPltSection != nil || gotSection != nil || relroSection != nil {
 		relroOffset := uint64(0)
 		relroAddr := uint64(0)
 
 		// Order of potential first sections in the relro segment:
-		// 1) .got.plt
+		// 1) .data.rel.ro
 		// 2) .got
-		// 3) .data.rel.ro
+		// 3) .got.plt
 		if gotPltSection != nil {
 			relroOffset = gotPltSection.Offset
 			relroAddr = gotPltSection.Addr
@@ -99,13 +88,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 			relroAddr = relroSection.Addr
 		}
 
+		sizeOfSceRelro := dataSegmentAddr - relroAddr
+
 		relroHeader := generateRelroHeader(relroOffset, relroAddr, sizeOfSceRelro)
 		orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, relroHeader)
 	}
-
-	// PT_LOAD - The data segment.
-	dataOffset := procParamSection.Offset
-	dataVaddr := procParamSection.Addr
 
 	// We'll get the size by subtracting the proc param offset from data's offset so we get padding for free, which the
 	// header size will not provide.
@@ -117,7 +104,8 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 		dataMemSize += (bssSection.Addr - (dataSection.Addr + dataSection.Size)) + bssSection.Size
 	}
 
-	dataHeader := generateDataHeader(dataOffset, dataVaddr, dataSize, dataMemSize)
+	// PT_LOAD - The data segment.
+	dataHeader := generateDataHeader(dataSegmentOffset, dataSegmentAddr, dataSize, dataMemSize)
 	orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, dataHeader)
 
 	// PT_SCE_PROC_PARAM or PT_SCE_MODULE_PARAM - The SCE process (or module) param segment.
@@ -247,7 +235,7 @@ func generateRelroHeader(offset uint64, virtualAddr uint64, size uint64) elf.Pro
 		Paddr:  virtualAddr,
 		Off:    offset,
 		Filesz: size,
-		Memsz:  (size + 0x4000) &^ 0x3FFF,
+		Memsz:  size,
 		Align:  0x4000,
 	}
 }
