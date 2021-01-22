@@ -17,6 +17,7 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	// TODO: Verify these sections exist in OrbisElf.ValidateInputELF()
 	textSection := orbisElf.ElfToConvert.Section(".text")
 	relroSection := orbisElf.ElfToConvert.Section(".data.rel.ro")
+	gotSection := orbisElf.ElfToConvert.Section(".got")
 	gotPltSection := orbisElf.ElfToConvert.Section(".got.plt")
 	procParamSection := orbisElf.ElfToConvert.Section(".data.sce_process_param")
 
@@ -79,11 +80,18 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 		relroOffset := uint64(0)
 		relroAddr := uint64(0)
 
-		// If the .got.plt section exists, but .data.rel.ro does not, use the offset and address of .got.plt. However,
-		// if .data.rel.ro *does* exist, we need to use this section's offset and address, as .data.rel.ro precedes the PLT.
+		// Order of potential first sections in the relro segment:
+		// 1) .got.plt
+		// 2) .got
+		// 3) .data.rel.ro
 		if gotPltSection != nil {
 			relroOffset = gotPltSection.Offset
 			relroAddr = gotPltSection.Addr
+		}
+
+		if gotSection != nil {
+			relroOffset = gotSection.Offset
+			relroAddr = gotSection.Addr
 		}
 
 		if relroSection != nil {
