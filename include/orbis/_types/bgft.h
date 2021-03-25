@@ -1,5 +1,7 @@
 #pragma once
 
+// https://github.com/flatz/ps4_stub_lib_maker_v2/blob/master/include/bgft.h
+
 struct _OrbisBgftInitParams {
 	void* heap;
 	size_t heapSize;
