@@ -230,8 +230,10 @@ void sceKernelIccGetPowerUpCause();
 void sceKernelIccGetThermalAlert();
 // Empty Comment
 void sceKernelIccIndicatorBootDone();
-// Empty Comment
 void sceKernelIccIndicatorShutdown();
+void sceKernelIccIndicatorStandby();
+void sceKernelIccIndicatorStandbyBoot();
+void sceKernelIccIndicatorStandbyShutdown();
 // Empty Comment
 void sceKernelIccNotifyBootStatus();
 // sceKernelIccNvsFlush = (DANGER / DO NOT USE THIS UNLESS YOU KNOW EXACTLY WHAT YOUR DOING, COULD RESULT IN A PERMA BRICK)
@@ -239,7 +241,7 @@ void sceKernelIccNvsFlush();
 // Empty Comment
 void sceKernelIccReadPowerBootMessage();
 // Empty Comment
-void sceKernelIccSetBuzzer();
+void sceKernelIccSetBuzzer(int mode);
 // Empty Comment
 void sceKernelIccSetCpuInfoBit();
 // Empty Comment
@@ -362,8 +364,8 @@ void sceKernelReportUnpatchedFunctionCall();
 int sceKernelReserveVirtualRange(void **, size_t, int, size_t);
 // Empty Comment
 int sceKernelRmdir(const char *folder);
-// Empty Comment
-void sceKernelSendNotificationRequest();
+// reverse engineered by flatz and OSM
+int sceKernelSendNotificationRequest(int device, OrbisNotificationRequest* req, size_t size, int blocking);
 // Empty Comment
 void sceKernelSetAppInfo();
 // Empty Comment
