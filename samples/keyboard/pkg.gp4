@@ -16,8 +16,8 @@
   <files img_no="0">
     <file targ_path="sce_sys/icon0.png" orig_path="sce_sys/icon0.png" />
     <file targ_path="sce_sys/param.sfo" orig_path="sce_sys/param.sfo" />
-    <file targ_path="eboot.bin" orig_path="../eboot.bin" />
-    <file targ_path="font.ttf" orig_path="font.ttf" />
+    <file targ_path="eboot.bin" orig_path="eboot.bin" />
+    <file targ_path="font.ttf" orig_path="assets/fonts/font.ttf" />
     <file targ_path="sce_sys/about/right.sprx" orig_path="sce_sys/about/right.sprx" />
     <file targ_path="sce_module/libc.prx" orig_path="sce_module/libc.prx" />
     <file targ_path="sce_module/libSceFios2.prx" orig_path="sce_module/libSceFios2.prx" />

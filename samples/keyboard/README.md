@@ -1,28 +1,24 @@
-# Sample: input
+# Sample: keyboard
 
 [![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code for getting controller input from the DualShock 4 (DS4) controller. If a button or multiple buttons are pushed, they will be highlighted on the screen over the controller graphic.
-
-![screenshot](screenshot.jpg)
-
+This project contains example code for getting input from a USB keyboard attached to the PlayStation 4. If a button or multiple buttons are pressed, their keycodes and the corresponding characters are displayed on the screen.
 
 
 ## Directory structure
 ```
 samples/input
-|-- input
+|-- keyboard
     |-- x64
         |-- Debug               // Object files / intermediate directory
     |-- build.bat               // Batch file for building on Windows
-    |-- controller.cpp          // Controller class and helper methods
-    |-- controller.h            // Controller class header
-    |-- input.vcxproj           // Visual studio project files
-    |-- input.vcxproj.filters
-    |-- input.cvxproj.user
+    |-- keyboard.cpp            // Keyboard class and helper methods
+    |-- keyboard.h              // Keyboard class header
+    |-- keyboard.vcxproj        // Visual studio project files
+    |-- keyboard.vcxproj.filters
     |-- main.cpp                // main source file
 |-- eboot.bin                   // final eboot (not present until built)
-|-- input.sln                   // Visual studio solution file
+|-- keyboard.sln                // Visual studio solution file
 |-- Makefile                    // Make rules for building on Linux
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
@@ -35,7 +31,9 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 - libkernel
 - libc++
 - libSceVideoOut
-- libScePad
+- libSceSysmodule
+- libSceKeyboard
+- libSceFreeType
 - libSceUserService
 
 
@@ -62,4 +60,5 @@ make
 
 ## Author(s)
 
+- sleirsgoevy
 - Specter
