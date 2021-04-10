@@ -213,8 +213,8 @@ void sceNpAllocateKernelMemoryWithAlignment();
 void sceNpArchInit();
 // Empty Comment
 void sceNpArchTerm();
-// Empty Comment
-void sceNpBase64Decoder();
+// reversed by idc
+int sceNpBase64Decoder(const void* inbuf, size_t inlen, void* outbuf, size_t* outlen);
 // Empty Comment
 void sceNpBase64Encoder();
 // Empty Comment
@@ -359,6 +359,11 @@ void sceNpUtilGetSystemLanguage();
 void sceNpUtilHttpUrlEncode();
 // Empty Comment
 void sceNpUtilJidToNpId();
+
+// reversed by flatz
+int sceNpUtilJsonEscape(char* out, size_t max_out_size, const char* in, size_t in_size);
+int sceNpUtilJsonUnescape(char* out, size_t max_out_size, const char* in, size_t in_size, unsigned int flags);
+
 // Empty Comment
 void sceNpUtilNpIdToJid();
 // Empty Comment
