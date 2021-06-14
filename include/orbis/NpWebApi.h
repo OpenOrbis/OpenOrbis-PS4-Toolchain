@@ -2,113 +2,67 @@
 #define _SCE_NP_WEB_API_H_
 
 #include <stdint.h>
+#include <_types/np_common.h>
+#include <_types/np_webapi.h>
 
-#ifdef __cplusplus 
-extern "C" {
+#ifdef __cplusplus
+extern "C"
+{
 #endif
 
-// Empty Comment
-void sceNpWebApiAbortHandle();
-// Empty Comment
-void sceNpWebApiAbortRequest();
-// Empty Comment
-void sceNpWebApiAddHttpRequestHeader();
-// Empty Comment
-void sceNpWebApiAddMultipartPart();
-// Empty Comment
-void sceNpWebApiCheckTimeout();
-// Empty Comment
-void sceNpWebApiClearAllUnusedConnection();
-// Empty Comment
-void sceNpWebApiClearUnusedConnection();
-// Empty Comment
-void sceNpWebApiCreateContext();
-// Empty Comment
-void sceNpWebApiCreateContextA();
-// Empty Comment
-void sceNpWebApiCreateExtdPushEventFilter();
-// Empty Comment
-void sceNpWebApiCreateHandle();
-// Empty Comment
-void sceNpWebApiCreateMultipartRequest();
-// Empty Comment
-void sceNpWebApiCreatePushEventFilter();
-// Empty Comment
-void sceNpWebApiCreateRequest();
-// Empty Comment
-void sceNpWebApiCreateServicePushEventFilter();
-// Empty Comment
-void sceNpWebApiDeleteContext();
-// Empty Comment
-void sceNpWebApiDeleteExtdPushEventFilter();
-// Empty Comment
-void sceNpWebApiDeleteHandle();
-// Empty Comment
-void sceNpWebApiDeletePushEventFilter();
-// Empty Comment
-void sceNpWebApiDeleteRequest();
-// Empty Comment
-void sceNpWebApiDeleteServicePushEventFilter();
-// Empty Comment
-void sceNpWebApiGetConnectionStats();
-// Empty Comment
-void sceNpWebApiGetErrorCode();
-// Empty Comment
-void sceNpWebApiGetHttpResponseHeaderValue();
-// Empty Comment
-void sceNpWebApiGetHttpResponseHeaderValueLength();
-// Empty Comment
-void sceNpWebApiGetHttpStatusCode();
-// Empty Comment
-void sceNpWebApiGetMemoryPoolStats();
-// Empty Comment
-void sceNpWebApiInitialize();
-// Empty Comment
-void sceNpWebApiIntCreateCtxIndExtdPushEventFilter();
-// Empty Comment
-void sceNpWebApiIntCreateServicePushEventFilter();
-// Empty Comment
-void sceNpWebApiIntInitialize();
-// Empty Comment
-void sceNpWebApiReadData();
-// Empty Comment
-void sceNpWebApiRegisterExtdPushEventCallback();
-// Empty Comment
-void sceNpWebApiRegisterExtdPushEventCallbackA();
-// Empty Comment
-void sceNpWebApiRegisterNotificationCallback();
-// Empty Comment
-void sceNpWebApiRegisterPushEventCallback();
-// Empty Comment
-void sceNpWebApiRegisterServicePushEventCallback();
-// Empty Comment
-void sceNpWebApiSendMultipartRequest();
-// Empty Comment
-void sceNpWebApiSendMultipartRequest2();
-// Empty Comment
-void sceNpWebApiSendRequest();
-// Empty Comment
-void sceNpWebApiSendRequest2();
-// Empty Comment
-void sceNpWebApiSetHandleTimeout();
-// Empty Comment
-void sceNpWebApiSetMaxConnection();
-// Empty Comment
-void sceNpWebApiSetMultipartContentType();
-// Empty Comment
-void sceNpWebApiSetRequestTimeout();
-// Empty Comment
-void sceNpWebApiTerminate();
-// Empty Comment
-void sceNpWebApiUnregisterExtdPushEventCallback();
-// Empty Comment
-void sceNpWebApiUnregisterNotificationCallback();
-// Empty Comment
-void sceNpWebApiUnregisterPushEventCallback();
-// Empty Comment
-void sceNpWebApiUnregisterServicePushEventCallback();
-// Empty Comment
-void sceNpWebApiUtilityParseNpId();
+    int sceNpWebApiAbortHandle(int libCtxId, int handleId);
+    int sceNpWebApiAbortRequest(uint64_t requestId);
+    int sceNpWebApiAddHttpRequestHeader(int64_t requestId, const char *pFieldName, const char *pValue);
+    int sceNpWebApiAddMultipartPart(int64_t requestId, const OrbisNpWebApiMultipartPartParameter *pParam, int *pIndex);
+    void sceNpWebApiCheckTimeout(void);
+    int sceNpWebApiClearAllUnusedConnection(int userCtxId, bool keepAlive);
+    int sceNpWebApiClearUnusedConnection(int userCtxId, const char *pApiGroup, bool keepAlive);
+    int sceNpWebApiCreateContextA(int libCtxId, int userId);
+    int sceNpWebApiCreateExtdPushEventFilter(int32_t libCtxId, int32_t handleId, const char *pNpServiceName, OrbisNpServiceLabel npServiceLabel, const OrbisNpWebApiExtdPushEventFilterParameter *pFilterParam, size_t filterParamNum);
+    int sceNpWebApiCreateHandle(int libCtxId);
+    int sceNpWebApiCreateMultipartRequest(int32_t titleUserCtxId, const char *pApiGroup, const char *pPath, OrbisNpWebApiHttpMethod method, int64_t *pRequestId);
+    int sceNpWebApiCreateRequest(int titleUserCtxId, const char *pApiGroup, const char *pPath, OrbisNpWebApiHttpMethod method, const OrbisNpWebApiContentParameter *pContentParameter, int64_t *pRequestId);
+    int sceNpWebApiDeleteContext(int titleUserCtxId);
+    int sceNpWebApiDeleteExtdPushEventFilter(int libCtxId, int filterId);
+    void sceNpWebApiDeleteHandle(int libCtxId, int handleId);
+    int sceNpWebApiDeleteRequest(int64_t requestId);
+    int sceNpWebApiGetConnectionStats(int userCtxId, const char *pApiGroup, void *pStats);
+    int sceNpWebApiGetHttpResponseHeaderValue(int64_t requestId, const char *pFieldName, char *pValue, size_t valueSize);
+    int sceNpWebApiGetHttpResponseHeaderValueLength(int64_t requestId, const char *pFieldName, size_t *pValueLength);
+    int sceNpWebApiGetMemoryPoolStats(int libCtxId, OrbisNpWebApiMemoryPoolStats *pCurrentStat);
+    int sceNpWebApiInitialize(int libHttpCtxId, size_t poolSize);
+    int sceNpWebApiReadData(int64_t requestId, void *pData, size_t size);
+    int sceNpWebApiRegisterExtdPushEventCallback(int32_t userCtxId, int32_t filterId, OrbisNpWebApiExtdPushEventCallbackA cbFunc, void *pUserArg);
+    int sceNpWebApiRegisterExtdPushEventCallbackA(int32_t userCtxId, int32_t filterId, OrbisNpWebApiExtdPushEventCallbackA cbFunc, void *pUserArg);
+    int sceNpWebApiSendMultipartRequest(int64_t requestId, int32_t partIndex, const void *pData, size_t dataSize, OrbisNpWebApiResponseInformationOption *pRespInfoOption);
+    int sceNpWebApiSendMultipartRequest2(int64_t requestId, int32_t partIndex, const void *pData, size_t dataSize, OrbisNpWebApiResponseInformationOption *pRespInfoOption);
+    int sceNpWebApiSendRequest2(int64_t requestId, const void *pData, size_t dataSize, OrbisNpWebApiResponseInformationOption *pRespInfoOption);
+    int sceNpWebApiSetMaxConnection(int32_t libCtxId, int32_t maxConnection);
+    int sceNpWebApiSetMultipartContentType(int64_t requestId, const char *pTypeName, const char *pBoundary);
+    int sceNpWebApiSetRequestTimeout(int64_t requestId, uint32_t timeout);
+    int sceNpWebApiTerminate(int32_t libCtxId);
+    int sceNpWebApiUnregisterExtdPushEventCallback(int32_t userCtxId, int32_t callbackId);
+    int sceNpWebApiUnregisterServicePushEventCallback();
+    int sceNpWebApiUtilityParseNpId(const char *pJsonNpId, OrbisNpId *pNpId);
+
+    // The below functions are currently not reversed
+    void sceNpWebApiCreateContext();
+    void sceNpWebApiCreatePushEventFilter();
+    void sceNpWebApiCreateServicePushEventFilter();
+    void sceNpWebApiDeletePushEventFilter();
+    void sceNpWebApiDeleteServicePushEventFilter();
+    void sceNpWebApiGetErrorCode();
+    void sceNpWebApiGetHttpStatusCode();
+    void sceNpWebApiIntCreateCtxIndExtdPushEventFilter();
+    void sceNpWebApiIntCreateServicePushEventFilter();
+    void sceNpWebApiIntInitialize();
+    void sceNpWebApiSendRequest();
+    void sceNpWebApiUnregisterNotificationCallback();
+    void sceNpWebApiUnregisterPushEventCallback();
+    void sceNpWebApiRegisterNotificationCallback();
+    void sceNpWebApiRegisterPushEventCallback();
+    void sceNpWebApiSetHandleTimeout();
+    void sceNpWebApiRegisterServicePushEventCallback();
 
 #endif
 
