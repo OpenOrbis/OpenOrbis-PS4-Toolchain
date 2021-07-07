@@ -111,6 +111,19 @@ var (
 // Dynlib Data Generation
 ////
 
+func OpenLibrary(name string) (*elf.File, error) {
+	libDirs := append([]string{sdkPath+"/lib"}, strings.Split(libPath, ":")...)
+	var err error
+	var lib *elf.File
+	for _, libDir := range libDirs {
+		lib, err = elf.Open(libDir+"/"+name)
+		if err == nil {
+			return lib, nil
+		}
+	}
+	return nil, err
+}
+
 // OrbisElf.GenerateLibrarySymbolDictionary parses the input ELF for any libraries as well as symbols it needs from shared
 // libraries, and creates a dictionary of library names to symbol lists for later use. Returns an error if a library failed
 // to open, or if we failed to get a symbol list for any library, nil otherwise.
@@ -137,7 +150,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 	}
 
 	// Ensure libkernel is the first library
-	if libraryObj, err := elf.Open(sdkPath + "/lib/libkernel.so"); err == nil {
+	if libraryObj, err := OpenLibrary("libkernel.so"); err == nil {
 		libraryObjs = append(libraryObjs, libraryObj)
 		orbisElf.ModuleSymbolDictionary.Set("libkernel", []string{})
 	} else {
@@ -152,7 +165,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 		}
 
 		// Open the library file for parsing
-		if libraryObj, err := elf.Open(sdkPath + "/lib/" + library); err == nil {
+		if libraryObj, err := OpenLibrary(library); err == nil {
 			libraryObjs = append(libraryObjs, libraryObj)
 		} else {
 			return err
@@ -566,6 +579,12 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 	symbols, _ := orbisElf.ElfToConvert.DynamicSymbols()
 
 	for _, symbol := range symbols {
+
+		// Skip symbols that have a valid section index - they're defined in the ELF and are not external
+		if symbol.Section != elf.SHN_UNDEF {
+			continue
+		}
+
 		if symbol.Name != "" {
 			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
 				Name: uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
@@ -576,6 +595,7 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 		} else {
 			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{})
 		}
+
 	}
 
 	modules := orbisElf.ModuleSymbolDictionary.Keys()
