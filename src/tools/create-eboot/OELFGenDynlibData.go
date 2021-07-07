@@ -495,7 +495,7 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if ((symbol.Info>>4&0xf) == uint8(elf.STB_GLOBAL) || (symbol.Info>>4&0xf) == uint8(elf.STB_WEAK)) && symbol.Value != 0 {
 				nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleId))
 			}
 		}
@@ -630,7 +630,7 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if ((symbol.Info>>4&0xf) == uint8(elf.STB_GLOBAL) || (symbol.Info>>4&0xf) == uint8(elf.STB_WEAK)) && symbol.Value != 0 {
 				_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
 					Name:  uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
 					Info:  symbol.Info,
