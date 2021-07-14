@@ -23,6 +23,7 @@ var TOOL_MODE = "SELF"
 
 // sdkPath holds the path of the SDK root directory. Gets set in main, most likely via environment variable.
 var sdkPath string
+var libPath string
 
 // errorExit function will print the given formatted error to stdout and exit immediately after.
 func errorExit(format string, params ...interface{}) {
@@ -78,11 +79,14 @@ func main() {
 	appVer := flag.Int64("appversion", 0, "application version")
 	fwVer := flag.Int64("fwversion", 0, "firmware version")
 	libNamePtr := flag.String("libname", "", "library name (ignored in create-eboot)")
+	libPathPtr := flag.String("library-path", "", "additional directories to search for .so files")
 
 	flag.Parse()
 
 	// Set the SDK version for overwriting .sce_process_param later on
 	sdkVer := *sdkVerPtr
+	libPath = *libPathPtr
+	if libPath == "" {}
 
 	inputFilePath := *inputFilePathPtr
 	outputFilePath := *outputFilePathPtr
