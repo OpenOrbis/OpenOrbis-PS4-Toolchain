@@ -17,6 +17,7 @@ jobs:
     - name: Build the Docker image
       run: |
         cd build/
+        chmod +x build.sh
         docker build --tag oo-toolchain-build:latest .
     - name: Run the Docker image and build toolchain
       run: |
