@@ -22,11 +22,11 @@ jobs:
     - name: Run the Docker image and build toolchain
       run: |
         docker run --name=builder oo-toolchain-build:latest
-        docker cp `sudo docker ps -aqf "name=builder"`:/out/OpenOrbis-PS4-Toolchain.tar.gz /OpenOrbis-PS4-Toolchain.tar.gz
+        docker cp `sudo docker ps -aqf "name=builder"`:/out/OpenOrbis-PS4-Toolchain.tar.gz OpenOrbis-PS4-Toolchain.tar.gz
         docker rm -f builder
     - name: Upload toolchain tarball
       uses: actions/upload-artifact@v2
       with:
         name: OpenOrbis-PS4-Toolchain.tar.gz
-        path: /OpenOrbis-PS4-Toolchain.tar.gz
+        path: OpenOrbis-PS4-Toolchain.tar.gz
         
