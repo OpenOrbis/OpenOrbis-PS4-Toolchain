@@ -1,0 +1,31 @@
+name: Toolchain
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        cd build/
+        docker build --tag oo-toolchain-build:latest .
+    - name: Run the Docker image and build toolchain
+      run: |
+        docker create -ti --name builder oo-toolchain-build:latest bash
+        docker cp builder:/out/OpenOrbis-PS4-Toolchain.tar.gz /OpenOrbis-PS4-Toolchain.tar.gz
+        docker rm -f builder
+    - name: Upload toolchain tarball
+      uses: actions/upload-artifact@v2
+      with:
+        name: OpenOrbis-PS4-Toolchain.tar.gz
+        path: /OpenOrbis-PS4-Toolchain.tar.gz
+        
