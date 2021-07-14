@@ -19,7 +19,7 @@ struct stat {
 	blksize_t st_blksize;
 	uint32_t st_flags;
 	uint32_t st_gen;
-	int32_t st_lspare;
+	//int32_t st_lspare; //??
 	struct timespec st_birthtim;
 	unsigned int :(8 / 2) * (16 - (int)sizeof(struct timespec));
 	unsigned int :(8 / 2) * (16 - (int)sizeof(struct timespec));
