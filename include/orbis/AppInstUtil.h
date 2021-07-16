@@ -1,11 +1,40 @@
 #ifndef _SCE_APP_INST_UTIL_H_
 #define _SCE_APP_INST_UTIL_H_
 
+#include "_types/appinst_util.h"
+
 #include <stdint.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
+
+int sceAppInstUtilInitialize(void);
+int sceAppInstUtilTerminate(void);
+
+int sceAppInstUtilGetTitleIdFromPkg(const char* pkgPath, char* titleId, int* isApp);
+int sceAppInstUtilGetPrimaryAppSlot(const char* titleId, int* slot);
+
+int sceAppInstUtilAppPrepareOverwritePkg(const char* pkgPath);
+
+int sceAppInstUtilAppInstallPkg(const char* pkgPath, void* reserved);
+
+int sceAppInstUtilAppUnInstall(const char* titleId);
+int sceAppInstUtilAppUnInstallByUser(const char* titleId, int userId);
+int sceAppInstUtilAppUnInstallPat(const char* titleId);
+int sceAppInstUtilAppUnInstallTypes(const char* titleId, unsigned int deleteTypes);
+int sceAppInstUtilAppUnInstallAddcont(const char* titleId, const char* addcontName);
+int sceAppInstUtilAppUnInstallTheme(const char* contentId);
+
+bool sceAppInstUtilAppIsInInstalling(const char* contentId);
+int sceAppInstUtilAppIsInUpdating(const char* titleId, int* updating);
+int sceAppInstUtilAppExists(const char* titleId, int* exists);
+int sceAppInstUtilAppGetSize(const char* titleId, unsigned long* size);
+
+int sceAppInstUtilAppRecoverApp(const char* titleId);
+
+int sceAppInstUtilGetInstallProgress(const char* contentId, unsigned int* progress);
+int sceAppInstUtilGetInstallProgressInfo(const char* contentId, unsigned int* state, unsigned int* progress, unsigned long* progressSize, unsigned long* totalSize, unsigned int* restSec);
 
 // Empty Comment
 void sceAppInstUtilAppCancelableUnInstall();
@@ -22,8 +51,6 @@ void sceAppInstUtilAppDestroyMetadata();
 // Empty Comment
 void sceAppInstUtilAppDestroyPkg();
 // Empty Comment
-void sceAppInstUtilAppExists();
-// Empty Comment
 void sceAppInstUtilAppGetAddcontInfo();
 // Empty Comment
 void sceAppInstUtilAppGetAddcontInfoByContentId();
@@ -34,8 +61,6 @@ void sceAppInstUtilAppGetAddcontNum();
 // Empty Comment
 void sceAppInstUtilAppGetCustomThemeInfo();
 // Empty Comment
-void sceAppInstUtilAppGetSize();
-// Empty Comment
 void sceAppInstUtilAppInstallAll();
 // Empty Comment
 void sceAppInstUtilAppInstallCloudGame();
@@ -44,35 +69,13 @@ void sceAppInstUtilAppInstallGetLinkState();
 // Empty Comment
 void sceAppInstUtilAppInstallMediaPlayer();
 // Empty Comment
-void sceAppInstUtilAppInstallPkg();
-// Empty Comment
 void sceAppInstUtilAppInstallRequestAddcontFromDisc();
 // Empty Comment
 void sceAppInstUtilAppInstallTitleDir();
 // Empty Comment
-void sceAppInstUtilAppIsInInstalling();
-// Empty Comment
-void sceAppInstUtilAppIsInUpdating();
-// Empty Comment
-void sceAppInstUtilAppPrepareOverwritePkg();
-// Empty Comment
-void sceAppInstUtilAppRecoverApp();
-// Empty Comment
 void sceAppInstUtilAppSetSavedataUploadStatus();
 // Empty Comment
-void sceAppInstUtilAppUnInstall();
-// Empty Comment
-void sceAppInstUtilAppUnInstallAddcont();
-// Empty Comment
-void sceAppInstUtilAppUnInstallByUser();
-// Empty Comment
 void sceAppInstUtilAppUnInstallForMultiInstall();
-// Empty Comment
-void sceAppInstUtilAppUnInstallPat();
-// Empty Comment
-void sceAppInstUtilAppUnInstallTheme();
-// Empty Comment
-void sceAppInstUtilAppUnInstallTypes();
 // Empty Comment
 void sceAppInstUtilAppUpdateStartTime();
 // Empty Comment
@@ -90,16 +93,6 @@ void sceAppInstUtilGetDataDiscCopyProgress();
 // Empty Comment
 void sceAppInstUtilGetInsertedDiscRoleType();
 // Empty Comment
-void sceAppInstUtilGetInstallProgress();
-// Empty Comment
-void sceAppInstUtilGetInstallProgressInfo();
-// Empty Comment
-void sceAppInstUtilGetPrimaryAppSlot();
-// Empty Comment
-void sceAppInstUtilGetTitleIdFromPkg();
-// Empty Comment
-void sceAppInstUtilInitialize();
-// Empty Comment
 void sceAppInstUtilJson();
 // Empty Comment
 void sceAppInstUtilRequestDataDiscCopy();
@@ -107,8 +100,6 @@ void sceAppInstUtilRequestDataDiscCopy();
 void sceAppInstUtilRequestInstallDiscGame();
 // Empty Comment
 void sceAppInstUtilSetPrimaryAppSlot();
-// Empty Comment
-void sceAppInstUtilTerminate();
 
 #endif
 
