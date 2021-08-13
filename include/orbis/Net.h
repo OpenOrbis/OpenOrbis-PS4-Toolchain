@@ -202,7 +202,7 @@ void sceNetFreeAllRouteInfo();
 // Empty Comment
 void sceNetGetArpInfo();
 // Empty Comment
-void sceNetGetDnsInfo();
+int sceNetGetDnsInfo(OrbisNetDnsInfo* info, int flags);
 // Empty Comment
 void sceNetGetIfList();
 // Empty Comment
@@ -264,7 +264,7 @@ uint64_t sceNetNtohll(uint64_t);
 // Empty Comment
 uint16_t sceNetNtohs(uint16_t);
 // Empty Comment
-int sceNetPoolCreate(const char *name, int size, int flags);
+void sceNetPoolCreate();
 // Empty Comment
 void sceNetPoolDestroy();
 // Empty Comment
