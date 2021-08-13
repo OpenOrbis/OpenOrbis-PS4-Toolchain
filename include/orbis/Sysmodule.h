@@ -1,6 +1,8 @@
 #ifndef _SCE_SYS_MODULE_H_
 #define _SCE_SYS_MODULE_H_
 
+#include "_types/sysmodule.h"
+
 #include <stdint.h>
 
 #ifdef __cplusplus 
@@ -35,7 +37,7 @@ void sceSysmoduleIsLoadedInternal();
 // Undocumented Function... Need to reverse
 void sceSysmoduleLoadModuleByNameInternal();
 // Undocumented Function... Need to reverse
-void sceSysmoduleLoadModuleInternal();
+uint32_t sceSysmoduleLoadModuleInternal(uint32_t);
 // Undocumented Function... Need to reverse
 void sceSysmoduleLoadModuleInternalWithArg();
 // Undocumented Function... Need to reverse
@@ -43,7 +45,7 @@ void sceSysmodulePreloadModuleForLibkernel();
 // Undocumented Function... Need to reverse
 void sceSysmoduleUnloadModuleByNameInternal();
 // Undocumented Function... Need to reverse
-void sceSysmoduleUnloadModuleInternal();
+int sceSysmoduleUnloadModuleInternal(uint32_t id);
 // Undocumented Function... Need to reverse
 void sceSysmoduleUnloadModuleInternalWithArg();
 

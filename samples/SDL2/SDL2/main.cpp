@@ -102,7 +102,7 @@ int main(int argc, char* args[])
     }
 
     // Create a font face for debug and score text
-    const char* debugFontPath = "/app0/VeraMono.ttf";
+    const char* debugFontPath = "/app0/assets/fonts/VeraMono.ttf";
 
     DEBUGLOG << "Initializing debug font (" << debugFontPath << ")";
 
@@ -112,7 +112,7 @@ int main(int argc, char* args[])
         for (;;);
     }
 
-    const char* scoreFontPath = "/app0/Bebas-Regular.ttf";
+    const char* scoreFontPath = "/app0/assets/fonts/Bebas-Regular.ttf";
 
     DEBUGLOG << "Initializing score font (" << scoreFontPath << ")";
 

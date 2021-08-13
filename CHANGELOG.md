@@ -2,6 +2,18 @@
 
 ## Beta
 
+**v0.5.1 - November 19th, 2020**
+
+- Fixed various discrepancies between BSD and MUSL including function prototypes, structure definitions, and macros!
+- Added Docker container support (thanks alazif)!
+- Added proper TLS support (thanks sleirsgoevy)!
+- Added a battery of unit tests for issues addressed in v0.5.1. These tests will be kept up to date with future additions to attempt to improve release qualities.
+- Fixed an issue where MUSL was not thread-safe due to custom CRT.
+- Added support '+' and '-' escaping in NIDs (thanks sleirsgoevy).
+- Fixed an issue where relocations could refer to incorrect symbols due to not accounting for an additional `SECTION` entry (thanks sleirsgoevy).
+- Fixed copy/paste induced bugs in the autobuild.py script (thanks alazif).
+- Fixed a minor issue where the `__bswap32` macro in the endian include header produced compiler warnings (thanks astrelsky).
+
 **v0.5 - August 7th, 2020**
 
 - The toolchain now includes stub/empty libc and libSceFios2 modules to avoid breaking non-homebrew games and applications!

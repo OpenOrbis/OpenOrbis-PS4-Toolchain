@@ -13,11 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\sce_sys">
+      <UniqueIdentifier>{37821ab6-56f6-4b88-ad1e-dd94bdd938c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sce_sys\about">
+      <UniqueIdentifier>{c4c936bb-5d00-4b04-81a2-339aad710701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\sce_module">
+      <UniqueIdentifier>{5935aea7-079a-4642-807d-83c0313c6cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets">
+      <UniqueIdentifier>{c7bcdbf5-11d9-4148-9931-7ded001c7202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\audio">
+      <UniqueIdentifier>{db4a58a5-4507-438f-9ba6-84bc0d1b7b5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\fonts">
+      <UniqueIdentifier>{241cb8f1-0014-47e2-9c0b-5654d5519ba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\images">
+      <UniqueIdentifier>{6ab9b10a-008c-4165-9ec4-a23213d1359a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\misc">
+      <UniqueIdentifier>{0c4d5f66-7563-4cae-bdcd-1c022339b6ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\assets\videos">
+      <UniqueIdentifier>{27ee93e0-2ba6-4baf-84d1-17ff6a9cb619}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="build.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="sce_sys\icon0.png">
+      <Filter>Resource Files\sce_sys</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sce_sys\about\right.sprx">
+      <Filter>Resource Files\sce_sys\about</Filter>
+    </None>
+    <None Include="sce_module\libSceFios2.prx">
+      <Filter>Resource Files\sce_module</Filter>
+    </None>
+    <None Include="sce_module\libc.prx">
+      <Filter>Resource Files\sce_module</Filter>
+    </None>
+    <None Include="assets\audio\.gitkeep">
+      <Filter>Resource Files\assets\audio</Filter>
+    </None>
+    <None Include="assets\fonts\.gitkeep">
+      <Filter>Resource Files\assets\fonts</Filter>
+    </None>
+    <None Include="assets\images\.gitkeep">
+      <Filter>Resource Files\assets\images</Filter>
+    </None>
+    <None Include="assets\misc\.gitkeep">
+      <Filter>Resource Files\assets\misc</Filter>
+    </None>
+    <None Include="assets\videos\.gitkeep">
+      <Filter>Resource Files\assets\videos</Filter>
+    </None>
   </ItemGroup>
 </Project>

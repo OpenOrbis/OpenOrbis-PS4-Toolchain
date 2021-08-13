@@ -3,7 +3,7 @@
 Projectile::Projectile(SDL_Renderer* renderer)
 {
     // Load the ship texture
-    SDL_Surface* projectileSurface = IMG_Load("/app0/projectile.tga");
+    SDL_Surface* projectileSurface = IMG_Load("/app0/assets/images/projectile.tga");
     this->texture = SDL_CreateTextureFromSurface(renderer, projectileSurface);
 
     this->targetDest.x = (1920 / 2) - projectileSurface->w;

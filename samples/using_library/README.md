@@ -4,11 +4,23 @@
 
 This project contains example code for using the `library_example` / `libExample.prx` library.
 
+- **Title ID**: BREW00089
+- **Content ID**: IV0000-BREW00089_00-USINGLIBEX000000
+
 
 
 ## Directory structure
 ```
 samples/using_library
+|-- assets                                 // Empty assets directory
+|-- sce_module                             // Dependency modules for the pkg
+    |-- libSceFios2.prx
+    |-- libc.prx
+|-- sce_sys                                // Package materials (metadata)
+    |-- about
+        |-- right.prx
+    |-- icon0.png
+    |-- param.sfo
 |-- using_library
     |-- x64
         |-- Debug                          // Object files / intermediate directory
@@ -18,8 +30,9 @@ samples/using_library
     |-- using_library.vcxproj.filters
     |-- using_library.cvxproj.user
 |-- eboot.bin                              // final eboot (not present until built)
-|-- using_library.sln                      // Visual studio solution file
 |-- Makefile                               // Make rules for building on Linux
+|-- pkg.gp4                         // Package project file
+|-- using_library.sln                      // Visual studio solution file
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 

@@ -62,6 +62,19 @@ del /s /q /f $(IntDir)\*.oelf</NMakeCleanCommandLine>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="build.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="sce_sys\icon0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\audio\.gitkeep" />
+    <None Include="assets\fonts\.gitkeep" />
+    <None Include="assets\images\.gitkeep" />
+    <None Include="assets\misc\.gitkeep" />
+    <None Include="assets\videos\.gitkeep" />
+    <None Include="sce_module\libc.prx" />
+    <None Include="sce_module\libSceFios2.prx" />
+    <None Include="sce_sys\about\right.sprx" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

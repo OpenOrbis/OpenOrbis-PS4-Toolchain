@@ -17,6 +17,7 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	// TODO: Verify these sections exist in OrbisElf.ValidateInputELF()
 	textSection := orbisElf.ElfToConvert.Section(".text")
 	relroSection := orbisElf.ElfToConvert.Section(".data.rel.ro")
+	gotSection := orbisElf.ElfToConvert.Section(".got")
 	gotPltSection := orbisElf.ElfToConvert.Section(".got.plt")
 	procParamSection := orbisElf.ElfToConvert.Section(".data.sce_process_param")
 
@@ -38,7 +39,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 	}
 
 	// PT_TLS - Empty TLS header. Unsure if it's needed, but we'll add it anyways as it's not hard to generate.
-	tlsHeader := generateTLSHeader()
+	oldTlsHeader := orbisElf.getProgramHeader(elf.PT_TLS, elf.PF_R)
+	tlsHeader := generateEmptyTLSHeader()
+	if oldTlsHeader != nil {
+		tlsHeader = generateTLSHeader(oldTlsHeader)
+	}
 	orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, tlsHeader)
 
 	// PT_LOAD - The text segment.
@@ -53,33 +58,29 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 		orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, gnuEhFrameHeader)
 	}
 
-	// PT_SCE_RELRO - This segment is a little weird because we have to combine sizes from adjacent sections. We'll take
-	// the start offset of .data.rel.ro, and the start offset + size of .got.plt to determine the size of the segment.
-	// This is because there are additional sections sandwiched between these that are unlabelled in the section header
-	// table.
-	sizeOfSceRelro := uint64(0)
+	// PT_SCE_RELRO - This segment is a little weird since we have to generate it from multiple segments, and it *must*
+	// be contiguous with the data LOAD segment, so we need to connect the in-memory size. To do that, we'll use the
+	// offset for the first section we find for relro, and subtract it from the data LOAD segment offset.
+	dataSegmentOffset := procParamSection.Offset
+	dataSegmentAddr := procParamSection.Addr
 
-	if gotPltSection != nil {
-		if relroSection != nil {
-			sizeOfSceRelro += gotPltSection.Offset
-		}
-
-		sizeOfSceRelro += gotPltSection.FileSize
-	}
-
-	if relroSection != nil {
-		sizeOfSceRelro -= relroSection.Offset
-	}
-
-	if sizeOfSceRelro != 0 {
+	// Check for the existence of relro-related sections
+	if gotPltSection != nil || gotSection != nil || relroSection != nil {
 		relroOffset := uint64(0)
 		relroAddr := uint64(0)
 
-		// If the .got.plt section exists, but .data.rel.ro does not, use the offset and address of .got.plt. However,
-		// if .data.rel.ro *does* exist, we need to use this section's offset and address, as .data.rel.ro precedes the PLT.
+		// Order of potential first sections in the relro segment:
+		// 1) .data.rel.ro
+		// 2) .got
+		// 3) .got.plt
 		if gotPltSection != nil {
 			relroOffset = gotPltSection.Offset
 			relroAddr = gotPltSection.Addr
+		}
+
+		if gotSection != nil {
+			relroOffset = gotSection.Offset
+			relroAddr = gotSection.Addr
 		}
 
 		if relroSection != nil {
@@ -87,13 +88,11 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 			relroAddr = relroSection.Addr
 		}
 
+		sizeOfSceRelro := dataSegmentAddr - relroAddr
+
 		relroHeader := generateRelroHeader(relroOffset, relroAddr, sizeOfSceRelro)
 		orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, relroHeader)
 	}
-
-	// PT_LOAD - The data segment.
-	dataOffset := procParamSection.Offset
-	dataVaddr := procParamSection.Addr
 
 	// We'll get the size by subtracting the proc param offset from data's offset so we get padding for free, which the
 	// header size will not provide.
@@ -105,7 +104,8 @@ func (orbisElf *OrbisElf) GenerateProgramHeaders() error {
 		dataMemSize += (bssSection.Addr - (dataSection.Addr + dataSection.Size)) + bssSection.Size
 	}
 
-	dataHeader := generateDataHeader(dataOffset, dataVaddr, dataSize, dataMemSize)
+	// PT_LOAD - The data segment.
+	dataHeader := generateDataHeader(dataSegmentOffset, dataSegmentAddr, dataSize, dataMemSize)
 	orbisElf.ProgramHeaders = append(orbisElf.ProgramHeaders, dataHeader)
 
 	// PT_SCE_PROC_PARAM or PT_SCE_MODULE_PARAM - The SCE process (or module) param segment.
@@ -169,8 +169,8 @@ func generateInterpreterHeader(interpreterOffset uint64) elf.Prog64 {
 	}
 }
 
-// generateTLSHeader creates a program header for TLS. Returns the final program header.
-func generateTLSHeader() elf.Prog64 {
+// generateEmptyTLSHeader creates an empty program header for TLS. Returns the final program header.
+func generateEmptyTLSHeader() elf.Prog64 {
 	return elf.Prog64{
 		Type:   uint32(elf.PT_TLS),
 		Flags:  uint32(elf.PF_R),
@@ -195,6 +195,18 @@ func generateTextHeader(originalTextHeader *elf.Prog) elf.Prog64 {
 		Filesz: originalTextHeader.Filesz,
 		Memsz:  originalTextHeader.Memsz,
 		Align:  0x4000,
+	}
+}
+func generateTLSHeader(originalTLSHeader *elf.Prog) elf.Prog64 {
+	return elf.Prog64{
+		Type:   uint32(originalTLSHeader.Type),
+		Flags:  uint32(originalTLSHeader.Flags),
+		Vaddr:  originalTLSHeader.Vaddr,
+		Paddr:  originalTLSHeader.Paddr,
+		Off:    originalTLSHeader.Off,
+		Filesz: originalTLSHeader.Filesz,
+		Memsz:  originalTLSHeader.Memsz,
+		Align:  1,
 	}
 }
 
@@ -223,7 +235,7 @@ func generateRelroHeader(offset uint64, virtualAddr uint64, size uint64) elf.Pro
 		Paddr:  virtualAddr,
 		Off:    offset,
 		Filesz: size,
-		Memsz:  (size + 0x4000) &^ 0x3FFF,
+		Memsz:  size,
 		Align:  0x4000,
 	}
 }

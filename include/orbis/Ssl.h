@@ -7,6 +7,10 @@
 extern "C" {
 #endif
 
+typedef struct SslPem {
+	char *ptr;
+	size_t size;
+} SslPem;
 
 // Empty Comment
 void CA_MGMT_allocCertDistinguishedName();
@@ -281,7 +285,7 @@ void sceSslGetSslError();
 // Empty Comment
 void sceSslGetSubjectName();
 // Empty Comment
-void sceSslInit();
+int sceSslInit(size_t poolSize);
 // Empty Comment
 void sceSslLoadCert();
 // Empty Comment
