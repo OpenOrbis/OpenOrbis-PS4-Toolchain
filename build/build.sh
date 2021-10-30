@@ -34,6 +34,13 @@ GOOS=linux GOARCH=amd64 go build -ldflags='-X main.TOOL_MODE=SPRX' -o create-lib
 GOOS=darwin GOARCH=amd64 go build -ldflags='-X main.TOOL_MODE=SELF' -o create-eboot && mv ./create-eboot /OpenOrbis-PS4-Toolchain/bin/macos/create-eboot
 GOOS=darwin GOARCH=amd64 go build -ldflags='-X main.TOOL_MODE=SPRX' -o create-lib && mv ./create-lib /OpenOrbis-PS4-Toolchain/bin/macos/create-lib
 
+# Build create-gp4
+cd /OpenOrbis-PS4-Toolchain/src/tools/create-gp4
+
+GOOS=windows GOARCH=amd64 go build -o create-gp4.exe && mv ./create-gp4.exe /OpenOrbis-PS4-Toolchain/bin/windows/create-gp4.exe
+GOOS=linux GOARCH=amd64 go build -o create-gp4 && mv ./create-gp4 /OpenOrbis-PS4-Toolchain/bin/linux/create-gp4
+GOOS=darwin GOARCH=amd64 go build -o create-gp4 && mv ./create-gp4 /OpenOrbis-PS4-Toolchain/bin/macos/create-gp4
+
 # Build readelf
 cd /OpenOrbis-PS4-Toolchain/src/tools/readelf
 
