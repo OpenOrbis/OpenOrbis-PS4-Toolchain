@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdint.h>
+
 typedef enum {
 	ORBIS_DIALOG_OK = 0,
 	ORBIS_DIALOG_CANCEL = 1,
