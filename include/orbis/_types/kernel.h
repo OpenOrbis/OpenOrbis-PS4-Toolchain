@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <sys/time.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 
 #ifndef MAP_TYPE
 	#define MAP_TYPE 0x0f
