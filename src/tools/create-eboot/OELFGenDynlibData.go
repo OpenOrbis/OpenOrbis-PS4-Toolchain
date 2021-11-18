@@ -476,7 +476,7 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 		}
 
 		if symbolModuleIndex < 0 {
-			return 0, errors.New("missing module for symbol")
+			return 0, errors.New(fmt.Sprintf("missing module for symbol: %s", symbol.Name))
 		}
 
 		// Build the NID and insert it into the table
