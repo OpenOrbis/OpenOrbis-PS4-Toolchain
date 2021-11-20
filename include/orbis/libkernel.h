@@ -28,7 +28,7 @@ int sceKernelDebugOutText(int dbg_channel, const char* text, ...);
 // Empty Comment
 int sceKernelGetThreadName(unsigned int id, char* out);
 // Empty Comment
-int sceKernelGetCpuUsage(Proc_Stats* out, int* size);
+int sceKernelGetCpuUsage(struct Proc_Stats* out, int* size);
 // Empty Comment
 int sceKernelGetCpuFrequency();
 // Empty Comment
