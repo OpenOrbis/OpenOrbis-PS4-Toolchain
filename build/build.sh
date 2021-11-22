@@ -50,9 +50,9 @@ GOOS=darwin GOARCH=amd64 go build -o readelf && mv ./readelf /OpenOrbis-PS4-Tool
 
 # Pull maxton's publishing tools (<3)
 # Sadly maxton has passed on, we have forked the repository and will continue to update it in the future. RIP <3
-cd /OpenOrbis-PS4-Toolchain/bin/windows && wget https://github.com/OpenOrbis/LibOrbisPkg/releases/download/v0.2/PkgEditor-0.2.231.zip && unzip PkgEditor-0.2.231.zip && rm PkgEditor-0.2.231.zip
-cd /OpenOrbis-PS4-Toolchain/bin/linux && wget https://github.com/OpenOrbis/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-linux-x64-0.2.231.zip && unzip PkgTool.Core-linux-x64-0.2.231.zip && rm PkgTool.Core-linux-x64-0.2.231.zip && chmod +x PkgTool.Core
-cd /OpenOrbis-PS4-Toolchain/bin/macos && wget https://github.com/OpenOrbis/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-osx-x64-0.2.231.zip && unzip PkgTool.Core-osx-x64-0.2.231.zip && rm PkgTool.Core-osx-x64-0.2.231.zip && chmod +x PkgTool.Core
+cd /OpenOrbis-PS4-Toolchain/bin/windows && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgEditor-0.2.231.zip && unzip PkgEditor-0.2.231.zip && rm PkgEditor-0.2.231.zip
+cd /OpenOrbis-PS4-Toolchain/bin/linux && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-linux-x64-0.2.231.zip && unzip PkgTool.Core-linux-x64-0.2.231.zip && rm PkgTool.Core-linux-x64-0.2.231.zip && chmod +x PkgTool.Core
+cd /OpenOrbis-PS4-Toolchain/bin/macos && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-osx-x64-0.2.231.zip && unzip PkgTool.Core-osx-x64-0.2.231.zip && rm PkgTool.Core-osx-x64-0.2.231.zip && chmod +x PkgTool.Core
 
 # Copy crtlib
 cd /OpenOrbis-PS4-Toolchain/src/crt && as crtlib.S -o crtlib.o && mv crtlib.o /OpenOrbis-PS4-Toolchain/lib
