@@ -49,6 +49,7 @@ GOOS=linux GOARCH=amd64 go build -o readelf && mv ./readelf /OpenOrbis-PS4-Toolc
 GOOS=darwin GOARCH=amd64 go build -o readelf && mv ./readelf /OpenOrbis-PS4-Toolchain/bin/macos/readelf
 
 # Pull maxton's publishing tools (<3)
+# Sadly maxton has passed on, we have forked the repository and will continue to update it in the future. RIP <3
 cd /OpenOrbis-PS4-Toolchain/bin/windows && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgEditor-0.2.231.zip && unzip PkgEditor-0.2.231.zip && rm PkgEditor-0.2.231.zip
 cd /OpenOrbis-PS4-Toolchain/bin/linux && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-linux-x64-0.2.231.zip && unzip PkgTool.Core-linux-x64-0.2.231.zip && rm PkgTool.Core-linux-x64-0.2.231.zip && chmod +x PkgTool.Core
 cd /OpenOrbis-PS4-Toolchain/bin/macos && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-osx-x64-0.2.231.zip && unzip PkgTool.Core-osx-x64-0.2.231.zip && rm PkgTool.Core-osx-x64-0.2.231.zip && chmod +x PkgTool.Core
@@ -68,6 +69,11 @@ rm -r /OpenOrbis-PS4-Toolchain/src/lib/build/lib/*.so && rm -r /OpenOrbis-PS4-To
 
 # Build example stub
 cd /OpenOrbis-PS4-Toolchain/samples/library_example && make
+
+# Copy the libc++ libraries
+cp /llvm-project/libcxx/build/lib/* /OpenOrbis-PS4-Toolchain/lib
+cp /llvm-project/libcxxabi/build/lib/* /OpenOrbis-PS4-Toolchain/lib
+cp /llvm-project/libunwind/build/lib/* /OpenOrbis-PS4-Toolchain/lib
 
 # Cleanup
 rm -rf /ps4 && rm -rf /musl && rm -rf /llvm-project
