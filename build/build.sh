@@ -70,11 +70,9 @@ rm -r /OpenOrbis-PS4-Toolchain/src/lib/build/lib/*.so && rm -r /OpenOrbis-PS4-To
 # Build example stub
 cd /OpenOrbis-PS4-Toolchain/samples/library_example && make
 
-# TODO: Copy the libc++ libraries
-cd /llvm-project/libcxx/build
-ls -lash
-cd /llvm-project/libcxxabi/build
-ls -lash
+# Copy the libc++ libraries
+cp /llvm-project/libcxx/build/lib/* /OpenOrbis-PS4-Toolchain/lib
+cp /llvm-project/libcxxabi/build/lib/* /OpenOrbis-PS4-Toolchain/lib
 
 # Cleanup
 rm -rf /ps4 && rm -rf /musl && rm -rf /llvm-project
