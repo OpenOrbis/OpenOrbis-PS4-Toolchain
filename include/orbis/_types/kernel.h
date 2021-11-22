@@ -172,7 +172,7 @@ enum OrbisNotificationRequestType
 // Struct Credits - OSM-Made
 typedef struct
 {
-	OrbisNotificationRequestType type;
+	enum OrbisNotificationRequestType type;
 	int reqId;
 	int priority;
 	int msgId;
@@ -183,7 +183,7 @@ typedef struct
 	int appId;
 	int errorNum;
 	int unk3;
-	bool useIconImageUri;
+	unsigned char useIconImageUri;
 	char message[1024];
 	char iconUri[1024];
 	char unk[1024];
