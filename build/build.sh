@@ -71,13 +71,9 @@ rm -r /OpenOrbis-PS4-Toolchain/src/lib/build/lib/*.so && rm -r /OpenOrbis-PS4-To
 cd /OpenOrbis-PS4-Toolchain/samples/library_example && make
 
 # TODO: Copy the libc++ libraries
-cd /llvm-project
+cd /llvm-project/libcxx/build
 ls -lash
-cd /llvm-project/libcxx/lib
-ls -lash
-cd /llvm-project/libcxxabi/lib
-ls -lash
-cd /llvm-project/libcxx
+cd /llvm-project/libcxxabi/build
 ls -lash
 
 # Cleanup
