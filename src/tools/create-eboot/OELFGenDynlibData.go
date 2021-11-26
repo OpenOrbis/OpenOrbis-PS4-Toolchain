@@ -11,6 +11,7 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+	"fmt"
 )
 
 // Const nidSuffixKey holds the suffix appended to the end of symbol names before calculating the NID hash.
