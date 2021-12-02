@@ -168,17 +168,17 @@ def buildPKGProcess():
 
 	# if libc.prx is not inside the tmppkg folder, copy it from our bin/data
 	if(os.path.exists(setting_build_folder + "/tmppkg/sce_module/libc.prx") == 0):
-		copyfile(DATA_PKG_FOLDER + "libc.prx", setting_build_folder + "/tmppkg/sce_module/libc.prx")
+		copyfile(DATA_PKG_FOLDER + "modules/libc.prx", setting_build_folder + "/tmppkg/sce_module/libc.prx")
 		pkg_assfiles += '\t\t<file targ_path="sce_module/libc.prx"/>\n'
 
-	# if libc.prx is not inside the tmppkg folder, copy it from our bin/data
+	# if libSceFios2.prx is not inside the tmppkg folder, copy it from our bin/data
 	if(os.path.exists(setting_build_folder + "/tmppkg/sce_module/libSceFios2.prx") == 0):
-		copyfile(DATA_PKG_FOLDER + "libSceFios2.prx", setting_build_folder + "/tmppkg/sce_module/libSceFios2.prx")
+		copyfile(DATA_PKG_FOLDER + "modules/libSceFios2.prx", setting_build_folder + "/tmppkg/sce_module/libSceFios2.prx")
 		pkg_assfiles += '\t\t<file targ_path="sce_module/libSceFios2.prx"/>\n'
 		
-	# if libc.prx is not inside the tmppkg folder, copy it from our bin/data
+	# if param.sfo is not inside the tmppkg folder, copy it from our bin/data
 	if(os.path.exists(setting_build_folder + "/tmppkg/sce_sys/param.sfo") == 0):
-		copyfile(DATA_PKG_FOLDER + "libc.prx", setting_build_folder + "/tmppkg/sce_sys/libc.prx")
+		copyfile(DATA_PKG_FOLDER + "param.sfo", setting_build_folder + "/tmppkg/sce_sys/param.sfo")
 		pkg_assfiles += '\t\t<file targ_path="sce_sys/libc.prx"/>\n'
 			
 	if(os.path.exists(setting_build_folder + "/tmppkg/sce_sys/icon0.png") == 0):

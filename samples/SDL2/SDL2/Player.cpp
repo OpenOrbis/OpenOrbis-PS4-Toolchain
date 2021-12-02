@@ -3,7 +3,7 @@
 Player::Player(SDL_Renderer *renderer)
 {
     // Load the ship texture
-    SDL_Surface* shipSurface = IMG_Load("/app0/player.tga");
+    SDL_Surface* shipSurface = IMG_Load("/app0/assets/images/player.tga");
     this->texture = SDL_CreateTextureFromSurface(renderer, shipSurface);
 
     // Center the ship

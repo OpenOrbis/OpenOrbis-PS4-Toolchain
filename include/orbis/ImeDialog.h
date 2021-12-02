@@ -1,3 +1,5 @@
+#include <orbis/_types/ime_dialog.h>
+
 #ifndef _SCE_IME_DIALOG_H_
 #define _SCE_IME_DIALOG_H_
 
@@ -20,11 +22,11 @@ void sceImeDialogGetPanelSize();
 // Empty Comment
 void sceImeDialogGetPanelSizeExtended();
 // Empty Comment
-void sceImeDialogGetResult();
+int sceImeDialogGetResult(OrbisDialogResult *result);
 // Empty Comment
-void sceImeDialogGetStatus();
+OrbisDialogStatus sceImeDialogGetStatus();
 // Empty Comment
-void sceImeDialogInit();
+int sceImeDialogInit(const OrbisImeDialogSetting *param, void* unk);
 // Empty Comment
 void sceImeDialogInitInternal();
 // Empty Comment

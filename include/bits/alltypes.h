@@ -149,12 +149,12 @@ typedef unsigned _Int64 uintmax_t;
 
 
 #if defined(__NEED_mode_t) && !defined(__DEFINED_mode_t)
-typedef unsigned mode_t;
+typedef unsigned short mode_t;
 #define __DEFINED_mode_t
 #endif
 
 #if defined(__NEED_nlink_t) && !defined(__DEFINED_nlink_t)
-typedef unsigned _Reg nlink_t;
+typedef unsigned short nlink_t;
 #define __DEFINED_nlink_t
 #endif
 
@@ -164,17 +164,17 @@ typedef _Int64 off_t;
 #endif
 
 #if defined(__NEED_ino_t) && !defined(__DEFINED_ino_t)
-typedef unsigned _Int64 ino_t;
+typedef unsigned int ino_t;
 #define __DEFINED_ino_t
 #endif
 
 #if defined(__NEED_dev_t) && !defined(__DEFINED_dev_t)
-typedef unsigned _Int64 dev_t;
+typedef unsigned int dev_t;
 #define __DEFINED_dev_t
 #endif
 
 #if defined(__NEED_blksize_t) && !defined(__DEFINED_blksize_t)
-typedef long blksize_t;
+typedef unsigned int blksize_t;
 #define __DEFINED_blksize_t
 #endif
 

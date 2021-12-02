@@ -203,24 +203,35 @@ int pthread_setconcurrency(int);
 
 int pthread_getcpuclockid(pthread_t, clockid_t *);
 
-struct __ptcb {
-	void (*__f)(void *);
-	void *__x;
-	struct __ptcb *__next;
+// from freebsd
+struct _pthread_cleanup_info {
+	unsigned long /* uintptr_t */ pthread_cleanup_pad[8];
 };
 
-void _pthread_cleanup_push(struct __ptcb *, void (*)(void *), void *);
-void _pthread_cleanup_pop(struct __ptcb *, int);
+void		__pthread_cleanup_push_imp(void (*)(void *), void *,
+			struct _pthread_cleanup_info *);
+void		__pthread_cleanup_pop_imp(int);
 
-#define pthread_cleanup_push(f, x) do { struct __ptcb __cb; _pthread_cleanup_push(&__cb, f, x);
-#define pthread_cleanup_pop(r) _pthread_cleanup_pop(&__cb, (r)); } while(0)
+#define		pthread_cleanup_push(cleanup_routine, cleanup_arg)		\
+		{								\
+			struct _pthread_cleanup_info __cleanup_info__;		\
+			__pthread_cleanup_push_imp(cleanup_routine, cleanup_arg,\
+				&__cleanup_info__);				\
+			{
+
+#define		pthread_cleanup_pop(execute)					\
+			}							\
+			__pthread_cleanup_pop_imp(execute);			\
+		}
 
 #ifdef _GNU_SOURCE
 struct cpu_set_t;
 int pthread_getaffinity_np(pthread_t, size_t, struct cpu_set_t *);
 int pthread_setaffinity_np(pthread_t, size_t, const struct cpu_set_t *);
-int pthread_getattr_np(pthread_t, pthread_attr_t *);
-int pthread_setname_np(pthread_t, const char *);
+int pthread_attr_get_np(pthread_t, pthread_attr_t *);
+int pthread_set_name_np(pthread_t, const char *);
+#define pthread_getattr_np pthread_attr_get_np
+#define pthread_setname_np pthread_set_name_np
 int pthread_getattr_default_np(pthread_attr_t *);
 int pthread_setattr_default_np(const pthread_attr_t *);
 int pthread_tryjoin_np(pthread_t, void **);

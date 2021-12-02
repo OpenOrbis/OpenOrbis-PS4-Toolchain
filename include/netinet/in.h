@@ -7,6 +7,7 @@ extern "C" {
 
 #include <features.h>
 #include <inttypes.h>
+#include <stdint.h>
 #include <sys/socket.h>
 
 typedef uint16_t in_port_t;

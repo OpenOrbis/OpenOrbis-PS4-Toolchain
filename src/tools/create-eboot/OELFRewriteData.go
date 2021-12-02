@@ -18,11 +18,7 @@ func (orbisElf *OrbisElf) RewriteELFHeader() error {
 	)
 
 	elfHeaderBuff := new(bytes.Buffer)
-	programHeaderCount := uint16(0x8)
-
-	if orbisElf.getProgramHeader(PT_GNU_EH_FRAME, elf.PF_R) != nil {
-		programHeaderCount++
-	}
+	programHeaderCount := uint16(len(orbisElf.ProgramHeaders))
 
 	elfType := ET_SCE_EXEC_ASLR
 	elfEntry := orbisElf.ElfToConvert.Entry

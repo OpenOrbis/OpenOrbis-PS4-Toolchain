@@ -11,6 +11,7 @@ import (
 	"io"
 	"path/filepath"
 	"strings"
+	"fmt"
 )
 
 // Const nidSuffixKey holds the suffix appended to the end of symbol names before calculating the NID hash.
@@ -111,6 +112,19 @@ var (
 // Dynlib Data Generation
 ////
 
+func OpenLibrary(name string) (*elf.File, error) {
+	libDirs := append([]string{sdkPath+"/lib"}, strings.Split(libPath, ":")...)
+	var err error
+	var lib *elf.File
+	for _, libDir := range libDirs {
+		lib, err = elf.Open(libDir+"/"+name)
+		if err == nil {
+			return lib, nil
+		}
+	}
+	return nil, err
+}
+
 // OrbisElf.GenerateLibrarySymbolDictionary parses the input ELF for any libraries as well as symbols it needs from shared
 // libraries, and creates a dictionary of library names to symbol lists for later use. Returns an error if a library failed
 // to open, or if we failed to get a symbol list for any library, nil otherwise.
@@ -137,7 +151,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 	}
 
 	// Ensure libkernel is the first library
-	if libraryObj, err := elf.Open(sdkPath + "/lib/libkernel.so"); err == nil {
+	if libraryObj, err := OpenLibrary("libkernel.so"); err == nil {
 		libraryObjs = append(libraryObjs, libraryObj)
 		orbisElf.ModuleSymbolDictionary.Set("libkernel", []string{})
 	} else {
@@ -152,7 +166,7 @@ func (orbisElf *OrbisElf) GenerateLibrarySymbolDictionary() error {
 		}
 
 		// Open the library file for parsing
-		if libraryObj, err := elf.Open(sdkPath + "/lib/" + library); err == nil {
+		if libraryObj, err := OpenLibrary(library); err == nil {
 			libraryObjs = append(libraryObjs, libraryObj)
 		} else {
 			return err
@@ -463,7 +477,7 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 		}
 
 		if symbolModuleIndex < 0 {
-			return 0, errors.New("missing module for symbol")
+			return 0, errors.New(fmt.Sprintf("missing module for symbol (%s)", symbol.Name))
 		}
 
 		// Build the NID and insert it into the table
@@ -482,7 +496,7 @@ func writeNIDTable(orbisElf *OrbisElf, segmentData *[]byte) (uint64, error) {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if ((symbol.Info>>4&0xf) == uint8(elf.STB_GLOBAL) || (symbol.Info>>4&0xf) == uint8(elf.STB_WEAK)) && symbol.Value != 0 {
 				nidTableBuff.WriteString(buildNIDEntry(symbol.Name, moduleId))
 			}
 		}
@@ -566,14 +580,23 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 	symbols, _ := orbisElf.ElfToConvert.DynamicSymbols()
 
 	for _, symbol := range symbols {
+
+		// Skip symbols that have a valid section index - they're defined in the ELF and are not external
+		if symbol.Section != elf.SHN_UNDEF {
+			continue
+		}
+
 		if symbol.Name != "" {
 			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
 				Name: uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
 				Info: symbol.Info,
 			})
 
-			numSymbols++
+			numSymbols++ // should it go outside?
+		} else {
+			_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{})
 		}
+
 	}
 
 	modules := orbisElf.ModuleSymbolDictionary.Keys()
@@ -608,7 +631,7 @@ func writeSymbolTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 		for _, symbol := range moduleSymbols {
 			// Only export global symbols that we have values for
-			if (symbol.Info>>4&uint8(elf.STB_GLOBAL)) == uint8(elf.STB_GLOBAL) && symbol.Value != 0 {
+			if ((symbol.Info>>4&0xf) == uint8(elf.STB_GLOBAL) || (symbol.Info>>4&0xf) == uint8(elf.STB_WEAK)) && symbol.Value != 0 {
 				_ = binary.Write(symbolTableBuff, binary.LittleEndian, elf.Sym64{
 					Name:  uint32(offsetOfNidTable + uint64(numSymbols*0x10)),
 					Info:  symbol.Info,
@@ -697,7 +720,7 @@ func writeRelocationTable(orbisElf *OrbisElf, segmentData *[]byte) uint64 {
 
 			_ = binary.Write(relocationTableBuff, binary.LittleEndian, elf.Rela64{
 				Off:    rOffset,
-				Info:   rInfo,
+				Info:   rInfo + (1 << 32), // Add one to the symbol index to account for STT_SECTION
 				Addend: int64(rAddend),
 			})
 		}

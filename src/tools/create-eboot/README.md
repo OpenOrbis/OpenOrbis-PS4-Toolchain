@@ -6,9 +6,9 @@ The `create-eboot` and `create-lib` tools takes 64-bit Executable Linkable Forma
 ### Build
 The tool is written in Golang. Commands should be the same between Windows and Linux assuming Golang is installed on the target system.
 
-Building is very easy, simply go to the root directory of the tool (`/src/tools/elf-to-oelf/`) and run the `go build` command.
+Building is very easy, simply go to the root directory of the tool (`/src/tools/create-eboot/`) and run the `go build` command.
 
-There is a shell build script to compile both `create-eboot` and `create-lib` on Linux and macOS, and cross-compile them for Windows. A batch script will be added at a later date.
+There is a shell and batch build script to compile both `create-eboot` and `create-lib` on all platforms (Windows, Linux, and macOS).
 
 ### Usage
 The `create-eboot` tool requires two arguments. These arguments are `-in` and `-out` for the input and output files respectively.

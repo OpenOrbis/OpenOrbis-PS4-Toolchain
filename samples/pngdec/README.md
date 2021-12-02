@@ -1,8 +1,11 @@
 # Sample: pngdec
 
-[![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
+[![Version](https://img.shields.io/badge/Version-1.02-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
 This project contains example code for initializing the SceVideoOut library, and for CPU rendering a PNG image on the screen. This sample will also have the capability to render JPEG, JPG, TGA, BMP, and non-animated GIFs as well as PNG files. This was made possible thanks to the awesome STB header library by Sean Barrett.
+
+- **Title ID**: BREW00086
+- **Content ID**: IV0000-BREW00086_00-IPNGDRAWEX000000
 
 ![screenshot](screenshot.jpg)
 
@@ -11,7 +14,10 @@ This project contains example code for initializing the SceVideoOut library, and
 ## Directory structure
 ```
 samples/pngdec
-|-- pngdec  
+|-- assets
+    |-- images
+        |-- logo.png            // Image to draw
+|-- pngdec
     |-- x64
         |-- Debug               // Object files / intermediate directory
     |-- build.bat               // Batch file for building on Windows
@@ -19,10 +25,19 @@ samples/pngdec
     |-- pngdec.vcxproj          // Visual studio project files
     |-- pngdec.vcxproj.filters
     |-- pngdec.cvxproj.user
+|-- sce_module                  // Dependency modules for the pkg
+    |-- libSceFios2.prx
+    |-- libc.prx
+|-- sce_sys                     // Package materials (metadata)
+    |-- about
+        |-- right.prx
+    |-- icon0.png
+    |-- param.sfo
 |-- eboot.bin                   // final eboot (not present until built)
 |-- logo.png                    // PNG to decode and display
-|-- pngdec.sln                  // Visual studio solution file
 |-- Makefile                    // Make rules for building on Linux
+|-- pkg.gp4                     // Package project file
+|-- pngdec.sln                  // Visual studio solution file
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 

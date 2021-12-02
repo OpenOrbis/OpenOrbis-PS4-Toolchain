@@ -1,8 +1,11 @@
 # Sample: SDL2
 
-[![Version](https://img.shields.io/badge/Version-1.0-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
+[![Version](https://img.shields.io/badge/Version-1.03-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
 This project contains an example asteroids clone which builds against SDL 2.0.
+
+- **Title ID**: BREW00090
+- **Content ID**: IV0000-BREW00090_00-SDLEXAMPLE000000
 
 ![screenshot](screenshot.jpg)
 
@@ -11,6 +14,22 @@ This project contains an example asteroids clone which builds against SDL 2.0.
 ## Directory structure
 ```
 samples/SDL2
+|-- assets
+    |-- fonts
+        |-- Bebas-Regular.ttf     // Score font truetype file
+        |-- VeraMono.ttf          // Debug font truetype file
+    |-- images
+        |-- enemy.tga             // Enemy asteroid texture
+        |-- player.tga            // Player spaceship texture
+        |-- projectile.tga        // Laser projectile texture
+|-- sce_module                    // Dependency modules for the pkg
+    |-- libSceFios2.prx
+    |-- libc.prx
+|-- sce_sys                       // Package materials (metadata)
+    |-- about
+        |-- right.prx
+    |-- icon0.png
+    |-- param.sfo
 |-- SDL2
     |-- x64
         |-- Debug                 // Object files / intermediate directory
@@ -34,6 +53,7 @@ samples/SDL2
     |-- TTF.h                     // Contains text rendering function declarations
 |-- eboot.bin                     // final eboot (not present until built)
 |-- Makefile                      // Make rules for building on Linux
+|-- pkg.gp4                       // Package project file
 |-- SDL2.sln                      // Visual studio solution file
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.

@@ -9,6 +9,7 @@ This directory contains source files for all the tools included in the OpenOrbis
 | `./modules` | Empty library source | Specter |
 | `./templates` | Visual Studio Templates | Specter |
 | `./tools/create-eboot` | `create-eboot` / `create-lib` | Specter |
+| `./tools/create-gp4` | `create-gp4` | Specter + John Tornblom |
 | `./tools/miralib` | MiraLib library | Specter |
 | `./tools/orbisLibGen` | Library stub generator | CrazyVoid |
 | `./tools/readelf` | Readelf replacement | Specter |
@@ -54,6 +55,15 @@ This directory contains two Visual Studio projects, one for `OpenOrbis SELF Proj
 The `create-eboot` project contains the source for both `create-eboot` and `create-lib`. The project was written in Golang.
 
 Since much of the process of creating applications and libraries is the same, we thought it best to not unnecessarily duplicate code and keep it all in one code-base. Which tool is compiled is determined by a linker flag. More information on this can be found on the tool's own `README.md`.
+
+
+
+## Create-GP4
+`./tools/create-gp4`
+
+The `create-gp4` project contains the source for a tool to generate .gp4 project files. The project was written in Golang.
+
+More information on this tool can be found on the tool's own `README.md`.
 
 
 

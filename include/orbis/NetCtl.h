@@ -1,9 +1,9 @@
 #ifndef _SCE_NET_CTL_H_
 #define _SCE_NET_CTL_H_
 
-#include <sys/stdint.h>
+#include <stdint.h>
 
-#ifdef __cplusplus 
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -55,8 +55,9 @@ typedef union OrbisNetCtlInfo {
 	uint16_t http_proxy_port;
 } OrbisNetCtlInfo;
 
-void sceNetCtlGetInfo(int, void *);
-void sceNetCtlInit();
+int sceNetCtlGetInfo(int, OrbisNetCtlInfo *);
+int sceNetCtlInit();
+void sceNetCtlTerm();
 
 #endif
 

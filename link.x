@@ -28,15 +28,18 @@ SECTIONS
 		*(.data.rel.ro)
 	}
 
+	.tls : ALIGN(0x4000) {
+		*(.tdata);
+		*(.tbss);
+	}
+
 	# Align .got to 0x4000 if .data.rel.ro doesn't exist
-	. = (SIZEOF(.data.rel.ro) > 0 ? . : ALIGN(.,0x4000));
-	.got : {
+	.got : ALIGN(SIZEOF(.data.rel.ro) > 0 ? 8 : 0x4000) {
 		*(.got)
 	}
 
 	# Align .got.plt to 0x4000 if .got doesn't exist
-	. = (SIZEOF(.got) > 0 ? . : ALIGN(.,0x4000));
-	.got.plt : {
+	.got.plt : ALIGN((SIZEOF(.got) > 0 || SIZEOF(.data.rel.ro) > 0) ? 8 : 0x4000) {
 		*(.got.plt)
 	}
 

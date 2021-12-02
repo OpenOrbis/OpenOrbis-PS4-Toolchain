@@ -48,7 +48,7 @@ int main()
     // Decode a wav file to play
     drwav wav;
 
-    if (!drwav_init_file(&wav, "/app0/lets_go_go_go_tigerblood_jewel.wav", NULL))
+    if (!drwav_init_file(&wav, "/app0/assets/audio/lets_go_go_go_tigerblood_jewel.wav", NULL))
     {
         printf("[ERROR] Failed to decode wav file\n");
         return -1;

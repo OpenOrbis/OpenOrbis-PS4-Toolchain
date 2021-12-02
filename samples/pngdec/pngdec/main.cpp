@@ -42,7 +42,7 @@ int main()
     int imagePosY = (FRAME_HEIGHT / 2) - (530 / 2); // We have to subtract the image height / 2 since our anchor point is the top left
     
     // Create the PNG instance for the logo
-    auto logo = new PNG("/app0/logo.png");
+    auto logo = new PNG("/app0/assets/images/logo.png");
 
     // Draw loop
     for (;;)
