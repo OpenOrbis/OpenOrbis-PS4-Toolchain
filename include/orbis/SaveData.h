@@ -2,11 +2,17 @@
 #define _SCE_SAVEDATA_H_
 
 #include <stdint.h>
+#include <orbis/_types/save_data.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
 
+int32_t sceSaveDataInitialize3(int32_t initParams);
+int32_t sceSaveDataMount(OrbisSaveDataMount*, OrbisSaveDataMountResult*);
+int32_t sceSaveDataUmount(OrbisSaveDataUMount *);
+int32_t sceSaveDataDelete(OrbisSaveDataDelete *del);
+int32_t sceSaveDataSetParam(char * mountPoint, uint32_t type, void * buffer, size_t bufferSize);
 
 // Empty Comment
 void sceSaveDataBackup();
@@ -16,8 +22,6 @@ void sceSaveDataCheckBackupData();
 void sceSaveDataCheckBackupDataInternal();
 // Empty Comment
 void sceSaveDataClearProgress();
-// Empty Comment
-void sceSaveDataDelete();
 // Empty Comment
 void sceSaveDataDelete5();
 // Empty Comment
@@ -41,11 +45,7 @@ void sceSaveDataInitialize();
 // Empty Comment
 void sceSaveDataInitialize2();
 // Empty Comment
-void sceSaveDataInitialize3();
-// Empty Comment
 void sceSaveDataLoadIcon();
-// Empty Comment
-void sceSaveDataMount();
 // Empty Comment
 void sceSaveDataMount2();
 // Empty Comment
@@ -56,8 +56,6 @@ void sceSaveDataMountInternal();
 void sceSaveDataRestoreBackupData();
 // Empty Comment
 void sceSaveDataSaveIcon();
-// Empty Comment
-void sceSaveDataSetParam();
 // Empty Comment
 void sceSaveDataSetSaveDataMemory();
 // Empty Comment
@@ -72,8 +70,6 @@ void sceSaveDataSyncSaveDataMemory();
 void sceSaveDataTerminate();
 // Empty Comment
 void sceSaveDataTransferringMount();
-// Empty Comment
-void sceSaveDataUmount();
 // Empty Comment
 void sceSaveDataUmountWithBackup();
 
