@@ -180,5 +180,6 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - ChendoChap: Bug fixes and support
 - astrelsky: Bug fixes and support
 - MrSlick: Awesome logo <3
+- Nikita Krapivin: C++ exception support
 - OpenOrbis Team
 - Other anonymous contributors
