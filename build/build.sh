@@ -19,7 +19,7 @@ rm -rf llvm-project
 mkdir ps4
 
 # Pull source code
-git clone --depth=1 https://github.com/nekohaku/OpenOrbis-PS4-Toolchain && rm -rf /OpenOrbis-PS4-Toolchain/.git
+git clone --depth=1 https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain && rm -rf /OpenOrbis-PS4-Toolchain/.git
 git clone --depth=1 https://github.com/OpenOrbis/musl
 git clone --depth=1 https://github.com/OpenOrbis/llvm-project
 
