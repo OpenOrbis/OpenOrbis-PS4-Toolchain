@@ -15,6 +15,7 @@ int sceUserServiceGetUserName(int, char *, const size_t);
 int sceUserServiceInitialize(void *);
 int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
 int sceUserServiceGetForegroundUser(int* user_id);
+int sceUserServiceGetNpAccountId(int user_id, uint64_t *account_id);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -122,7 +123,6 @@ void sceUserServiceGetMouseHandType();
 void sceUserServiceGetMousePointerSpeed();
 void sceUserServiceGetNotificationBehavior();
 void sceUserServiceGetNotificationSettings();
-void sceUserServiceGetNpAccountId();
 void sceUserServiceGetNpAccountUpgradeFlag();
 void sceUserServiceGetNpAuthErrorFlag();
 void sceUserServiceGetNpEnv();
