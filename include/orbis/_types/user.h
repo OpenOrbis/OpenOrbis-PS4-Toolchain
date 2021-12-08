@@ -3,6 +3,8 @@
 #include <stdint.h>
 
 
+#define ORBIS_USER_SERVICE_MAX_LOGIN_USERS      4   //Maximum number of users that can be logged in at once
+#define ORBIS_USER_SERVICE_MAX_USER_NAME_LENGTH 16  //Maximum user name length
 
 #define ORBIS_USER_SERVICE_USER_ID_SYSTEM 0xFF
 
