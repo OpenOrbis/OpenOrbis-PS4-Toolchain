@@ -19,5 +19,12 @@ typedef struct OrbisUserServiceInitializeParams {
 } OrbisUserServiceInitializeParams;
 
 typedef struct OrbisUserServiceLoginUserIdList {
-	OrbisUserServiceUserId userId[4];
+	OrbisUserServiceUserId userId[ORBIS_USER_SERVICE_MAX_LOGIN_USERS];
 } OrbisUserServiceLoginUserIdList;
+
+typedef enum OrbisUserServiceUserColor {
+	ORBIS_USER_SERVICE_USER_COLOR_BLUE 	= 0,
+	ORBIS_USER_SERVICE_USER_COLOR_RED 	= 1,
+	ORBIS_USER_SERVICE_USER_COLOR_GREEN	= 2,
+	ORBIS_USER_SERVICE_USER_COLOR_PINK 	= 3,
+} OrbisUserServiceUserColor;

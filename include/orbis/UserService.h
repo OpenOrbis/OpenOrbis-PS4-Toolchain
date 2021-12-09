@@ -16,6 +16,7 @@ int sceUserServiceInitialize(void *);
 int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
 int sceUserServiceGetForegroundUser(int* user_id);
 int sceUserServiceGetNpAccountId(int user_id, uint64_t *account_id);
+int sceUserServiceGetUserColor(const OrbisUserServiceUserId, OrbisUserServiceUserColor *);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -173,7 +174,6 @@ void sceUserServiceGetTopMenuLimitItem();
 void sceUserServiceGetTopMenuNotificationFlag();
 void sceUserServiceGetTopMenuTutorialFlag();
 void sceUserServiceGetTraditionalChineseInputType();
-void sceUserServiceGetUserColor();
 void sceUserServiceGetUserGroupName();
 void sceUserServiceGetUserGroupNameList();
 void sceUserServiceGetUserGroupNum();
