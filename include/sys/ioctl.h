@@ -117,7 +117,15 @@ struct winsize {
 #define SIOCDEVPRIVATE     0x89F0
 #define SIOCPROTOPRIVATE   0x89E0
 
+#ifndef PS4
 int ioctl (int, int, ...);
+#else
+/* as for why, please consult this page: https://www.freebsd.org/cgi/man.cgi?query=arch&sektion=7&format=html
+ * and this one: https://www.freebsd.org/cgi/man.cgi?query=ioctl&apropos=0&sektion=2&manpath=FreeBSD+9.0-RELEASE&arch=amd64&format=html
+ * best wishes, OpenOrbis <3
+ */
+int ioctl(int fd, unsigned long request, ...);
+#endif /* PS4 */
 
 #ifdef __cplusplus
 }
