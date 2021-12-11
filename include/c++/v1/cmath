@@ -319,6 +319,21 @@ _LIBCPP_PUSH_MACROS
 
 _LIBCPP_BEGIN_NAMESPACE_STD
 
+using ::signbit;
+using ::fpclassify;
+using ::isfinite;
+using ::isinf;
+using ::isnan;
+using ::isnormal;
+using ::isgreater;
+using ::isgreaterequal;
+using ::isless;
+using ::islessequal;
+using ::islessgreater;
+using ::isunordered;
+/* duplicate? */
+/* using ::isunordered; */
+
 using ::float_t;
 using ::double_t;
 
