@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "OpenOrbis PS4 Toolchain"
-#define MyAppVersion "0.4"
+#define MyAppVersion "0.5.2"
 #define MyAppPublisher "OpenOrbis"
 #define MyAppURL "http://www.github.com/openorbis"
 #define Toolchain GetEnv('OO_PS4_TOOLCHAIN_SRC')
