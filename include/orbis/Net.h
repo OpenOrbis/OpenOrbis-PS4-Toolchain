@@ -248,7 +248,7 @@ int sceNetInetPton(int, const char*, void*);
 // Empty Comment
 void sceNetInetPtonEx();
 // Empty Comment
-void sceNetInit();
+int sceNetInit();
 // Empty Comment
 void sceNetIoctl();
 // Empty Comment
