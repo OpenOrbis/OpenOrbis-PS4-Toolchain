@@ -65,27 +65,27 @@ static __inline unsigned long long __DOUBLE_BITS(double __f)
 	return __u.__i;
 }
 
-#define fpclassify(x) ( \
+#define _fpclassify(x) ( \
 	sizeof(x) == sizeof(float) ? __fpclassifyf(x) : \
 	sizeof(x) == sizeof(double) ? __fpclassify(x) : \
 	__fpclassifyl(x) )
 
-#define isinf(x) ( \
+#define _isinf(x) ( \
 	sizeof(x) == sizeof(float) ? (__FLOAT_BITS(x) & 0x7fffffff) == 0x7f800000 : \
 	sizeof(x) == sizeof(double) ? (__DOUBLE_BITS(x) & -1ULL>>1) == 0x7ffULL<<52 : \
 	__fpclassifyl(x) == FP_INFINITE)
 
-#define isnan(x) ( \
+#define _isnan(x) ( \
 	sizeof(x) == sizeof(float) ? (__FLOAT_BITS(x) & 0x7fffffff) > 0x7f800000 : \
 	sizeof(x) == sizeof(double) ? (__DOUBLE_BITS(x) & -1ULL>>1) > 0x7ffULL<<52 : \
 	__fpclassifyl(x) == FP_NAN)
 
-#define isnormal(x) ( \
+#define _isnormal(x) ( \
 	sizeof(x) == sizeof(float) ? ((__FLOAT_BITS(x)+0x00800000) & 0x7fffffff) >= 0x01000000 : \
 	sizeof(x) == sizeof(double) ? ((__DOUBLE_BITS(x)+(1ULL<<52)) & -1ULL>>1) >= 1ULL<<53 : \
 	__fpclassifyl(x) == FP_NORMAL)
 
-#define isfinite(x) ( \
+#define _isfinite(x) ( \
 	sizeof(x) == sizeof(float) ? (__FLOAT_BITS(x) & 0x7fffffff) < 0x7f800000 : \
 	sizeof(x) == sizeof(double) ? (__DOUBLE_BITS(x) & -1ULL>>1) < 0x7ffULL<<52 : \
 	__fpclassifyl(x) > FP_INFINITE)
@@ -94,12 +94,34 @@ int __signbit(double);
 int __signbitf(float);
 int __signbitl(long double);
 
-#define signbit(x) ( \
+#define _signbit(x) ( \
 	sizeof(x) == sizeof(float) ? (int)(__FLOAT_BITS(x)>>31) : \
 	sizeof(x) == sizeof(double) ? (int)(__DOUBLE_BITS(x)>>63) : \
 	__signbitl(x) )
 
-#define isunordered(x,y) (isnan((x)) ? ((void)(y),1) : isnan((y)))
+#define _isunordered(x,y) (isnan((x)) ? ((void)(y),1) : isnan((y)))
+
+static __inline int signbit       (float       __x                 ) { return _signbit(__x);             }
+static __inline int signbit       (double      __x                 ) { return _signbit(__x);             }
+static __inline int signbit       (long double __x                 ) { return _signbit(__x);             }
+static __inline int fpclassify    (float       __x                 ) { return _fpclassify(__x);          }
+static __inline int fpclassify    (double      __x                 ) { return _fpclassify(__x);          }
+static __inline int fpclassify    (long double __x                 ) { return _fpclassify(__x);          }
+static __inline int isfinite      (float       __x                 ) { return _isfinite(__x);            }
+static __inline int isfinite      (double      __x                 ) { return _isfinite(__x);            }
+static __inline int isfinite      (long double __x                 ) { return _isfinite(__x);            }
+static __inline int isinf         (float       __x                 ) { return _isinf(__x);               }
+static __inline int isinf         (double      __x                 ) { return _isinf(__x);               }
+static __inline int isinf         (long double __x                 ) { return _isinf(__x);               }
+static __inline int isnan         (float       __x                 ) { return _isnan(__x);               }
+static __inline int isnan         (double      __x                 ) { return _isnan(__x);               }
+static __inline int isnan         (long double __x                 ) { return _isnan(__x);               }
+static __inline int isnormal      (float       __x                 ) { return _isnormal(__x);            }
+static __inline int isnormal      (double      __x                 ) { return _isnormal(__x);            }
+static __inline int isnormal      (long double __x                 ) { return _isnormal(__x);            }
+static __inline int isunordered   (float       __x, float       __y) { return _isunordered(__x, __y);    }
+static __inline int isunordered   (double      __x, double      __y) { return _isunordered(__x, __y);    }
+static __inline int isunordered   (long double __x, long double __y) { return _isunordered(__x, __y);    }
 
 #define __ISREL_DEF(rel, op, type) \
 static __inline int __is##rel(type __x, type __y) \
@@ -126,11 +148,28 @@ __ISREL_DEF(greaterequall, >=, long double)
 	sizeof((x)+(y)) == sizeof(double) ? p(x, y) : \
 	p##l(x, y) )
 
-#define isless(x, y)            __tg_pred_2(x, y, __isless)
-#define islessequal(x, y)       __tg_pred_2(x, y, __islessequal)
-#define islessgreater(x, y)     __tg_pred_2(x, y, __islessgreater)
-#define isgreater(x, y)         __tg_pred_2(x, y, __isgreater)
-#define isgreaterequal(x, y)    __tg_pred_2(x, y, __isgreaterequal)
+#define _isless(x, y)            __tg_pred_2(x, y, __isless)
+#define _islessequal(x, y)       __tg_pred_2(x, y, __islessequal)
+#define _islessgreater(x, y)     __tg_pred_2(x, y, __islessgreater)
+#define _isgreater(x, y)         __tg_pred_2(x, y, __isgreater)
+#define _isgreaterequal(x, y)    __tg_pred_2(x, y, __isgreaterequal)
+
+/* OpenOrbis prototypes: */
+static __inline int isgreater     (float       __x, float       __y) { return _isgreater(__x, __y);      }
+static __inline int isgreater     (double      __x, double      __y) { return _isgreater(__x, __y);      }
+static __inline int isgreater     (long double __x, long double __y) { return _isgreater(__x, __y);      }
+static __inline int isgreaterequal(float       __x, float       __y) { return _isgreaterequal(__x, __y); }
+static __inline int isgreaterequal(double      __x, double      __y) { return _isgreaterequal(__x, __y); }
+static __inline int isgreaterequal(long double __x, long double __y) { return _isgreaterequal(__x, __y); }
+static __inline int isless        (float       __x, float       __y) { return _isless(__x, __y);         }
+static __inline int isless        (double      __x, double      __y) { return _isless(__x, __y);         }
+static __inline int isless        (long double __x, long double __y) { return _isless(__x, __y);         }
+static __inline int islessequal   (float       __x, float       __y) { return _islessequal(__x, __y);    }
+static __inline int islessequal   (double      __x, double      __y) { return _islessequal(__x, __y);    }
+static __inline int islessequal   (long double __x, long double __y) { return _islessequal(__x, __y);    }
+static __inline int islessgreater (float       __x, float       __y) { return _islessgreater(__x, __y);  }
+static __inline int islessgreater (double      __x, double      __y) { return _islessgreater(__x, __y);  }
+static __inline int islessgreater (long double __x, long double __y) { return _islessgreater(__x, __y);  }
 
 double      acos(double);
 float       acosf(float);
