@@ -56,7 +56,7 @@ void sceSystemServiceLaunchApp();
 void sceSystemServiceLaunchEventDetails();
 void sceSystemServiceLaunchTournamentsTeamProfile();
 void sceSystemServiceLaunchWebBrowser();
-void sceSystemServiceLoadExec();
+int sceSystemServiceLoadExec(const char *path, const char *args[]);
 void sceSystemServiceNavigateToAnotherApp();
 void sceSystemServiceNavigateToGoBack();
 void sceSystemServiceNavigateToGoBackWithValue();
