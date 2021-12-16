@@ -12,11 +12,11 @@ SECTIONS
 		QUAD(0x0000000000000000);
 
 		# original .text
-		*(.text)
+		*(.text .text.*)
 	}
 
 	.rodata : ALIGN(0x10) {
-		*(.rodata)
+		*(.rodata .rodata.*)
 	}
 
     # Since we lack a proper POSIX dladdr() on a PS4, we define these global symbols
@@ -35,10 +35,10 @@ SECTIONS
 	}
 
 	.data.rel.ro : ALIGN(0x4000) {
-		*(.data.rel.ro)
+		*(.data.rel.ro .data.rel.ro.*)
 	}
 
-	.tls : ALIGN(0x4000) {
+	.tls : {
 		*(.tdata);
 		*(.tbss);
 	}
@@ -66,7 +66,7 @@ SECTIONS
 	}
 
 	.bss : {
-		*(.bss)
+		*(.bss .bss.*)
 	}
 
 	# Force .got.plt to appear, because SPRX requires a valid .got.plt.
