@@ -192,7 +192,7 @@ void sceKernelGetIdPs();
 // Empty Comment
 void sceKernelGetIpcPath();
 // Empty Comment
-void sceKernelGetModuleInfo();
+int sceKernelGetModuleInfo(OrbisKernelModule handle, OrbisKernelModuleInfo* info);
 // Empty Comment
 void sceKernelGetModuleInfoForUnwind();
 // Empty Comment
@@ -200,9 +200,9 @@ void sceKernelGetModuleInfoFromAddr();
 // Empty Comment
 void sceKernelGetModuleInfoInternal();
 // Empty Comment
-void sceKernelGetModuleList();
+int sceKernelGetModuleList(OrbisKernelModule *array, size_t size, size_t *available);
 // Empty Comment
-void sceKernelGetOpenPsIdForSystem();
+int sceKernelGetOpenPsIdForSystem(void* ret);
 // Empty Comment
 int32_t sceKernelGetPageTableStats(int *, int*, int*, int*);
 // Empty Comment

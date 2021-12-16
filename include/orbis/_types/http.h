@@ -13,3 +13,16 @@ typedef enum{
 	ORBIS_METHOD_TRACE,
 	ORBIS_CONNECT
 } OrbisMethods;
+
+typedef enum {
+	ORBIS_HTTP_VERSION_1_0=1,
+	ORBIS_HTTP_VERSION_1_1
+} OrbisHttpHttpVersion;
+
+typedef enum {
+	ORBIS_HTTP_CONTENTLEN_EXIST,
+	ORBIS_HTTP_CONTENTLEN_NOT_FOUND,
+	ORBIS_HTTP_CONTENTLEN_CHUNK_ENC
+} OrbisHttpContentLengthType;
+
+typedef int (*OrbisHttpsCallback)(int libsslCtxId,unsigned int verifyErr,void * const sslCert[],int certNum,void *userArg);

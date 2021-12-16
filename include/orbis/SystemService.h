@@ -2,12 +2,15 @@
 #define _SCE_SYSTEM_SERVICE_H_
 
 #include <stdint.h>
+#include <_types/sys_service.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
 
 int32_t sceSystemServiceHideSplashScreen();
+int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
+int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
 
 void sceSystemServiceAcquireFb0();
 void sceSystemServiceAddLocalProcess();
@@ -61,8 +64,6 @@ void sceSystemServiceNavigateToAnotherApp();
 void sceSystemServiceNavigateToGoBack();
 void sceSystemServiceNavigateToGoBackWithValue();
 void sceSystemServiceNavigateToGoHome();
-void sceSystemServiceParamGetInt();
-void sceSystemServiceParamGetString();
 void sceSystemServicePowerTick();
 void sceSystemServiceRaiseExceptionLocalProcess();
 void sceSystemServiceReceiveEvent();
