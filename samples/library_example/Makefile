@@ -5,6 +5,9 @@ INTDIR    	:= $(PROJDIR)/x64/Debug
 # Libraries linked into the ELF.
 LIBS 		:= -lSceLibcInternal -lkernel
 
+# Additional compile flags.
+#EXTRAFLAGS  := 
+
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
@@ -21,7 +24,7 @@ ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
 IDIRS 		:= -I$(TOOLCHAIN)/include
 LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables $(IDIRS) -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -emit-obj
+CFLAGS 		:= --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
 LFLAGS 		:= -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crtlib.o
 
 CFILES 		:= $(wildcard $(SDIR)/*.c)
@@ -38,8 +41,7 @@ _unused := $(shell mkdir -p $(INTDIR))
 # Make rules
 $(TARGET): $(ODIR) $(OBJS)
 	$(LD) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf $(LFLAGS)
-	$(TOOLCHAIN)/bin/$(CDIR)/create-lib -in=$(ODIR)/$(PROJDIR).elf -out=$(ODIR)/$(PROJDIR).oelf --paid 0x3800000000000011
-	mv $(ODIR)/$(PROJDIR).prx $(TARGET)
+	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(ODIR)/$(PROJDIR).elf -out=$(ODIR)/$(PROJDIR).oelf --lib=$(TARGET) --paid 0x3800000000000011
 
 $(TARGETSTUB): $(ODIR) $(STUBOBJS)
 	$(CC) $(ODIR)/*.o.stub -o $(TARGETSTUB) -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin $(LDIRS) $(LIBS)
