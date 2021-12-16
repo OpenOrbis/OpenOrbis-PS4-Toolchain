@@ -24,19 +24,19 @@ set outputOelf=%intdir%\%targetname%.oelf
 
 Rem Compile object files for all the source files
 for %%f in (*.c) do (
-    clang -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.c
+    clang --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.c
 )
 
 for %%f in (*.cpp) do (
-    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 for %%f in (..\..\_common\*.c) do (
-    clang -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o ..\..\_common\%%~nf.c
+    clang --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o ..\..\_common\%%~nf.c
 )
 
 for %%f in (..\..\_common\*.cpp) do (
-    clang++ -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" -fuse-init-array %extra_flags% -debug-info-kind=limited -debugger-tuning=gdb -emit-obj -o %intdir%\%%~nf.o ..\..\_common\%%~nf.cpp
+    clang++ --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o ..\..\_common\%%~nf.cpp
 )
 
 Rem Get a list of object files for linking
@@ -47,7 +47,7 @@ Rem Link the input ELF
 ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\\lib" %libraries% --verbose "%OO_PS4_TOOLCHAIN%\lib\crt1.o" %obj_files%
 
 Rem Create the eboot
-%OO_PS4_TOOLCHAIN%\bin\windows\create-eboot.exe -in "%outputElf%" --out "%outputOelf%" --paid 0x3800000000000011
+%OO_PS4_TOOLCHAIN%\bin\windows\create-fself.exe -in "%outputElf%" --out "%outputOelf%" --eboot "eboot.bin" --paid 0x3800000000000011
 
 Rem Eboot cleanup
 copy "eboot.bin" %outputPath%\eboot.bin
