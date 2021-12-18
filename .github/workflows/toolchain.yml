@@ -124,7 +124,7 @@ jobs:
         run: |
           cd src/crt
           as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
-          
+      
       # Cleanup
       - name: Cleanup
         run: |
@@ -140,7 +140,7 @@ jobs:
       # Create a tarball
       - name: Create tarball
         run: |
-          tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain,' *
+          tar -cvzf toolchain.tar.gz --transform 's,^,OOPS4Toolchain,' *
           
       # Upload artifact
       - name: Upload toolchain
