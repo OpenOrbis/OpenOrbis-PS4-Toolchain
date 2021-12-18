@@ -21,12 +21,12 @@ jobs:
 
       # Get latest musl
       - name: Fetch musl stable
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: OpenOrbis/musl
-          latest: true
-          tarBall: true
-          out-file-path: musl.tar.gz
+          owner: OpenOrbis
+          repo: musl
+          tag: latest
+          file: musl.tar.gz
       
       - run: tar -xvzf musl.tar.gz .
       
