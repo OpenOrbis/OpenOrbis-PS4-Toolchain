@@ -28,7 +28,7 @@ jobs:
           tag: latest
           file: musl.tar.gz
       
-      - run: tar -xvzf musl.tar.gz .
+      - run: tar -xvzf musl.tar.gz
       
       # Get latest libcxx
       - name: Fetch libcxx stable
