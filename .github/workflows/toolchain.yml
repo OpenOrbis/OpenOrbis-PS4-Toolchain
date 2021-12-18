@@ -124,6 +124,12 @@ jobs:
         run: |
           cd src/crt
           as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
+
+      # Build sce_module
+      - name: Build sce_module/ and copy to samples
+        run: |
+          cd src/modules
+          bash build-and-copy.sh
       
       # Cleanup
       - name: Cleanup
