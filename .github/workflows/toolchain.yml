@@ -18,6 +18,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      
+      - name: "Set environment variables"
+        run: echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
       # Get latest musl
       - name: Fetch musl stable
