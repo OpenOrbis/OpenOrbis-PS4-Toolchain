@@ -26,6 +26,7 @@ jobs:
           repository: OpenOrbis/musl
           latest: true
           tarBall: true
+          out-file-path: musl.tar.gz
       
       - run: tar -xvzf musl.tar.gz .
       
