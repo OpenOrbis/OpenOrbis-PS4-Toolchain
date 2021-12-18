@@ -32,80 +32,88 @@ jobs:
       
       # Get latest libcxx
       - name: Fetch libcxx stable
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: OpenOrbis/llvm-project
-          latest: true
-          tarBall: true
+          owner: OpenOrbis
+          repo: llvm-project
+          tag: latest
+          file: libcxx-full.tar.gz
       
       - run: tar -xvzf libcxx-full.tar.gz
       
       # Get latest library stubs
       - name: Fetch library stubs stable
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: OpenOrbis/orbis-lib-gen
-          latest: true
-          tarBall: true
+          owner: OpenOrbis
+          repo: orbis-lib-gen
+          tag: latest
+          file: lib.tar.gz
       
       - run: tar -xvzf lib.tar.gz
       
       # Get latest create-fself
       - name: Fetch create-fself
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: OpenOrbis/create-fself
-          latest: true
-          tarBall: true
+          owner: OpenOrbis
+          repo: create-fself
+          tag: latest
+          file: binaries.tar.gz
 
       - run: tar -xvzf binaries.tar.gz
 
       # Get latest create-gp4
       - name: Fetch create-fself
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: OpenOrbis/create-fself
-          latest: true
-          tarBall: true
+          owner: OpenOrbis
+          repo: create-gp4
+          tag: latest
+          file: binaries.tar.gz
 
       - run: tar -xvzf binaries.tar.gz
       
       # Get maxton's publishing tools <3
       - name: Fetch windows PkgEditor
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: maxton/LibOrbisPkg
-          latest: true
-          fileName: PkgEditor-0.2.231.zip
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgEditor-0.2.231.zip
       
       - run: unzip PkgEditor-0.2.231.zip -d bin/windows
       
       - name: Fetch windows PkgCore
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: maxton/LibOrbisPkg
-          latest: true
-          fileName: PkgTool.Core-0.2.231.zip
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-0.2.231.zip
       
       - run: unzip PkgTool.Core-0.2.231.zip -d bin/windows
       
       - name: Fetch linux PkgCore
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: maxton/LibOrbisPkg
-          latest: true
-          fileName: PkgTool.Core-linux-x64-0.2.231.zip
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-linux-x64-0.2.231.zip
       
       - run: |
           unzip PkgTool.Core-linux-x64-0.2.231.zip -d bin/linux
           chmod +x bin/linux/PkgTool.Core
           
       - name: Fetch macOS PkgCore
-        uses: robinraju/release-downloader@v1.3
+        uses: i3h/download-release-asset@v1
         with:
-          repository: maxton/LibOrbisPkg
-          latest: true
-          fileName: PkgTool.Core-osx-x64-0.2.231.zip
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-osx-x64-0.2.231.zip
       
       - run: |
           unzip PkgTool.Core-osx-x64-0.2.231.zip -d bin/macos
