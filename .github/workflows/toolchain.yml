@@ -1,0 +1,141 @@
+name: Toolchain
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Get latest musl
+      - name: Fetch musl stable
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: OpenOrbis/musl
+          latest: true
+          tarBall: true
+      
+      - run: tar -xvzf musl.tar.gz .
+      
+      # Get latest libcxx
+      - name: Fetch libcxx stable
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: OpenOrbis/llvm-project
+          latest: true
+          tarBall: true
+      
+      - run: tar -xvzf libcxx-full.tar.gz
+      
+      # Get latest library stubs
+      - name: Fetch library stubs stable
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: OpenOrbis/orbis-lib-gen
+          latest: true
+          tarBall: true
+      
+      - run: tar -xvzf lib.tar.gz
+      
+      # Get latest create-fself
+      - name: Fetch create-fself
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: OpenOrbis/create-fself
+          latest: true
+          tarBall: true
+
+      - run: tar -xvzf binaries.tar.gz
+
+      # Get latest create-gp4
+      - name: Fetch create-fself
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: OpenOrbis/create-fself
+          latest: true
+          tarBall: true
+
+      - run: tar -xvzf binaries.tar.gz
+      
+      # Get maxton's publishing tools <3
+      - name: Fetch windows PkgEditor
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: maxton/LibOrbisPkg
+          latest: true
+          fileName: PkgEditor-0.2.231.zip
+      
+      - run: unzip PkgEditor-0.2.231.zip -d bin/windows
+      
+      - name: Fetch windows PkgCore
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: maxton/LibOrbisPkg
+          latest: true
+          fileName: PkgTool.Core-0.2.231.zip
+      
+      - run: unzip PkgTool.Core-0.2.231.zip -d bin/windows
+      
+      - name: Fetch linux PkgCore
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: maxton/LibOrbisPkg
+          latest: true
+          fileName: PkgTool.Core-linux-x64-0.2.231.zip
+      
+      - run: |
+          unzip PkgTool.Core-linux-x64-0.2.231.zip -d bin/linux
+          chmod +x bin/linux/PkgTool.Core
+          
+      - name: Fetch macOS PkgCore
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: maxton/LibOrbisPkg
+          latest: true
+          fileName: PkgTool.Core-osx-x64-0.2.231.zip
+      
+      - run: |
+          unzip PkgTool.Core-osx-x64-0.2.231.zip -d bin/macos
+          chmod +x bin/macos/PkgTool.Core
+      
+      # Build crtlib
+      - name: Build crtlib
+        run: |
+          cd src/crt
+          as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
+          
+      # Cleanup
+      - name: Cleanup
+        run: |
+          rm musl.tar.gz
+          rm libcxx-full.tar.gz
+          rm lib.tar.gz
+          rm binaries.tar.gz
+          rm PkgEditor-0.2.231.zip
+          rm PkgTool.Core-0.2.231.zip
+          rm PkgTool.Core-linux-x64-0.2.231.zip
+          rm PkgTool.Core-osx-x64-0.2.231.zip
+      
+      # Create a tarball
+      - name: Create tarball
+        run: |
+          tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain,' *
+          
+      # Upload artifact
+      - name: Upload toolchain
+        uses: actions/upload-artifact@v2
+        with:
+          name: toolchain.tar.gz
+          path: toolchain.tar.gz
