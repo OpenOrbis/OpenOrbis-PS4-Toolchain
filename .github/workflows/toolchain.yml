@@ -140,7 +140,7 @@ jobs:
       # Create a tarball
       - name: Create tarball
         run: |
-          tar -cvzf toolchain.tar.gz --transform 's,^,OOPS4Toolchain,' *
+          tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
           
       # Upload artifact
       - name: Upload toolchain
