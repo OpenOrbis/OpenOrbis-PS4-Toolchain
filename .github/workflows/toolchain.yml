@@ -93,7 +93,7 @@ jobs:
           tag: latest
           file: PkgTool.Core-0.2.231.zip
       
-      - run: unzip PkgTool.Core-0.2.231.zip -o -d bin/windows
+      - run: unzip -o PkgTool.Core-0.2.231.zip -d bin/windows
       
       - name: Fetch linux PkgCore
         uses: i3h/download-release-asset@v1
