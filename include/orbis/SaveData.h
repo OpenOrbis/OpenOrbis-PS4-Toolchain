@@ -10,9 +10,9 @@ extern "C" {
 
 int32_t sceSaveDataInitialize3(int32_t initParams);
 int32_t sceSaveDataMount(OrbisSaveDataMount*, OrbisSaveDataMountResult*);
-int32_t sceSaveDataUmount(OrbisSaveDataUMount *);
+int32_t sceSaveDataUmount(OrbisSaveDataMountPoint*);
 int32_t sceSaveDataDelete(OrbisSaveDataDelete *del);
-int32_t sceSaveDataSetParam(char * mountPoint, uint32_t type, void * buffer, size_t bufferSize);
+int32_t sceSaveDataSetParam(const OrbisSaveDataMountPoint * mountPoint, uint32_t type, void * buffer, size_t bufferSize);
 
 // Empty Comment
 void sceSaveDataBackup();
@@ -31,11 +31,11 @@ void sceSaveDataDirNameSearchInternal();
 // Empty Comment
 void sceSaveDataGetEventResult();
 // Empty Comment
-void sceSaveDataGetMountInfo();
+void sceSaveDataGetMountInfo(const OrbisSaveDataMountPoint *mountPoint, OrbisSaveDataMountInfo *info);
 // Empty Comment
-void sceSaveDataGetParam();
+int32_t sceSaveDataGetParam(const OrbisSaveDataMountPoint *mountPoint, uint32_t paramType, void *paramBuf, size_t paramBufSize, size_t *gotSize);
 // Empty Comment
-void sceSaveDataGetProgress();
+int32_t sceSaveDataGetProgress(float *progress);
 // Empty Comment
 void sceSaveDataGetSaveDataMemory();
 // Empty Comment
@@ -45,9 +45,9 @@ void sceSaveDataInitialize();
 // Empty Comment
 void sceSaveDataInitialize2();
 // Empty Comment
-void sceSaveDataLoadIcon();
+int32_t sceSaveDataLoadIcon(const OrbisSaveDataMountPoint *mountPoint, OrbisSaveDataIcon *icon);
 // Empty Comment
-void sceSaveDataMount2();
+int32_t sceSaveDataMount2(const OrbisSaveDataMount2 *mount, OrbisSaveDataMountResult *mountResult);
 // Empty Comment
 void sceSaveDataMount5();
 // Empty Comment
@@ -55,7 +55,7 @@ void sceSaveDataMountInternal();
 // Empty Comment
 void sceSaveDataRestoreBackupData();
 // Empty Comment
-void sceSaveDataSaveIcon();
+int32_t sceSaveDataSaveIcon(const OrbisSaveDataMountPoint *mountPoint, const OrbisSaveDataIcon *icon);
 // Empty Comment
 void sceSaveDataSetSaveDataMemory();
 // Empty Comment
