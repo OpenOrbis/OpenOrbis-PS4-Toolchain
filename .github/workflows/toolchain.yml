@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Install dependencies
-        run: sudo apt-get install -y lld
+        run: sudo apt-get install -y lld llvm
       
       - name: Set environment variables
         run: echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
@@ -130,6 +130,17 @@ jobs:
         run: |
           cd src/crt
           as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
+
+      # Merge compiler-rt into libc
+      - name: Merge compiler-rt into libc
+        run: |
+          touch /mri.txt
+          echo "CREATE libcM.a"                       >> /mri.txt
+          echo "ADDLIB libc.a"                        >> /mri.txt
+          echo "ADDLIB libclang_rt.builtins-x86_64.a" >> /mri.txt
+          echo "SAVE"                                 >> /mri.txt
+          echo "END"                                  >> /mri.txt
+          cd lib && llvm-ar -M < /mri.txt && rm /mri.txt && rm libc.a && mv libcM.a libc.a
 
       # Build sce_module
       - name: Build sce_module/ and copy to samples
