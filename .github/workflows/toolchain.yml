@@ -134,13 +134,14 @@ jobs:
       # Merge compiler-rt into libc
       - name: Merge compiler-rt into libc
         run: |
+          cd lib
           touch mri.txt
           echo "CREATE libcM.a"                       >> mri.txt
           echo "ADDLIB libc.a"                        >> mri.txt
           echo "ADDLIB libclang_rt.builtins-x86_64.a" >> mri.txt
           echo "SAVE"                                 >> mri.txt
           echo "END"                                  >> mri.txt
-          cd lib && llvm-ar -M < mri.txt && rm mri.txt && rm libc.a && mv libcM.a libc.a
+          llvm-ar -M < mri.txt && rm mri.txt && rm libc.a && mv libcM.a libc.a
 
       # Build sce_module
       - name: Build sce_module/ and copy to samples
