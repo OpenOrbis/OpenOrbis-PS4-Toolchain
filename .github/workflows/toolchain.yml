@@ -70,7 +70,7 @@ jobs:
       - run: tar -xvzf binaries.tar.gz
 
       # Get latest create-gp4
-      - name: Fetch create-fself
+      - name: Fetch create-gp4
         uses: i3h/download-release-asset@v1
         with:
           owner: OpenOrbis
@@ -85,7 +85,7 @@ jobs:
         uses: i3h/download-release-asset@v1
         with:
           owner: OpenOrbis
-          repo: create-gp4
+          repo: readoelf
           tag: latest
           file: binaries.tar.gz
       
