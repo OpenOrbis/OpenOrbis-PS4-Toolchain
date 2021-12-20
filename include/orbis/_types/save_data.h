@@ -36,6 +36,30 @@
 #define ORBIS_SAVE_DATA_DETAIL_MAXSIZE				1024		//Maximum size for save data detailed information (NULL-terminated, UTF-8)
 
 
+typedef struct OrbisSaveDataFingerprint {
+	char data[ORBIS_SAVE_DATA_FINGERPRINT_DATA_SIZE];
+	char padding[15];
+} OrbisSaveDataFingerprint;
+
+typedef struct OrbisSaveDataDirName {
+	char data[ORBIS_SAVE_DATA_DIRNAME_DATA_MAXSIZE];
+} OrbisSaveDataDirName;
+
+typedef struct OrbisSaveDataTitleId {
+	char data[ORBIS_SAVE_DATA_TITLE_ID_DATA_SIZE];
+	char padding[6];
+} OrbisSaveDataTitleId;
+
+typedef struct OrbisSaveDataMountPoint {
+    char data[ORBIS_SAVE_DATA_MOUNT_POINT_DATA_MAXSIZE];
+} OrbisSaveDataMountPoint;
+
+typedef struct OrbisSaveDataMountInfo {
+	uint64_t blocks;
+	uint64_t freeBlocks;
+	uint8_t reserved[32];
+} OrbisSaveDataMountInfo;
+
 typedef struct __attribute__((packed)) OrbisSaveDataMount
 {
 	int32_t userId;
@@ -56,17 +80,13 @@ typedef struct __attribute__((packed)) OrbisSaveDataMountResult
 	uint8_t reserved[32];
 } OrbisSaveDataMountResult;
 
-typedef struct OrbisSaveDataUMount 
-{
-    char mountPathName[ORBIS_SAVE_DATA_MOUNT_POINT_DATA_MAXSIZE];
-} OrbisSaveDataUMount;
-
 typedef struct OrbisSaveDataDelete
 {
 	int32_t userId;
 	int32_t unknown1; 
-	const char *titleId; 
-	const char *dirName; 
+	const OrbisSaveDataTitleId *titleId;
+	const OrbisSaveDataDirName *dirName;
+	uint32_t unused;
 	uint8_t reserved[32];
 	int32_t unknown2;
 } OrbisSaveDataDelete;
@@ -81,3 +101,20 @@ typedef struct __attribute((packed)) OrbisSaveDataParam
     time_t mtime;
     char unknown2[0x20];
 } OrbisSaveDataParam;
+
+typedef struct OrbisSaveDataMount2 {
+	int32_t userId;
+	uint32_t unk1;
+	const OrbisSaveDataDirName *dirName;
+	uint64_t blocks;
+	uint32_t mountMode;
+	uint8_t reserved[32];
+	uint32_t unk2;
+} OrbisSaveDataMount2;
+
+typedef struct OrbisSaveDataIcon {
+	void *buf;
+	size_t bufSize;
+	size_t dataSize;
+	uint8_t reserved[32];
+} OrbisSaveDataIcon;
