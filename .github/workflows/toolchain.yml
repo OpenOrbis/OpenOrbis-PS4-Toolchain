@@ -1,32 +1,185 @@
 name: Toolchain
 
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  
+  workflow_dispatch:
 
 jobs:
-
   build:
+    runs-on: ubuntu-latest
 
-    runs-on: ubuntu-20.04
-
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: |
-        cd build/
-        chmod +x build.sh
-        docker build --tag oo-toolchain-build:latest .
-    - name: Run the Docker image and build toolchain
-      run: |
-        docker run --name=builder oo-toolchain-build:latest
-        docker cp `sudo docker ps -aqf "name=builder"`:/out/OpenOrbis-PS4-Toolchain.tar.gz OpenOrbis-PS4-Toolchain.tar.gz
-        docker rm -f builder
-    - name: Upload toolchain tarball
-      uses: actions/upload-artifact@v2
-      with:
-        name: OpenOrbis-PS4-Toolchain.tar.gz
-        path: OpenOrbis-PS4-Toolchain.tar.gz
-        
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: sudo apt-get install -y lld llvm
+      
+      - name: Set environment variables
+        run: echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
+      # Get latest musl
+      - name: Fetch musl stable
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: musl
+          tag: latest
+          file: musl.tar.gz
+      
+      - run: tar -xvzf musl.tar.gz
+      
+      # Get latest libcxx
+      - name: Fetch libcxx stable
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: llvm-project
+          tag: latest
+          file: libcxx-full.tar.gz
+      
+      - run: tar -xvzf libcxx-full.tar.gz
+      
+      # Get latest library stubs
+      - name: Fetch library stubs stable
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: orbis-lib-gen
+          tag: latest
+          file: lib.tar.gz
+      
+      - run: tar -xvzf lib.tar.gz
+      
+      # Get latest create-fself
+      - name: Fetch create-fself
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: create-fself
+          tag: latest
+          file: binaries.tar.gz
+
+      - run: tar -xvzf binaries.tar.gz
+
+      # Get latest create-gp4
+      - name: Fetch create-gp4
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: create-gp4
+          tag: latest
+          file: binaries.tar.gz
+
+      - run: tar -xvzf binaries.tar.gz
+      
+      # Get latest readoelf
+      - name: Fetch readoelf
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: readoelf
+          tag: latest
+          file: binaries.tar.gz
+      
+      - run: tar -xvzf binaries.tar.gz
+      
+      # Get maxton's publishing tools <3
+      - name: Fetch windows PkgEditor
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgEditor-0.2.231.zip
+      
+      - run: unzip PkgEditor-0.2.231.zip -d bin/windows
+      
+      - name: Fetch windows PkgCore
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-0.2.231.zip
+      
+      - run: unzip -o PkgTool.Core-0.2.231.zip -d bin/windows
+      
+      - name: Fetch linux PkgCore
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-linux-x64-0.2.231.zip
+      
+      - run: |
+          unzip PkgTool.Core-linux-x64-0.2.231.zip -d bin/linux
+          chmod +x bin/linux/PkgTool.Core
+          
+      - name: Fetch macOS PkgCore
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: maxton
+          repo: LibOrbisPkg
+          tag: latest
+          file: PkgTool.Core-osx-x64-0.2.231.zip
+      
+      - run: |
+          unzip PkgTool.Core-osx-x64-0.2.231.zip -d bin/macos
+          chmod +x bin/macos/PkgTool.Core
+      
+      # Build crtlib
+      - name: Build crtlib
+        run: |
+          cd src/crt
+          as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
+
+      # Merge compiler-rt into libc
+      - name: Merge compiler-rt into libc
+        run: |
+          cd lib
+          touch mri.txt
+          echo "CREATE libcM.a"                       >> mri.txt
+          echo "ADDLIB libc.a"                        >> mri.txt
+          echo "ADDLIB libclang_rt.builtins-x86_64.a" >> mri.txt
+          echo "SAVE"                                 >> mri.txt
+          echo "END"                                  >> mri.txt
+          llvm-ar -M < mri.txt && rm mri.txt && rm libc.a && mv libcM.a libc.a
+
+      # Build sce_module
+      - name: Build sce_module/ and copy to samples
+        run: |
+          cd src/modules
+          bash build-and-copy.sh
+      
+      # Cleanup
+      - name: Cleanup
+        run: |
+          rm musl.tar.gz
+          rm libcxx-full.tar.gz
+          rm lib.tar.gz
+          rm binaries.tar.gz
+          rm PkgEditor-0.2.231.zip
+          rm PkgTool.Core-0.2.231.zip
+          rm PkgTool.Core-linux-x64-0.2.231.zip
+          rm PkgTool.Core-osx-x64-0.2.231.zip
+      
+      # Create a tarball
+      - name: Create tarball
+        run: |
+          tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
+          
+      # Upload artifact
+      - name: Upload toolchain
+        uses: actions/upload-artifact@v2
+        with:
+          name: toolchain.tar.gz
+          path: toolchain.tar.gz

@@ -35,7 +35,17 @@ SECTIONS
 	}
 
 	.data.rel.ro : ALIGN(0x4000) {
-		*(.data.rel.ro .data.rel.ro.*)
+	   __data_relro_start = .;	
+	   KEEP(*(.data.rel.ro .data.rel.ro.*))
+	   __data_relro_start = .;
+	}
+	
+	.init_array : {
+		*(.init_array);
+	}
+	
+	.dynamic : {
+		*(.dynamic);
 	}
 
 	.tls : {

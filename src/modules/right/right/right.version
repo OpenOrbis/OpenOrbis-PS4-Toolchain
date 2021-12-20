@@ -1,0 +1,4 @@
+sceGameRight {
+  global: sceGameRight*;
+  local: *;
+};
