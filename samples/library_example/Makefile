@@ -68,7 +68,7 @@ $(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
 .PHONY: clean
 .DEFAULT_GOAL := all
 
-all: $(TARGET) #$(TARGETSTUB)
+all: $(TARGET) $(TARGETSTUB)
 
 clean:
 	rm -f $(TARGET) $(TARGETSTUB) $(INTDIR)/$(PROJDIR).elf $(INTDIR)/$(PROJDIR)/oelf $(OBJS)
