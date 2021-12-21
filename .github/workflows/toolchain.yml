@@ -231,9 +231,7 @@ jobs:
 
       # Create a zip of samples
       - name: Create samples zip
-        uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r -D samples.zip samples/*.pkg
+        run: zip -qq -r -D samples.zip samples/*.pkg
           
       # Upload artifact
       - name: Upload samples
