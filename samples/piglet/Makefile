@@ -74,7 +74,7 @@ sce_sys/param.sfo: Makefile
 
 eboot.bin: $(INTDIR) $(OBJS)
 	$(LD) $(INTDIR)/*.o -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
-	$(TOOLCHAIN)/bin/$(CDIR)/create-eboot -in=$(INTDIR)/$(PROJDIR).elf -out=$(INTDIR)/$(PROJDIR).oelf --paid 0x3800000000000011
+	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(INTDIR)/$(PROJDIR).elf -out=$(INTDIR)/$(PROJDIR).oelf --eboot "eboot.bin" --paid 0x3800000000000011
 
 $(INTDIR)/%.o: $(PROJDIR)/%.c
 	$(CC) $(CFLAGS) -o $@ $<
