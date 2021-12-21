@@ -16,7 +16,7 @@ and will be worked on throughout the life of the toolchain.
 - [x] Finished in v0.5: ~~SDL 2D sample~~
 - [ ] Develop MiraLib bindings for other languages
 
-## Advanced Issues (3/5 remain)
+## Advanced Issues (2/5 remain)
 
 - [x] Finished in v0.3: ~~Build a standardized libc for PS4 for portability and eventually C++ support~~
 - [x] Finished in v0.4: ~~C++ support (see above)~~
