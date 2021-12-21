@@ -18,7 +18,7 @@ int main()
     setvbuf(stdout, NULL, _IONBF, 0);
 
     // Open the library and resolve symbols
-    exampleLib = sceKernelLoadStartModule("/app0/libExample.prx", 0, NULL, 0, 0, 0);
+    exampleLib = sceKernelLoadStartModule("/app0/sce_module/libExample.prx", 0, NULL, 0, 0, 0);
     rv = sceKernelDlsym(exampleLib, "_Z19testLibraryFunctionPcmi", (void**)&testLibraryFunction);
 
     printf("Opened exampleLib: %d | Jumping to %p\n", exampleLib, testLibraryFunction);
