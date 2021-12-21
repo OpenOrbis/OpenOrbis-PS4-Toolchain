@@ -228,8 +228,6 @@ jobs:
           cp IV0000-BREW00087_00-PTHREADDEX000000.pkg ..
           cd ../using_library && make
           cp IV0000-BREW00089_00-USINGLIBEX000000.pkg ..
-        env:
-          OO_PS4_TOOLCHAIN: ${{ GITHUB_WORKSPACE }}
 
       # Create a zip of samples
       - name: Create samples zip
