@@ -212,8 +212,6 @@ jobs:
           cp IV0000-BREW00083_00-HELLOWORLD000000.pkg ..
           cd ../input && make
           cp IV0000-BREW00084_00-CONTROLREX000000.pkg ..
-          cd ../keyboard && make
-          cp IV0000-BREW00092_00-KEYBOARDIN000000.pkg ..
           cd ../library_example && make
           cp libExample.prx ../using_library/sce_module/
           cd ../networking && make
