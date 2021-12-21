@@ -1,7 +1,13 @@
 #include <stdio.h>
+#include <string.h>
+#include <sstream>
 
-int testLibraryFunction()
+int testLibraryFunction(char *buf, size_t buf_size, int num)
 {
-    printf("This is a print from a test library function!");
-    return 0x1337;
+    std::ostringstream os;
+    os << "Hi I'm from the library! You passed: " << num;
+    std::string s = os.str();
+    strncpy(buf, s.c_str(), buf_size);
+
+    return 0;
 }
