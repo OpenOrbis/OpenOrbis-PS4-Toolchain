@@ -8,7 +8,7 @@ CONTENT_ID  := IV0000-BREW00092_00-KEYBOARDIN000000
 LIBS        := -lc -lkernel -lc++ -lSceVideoOut -lSceSysmodule -lSceKeyboard -lSceFreeType -lSceUserService
 
 # Additional compile flags.
-#EXTRAFLAGS  := 
+EXTRAFLAGS  := -DGRAPHICS_USES_FONT
 
 # Asset and module directories.
 ASSETS 		:= $(wildcard assets/**/*)
