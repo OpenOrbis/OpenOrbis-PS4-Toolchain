@@ -47,6 +47,17 @@ jobs:
       
       - run: tar -xvzf libcxx-full.tar.gz
       
+      # Get latest SDL2
+      - name: Fetch SDL2
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: OpenOrbis
+          repo: SDL-PS4
+          tag: latest
+          file: SDL2.tar.gz
+      
+      - run: tar -xvzf SDL2.tar.gz
+      
       # Get latest library stubs
       - name: Fetch library stubs stable
         uses: i3h/download-release-asset@v1
