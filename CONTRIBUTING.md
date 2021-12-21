@@ -22,6 +22,6 @@ and will be worked on throughout the life of the toolchain.
 - [x] Finished in v0.4: ~~C++ support (see above)~~
 - [ ] GPU 2D/3D rendering support
 - [ ] DOOM port?
-- [ ] Fix std::cout in libcxx
+- [x] Finished in v0.5.2: ~~Fix std::cout in libcxx~~
 
 More issues will be added here as more are requested. If you think something should be here that isn't, feel free to file an issue!
