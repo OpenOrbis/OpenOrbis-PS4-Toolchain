@@ -2,7 +2,7 @@
 #define _SCE_SYSTEM_SERVICE_H_
 
 #include <stdint.h>
-#include <_types/sys_service.h>
+#include <orbis/_types/sys_service.h>
 
 #ifdef __cplusplus 
 extern "C" {
