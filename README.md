@@ -1,8 +1,6 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release Mode](https://img.shields.io/badge/Release%20Mode-Beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/Version-0.5.1-brightgreen.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Version](https://img.shields.io/badge/license-GPL%20v3-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE)
-
-[![Generic badge](https://img.shields.io/badge/WINDOWS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/LINUX-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Generic badge](https://img.shields.io/badge/MacOS-RELEASE-GREEN.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
+[![Release State](https://img.shields.io/badge/release%20state-beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Release](https://img.shields.io/github/v/release/OpenOrbis/OpenOrbis-PS4-Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Build](https://img.shields.io/github/workflow/status/OpenOrbis/OpenOrbis-PS4-Toolchain/Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE) [![Platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-lightgrey)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
 **Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.**
 
@@ -14,28 +12,28 @@ The header files as well as the library stubs may need updating to support yet u
 	<img src="logo.png" width="200px" height="200px">
 </p>
 
-## Notes
+## Roadmap
 
-The following projects will be added to this repo soon:
-- Debugger
-- MiraLib
+The following is planned to be added in future updates:
 
-It was intended for these to drop at the same time as everything else, however both are getting ported to .NET core to be made more future-proof and to allow easier Continuous Integration (CI).
+**v0.6** - Debugging tools (debugger, VS integration).
+**v0.7** - Finalize GPU rendering support.
+**v1.0** - Stable release that works smoothly and has header discrepancies mostly resolved.
 
 ## Documentation
 
-Each tool will have an additional `README.md` file in it's sub-directory giving more specific information on that project. The `docs` sub-directory also contains additional materials and documentation. Below is an overview of the purpose of each sub-directory:
+Tool-specific documentation can be found alongside it's source code. The `docs` sub-directory also contains additional materials and documentation. Below is an overview of the purpose of each sub-directory:
 
 | Directory | Contents |
 |--|--|
 | `/bin` | Executables for tools for each platform (Windows in `/bin/windows`, Linux in `/bin/linux` and macOS in `/bin/macos`) |
-| `/docs` | Documentation for PS4 format specifications (reverse engineered) and the toolchain itself
-| `/extra` | Extra / miscellaneous files. Currently, this includes project templates for Visual Studio
-| `/include` | Contains header files to compile against when building applications/libraries (PS4 specific files are in `/include/orbis`
-| `/lib` | Contains library stubs to link against when building applications/libraries
-| `/samples` | Example programs to get you started and for reference
-| `/scripts` | Helpful scripts to view Orbis ELF (OELF) information as well as other various tools
-| `/src` | Contains source code for tools (see [/src/README.md](/src/README.md) for more information on this directory)
+| `/docs` | Documentation for PS4 format specifications (reverse engineered) and the toolchain itself |
+| `/extra` | Extra / miscellaneous files. Currently, this includes project templates for Visual Studio |
+| `/include` | Contains PS4-specific + EGL/GLES and freetype headers |
+| `/lib` | Placeholder for built library files |
+| `/samples` | Example programs to get you started and for reference |
+| `/scripts` | Helpful scripts to view Orbis ELF (OELF) information as well as other various tools |
+| `/src` | Contains source code for CRT, modules, and VS templates |
 
 
 
@@ -69,13 +67,15 @@ The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, th
 export OO_PS4_TOOLCHAIN=[directory of installation]
 ```
 
+If you don't wish to restart your shell, remember to `source` your updated profile for it to take effect.
+
 This is needed so the build scripts and the converter tool know where to look for certain files. It is also recommended you add the root SDK directory + `/bin` to your path variable.
 
 ### Windows Installer
 For Windows, a Nullsoft scriptable installer is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable.
 
 ### Linux
-For Linux, after installing the required dependencies and setting up the environment variable as noted above, you'll also want to run the `setup-toolchain.sh` script in `/extra`. This will mark all the Linux binaries as executable, as by default they're read/write.
+For Linux, after installing the required dependencies and setting up the environment variable as noted above, you should be good to go.
 
 ### macOS
 For macOS, a PKG installer is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable in both bash and zsh shells.
@@ -90,50 +90,46 @@ For Linux and macOS, `/extra` contains a `setup-project.sh` script which will cr
 
 Contribution is welcome, the OpenOrbis toolchain is open source after all. For those eager to contribute, we have an actively maintained list of issues on [CONTRIBUTING.md](/CONTRIBUTING.md) that are accessible and would be awesome to get closed. We appreciate anyone who contributes and acknowledgements will be maintained in this README.
 
-## Tools
+## Dependencies
 
-Each tool will have a dedicated `README.md` file for more specific information on the tool. Below is a generic overview of the tools included in the toolchain currently.
+There are various dependencies that need to be pulled in and compiled if you wish to build the toolchain from source. This includes musl libc, libcxx, library stubs, and other tools.
 
-### create-eboot
+### musl
+https://github.com/OpenOrbis/musl
 
-The `create-eboot` tool takes normal Executable Linkable Format (ELF) files and performs the necessary patches and relinking to create an Orbis ELF (OELF). It will further take this OELF and process it into a final wrapped Signed Executable Linkable Format (SELF). This was made possible thanks to flatz' previous work on the `make-fself.py` script, which can be found in `/scripts`. For more information on these formats, see the wiki or `/docs`.
+Samples all link against a statically-compiled musl libc fork for PS4.
 
-Author: Specter + flatz (fself stuff)
+### libcxx
+https://github.com/OpenOrbis/llvm-project
 
-### create-lib
-The `create-lib` tool is similar to the `create-eboot` tool, however it produces Playstation Relocatable eXecutable (PRX) library files from a given ELF file.
+Samples that use C++ and use the stdlib link against a statically-compiled libcxx from an llvm-project fork for PS4.
 
-Author: Specter + flatz (fself stuff)
+### SDL-PS4
+https://github.com/OpenOrbis/SDL-PS4
+
+The SDL2 sample uses a port of the SDL library done by znullptr.
+
+### orbis-lib-gen
+https://github.com/OpenOrbis/orbis-lib-gen
+
+The `orbis-lib-gen` tool is used to generate library stubs, which are needed for linking against PS4-exclusive libraries.
+
+### create-fself
+https://github.com/OpenOrbis/create-fself
+
+The `create-fself` tool is used to generate the final eboot.bin (for games/apps) or library PRX files that are compatible with PS4.
 
 ### create-gp4
-The `create-gp4` tool generates .GP4 project files for package (pkg) generation.
 
-Author: Specter + John Tornblom (wrote python prototype the tool is based on)
+The `create-gp4` tool is used to programmatically create .PKG project files for use with maxton's publishing tools.
 
-### liborbispkg
-The `liborbispkg` tool takes a set of files that applications are expected to have (`eboot.bin`, `param.sfo`, necessary modules, etc.) and creates a package file (pkg) for them to install on the PS4.
+### readoelf
 
-Author: maxton
+The `readoelf` tool is a custom-rolled variant of `readelf` for parsing Sony's modified ELF format.
 
-### stub-generator
-The `stub-generator` generates the header files and shared libraries (.so) files for linking with PS4 system libraries. The output of this tool can be found in `/include/orbis` and `/lib`. These directories are essential to properly link with PS4 libraries.
+### LibOrbisPkg
 
-Author: CrazyVoid
-
-### miralib
-The `miralib` library contains C# and Python code for interacting with Mira on the desktop side of things. This includes management of a local list of consoles, connecting to a console, and performing various actions once connected via RPC.
-
-Author: Specter + Kiwi
-
-### assistant
-Assistant is actually a suite of tools for aiding in developing PS4 homebrew. This includes a log viewer, a debugger, a launcher for Mira, and a tray application to easily launch all of these.
-
-Author: Specter
-
-### readelf replacement
-A replacement `readelf` tool for reading PS4-compatible ELFs, otherwise known as Orbis ELFs (OELF).
-
-Author: Specter
+Maxton's publishing tools are used to create param.sfo and the final .PKG file to install on the PS4.
 
 ## Scripts
 
@@ -176,10 +172,10 @@ The accompanying LLVM binaries are licensed under the Apache 2.0 license and is 
 - John Tormblom: Build system prototyping
 - LightningMods / LM: Testing via APP_HOME and lib loading help on the Mira side
 - Lord Friky: Proper macOS support
-- sleirsgoevy: Bug fixes and support
+- sleirsgoevy: Bug fixes and support, various samples
 - ChendoChap: Bug fixes and support
 - astrelsky: Bug fixes and support
+- Nikita Krapivin: C++ exception support, openGL/piglet work
 - MrSlick: Awesome logo <3
-- Nikita Krapivin: C++ exception support
 - OpenOrbis Team
 - Other anonymous contributors
