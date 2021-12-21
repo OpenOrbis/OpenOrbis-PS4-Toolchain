@@ -17,7 +17,9 @@ The header files as well as the library stubs may need updating to support yet u
 The following is planned to be added in future updates:
 
 **v0.6** - Debugging tools (debugger, VS integration).
+
 **v0.7** - Finalize GPU rendering support.
+
 **v1.0** - Stable release that works smoothly and has header discrepancies mostly resolved.
 
 ## Documentation
