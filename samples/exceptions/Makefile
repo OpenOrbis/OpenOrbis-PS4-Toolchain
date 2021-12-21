@@ -1,8 +1,8 @@
 # Package metadata.
 TITLE       := OpenOrbis Exceptions Sample
 VERSION     := 1.00
-TITLE_ID    := BREW00070
-CONTENT_ID  := IV0000-BREW00070_00-EXCEPTIONSEX0000
+TITLE_ID    := BREW00091
+CONTENT_ID  := IV0000-BREW00091_00-EXCEPTIONS000000
 
 # Libraries linked into the ELF.
 LIBS        := -lc -lkernel -lc++ -lSceVideoOut

@@ -1,8 +1,8 @@
 # Package metadata.
 TITLE       := OpenOrbis Piglet Sample
 VERSION     := 1.00
-TITLE_ID    := BREW00071
-CONTENT_ID  := IV0000-BREW00071_00-PIGLETEXAMPLE000
+TITLE_ID    := BREW00093
+CONTENT_ID  := IV0000-BREW00093_00-PIGLETGPUR000000
 
 # Libraries linked into the ELF.
 LIBS        := -lc -lkernel -lc++ -lSceShellCoreUtil -lSceSysmodule -lSceSystemService -lScePigletv2VSH -lScePrecompiledShaders -lSceRtc
@@ -28,7 +28,7 @@ CPPFILES    := $(wildcard $(PROJDIR)/*.cpp)
 OBJS        := $(patsubst $(PROJDIR)/%.c, $(INTDIR)/%.o, $(CFILES)) $(patsubst $(PROJDIR)/%.cpp, $(INTDIR)/%.o, $(CPPFILES))
 
 # Define final C/C++ flags
-CFLAGS      := -cc1 -triple x86_64-pc-freebsd-elf -munwind-tables -fuse-init-array -debug-info-kind=limited -debugger-tuning=gdb -emit-obj $(EXTRAFLAGS) -I$(COMMONDIR) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
+CFLAGS      := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
 CXXFLAGS    := $(CFLAGS) -isystem $(TOOLCHAIN)/include/c++/v1
 LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(TOOLCHAIN)/lib/crt1.o
 
