@@ -194,3 +194,52 @@ jobs:
         with:
           name: toolchain.tar.gz
           path: toolchain.tar.gz
+      
+      # Build samples
+      - name: Build samples
+        run: |
+          cd samples/SDL2 && make
+          cp IV0000-BREW00090_00-SDLEXAMPLE000000.pkg ..
+          cd ../audio-wav && make
+          cp IV0000-BREW00080_00-AUDIOWAVEX000000.pkg ..
+          cd ../exceptions && make
+          cp IV0000-BREW00091_00-EXCEPTIONS000000.pkg ..
+          cd ../font && make
+          cp IV0000-BREW00081_00-FONTDRAWEX000000.pkg ..
+          cd ../graphics && make
+          cp IV0000-BREW00082_00-GRAPHICSEX000000.pkg ..
+          cd ../hello_world && make
+          cp IV0000-BREW00083_00-HELLOWORLD000000.pkg ..
+          cd ../input && make
+          cp IV0000-BREW00084_00-CONTROLREX000000.pkg ..
+          cd ../keyboard && make
+          cp IV0000-BREW00092_00-KEYBOARDIN000000.pkg ..
+          cd ../library_example && make
+          cp libExample.prx ../using_library/sce_module/
+          cd ../networking && make
+          cp IV0000-BREW00085_00-NETWORKKEX000000.pkg ..
+          cd ../piglet && make
+          cp IV0000-BREW00093_00-PIGLETGPUR000000.pkg ..
+          cd ../pngdec && make
+          cp IV0000-BREW00086_00-IPNGDRAWEX000000.pkg ..
+          cd ../system && make
+          cp IV0000-BREW00088_00-GETUSRIDEX000000.pkg ..
+          cd ../threading && make
+          cp IV0000-BREW00087_00-PTHREADDEX000000.pkg ..
+          cd ../using_library && make
+          cp IV0000-BREW00089_00-USINGLIBEX000000.pkg ..
+        env:
+          OO_PS4_TOOLCHAIN: ${{ GITHUB_WORKSPACE }}
+
+      # Create a zip of samples
+      - name: Create samples zip
+        uses: montudor/action-zip@v0.1.0
+        with:
+          args: zip -qq -r -D samples.zip samples/*.pkg
+          
+      # Upload artifact
+      - name: Upload samples
+        uses: actions/upload-artifact@v2
+        with:
+          name: sample-packages
+          path: samples.zip
