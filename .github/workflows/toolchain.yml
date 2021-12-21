@@ -151,7 +151,7 @@ jobs:
       - name: Build crtlib
         run: |
           cd src/crt
-          as crtlib.S -o crtlib.o && mv crtlib.o ../../lib
+          clang crtlib.c -c -o crtlib.o && mv crtlib.o ../../lib
 
       # Merge compiler-rt into libc
       - name: Merge compiler-rt into libc
