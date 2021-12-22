@@ -91,7 +91,7 @@ typedef struct OrbisSaveDataDelete
 	int32_t unknown2;
 } OrbisSaveDataDelete;
 
-typedef struct __attribute((packed)) OrbisSaveDataParam
+typedef struct __attribute__((packed)) OrbisSaveDataParam
 {
     char title[ORBIS_SAVE_DATA_TITLE_MAXSIZE];
     char subtitle[ORBIS_SAVE_DATA_SUBTITLE_MAXSIZE];
