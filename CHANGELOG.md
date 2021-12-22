@@ -2,6 +2,23 @@
 
 ## Beta
 
+**v0.5.2 - December 21st, 2021**
+
+- C++ exception support has been added (thanks Nikita Krapivin)!
+- Added OpenGL/piglet GPU rendering sample + headers (thanks Nikita Krapivin)!
+- Added automated package generation to sample build scripts!
+- Added C++ support for building libraries/PRXs!
+- Added and updated prototypes/types for over 13 PS4-specific headers (thanks 0x199, sleirsgoevy, Nikita Krapivin, OSM, al-azif, bucanero)!
+- Updated build system/scripts for samples and VS project templates to a more clean and convenient system.
+- Fixed an issue where homebrew apps were hard to debug in GDB due to improper .dynamic section (thanks sleirsgoevy)!
+- Fixed more discrepancies between BSD and MUSL headers (thanks sleirsgoevy, al-azif).
+- Fixed an issue where C++ cmath headers failed to use certain namespaces (thanks Nikita Krapivin).
+- Fixed various miscalculation bugs in create-fself.
+- Reworked musl to use libkernel instead of syscalls for compatibility (thanks sleirsgoevy, John Tornblom).
+- Merged create-eboot and create-lib into one tool for ease-of-use.
+
+
+
 **v0.5.1 - November 19th, 2020**
 
 - Fixed various discrepancies between BSD and MUSL including function prototypes, structure definitions, and macros!
