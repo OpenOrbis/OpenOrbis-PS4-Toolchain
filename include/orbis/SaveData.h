@@ -73,10 +73,8 @@ void sceSaveDataTransferringMount();
 // Empty Comment
 void sceSaveDataUmountWithBackup();
 
-
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
