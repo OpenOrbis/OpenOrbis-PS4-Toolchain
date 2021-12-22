@@ -4,8 +4,8 @@ Rem Package information
 set PKG_TITLE="OpenOrbis Exceptions Sample"
 set PKG_VERSION="1.00"
 set PKG_ASSETS="assets"
-set PKG_TITLE_ID="BREW00070"
-set PKG_CONTENT_ID="IV0000-BREW00070_00-EXCEPTIONSEX0000"
+set PKG_TITLE_ID="BREW00091"
+set PKG_CONTENT_ID="IV0000-BREW00091_00-EXCEPTIONS000000"
 
 Rem Libraries to link in
 set libraries=-lc -lkernel -lc++ -lSceVideoOut
