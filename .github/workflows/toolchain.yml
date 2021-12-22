@@ -176,6 +176,7 @@ jobs:
         run: |
           rm musl.tar.gz
           rm libcxx-full.tar.gz
+          rm SDL2.tar.gz
           rm lib.tar.gz
           rm binaries.tar.gz
           rm PkgEditor-0.2.231.zip
