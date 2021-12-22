@@ -1,21 +1,17 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Libraries to link in
-set libraries=-lSceLibcInternal -lkernel
-
-Rem set extra_flags=
+set libraries=-lc -c++ -lkernel
 
 Rem Read the script arguments into local vars
 set intdir=%1
 set targetname=%~2
 set outputPath=%~3
 
-set outputElf=%intdir%\%targetname%.elf
-set outputOelf=%intdir%\%targetname%.oelf
-set outputPrx=%intdir%\%targetname%.prx
-set outputStub=%intdir%\%targetname%_stub.so
-
-@mkdir %intdir%
+set outputElf=%intdir%%targetname%.elf
+set outputOelf=%intdir%%targetname%.oelf
+set outputPrx=%intdir%%targetname%.prx
+set outputStub=%intdir%%targetname%_stub.so
 
 Rem Compile object files for all the source files
 for %%f in (*.cpp) do (
@@ -27,7 +23,7 @@ set obj_files=
 for %%f in (%intdir%\\*.o) do set obj_files=!obj_files! .\%%f
 
 Rem Link the input ELF
-ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" -lSceLibcInternal -lkernel --verbose "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" %obj_files%
+ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% --verbose "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" %obj_files%
 
 Rem Create stub shared libraries
 for %%f in (*.cpp) do (
@@ -40,7 +36,7 @@ for %%f in (%intdir%\\*.o.stub) do set stub_obj_files=!stub_obj_files! .\%%f
 clang++ -target x86_64-pc-linux-gnu -shared -fuse-ld=lld -ffreestanding -nostdlib -fno-builtin "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% %stub_obj_files% -o "%outputStub%"
 
 Rem Create the prx
-%OO_PS4_TOOLCHAIN%\bin\windows\create-fself.exe -in "%outputElf%" --out "%outputOelf%" --lib "%outputPrx%"
+%OO_PS4_TOOLCHAIN%\bin\windows\create-lib.exe -in "%outputElf%" --out "%outputOelf%" --paid 0x3800000000000011
 
 Rem Cleanup
 copy "%outputPrx%" "%outputPath%\%targetname%.prx"
