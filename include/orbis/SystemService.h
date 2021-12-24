@@ -1,6 +1,7 @@
 #ifndef _SCE_SYSTEM_SERVICE_H_
 #define _SCE_SYSTEM_SERVICE_H_
 
+#include <stddef.h>
 #include <stdint.h>
 #include <orbis/_types/sys_service.h>
 
@@ -9,16 +10,6 @@ extern "C" {
 #endif
 
 int32_t sceSystemServiceHideSplashScreen();
-
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_LANG 1
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_DATE_FORMAT 2
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_TIME_FORMAT 3
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_TIME_ZONE 4
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_SUMMERTIME 5
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_SYSTEM_NAME 6
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_GAME_PARENTAL_LEVEL 7
-#define ORBIS_SYSTEM_SERVICE_PARAM_ID_ENTER_BUTTON_ASSIGN 1000
-
 int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
 int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
 
