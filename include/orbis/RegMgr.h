@@ -30,15 +30,15 @@ void sceRegMgrEvtGetCnt();
 // Empty Comment
 void sceRegMgrEvtGetRegId();
 // Empty Comment
-void sceRegMgrGetBin();
+int sceRegMgrGetBin(int optionId, void* outData, size_t dataLength);
 // Empty Comment
 void sceRegMgrGetBinInitVal();
 // Empty Comment
-void sceRegMgrGetInt();
+int sceRegMgrGetInt(int optionId, int* outInt);
 // Empty Comment
 void sceRegMgrGetIntInitVal();
 // Empty Comment
-void sceRegMgrGetStr();
+int sceRegMgrGetStr(int optionId, char* outString, size_t stringLength);
 // Empty Comment
 void sceRegMgrGetStrInitVal();
 // Empty Comment
@@ -68,13 +68,13 @@ void sceRegMgrNonSysSetStr();
 // Empty Comment
 void sceRegMgrResetVal();
 // Empty Comment
-void sceRegMgrSetBin();
+int sceRegMgrSetBin(int optionId, const void* inData, size_t dataLength);
 // Empty Comment
 void sceRegMgrSetInitLevel();
 // Empty Comment
-void sceRegMgrSetInt();
+int sceRegMgrSetInt(int optionId, int inInt);
 // Empty Comment
-void sceRegMgrSetStr();
+int sceRegMgrSetStr(int optionId, const char* inStirng, size_t stringLength);
 // Empty Comment
 void sceRegMgrSrvCnvRegionInt();
 // Empty Comment
