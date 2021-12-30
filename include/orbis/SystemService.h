@@ -1,6 +1,7 @@
 #ifndef _SCE_SYSTEM_SERVICE_H_
 #define _SCE_SYSTEM_SERVICE_H_
 
+#include <stddef.h>
 #include <stdint.h>
 #include <orbis/_types/sys_service.h>
 
