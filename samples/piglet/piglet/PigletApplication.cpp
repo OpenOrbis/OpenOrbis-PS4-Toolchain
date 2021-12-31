@@ -26,7 +26,7 @@ namespace nik {
         unsigned char* code;            // a pointer to raw bytes...
     } OrbisShaderBlob;
 
-    OrbisShaderBlob* scePrecompiledShaderEntries{nullptr};
+    extern "C" OrbisShaderBlob scePrecompiledShaderEntries[];
 
     static PigletApplication g_Application{};
     PigletApplication& GetPigletApplication() {
@@ -78,12 +78,6 @@ namespace nik {
 
         std::cout << "PrecompiledShaders module_start() = " << mstart_ret << std::endl;
 
-        ret = sceKernelDlsym(precompiledprx, "scePrecompiledShaderEntries", reinterpret_cast<void**>(&scePrecompiledShaderEntries));
-        if (ret < ORBIS_OK) {
-            std::cerr << "Failed to find the precompiled shaders table, err=0x" << std::hex << ret << std::endl;
-            goto err;
-        }
-
         std::cout << "Modules loaded OK." << std::endl;
 
         return true;
@@ -95,8 +89,6 @@ namespace nik {
     void PigletApplication::unloadModules() {
         int ret{-1};
         int mstop_ret{0};
-
-        scePrecompiledShaderEntries = nullptr;
 
         ret = sceKernelStopUnloadModule(precompiledprx, 0, nullptr, 0, nullptr, &mstop_ret);
         if (ret < ORBIS_OK) {
