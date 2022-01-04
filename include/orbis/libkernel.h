@@ -666,7 +666,7 @@ int scePthreadRwlockUnlock(OrbisPthreadRwlock*);
 // Empty Comment
 int scePthreadRwlockWrlock(OrbisPthreadRwlock*);
 // Empty Comment
-void scePthreadSelf();
+OrbisPthread scePthreadSelf();
 // Empty Comment
 void scePthreadSetaffinity();
 // Empty Comment
