@@ -76,6 +76,8 @@ This is needed so the build scripts and the converter tool know where to look fo
 ### Windows Installer
 For Windows, a Nullsoft scriptable installer is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable.
 
+Dependency [.NET Core 3.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-3.0.3-windows-x64-installer) is required to run LibOrbisPkg tools as part of build process.
+
 ### Linux
 For Linux, after installing the required dependencies and setting up the environment variable as noted above, you should be good to go.
 
