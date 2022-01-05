@@ -64,7 +64,7 @@ int sceKernelCancelEventFlag(OrbisKernelEventFlag, uint64_t, int*);
 // Empty Comment
 int sceKernelCancelSema(OrbisKernelSema, int, int*);
 // Empty Comment
-void sceKernelCheckedReleaseDirectMemory();
+void sceKernelCheckedReleaseDirectMemory(off_t memstart, size_t memlen);
 // Empty Comment
 void sceKernelCheckReachability();
 // Empty Comment
