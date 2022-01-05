@@ -265,8 +265,8 @@ uint64_t sceNetNtohll(uint64_t);
 uint16_t sceNetNtohs(uint16_t);
 // Empty Comment
 int sceNetPoolCreate(const char *name, int size, int flags);
-// Empty Comment
-void sceNetPoolDestroy();
+// This function releases the memory pool created with sceNetPoolCreate()
+int sceNetPoolDestroy(int memid);
 // Empty Comment
 void sceNetPppoeStart();
 // Empty Comment
