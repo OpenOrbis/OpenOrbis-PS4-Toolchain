@@ -300,8 +300,8 @@ void sceSslSetSslVersion();
 void sceSslSetVerifyCallback();
 // Empty Comment
 void sceSslShowMemoryStat();
-// Empty Comment
-void sceSslTerm();
+// This function terminates the Ssl library and frees resources that had been allocated
+int sceSslTerm(int libsslCtxId);
 // Empty Comment
 void sceSslUnloadCert();
 // Empty Comment
