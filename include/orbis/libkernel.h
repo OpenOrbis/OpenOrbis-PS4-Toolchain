@@ -64,7 +64,7 @@ int sceKernelCancelEventFlag(OrbisKernelEventFlag, uint64_t, int*);
 // Empty Comment
 int sceKernelCancelSema(OrbisKernelSema, int, int*);
 // Empty Comment
-void sceKernelCheckedReleaseDirectMemory();
+void sceKernelCheckedReleaseDirectMemory(off_t memstart, size_t memlen);
 // Empty Comment
 void sceKernelCheckReachability();
 // Empty Comment
@@ -666,7 +666,7 @@ int scePthreadRwlockUnlock(OrbisPthreadRwlock*);
 // Empty Comment
 int scePthreadRwlockWrlock(OrbisPthreadRwlock*);
 // Empty Comment
-void scePthreadSelf();
+OrbisPthread scePthreadSelf();
 // Empty Comment
 void scePthreadSetaffinity();
 // Empty Comment
