@@ -36,6 +36,10 @@
 #define ORBIS_SAVE_DATA_DETAIL_MAXSIZE				1024		//Maximum size for save data detailed information (NULL-terminated, UTF-8)
 
 
+typedef uint32_t OrbisSaveDataSortKey;
+typedef uint32_t OrbisSaveDataSortOrder;
+typedef uint64_t OrbisSaveDataBlocks;
+
 typedef struct OrbisSaveDataFingerprint {
 	char data[ORBIS_SAVE_DATA_FINGERPRINT_DATA_SIZE];
 	char padding[15];
@@ -118,3 +122,32 @@ typedef struct OrbisSaveDataIcon {
 	size_t dataSize;
 	uint8_t reserved[32];
 } OrbisSaveDataIcon;
+
+typedef struct OrbisSaveDataDirNameSearchCond {
+	int32_t userId;
+	int :32;
+	const OrbisSaveDataTitleId *titleId;
+	const OrbisSaveDataDirName *dirName;
+	OrbisSaveDataSortKey key;
+	OrbisSaveDataSortOrder order;
+	uint8_t reserved[32];
+} OrbisSaveDataDirNameSearchCond;
+
+typedef struct OrbisSaveDataSearchInfo {
+	OrbisSaveDataBlocks blocks;
+	OrbisSaveDataBlocks freeBlocks;
+	uint8_t reserved[32];
+} OrbisSaveDataSearchInfo;
+
+typedef struct OrbisSaveDataDirNameSearchResult {
+	uint32_t hitNum;
+	int :32;
+	OrbisSaveDataDirName *dirNames;
+	uint32_t dirNamesNum;
+	uint32_t setNum;
+	OrbisSaveDataParam *params;
+	OrbisSaveDataSearchInfo *infos;
+	uint8_t reserved[12];
+	int :32;
+} OrbisSaveDataDirNameSearchResult;
+
