@@ -12,13 +12,13 @@ void sceNpTrophyAbortHandle();
 // Empty Comment
 void sceNpTrophyCaptureScreenshot();
 // Empty Comment
-void sceNpTrophyCreateContext();
+int sceNpTrophyCreateContext(int32_t *context, int32_t user, uint32_t unk, uint64_t unk2);
 // Empty Comment
-void sceNpTrophyCreateHandle();
+int sceNpTrophyCreateHandle(int32_t *handle);
 // Empty Comment
-void sceNpTrophyDestroyContext();
+int sceNpTrophyDestroyContext(int32_t context);
 // Empty Comment
-void sceNpTrophyDestroyHandle();
+int sceNpTrophyDestroyHandle(int32_t handle);
 // Empty Comment
 void sceNpTrophyGetGameIcon();
 // Empty Comment
@@ -39,7 +39,7 @@ void sceNpTrophyIntAbortHandle();
 void sceNpTrophyIntCheckNetSyncTitles();
 // Empty Comment
 void sceNpTrophyIntCreateHandle();
-// Empty Comment
+// destroy the handle
 void sceNpTrophyIntDestroyHandle();
 // Empty Comment
 void sceNpTrophyIntGetLocalTrophySummary();
@@ -52,16 +52,15 @@ void sceNpTrophyIntGetRunningTitles();
 // Empty Comment
 void sceNpTrophyIntGetTrpIconByUri();
 // Empty Comment
-void sceNpTrophyIntNetSyncTitles();
-// Empty Comment
-void sceNpTrophyRegisterContext();
-// Empty Comment
-void sceNpTrophyShowTrophyList();
+void sceNpTrophyIntNetSyncTitles();     
+// Register the trophy context
+void sceNpTrophyRegisterContext(int32_t context, int32_t handle, uint64_t unk);
+// Displays the trophy list menu
+int sceNpTrophyShowTrophyList(int32_t Context, int32_t hadle);
 // Empty Comment
 void sceNpTrophySystemIsServerAvailable();
-// Empty Comment
-void sceNpTrophyUnlockTrophy();
-
+// Unlocks the Trophy with the ID of TRPID
+int sceNpTrophyUnlockTrophy(int32_t context, int32_t handle, int32_t TrophyID, int32_t *PLATID);
 #endif
 
 #ifdef __cplusplus
