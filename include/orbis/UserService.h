@@ -1,17 +1,54 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@xXxTheDarkprogramerxXx 
+OpenOrbis
+/
+OpenOrbis-PS4-Toolchain
+Public
+Code
+Issues
+13
+Pull requests
+1
+Actions
+Projects
+1
+Wiki
+Security
+Insights
+OpenOrbis-PS4-Toolchain/include/orbis/UserService.h
+@bucanero
+bucanero clean up
+Latest commit 4b58032 29 days ago
+ History
+ 4 contributors
+@bucanero@Cryptogenic@xXxTheDarkprogramerxXx@0x199
+359 lines (353 sloc)  14.9 KB
+   
 #ifndef _SCE_USER_SERVICE_H_
 #define _SCE_USER_SERVICE_H_
 
+#include <stddef.h>
 #include <stdint.h>
 #include <orbis/_types/user.h>
+#include <orbis/_types/errors.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
 
-
-void sceUserServiceGetInitialUser(int *);
+int sceUserServiceGetInitialUser(int *);
 int sceUserServiceGetUserName(int, char *, const size_t);
-void sceUserServiceInitialize(void *);
+int sceUserServiceInitialize(void *);
+int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
+int sceUserServiceGetForegroundUser(int* user_id);
+int sceUserServiceGetNpAccountId(const OrbisUserServiceUserId, uint64_t *account_id);
+int sceUserServiceGetUserColor(const OrbisUserServiceUserId, OrbisUserServiceUserColor *);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -42,7 +79,6 @@ void sceUserServiceGetFileBrowserSortTitle();
 void sceUserServiceGetFileSelectorFilter();
 void sceUserServiceGetFileSelectorSortContent();
 void sceUserServiceGetFileSelectorSortTitle();
-void sceUserServiceGetForegroundUser();
 void sceUserServiceGetFriendCustomListLastFocus();
 void sceUserServiceGetFriendFlag();
 void sceUserServiceGetGlsAccessTokenNiconicoLive();
@@ -115,13 +151,11 @@ void sceUserServiceGetKratosPrimaryUser();
 void sceUserServiceGetLastLoginOrder();
 void sceUserServiceGetLightBarBaseBrightness();
 void sceUserServiceGetLoginFlag();
-void sceUserServiceGetLoginUserIdList();
 void sceUserServiceGetMicLevel();
 void sceUserServiceGetMouseHandType();
 void sceUserServiceGetMousePointerSpeed();
 void sceUserServiceGetNotificationBehavior();
 void sceUserServiceGetNotificationSettings();
-void sceUserServiceGetNpAccountId();
 void sceUserServiceGetNpAccountUpgradeFlag();
 void sceUserServiceGetNpAuthErrorFlag();
 void sceUserServiceGetNpEnv();
@@ -172,7 +206,6 @@ void sceUserServiceGetTopMenuLimitItem();
 void sceUserServiceGetTopMenuNotificationFlag();
 void sceUserServiceGetTopMenuTutorialFlag();
 void sceUserServiceGetTraditionalChineseInputType();
-void sceUserServiceGetUserColor();
 void sceUserServiceGetUserGroupName();
 void sceUserServiceGetUserGroupNameList();
 void sceUserServiceGetUserGroupNum();
@@ -348,12 +381,23 @@ void sceUserServiceSetVolumeForController();
 void sceUserServiceSetVolumeForGenericUSB();
 void sceUserServiceSetVolumeForMorpheusSidetone();
 void sceUserServiceSetVolumeForSidetone();
-void sceUserServiceTerminate();
+int sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
-void sceUserServiceInitializeForShellCore();
-  
-#endif
 
 #ifdef __cplusplus
 }
 #endif
+#endif
+
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
