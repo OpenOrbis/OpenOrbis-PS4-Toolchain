@@ -7,19 +7,24 @@ This project contains example code for getting input from a USB keyboard attache
 
 ## Directory structure
 ```
-samples/input
+samples/keyboard
+|-- assets
+    |-- fonts
+	|-- font.ttf
 |-- keyboard
-    |-- x64
-        |-- Debug               // Object files / intermediate directory
-    |-- build.bat               // Batch file for building on Windows
     |-- keyboard.cpp            // Keyboard class and helper methods
     |-- keyboard.h              // Keyboard class header
-    |-- keyboard.vcxproj        // Visual studio project files
-    |-- keyboard.vcxproj.filters
     |-- main.cpp                // main source file
+    |-- x64
+	|-- Debug
 |-- eboot.bin                   // final eboot (not present until built)
-|-- keyboard.sln                // Visual studio solution file
 |-- Makefile                    // Make rules for building on Linux
+|-- sce_module // (not included)
+    |-- libc.prx 
+    |-- libSceFios2.prx
+|-- sce_sys
+    |-- about
+	|-- right.sprx
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 
