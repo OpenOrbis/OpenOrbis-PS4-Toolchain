@@ -39,7 +39,7 @@ void sceNpTrophyIntAbortHandle();
 void sceNpTrophyIntCheckNetSyncTitles();
 // Empty Comment
 void sceNpTrophyIntCreateHandle();
-// destroy the handle
+// Empty Comment
 void sceNpTrophyIntDestroyHandle();
 // Empty Comment
 void sceNpTrophyIntGetLocalTrophySummary();
@@ -52,15 +52,16 @@ void sceNpTrophyIntGetRunningTitles();
 // Empty Comment
 void sceNpTrophyIntGetTrpIconByUri();
 // Empty Comment
-void sceNpTrophyIntNetSyncTitles();     
-// Register the trophy context
-void sceNpTrophyRegisterContext(int32_t context, int32_t handle, uint64_t unk);
-// Displays the trophy list menu
+void sceNpTrophyIntNetSyncTitles();
+// Empty Comment
+int sceNpTrophyRegisterContext(int32_t context, int32_t handle, uint64_t unk);
+// Empty Comment
 int sceNpTrophyShowTrophyList(int32_t Context, int32_t hadle);
 // Empty Comment
 void sceNpTrophySystemIsServerAvailable();
-// Unlocks the Trophy with the ID of TRPID
+// Empty Comment
 int sceNpTrophyUnlockTrophy(int32_t context, int32_t handle, int32_t TrophyID, int32_t *PLATID);
+
 #endif
 
 #ifdef __cplusplus
