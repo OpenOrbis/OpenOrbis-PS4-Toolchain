@@ -4,9 +4,11 @@
 
 This project contains example code for unlocking trophies.
 (To run this, you need to make sure you have debug trophy's enabled on your system or the app will not install)
+(should this sample fail to work and push a "Failed to register context for 0x80551626" this means the system did **NOT** install the trophy pack internally, to fix this simply create /user/trophy/conf/BREW00080_00-00/ and place the trophy pack with the name "TROPHY.TRP" and TRPPARAM.INI with the contents of TROPSYSVER=1.0\nTROPTITLEID=BREW00080_00-00\nTROPAPPVER=1.0)
 
-- **Title ID**: BREW00090
-- **Content ID**: IV0000-BREW00090_00-TROPHIESEX000000
+
+- **Title ID**: BREW00080
+- **Content ID**: IV0000-BREW00080_00-TROPHIESEX000000
 
 
 
@@ -20,6 +22,7 @@ This project contains example code for unlocking trophies.
     |-- trophies.cvxproj.user
     |-- build.bat                                 // Batch file for building on Windows
     |-- main.cpp                                  // Main source file
+    |-- util.h                                    // header to contains a pre-setup Notify and kernel loger
 |-- trophy00                                      // Images needed to construct the Trophy pack
         |-- ICON0.PNG                             // Trophy Pack Icon
         |-- TROPXXX.PNG                           // Trophy Icon
