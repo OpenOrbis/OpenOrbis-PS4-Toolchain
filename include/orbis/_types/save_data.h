@@ -73,7 +73,7 @@ typedef struct __attribute__((packed)) OrbisSaveDataMount
 	const char *fingerprint;
 	uint64_t blocks;
 	uint32_t mountMode;
-	uint8_t reserved[32];
+	uint8_t reserved[36];
 } OrbisSaveDataMount;
 
 typedef struct __attribute__((packed)) OrbisSaveDataMountResult
