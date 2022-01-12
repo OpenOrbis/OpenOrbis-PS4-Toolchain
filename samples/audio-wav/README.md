@@ -23,7 +23,6 @@ samples/audio-wav
     |-- audio-wav.cvxproj.user
     |-- build.bat                                 // Batch file for building on Windows
     |-- main.cpp                                  // Main source file
-    |-- wav.cpp                                   // Contains definition for wav data to play
 |-- sce_module                                    // Dependency modules for the pkg
     |-- libSceFios2.prx
     |-- libc.prx
