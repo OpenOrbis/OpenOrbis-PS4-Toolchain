@@ -6,11 +6,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install needed applications for running the SDK
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      build-essential=12.8ubuntu1 \
-      clang=1:10.0-50~exp1 \
-      libicu66=66.1-2ubuntu2 \
-      libssl1.1=1.1.1f-1ubuntu2 \
-      lld=1:10.0-50~exp1 && \
+      build-essential \
+      clang-12 \
+      libicu66 \
+      libssl1.1 \
+      lld-12 \
+      llvm-12 && \
     rm -rf /var/lib/apt/lists/*
 
 # SETUP STAGE: Minimal install for what is required to download/setup the SDK
@@ -20,8 +21,8 @@ FROM ubuntu:20.04 as setup
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       ca-certificates \
-      curl=7.68.0-1ubuntu2.2 \
-      tar=1.30+dfsg-7 && \
+      curl \
+      tar && \
     rm -rf /var/lib/apt/lists/*
 
 # Set the OO_PS4_TOOLCHAIN environmental variable for later use vs using copy/paste
