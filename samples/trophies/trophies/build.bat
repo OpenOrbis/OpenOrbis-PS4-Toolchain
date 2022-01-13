@@ -3,11 +3,11 @@ SETLOCAL EnableDelayedExpansion
 Rem Package information
 set PKG_TITLE="OpenOrbis Trophy Sample"
 set PKG_VERSION="1.00"
-set PKG_TITLE_ID="BREW00080"
-set PKG_CONTENT_ID="IV0000-BREW00080_00-TROPHIESEX000000"
+set PKG_TITLE_ID="BREW00094"
+set PKG_CONTENT_ID="IV0000-BREW00094_00-TROPHIESEX000000"
 
 Rem Libraries to link in
-set libraries=-lc -lkernel -lc++ -lSceAudioOut -lSceUserService -lSceNpTrophy -lSceSysmodule
+set libraries=-lc -lkernel -lc++ -lSceUserService -lSceNpTrophy -lSceSysmodule
 
 Rem set extra_flags=
 
@@ -68,7 +68,6 @@ rem this only works if you are using a compiled version with pull #3 added in
 
 rem create trophy data if util exists
 if exist %OO_PS4_TOOLCHAIN%\bin\windows\create-trp.exe (
-
 %OO_PS4_TOOLCHAIN%\bin\windows\create-trp.exe "-CSYS" %PKG_TITLE_ID% "-PTS" "%~3trophy00" "%~3sce_sys\trophy\trophy00.trp"
 copy "npbind.dat" "sce_sys/npbind.dat"
 copy "nptitle.dat" "sce_sys/nptitle.dat"

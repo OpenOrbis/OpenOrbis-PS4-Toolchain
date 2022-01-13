@@ -3,9 +3,6 @@
 [![Version](https://img.shields.io/badge/Version-1.00-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
 This project contains example code for unlocking trophies.
-(To run this, you need to make sure you have debug trophy's enabled on your system or the app will not install)
-(should this sample fail to work and push a "Failed to register context for 0x80551626" this means the system did **NOT** install the trophy pack internally, to fix this simply create /user/trophy/conf/BREW00080_00-00/ and place the trophy pack with the name "TROPHY.TRP" and TRPPARAM.INI with the contents of TROPSYSVER=1.0\nTROPTITLEID=BREW00080_00-00\nTROPAPPVER=1.0)
-
 
 - **Title ID**: BREW00080
 - **Content ID**: IV0000-BREW00080_00-TROPHIESEX000000
@@ -26,6 +23,9 @@ This project contains example code for unlocking trophies.
 |-- trophy00                                      // Images needed to construct the Trophy pack
         |-- ICON0.PNG                             // Trophy Pack Icon
         |-- TROPXXX.PNG                           // Trophy Icon
+|-- BREW00094_00-00
+    |-- TROPHY.TRP                                // trophy pack file, same as trophy00.trp
+    |-- TRPPARAM.INI                              // INI file that tells the system info about the trophy pack
 |-- sce_module                                    // Dependency modules for the pkg
     |-- libc.prx
 |-- sce_sys                                       // Package materials (metadata)
@@ -40,6 +40,8 @@ This project contains example code for unlocking trophies.
 |-- eboot.bin                                     // Final eboot (not present until built)
 |-- trophies.sln                                  // Visual studio solution file
 |-- pkg.gp4                                       // Package project file
+
+
 ```
 The ELF, Orbis ELF (OELF), and object files will all be stored in the intermediate directory `x64/Debug`. The final eboot.bin file will be found in the root directory.
 
@@ -74,6 +76,9 @@ make
 ```
 
 
+## Issue(s)
+- Because we cannot sign our own trophies we must use debug trophies, this means we require shellcore patches that allow installing of and usage of them.
+- The system failing to install the trophy pack and INI("Failed to register context for 0x80551626"), simply place the "BREW00094_00-00" folder inside "/user/trophy/conf" and that should fix the issue.
 
 ## Author(s)
 
