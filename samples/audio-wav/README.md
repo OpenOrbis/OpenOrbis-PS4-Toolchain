@@ -14,7 +14,7 @@ This project contains example code for decoding and playing a 16-bit signed PCM 
 samples/audio-wav
 |-- assets
     |-- audio
-        |-- lets_go_go_go_tigerblood_jewel.wav    // wav file to decode and display
+        |-- lets_go_go_go_tigerblood_jewel.wav    // WAV file to decode and display
 |-- audio-wav
     |-- x64
         |-- Debug                                 // Object files / intermediate directory
@@ -22,6 +22,7 @@ samples/audio-wav
     |-- audio-wav.vcxproj.filters
     |-- audio-wav.cvxproj.user
     |-- build.bat                                 // Batch file for building on Windows
+    |-- dr_wav.h                                  // WAV audio loader and writer
     |-- main.cpp                                  // Main source file
 |-- sce_module                                    // Dependency modules for the pkg
     |-- libSceFios2.prx
