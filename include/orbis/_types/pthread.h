@@ -1,6 +1,7 @@
 #pragma once 
 
 #include <stdint.h>
+#include <sys/types.h>
 
 #define ORBIS_PTHREAD_DESTRUCTOR_ITERATIONS	4
 #define ORBIS_PTHREAD_KEYS_MAX			256
