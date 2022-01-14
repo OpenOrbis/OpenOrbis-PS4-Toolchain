@@ -61,7 +61,6 @@ del /s /q /f $(IntDir)\*.oelf</NMakeCleanCommandLine>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="build.bat" />
-    <ClCompile Include="wav.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dr_wav.h" />

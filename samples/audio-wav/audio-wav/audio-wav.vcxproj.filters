@@ -19,7 +19,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="build.bat" />
-    <ClCompile Include="wav.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
