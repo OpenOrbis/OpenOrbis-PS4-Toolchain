@@ -2,6 +2,7 @@
 #define _SCE_NP_TROPHY_H_
 
 #include <stdint.h>
+#include <orbis/_types/Np.h>
 
 #ifdef __cplusplus 
 extern "C" {
@@ -30,7 +31,7 @@ void sceNpTrophyGetGroupInfo();
 // Empty Comment
 void sceNpTrophyGetTrophyIcon();
 // Empty Comment
-void sceNpTrophyGetTrophyInfo();
+int32_t sceNpTrophyGetTrophyInfo(int32_t context, int32_t handle, int32_t TRPID, OrbisNpTrophyDetails* details, OrbisNpTrophyData* data);
 // Empty Comment
 void sceNpTrophyGetTrophyUnlockState();
 // Empty Comment
