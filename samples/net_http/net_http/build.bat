@@ -1,14 +1,14 @@
 SETLOCAL EnableDelayedExpansion
 
 Rem Package information
-set PKG_TITLE="OpenOrbis Hello World Sample"
+set PKG_TITLE="OpenOrbis HTTP Network Sample"
 set PKG_VERSION="1.00"
 set PKG_ASSETS="assets"
-set PKG_TITLE_ID="BREW00083"
-set PKG_CONTENT_ID="IV0000-BREW00083_00-HELLOWORLD000000"
+set PKG_TITLE_ID="BREW00051"
+set PKG_CONTENT_ID="IV0000-BREW00051_00-NETHTTPS00000000"
 
 Rem Libraries to link in
-set libraries=-lc -lkernel -lc++
+set libraries=-lc -lkernel -lSceNet -lSceSsl -lSceHttp -lSceSysmodule
 
 Rem set extra_flags=
 
