@@ -5,7 +5,7 @@ TITLE_ID    := BREW00052
 CONTENT_ID  := IV0000-BREW00052_00-MSGDIALOGS000000
 
 # Libraries linked into the ELF.
-LIBS        := -lc -lkernel -lc++ -lSceMsgDialog -lSceCommonDialog
+LIBS        := -lc -lkernel -lSceMsgDialog -lSceCommonDialog -lSceSysmodule
 
 # Additional compile flags.
 #EXTRAFLAGS  := 

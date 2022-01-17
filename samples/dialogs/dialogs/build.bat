@@ -8,7 +8,7 @@ set PKG_TITLE_ID="BREW00052"
 set PKG_CONTENT_ID="IV0000-BREW00052_00-MSGDIALOGS000000"
 
 Rem Libraries to link in
-set libraries=-lc -lkernel -lc++ -lSceMsgDialog -lSceCommonDialog
+set libraries=-lc -lkernel -lSceMsgDialog -lSceCommonDialog -lSceSysmodule
 
 Rem set extra_flags=
 

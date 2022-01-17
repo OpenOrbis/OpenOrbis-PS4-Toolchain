@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Version-1.00-brightgreen.svg)](https://github.com/Cryptogenic/OpenOrbis-PS4-Toolchain)
 
-This project contains example code for calling printf to print a hello world string to the console, as well as calling SCE's usleep from libkernel. This project is mostly meant as an example for what the build scripts and what not look like for using the toolchain.
+This project contains example code for showing a user-defined message dialog on the screen.
 
 - **Title ID**: BREW00052
 - **Content ID**: IV0000-BREW00052_00-MSGDIALOGS000000
@@ -20,7 +20,7 @@ samples/dialogs
     |-- dialogs.vcxproj                // Visual studio project files
     |-- dialogs.vcxproj.filters
     |-- dialogs.cvxproj.user
-    |-- main.cpp                       // main source file
+    |-- main.c                         // main source file
 |-- sce_module                         // Dependency modules for the pkg
     |-- libSceFios2.prx
     |-- libc.prx
@@ -42,10 +42,9 @@ The ELF, Orbis ELF (OELF), and object files will all be stored in the intermedia
 
 - libc
 - libkernel
-- libc++
 - libSceCommonDialog
 - libSceMsgDialog
-
+- libSceSysmodule
 
 
 ## Building
