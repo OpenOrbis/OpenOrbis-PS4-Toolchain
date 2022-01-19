@@ -1,0 +1,18 @@
+<!--Sce-Np-Trophy-Signature: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+<trophyconf version="1.1" platform="ps4" policy="large">
+ <npcommid>AAAA00000_00</npcommid>
+ <trophyset-version>01.00</trophyset-version>
+ <parental-level license-area="default">0</parental-level>
+ <trophy id="000" hidden="no" ttype="P" pid="-1"/>
+ <trophy id="001" hidden="no" ttype="G" pid="000"/>
+ <trophy id="002" hidden="no" ttype="G" pid="000"/>
+ <trophy id="003" hidden="no" ttype="G" pid="000"/>
+ <trophy id="004" hidden="no" ttype="G" pid="000"/>
+ <trophy id="005" hidden="no" ttype="G" pid="000"/>
+ <trophy id="006" hidden="no" ttype="G" pid="000"/>
+ <trophy id="007" hidden="no" ttype="G" pid="000"/>
+ <trophy id="008" hidden="no" ttype="G" pid="000"/>
+ <trophy id="009" hidden="no" ttype="G" pid="000"/>
+ <trophy id="010" hidden="no" ttype="G" pid="000"/>
+ <trophy id="011" hidden="no" ttype="G" pid="000"/>
+</trophyconf>
