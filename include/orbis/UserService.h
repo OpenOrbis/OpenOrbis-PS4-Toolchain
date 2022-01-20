@@ -1,35 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@xXxTheDarkprogramerxXx 
-OpenOrbis
-/
-OpenOrbis-PS4-Toolchain
-Public
-Code
-Issues
-13
-Pull requests
-1
-Actions
-Projects
-1
-Wiki
-Security
-Insights
-OpenOrbis-PS4-Toolchain/include/orbis/UserService.h
-@bucanero
-bucanero clean up
-Latest commit 4b58032 29 days ago
- History
- 4 contributors
-@bucanero@Cryptogenic@xXxTheDarkprogramerxXx@0x199
-359 lines (353 sloc)  14.9 KB
-   
 #ifndef _SCE_USER_SERVICE_H_
 #define _SCE_USER_SERVICE_H_
 
