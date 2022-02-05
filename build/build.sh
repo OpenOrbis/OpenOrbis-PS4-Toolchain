@@ -77,7 +77,7 @@ cd /OpenOrbis-PS4-Toolchain/bin/linux   && wget https://github.com/maxton/LibOrb
 cd /OpenOrbis-PS4-Toolchain/bin/macos   && wget https://github.com/maxton/LibOrbisPkg/releases/download/v0.2/PkgTool.Core-osx-x64-0.2.231.zip   && unzip PkgTool.Core-osx-x64-0.2.231.zip && rm PkgTool.Core-osx-x64-0.2.231.zip && chmod +x PkgTool.Core
 
 # Copy crtlib
-cd /OpenOrbis-PS4-Toolchain/src/crt && as crtlib.S -o crtlib.o && mv crtlib.o /OpenOrbis-PS4-Toolchain/lib
+cd /OpenOrbis-PS4-Toolchain/src/crt && as -fPIC crtlib.S -o crtlib.o && mv crtlib.o /OpenOrbis-PS4-Toolchain/lib
 
 # Copy musl built libs
 cd /ps4 && cp -r lib /OpenOrbis-PS4-Toolchain
