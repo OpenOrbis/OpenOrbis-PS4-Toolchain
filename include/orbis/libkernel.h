@@ -137,8 +137,10 @@ int sceKernelFchmod(int, OrbisKernelMode);
 int sceKernelFcntl(int, int, ...);
 // Empty Comment
 void sceKernelFlock();
-// Empty Comment
-int sceKernelFstat(int, OrbisKernelStat);
+
+// Get stats from a descriptor
+int sceKernelFstat(int, OrbisKernelStat*);
+
 // Empty Comment
 int sceKernelFsync(int);
 // Empty Comment
