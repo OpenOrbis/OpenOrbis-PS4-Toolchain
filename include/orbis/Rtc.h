@@ -231,11 +231,7 @@ void sceRtcSetTime_t();
 // Undocumented Function... Need to reverse
 void sceRtcSetWin32FileTime();
 
-
-
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
 #endif
