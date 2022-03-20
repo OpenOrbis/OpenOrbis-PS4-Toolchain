@@ -9,7 +9,7 @@ extern "C" {
 #endif
 
 // closes the opened error dialog
-void sceErrorDialogClose();
+int32_t sceErrorDialogClose();
 
 // returns the status of the running error dialog 
 OrbisErrorDialogStatus sceErrorDialogGetStatus();
@@ -21,19 +21,19 @@ int32_t sceErrorDialogInitialize();
 int32_t sceErrorDialogOpen(OrbisErrorDialogParam*);
 
 // Unkown, first arg might be OrbisErrorDialogParam?
-void sceErrorDialogOpenDetail(void*, char*, char*, char*, char*);
+int32_t sceErrorDialogOpenDetail(void*, char*, char*, char*, char*);
 
 // Unkown, first arg might be OrbisErrorDialogParam?
-void sceErrorDialogOpenWithReport(void*, char*);
+int32_t sceErrorDialogOpenWithReport(void*, char*);
 
 // force clsoing of the error dialog
-void sceErrorDialogTerminate();
+int32_t sceErrorDialogTerminate();
 
 // Gets the updated status of the currently running error dialog
 OrbisErrorDialogStatus sceErrorDialogUpdateStatus();
 
-
 #ifdef __cplusplus
 }
 #endif
+
 #endif
