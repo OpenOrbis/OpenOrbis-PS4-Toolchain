@@ -2,7 +2,7 @@
 #define _SCE_NP_MANAGER_H_
 
 #include <stdint.h>
-
+#include <orbis/_types/Np.h>
 #ifdef __cplusplus 
 extern "C" {
 #endif
@@ -51,8 +51,9 @@ void sceNpCheckCallback();
 void sceNpCheckCallbackForLib();
 // Empty Comment
 void sceNpCheckNpAvailability();
-// Empty Comment
-void sceNpCheckNpAvailabilityA();
+
+int32_t sceNpCheckNpAvailabilityA(int, int32_t UserID);
+
 // Empty Comment
 void sceNpCheckNpReachability();
 // Empty Comment
@@ -87,8 +88,9 @@ void sceNpGetGamePresenceStatusA();
 void sceNpGetNpId();
 // Empty Comment
 void sceNpGetNpReachabilityState();
-// Empty Comment
-void sceNpGetOnlineId();
+
+int32_t sceNpGetOnlineId(int32_t UserID, OrbisNpOnlineId* onlineID);
+
 // Empty Comment
 void sceNpGetParentalControlInfo();
 // Empty Comment
@@ -344,9 +346,7 @@ void sceNpUnregisterStateCallbackA();
 // Empty Comment
 void sceNpWaitAsync();
 
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
 #endif
