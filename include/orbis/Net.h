@@ -266,7 +266,7 @@ uint16_t sceNetNtohs(uint16_t);
 // Empty Comment
 int sceNetPoolCreate(const char *name, int size, int flags);
 // Empty Comment
-void sceNetPoolDestroy();
+void sceNetPoolDestroy(int);
 // Empty Comment
 void sceNetPppoeStart();
 // Empty Comment
@@ -278,11 +278,11 @@ int sceNetRecvfrom(OrbisNetId, void*, size_t, int, OrbisNetSockaddr*, OrbisNetSo
 // Empty Comment
 int sceNetRecvmsg(OrbisNetId, OrbisNetMsghdr*, int);
 // Empty Comment
-void sceNetResolverAbort();
+int sceNetResolverAbort(OrbisNetId, int flags);
 // Empty Comment
-void sceNetResolverCreate();
+OrbisNetId sceNetResolverCreate(const char *name, int memid, int flags);
 // Empty Comment
-void sceNetResolverDestroy();
+int sceNetResolverDestroy(OrbisNetId);
 // Empty Comment
 void sceNetResolverGetError();
 // Empty Comment
@@ -290,7 +290,7 @@ void sceNetResolverStartAton();
 // Empty Comment
 void sceNetResolverStartAton6();
 // Empty Comment
-void sceNetResolverStartNtoa();
+int sceNetResolverStartNtoa(OrbisNetId rid, const char *hostname, OrbisNetInAddr *addr, int timeout, int retry, int flags);
 // Empty Comment
 void sceNetResolverStartNtoa6();
 // Empty Comment
