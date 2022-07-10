@@ -54,3 +54,7 @@ typedef struct OrbisNetDnsInfo {
 	OrbisNetInAddr_t primary_dns;
 	OrbisNetInAddr_t secondary_dns;
 } OrbisNetDnsInfo;
+
+typedef struct OrbisNetInAddr {
+	OrbisNetInAddr_t s_addr;
+} OrbisNetInAddr;
