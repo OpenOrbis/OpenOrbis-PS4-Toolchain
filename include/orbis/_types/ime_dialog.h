@@ -46,9 +46,9 @@ typedef enum {
 } OrbisDialogStatus;
 
 typedef int(*OrbisTextFilter)(
-	wchar_t *outText,
+	uint16_t *outText,
 	uint32_t *outTextLength,
-	const wchar_t *srcText,
+	const uint16_t *srcText,
 	uint32_t srcTextLength
 );
 
@@ -66,7 +66,7 @@ typedef struct OrbisImeSetting {
 	OrbisTextFilter filter;
 	uint32_t option;
 	uint32_t maxTextLength;
-	wchar_t *inputTextBuffer;
+	uint16_t *inputTextBuffer;
 	float posx;
 	float posy;
 	OrbisHAlignment horizontalAlignment;
@@ -86,12 +86,12 @@ typedef struct OrbisImeDialogSetting {
 	OrbisTextFilter filter;
 	uint32_t option;
 	uint32_t maxTextLength;
-	wchar_t *inputTextBuffer;
+	uint16_t *inputTextBuffer;
 	float posx;
 	float posy;
 	OrbisHAlignment horizontalAlignment;
 	OrbisVAlignment verticalAlignment;
-	const wchar_t *placeholder;
-	const wchar_t *title;
+	const uint16_t *placeholder;
+	const uint16_t *title;
 	int8_t reserved[16];
 } OrbisImeDialogSetting;
