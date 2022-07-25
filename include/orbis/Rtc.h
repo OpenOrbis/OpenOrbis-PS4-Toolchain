@@ -175,8 +175,10 @@ void sceRtcGetCurrentAdNetworkTick();
 // Undocumented Function... Need to reverse
 void sceRtcGetCurrentClock();
 
-// Undocumented Function... Need to reverse
-void sceRtcGetCurrentClockLocalTime();
+// 0x0        = OK
+// 0x80B50002 = pointer is invalid
+// needs more RE to fully understand
+int sceRtcGetCurrentClockLocalTime(TimeTable*);
 
 // Undocumented Function... Need to reverse
 void sceRtcGetCurrentDebugNetworkTick();

@@ -134,11 +134,11 @@ typedef struct {
 } OrbisKernelVirtualQueryInfo;
 
 typedef struct {
-	char padding[8];
-	char s_version[10]; // e.g. " 6.720.001"
-	char unk[18]; // zeros
-	uint32_t i_version; // e.g. 0x06720001
+    size_t Size;                // 0x0
+    char VersionString[0x1C];   // 0x8 (e.g. " 6.720.001" padded with leading zeros)
+    uint32_t Version;           // 0xe.g. 0x06720001
 } OrbisKernelSwVersion;
+// size = 0x28
 
 // Enum Credits - OSM-Made
 enum OrbisNotificationRequestType

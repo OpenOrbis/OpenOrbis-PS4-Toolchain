@@ -1,3 +1,5 @@
+#pragma once
+
 #include <orbis/_types/rtc.h>
 
 typedef struct OrbisNpTrophyDetails {
@@ -19,3 +21,14 @@ typedef struct OrbisNpTrophyData {
 	OrbisRtcTick Timecode;		// time when the Trophy was unlocked
 } OrbisNpTrophyData;
 	
+typedef struct OrbisNpOnlineId {
+	char    data[16];		    // account name, follows PSN schema, min 3/max 16
+	char    term;				// terminator, always '\0'?
+	uint8_t UNK[3];				// Unkown, probably reserved?
+} OrbisNpOnlineId;
+
+typedef struct OrbisNpId {
+	OrbisNpOnlineId handle;		// online info
+	uint8_t Unk20[8];			// could be uint64_t?
+	uint8_t Unk28[8];			// could be uint64_t?
+} OrbisNpId;

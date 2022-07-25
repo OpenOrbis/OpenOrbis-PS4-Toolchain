@@ -137,8 +137,8 @@ int sceKernelFchmod(int, OrbisKernelMode);
 int sceKernelFcntl(int, int, ...);
 // Empty Comment
 void sceKernelFlock();
-// Empty Comment
-int sceKernelFstat(int, OrbisKernelStat);
+// Get stats from a descriptor
+int sceKernelFstat(int, OrbisKernelStat*);
 // Empty Comment
 int sceKernelFsync(int);
 // Empty Comment
@@ -483,7 +483,7 @@ int scePthreadAttrGetstacksize(const OrbisPthreadAttr*, size_t*);
 // Empty Comment
 int scePthreadAttrInit(OrbisPthreadAttr*);
 // Empty Comment
-int scePthreadAttrSetaffinity(OrbisPthreadAttr*, const void *);
+int scePthreadAttrSetaffinity(OrbisPthreadAttr*, uint64_t);
 // void (2nd arg) is OrbisKernelCpumask, need to por OrbisKernelCpumask -cv
 // Empty Comment
 void scePthreadAttrSetcreatesuspend();
@@ -492,9 +492,9 @@ int scePthreadAttrSetdetachstate(OrbisPthreadAttr*, int);
 // Empty Comment
 int scePthreadAttrSetguardsize(OrbisPthreadAttr*, size_t);
 // Empty Comment
-void scePthreadAttrSetinheritsched();
+void scePthreadAttrSetinheritsched(OrbisPthreadAttr*, int);
 // Empty Comment
-void scePthreadAttrSetschedparam();
+void scePthreadAttrSetschedparam(OrbisPthreadAttr*, struct sched_param*);
 // Empty Comment
 void scePthreadAttrSetschedpolicy();
 // Empty Comment
@@ -548,7 +548,7 @@ int scePthreadCondTimedwait(OrbisPthreadCond*, OrbisPthreadMutex*, OrbisKernelUs
 // Empty Comment
 int scePthreadCondWait(OrbisPthreadCond*, OrbisPthreadMutex*);
 // Empty Comment
-int scePthreadCreate(OrbisPthread *, const OrbisPthreadAttr *, void *, void *, const char *);
+int scePthreadCreate(OrbisPthread *, const OrbisPthreadAttr *, void*(*F)(void*), void *, const char *);
 // Empty Comment
 int scePthreadDetach(OrbisPthread);
 // Empty Comment
@@ -556,7 +556,7 @@ int scePthreadEqual(OrbisPthread, OrbisPthread);
 // Empty Comment
 void scePthreadExit(void*);
 // Empty Comment
-void scePthreadGetaffinity();
+void scePthreadGetaffinity(OrbisPthread, uint64_t*);
 // Empty Comment
 void scePthreadGetconcurrency();
 // Empty Comment
