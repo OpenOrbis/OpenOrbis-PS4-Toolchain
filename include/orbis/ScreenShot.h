@@ -28,8 +28,8 @@ void sceScreenShotIsDisabled();
 void sceScreenShotIsVshScreenCaptureDisabled();
 // Sets overlay image with manual positioning
 int sceScreenShotSetOverlayImage(const char *overlay_image, int x, int y);
-// Empty Comment
-void sceScreenShotSetOverlayImageWithOrigin();
+// Sets overlay image with manual positioning
+int sceScreenShotSetOverlayImageWithOrigin(const char *overlay_image, int x, int y, int);
 // Empty Comment
 void sceScreenShotSetParam();
 
