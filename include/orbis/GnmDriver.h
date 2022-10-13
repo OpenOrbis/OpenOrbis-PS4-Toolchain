@@ -190,7 +190,7 @@ void sceGnmSetVsShader();
 // Empty Comment
 void sceGnmSetWaveLimitMultipliers();
 // Empty Comment
-void sceGnmSubmitAndFlipCommandBuffers();
+int32_t sceGnmSubmitAndFlipCommandBuffers(uint32_t count, void *dcbGpuAddrs[], uint32_t *dcbSizesInBytes, void *ccbGpuAddrs[], uint32_t *ccbSizesInBytes, uint32_t videoOutHandle, uint32_t displayBufferIndex, uint32_t flipMode, int64_t flipArg);
 // Empty Comment
 void sceGnmSubmitAndFlipCommandBuffersForWorkload();
 // Empty Comment
