@@ -18,7 +18,11 @@ int sceVideoOutRegisterBuffers(int, int, void * const *, int, const OrbisVideoOu
 int sceVideoOutUnregisterBuffers(int, int);
 int sceVideoOutSubmitFlip(int, int, unsigned int, int64_t);
 void sceVideoOutSetBufferAttribute(void *, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
-int sceVideoOutSetFlipRate(int, int);
+// limits framerate in application
+// 0 none
+// 1 33ms - 30FPS
+// 2 50ms - 20FPS
+int sceVideoOutSetFlipRate(int handle, int fliprate);
 int sceVideoOutAddFlipEvent(OrbisKernelEqueue, int, void *);
 int sceVideoOutGetFlipStatus(int, OrbisVideoOutFlipStatus *);
 int sceVideoOutIsFlipPending(int);
