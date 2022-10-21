@@ -13,26 +13,25 @@ void _Z5dummyv();
 // Empty Comment
 void sceScreenShotCapture();
 // Empty Comment
-void sceScreenShotDisable();
+int sceScreenShotDisable();
 // Empty Comment
-void sceScreenShotDisableNotification();
+int sceScreenShotDisableNotification();
 // Empty Comment
-void sceScreenShotEnable();
+int sceScreenShotEnable();
 // Empty Comment
-void sceScreenShotEnableNotification();
+int sceScreenShotEnableNotification();
 // Empty Comment
 void sceScreenShotGetAppInfo();
 // Empty Comment
-void sceScreenShotIsDisabled();
+int sceScreenShotIsDisabled();
 // Empty Comment
-void sceScreenShotIsVshScreenCaptureDisabled();
+int sceScreenShotIsVshScreenCaptureDisabled();
 // Sets overlay image with manual positioning
-int sceScreenShotSetOverlayImage(const char *overlay_image, int x, int y);
-// Sets overlay image with manual positioning
-int sceScreenShotSetOverlayImageWithOrigin(const char *overlay_image, int x, int y, int);
+int sceScreenShotSetOverlayImage(const char *path, int x, int y);
+// Sets overlay image with specified positioning
+int sceScreenShotSetOverlayImageWithOrigin(const char *path, int x, int y, int);
 // Empty Comment
 void sceScreenShotSetParam();
-
 
 #endif
 
