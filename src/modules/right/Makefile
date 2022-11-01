@@ -21,7 +21,7 @@ ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
 IDIRS 		:= -I$(TOOLCHAIN)/include
 LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -fpic -munwind-tables $(IDIRS) -emit-obj
+CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -emit-obj
 LFLAGS 		:= -m elf_x86_64 -shared --version-script="right/right.version" --script $(TOOLCHAIN)/link_prx.x --eh-frame-hdr $(LIBS) $(TOOLCHAIN)/lib/crtlib.o $(LDIRS)
 
 CFILES 		:= $(wildcard $(SDIR)/*.c)
