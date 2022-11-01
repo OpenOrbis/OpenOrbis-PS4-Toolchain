@@ -5,9 +5,6 @@
 typedef void(*fp_t)(void);
 typedef int(*module_func_t)(unsigned long long argl, void *argp);
 
-hidesym int module_start_dummy(unsigned long long argl, void *argp) { return 0; }
-hidesym int module_stop_dummy(unsigned long long argl, void *argp)  { return 0; }
-
 extern void(*__preinit_array_start[])(void) weaksym;
 extern void(*__preinit_array_end[])(void) weaksym;
 extern void(*__init_array_start[])(void) weaksym;
@@ -19,8 +16,7 @@ extern int module_start(unsigned long long argl, void *argp) weaksymal(module_st
 extern int module_stop(unsigned long long argl, void *argp) weaksymal(module_stop_dummy);
 extern int _init(unsigned long long argl, void *argp, module_func_t overrider) hidesym;
 extern int _fini(unsigned long long argl, void *argp, module_func_t overrider) hidesym;
-
-hidesym void *__dso_handle = &__dso_handle;
+extern void *__dso_handle hidesym;
 
 #define call_fp_array(_Name) for (fp_t *f = (_Name##_start); f && (f != (_Name##_end)); ++f) if (*f) (*f)()
 
@@ -79,3 +75,8 @@ int _fini(unsigned long long argl, void *argp, module_func_t overrider /* ???? *
 }
 
 
+hidesym int module_start_dummy(unsigned long long argl, void *argp) { return 0; }
+hidesym int module_stop_dummy(unsigned long long argl, void *argp)  { return 0; }
+
+
+void *__dso_handle = &__dso_handle;
