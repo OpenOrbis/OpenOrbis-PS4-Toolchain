@@ -20,6 +20,35 @@ extern void *__dso_handle hidesym;
 
 #define call_fp_array(_Name) for (fp_t *f = (_Name##_start); f && (f != (_Name##_end)); ++f) if (*f) (*f)()
 
+int _init(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
+	call_fp_array(__preinit_array);
+	call_fp_array(__init_array);
+	
+	if (overrider) return overrider(argl, argp);
+	else if (&module_start) return module_start(argl, argp);
+	
+	return 0;
+}
+
+int _fini(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
+	static char completed = 0;
+	int rc = 0;
+	
+	if (completed) {
+		return rc;
+	}
+	
+	
+	if (overrider) rc = overrider(argl, argp);
+	else if (&module_stop) rc = module_stop(argl, argp);
+	
+	if (&__cxa_finalize) __cxa_finalize(__dso_handle);
+	call_fp_array(__fini_array);
+	
+	completed = 1;
+	return rc;
+}
+
 // sce_module_param
 __asm__(
 ".intel_syntax noprefix \n"
@@ -44,36 +73,6 @@ __asm__(
 "	.quad 	0 \n"
 ".att_syntax prefix \n"
 );
-
-int _init(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
-	call_fp_array(__preinit_array);
-	call_fp_array(__init_array);
-	
-	if (overrider) return overrider(argl, argp);
-	else if (&module_start) return module_start(argl, argp);
-	
-	return 0;
-}
-
-int _fini(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
-	static char completed = 0;
-	int rc = 0;
-	
-	if (completed) {
-		return rc;
-	}
-	completed = 1;
-	
-	
-	if (overrider) rc = overrider(argl, argp);
-	else if (&module_stop) rc = module_stop(argl, argp);
-	
-	if (&__cxa_finalize) __cxa_finalize(__dso_handle);
-	call_fp_array(__fini_array);
-	
-	return rc;
-}
-
 
 hidesym int module_start_dummy(unsigned long long argl, void *argp) { return 0; }
 hidesym int module_stop_dummy(unsigned long long argl, void *argp)  { return 0; }
