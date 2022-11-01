@@ -19,11 +19,11 @@ set outputStub=%targetname%_stub.so
 
 Rem Compile object files for all the source files
 for %%f in (*.c) do (
-    clang --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.c
+    clang --target=x86_64-pc-freebsd12-elf -shared -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.c
 )
 
 for %%f in (*.cpp) do (
-    clang++ --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.cpp
+    clang++ --target=x86_64-pc-freebsd12-elf -shared -fPIC -funwind-tables -I"%OO_PS4_TOOLCHAIN%\\include" -I"%OO_PS4_TOOLCHAIN%\\include\\c++\\v1" %extra_flags% -c -o %intdir%\%%~nf.o %%~nf.cpp
 )
 
 Rem Get a list of object files for linking
@@ -31,7 +31,7 @@ set obj_files=
 for %%f in (%intdir%\\*.o) do set obj_files=!obj_files! .\%%f
 
 Rem Link the input ELF
-ld.lld -m elf_x86_64 -pie --script "%OO_PS4_TOOLCHAIN%\link.x" --eh-frame-hdr -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% --verbose "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" %obj_files%
+ld.lld -m elf_x86_64 -shared --script "%OO_PS4_TOOLCHAIN%\link_prx.x" --eh-frame-hdr "%OO_PS4_TOOLCHAIN%\lib\crtlib.o" -o "%outputElf%" "-L%OO_PS4_TOOLCHAIN%\lib" %libraries% --verbose %obj_files%
 
 Rem Create stub shared libraries
 for %%f in (*.c) do (

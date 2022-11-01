@@ -1,2 +1,1 @@
-as crt1.s -o crt1.o
-as crtlib.s -o crtlib.o
+clang -fPIC -shared crtlib.c -c -o crtlib.o && move crtlib.o ../../lib

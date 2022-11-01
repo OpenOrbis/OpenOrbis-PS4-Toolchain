@@ -21,8 +21,8 @@ ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
 IDIRS 		:= -I$(TOOLCHAIN)/include
 LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -emit-obj
-LFLAGS 		:= -m elf_x86_64 -pie --version-script="right/right.version" --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crtlib.o
+CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -shared -fPIC -munwind-tables $(IDIRS) -emit-obj
+LFLAGS 		:= -m elf_x86_64 -shared --version-script="right/right.version" --script $(TOOLCHAIN)/link_prx.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crtlib.o
 
 CFILES 		:= $(wildcard $(SDIR)/*.c)
 CPPFILES 	:= $(wildcard $(SDIR)/*.cpp)
@@ -36,7 +36,7 @@ _unused := $(shell mkdir -p $(INTDIR))
 
 # Make rules
 $(TARGET): $(ODIR) $(OBJS)
-	$(LD) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf $(LFLAGS)
+	$(LD) $(LFLAGS) $(ODIR)/*.o -o $(ODIR)/$(PROJDIR).elf
 	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(ODIR)/$(PROJDIR).elf -out=$(ODIR)/$(PROJDIR).oelf --lib=$(TARGET) --paid 0x3800000000000011 --libname "sceGameRight"
 
 $(ODIR)/%.o: $(SDIR)/%.c

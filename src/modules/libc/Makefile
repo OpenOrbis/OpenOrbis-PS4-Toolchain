@@ -23,9 +23,9 @@ OBJS        := $(patsubst $(PROJDIR)/%.c, $(INTDIR)/%.o, $(CFILES)) $(patsubst $
 STUBOBJS    := $(patsubst $(PROJDIR)/%.c, $(INTDIR)/%.o, $(CFILES)) $(patsubst $(PROJDIR)/%.cpp, $(INTDIR)/%.o.stub, $(CPPFILES)) $(patsubst $(COMMONDIR)/%.cpp, $(INTDIR)/%.o.stub, $(COMMONFILES))
 
 # Define final C/C++ flags
-CFLAGS      := --target=x86_64-pc-freebsd12-elf -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
+CFLAGS      := --target=x86_64-pc-freebsd12-elf -shared -fPIC -funwind-tables -c $(EXTRAFLAGS) -isysroot $(TOOLCHAIN) -isystem $(TOOLCHAIN)/include
 CXXFLAGS    := $(CFLAGS) -isystem $(TOOLCHAIN)/include/c++/v1
-LDFLAGS     := -m elf_x86_64 -pie --script $(TOOLCHAIN)/link.x --eh-frame-hdr -L$(TOOLCHAIN)/lib $(LIBS) $(TOOLCHAIN)/lib/crtlib.o
+LDFLAGS     := -m elf_x86_64 -shared --script $(TOOLCHAIN)/link_prx.x --eh-frame-hdr $(TOOLCHAIN)/lib/crtlib.o -L$(TOOLCHAIN)/lib $(LIBS)
 
 # Create the intermediate directory incase it doesn't already exist.
 _unused     := $(shell mkdir -p $(INTDIR))
@@ -47,7 +47,7 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 $(TARGET): $(INTDIR) $(OBJS)
-	$(LD) $(INTDIR)/*.o -o $(INTDIR)/$(PROJDIR).elf $(LDFLAGS)
+	$(LD) $(LDFLAGS) $(INTDIR)/*.o -o $(INTDIR)/$(PROJDIR).elf
 	$(TOOLCHAIN)/bin/$(CDIR)/create-fself -in=$(INTDIR)/$(PROJDIR).elf -out=$(INTDIR)/$(PROJDIR).oelf --lib=$(TARGET) --paid 0x3800000000000011
 
 #$(TARGETSTUB): $(INTDIR) $(STUBOBJS)

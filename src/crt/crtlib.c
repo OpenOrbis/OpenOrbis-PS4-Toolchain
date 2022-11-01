@@ -1,5 +1,24 @@
-void(*__init_array_start[])(void);
-void(*__init_array_end[])(void);
+#define weaksym __attribute__((weak))
+#define hidesym __attribute__((visibility("hidden")))
+
+typedef void(*fp_t)(void);
+typedef int(*module_func_t)(unsigned long long argl, void *argp);
+
+extern void(*__preinit_array_start[])(void) weaksym;
+extern void(*__preinit_array_end[])(void) weaksym;
+extern void(*__init_array_start[])(void) weaksym;
+extern void(*__init_array_end[])(void) weaksym;
+extern void(*__fini_array_start[])(void) weaksym;
+extern void(*__fini_array_end[])(void) weaksym;
+extern void __cxa_finalize(void *dsoh) weaksym;
+extern int module_start(unsigned long long argl, void *argp) weaksym;
+extern int module_stop(unsigned long long argl, void *argp) weaksym;
+extern int _init(unsigned long long argl, void *argp, module_func_t overrider) hidesym;
+extern int _fini(unsigned long long argl, void *argp, module_func_t overrider) hidesym;
+
+hidesym void *__dso_handle = &__dso_handle;
+
+#define call_fp_array(_Name) for (fp_t *f = (_Name##_start); f && (f != (_Name##_end)); ++f) if (*f) (*f)()
 
 // sce_module_param
 __asm__(
@@ -21,30 +40,38 @@ __asm__(
 ".intel_syntax noprefix \n"
 ".align 0x8 \n"
 ".data \n"
-"__dso_handle: \n"
-"	.quad 	0 \n"
 "_sceLibc: \n"
 "	.quad 	0 \n"
 ".att_syntax prefix \n"
 );
 
-int __attribute__((visibility("hidden"))) module_start(unsigned long long args, const void* argp)
-{
-	// Iterate init array and initialize all objects
-	for(void(**i)(void) = __init_array_start; i != __init_array_end; i++)
-	        i[0]();
-}
-
-int __attribute__((visibility("hidden"))) module_stop(unsigned long long args, const void* argp)
-{
-}
-
-int _init()
-{
+int _init(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
+	call_fp_array(__preinit_array);
+	call_fp_array(__init_array);
+	
+	if (overrider) return overrider(argl, argp);
+	else if (&module_start) return module_start(argl, argp);
+	
 	return 0;
 }
 
-int _fini()
-{
-	return 0;
+int _fini(unsigned long long argl, void *argp, module_func_t overrider /* ???? */) {
+	static char completed = 0;
+	int rc = 0;
+	
+	if (completed) {
+		return rc;
+	}
+	completed = 1;
+	
+	
+	if (overrider) rc = overrider(argl, argp);
+	else if (&module_stop) rc = module_stop(argl, argp);
+	
+	if (&__cxa_finalize) __cxa_finalize(__dso_handle);
+	call_fp_array(__fini_array);
+	
+	return rc;
 }
+
+
