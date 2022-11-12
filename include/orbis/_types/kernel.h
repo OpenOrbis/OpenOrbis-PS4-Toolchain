@@ -100,9 +100,9 @@ typedef struct _OrbisKernelSemaOptParam {
 
 typedef struct _OrbisKernelSema* OrbisKernelSema;
 
-typedef struct {
+typedef struct OrbisKernelUuid {
 	uint32_t    timeLow;
-	uint16_t    timeLow;
+	uint16_t    timeMid;
 	uint16_t    timeHiAndVersion;
 	uint8_t     clockSeqHiAndReserved;
 	uint8_t     clockSeqLow;
