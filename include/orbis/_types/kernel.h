@@ -59,11 +59,11 @@
 
 struct kevent {
 	uintptr_t	ident;		/* identifier for this event */
-	short		filter;	/* filter for event */
-	u_short	flags;
+	short		filter;		/* filter for event */
+	u_short		flags;
 	u_int		fflags;
 	intptr_t	data;
-	void		*udata;	/* opaque user data identifier */
+	void*		udata;		/* opaque user data identifier */
 };
 
 typedef struct OrbisKernelModuleSegmentInfo
@@ -101,12 +101,12 @@ typedef struct _OrbisKernelSemaOptParam {
 typedef struct _OrbisKernelSema* OrbisKernelSema;
 
 typedef struct {
-	uint32_t    unk01;
-	uint16_t    unk02;
-	uint16_t    unk03;
-	uint8_t     unk04;
-	uint8_t     unk05;
-	uint8_t     unk06[6];
+	uint32_t    timeLow;
+	uint16_t    timeLow;
+	uint16_t    timeHiAndVersion;
+	uint8_t     clockSeqHiAndReserved;
+	uint8_t     clockSeqLow;
+	uint8_t     node[6];
 } OrbisKernelUuid;
 
 typedef mode_t OrbisKernelMode;
@@ -120,11 +120,11 @@ typedef struct OrbisKernelIovec {
 } OrbisKernelIovec;
 
 typedef struct {
-	void* unk01;
-	void* unk02;
+	void* start;
+	void* end;
 	off_t offset;
-	int unk04;
-	int unk05;
+	int protection;
+	int memoryType;
 	unsigned isFlexibleMemory : 1;
 	unsigned isDirectMemory : 1;
 	unsigned isStack : 1;

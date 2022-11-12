@@ -8,27 +8,31 @@
 #define ORBIS_AUDIO_OUT_PARAM_FORMAT_FLOAT_MONO   3
 #define ORBIS_AUDIO_OUT_PARAM_FORMAT_FLOAT_STEREO 4
 
-typedef struct OrbisAudioOutPostState {
+typedef struct OrbisAudioOutPostState 
+{
 	uint16_t output;
 	uint8_t channel;
-	uint8_t unk3[1];
+	uint8_t reserved[1];
 	int16_t volume;
-	uint16_t unk5;
+	uint16_t rerouteCounter;
 	uint64_t flag;
-	uint64_t unk7[2];
+	uint64_t reserved2[2];
 } OrbisAudioOutPostState;
 
-typedef struct OrbisAudioOutSystemState {
+typedef struct OrbisAudioOutSystemState 
+{
 	float loudness;
-	uint8_t unk2[4];
-	uint64_t unk3[3];
+	uint8_t reserved[4];
+	uint64_t reserved2[3];
 } OrbisAudioOutSystemState;
 
-typedef struct OrbisAudioOutMasteringStatesHeader {
+typedef struct OrbisAudioOutMasteringStatesHeader 
+{
 	uint32_t id;
 } OrbisAudioOutMasteringStatesHeader;
 
-typedef struct OrbisAudioOutOutputParam {
+typedef struct OrbisAudioOutOutputParam 
+{
 	int32_t handle;
 	const void *pointer;
 } OrbisAudioOutOutputParam;

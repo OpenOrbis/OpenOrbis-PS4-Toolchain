@@ -35,6 +35,9 @@
 #define ORBIS_SAVE_DATA_SUBTITLE_MAXSIZE			128			//Maximum size for a save data subtitle name (NULL-terminated, UTF-8)
 #define ORBIS_SAVE_DATA_DETAIL_MAXSIZE				1024		//Maximum size for save data detailed information (NULL-terminated, UTF-8)
 
+typedef struct OrbisSaveDataMountPoint {
+	char data[ORBIS_SAVE_DATA_MOUNT_POINT_DATA_MAXSIZE];
+} OrbisSaveDataMountPoint;
 
 typedef struct OrbisSaveDataFingerprint {
 	char data[ORBIS_SAVE_DATA_FINGERPRINT_DATA_SIZE];
@@ -60,21 +63,21 @@ typedef struct OrbisSaveDataMountInfo {
 	uint8_t reserved[32];
 } OrbisSaveDataMountInfo;
 
-typedef struct __attribute__((packed)) OrbisSaveDataMount
+typedef struct OrbisSaveDataMount
 {
 	int32_t userId;
-	int32_t unknown1;
-	const char *titleId;
-	const char *dirName;
-	const char *fingerprint;
-	uint64_t blocks;
-	uint32_t mountMode;
-	uint8_t reserved[36];
+	int32_t pad04;
+	const OrbisSaveDataTitleId*	titleId;
+	const OrbisSaveDataDirName*	dirName;
+	const OrbisSaveDataFingerprint*	fingerprint;
+	uint64_t 	blocks;
+	uint32_t 	mountMode;
+	uint8_t 	reserved[32];
 } OrbisSaveDataMount;
 
-typedef struct __attribute__((packed)) OrbisSaveDataMountResult
+typedef struct OrbisSaveDataMountResult
 {
-	char mountPathName[ORBIS_SAVE_DATA_MOUNT_POINT_DATA_MAXSIZE];
+	OrbisSaveDataMountPoint mountPoint;
 	uint64_t requiredBlocks;
 	uint32_t progress;
 	uint8_t reserved[32];
@@ -91,15 +94,15 @@ typedef struct OrbisSaveDataDelete
 	int32_t unknown2;
 } OrbisSaveDataDelete;
 
-typedef struct __attribute__((packed)) OrbisSaveDataParam
+typedef struct OrbisSaveDataParam
 {
     char title[ORBIS_SAVE_DATA_TITLE_MAXSIZE];
     char subtitle[ORBIS_SAVE_DATA_SUBTITLE_MAXSIZE];
     char details[ORBIS_SAVE_DATA_DETAIL_MAXSIZE];
     uint32_t userParam;
-    uint32_t unknown1;
+    uint32_t pad504;
     time_t mtime;
-    char unknown2[0x20];
+    char reserved[32];
 } OrbisSaveDataParam;
 
 typedef struct OrbisSaveDataMount2 {
@@ -113,7 +116,7 @@ typedef struct OrbisSaveDataMount2 {
 } OrbisSaveDataMount2;
 
 typedef struct OrbisSaveDataIcon {
-	void *buf;
+	void* buf;
 	size_t bufSize;
 	size_t dataSize;
 	uint8_t reserved[32];

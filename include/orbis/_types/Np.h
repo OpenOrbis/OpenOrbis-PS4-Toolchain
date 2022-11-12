@@ -2,6 +2,12 @@
 #include <orbis/_types/rtc.h>
 
 /* Np Trophy */
+
+typedef struct OrbisNpTrophyFlagArray
+{
+	uint32_t bits[128 >> 5];
+} OrbisNpTrophyFlagArray;
+
 typedef struct OrbisNpTrophyGameDetails 
 {
 	size_t size;			// This needs to be set with sizeof(OrbisNpTrophyGameDetails) or any function that takes this structure as a parameter will return a error(0x80551604)
