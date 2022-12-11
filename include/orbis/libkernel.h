@@ -148,7 +148,7 @@ int sceKernelFutimes(int, const OrbisKernelTimeval *);
 // Empty Comment
 void sceKernelGetAllowedSdkVersionOnSystem();
 // Empty Comment
-void sceKernelGetAppInfo();
+int sceKernelGetAppInfo(pid_t pid, OrbisAppInfo* info);
 // Empty Comment
 void sceKernelGetBackupRestoreMode();
 // Empty Comment
