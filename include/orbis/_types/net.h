@@ -27,6 +27,13 @@ typedef struct OrbisNetSockaddr {
 	char sa_data[14];
 } OrbisNetSockaddr;
 
+typedef struct OrbisNetSockaddrUn
+{
+	uint8_t sun_len;
+	OrbisNetSaFamily_t sun_family;
+	char sun_path[104];
+} OrbisNetSockaddrUn;
+
 typedef struct OrbisNetIovec {
 	void *iov_base;
 	size_t iov_len;
@@ -58,3 +65,36 @@ typedef struct OrbisNetDnsInfo {
 typedef struct OrbisNetInAddr {
 	OrbisNetInAddr_t s_addr;
 } OrbisNetInAddr;
+
+typedef struct OrbisNetEtherAddr {
+	unsigned char data[6];
+} OrbisNetEtherAddr;
+
+enum OrbisNetIfName
+{
+	SCE_NET_IF_NAME_UNKNOWN = -2,
+	SCE_NET_IF_NAME_NONE,
+	SCE_NET_IF_NAME_LO0,
+	SCE_NET_IF_NAME_PHYSICAL,
+	SCE_NET_IF_NAME_ETH0 = 1,
+	SCE_NET_IF_NAME_ETH1,
+	SCE_NET_IF_NAME_DBG0,
+	SCE_NET_IF_NAME_WLAN0,
+	SCE_NET_IF_NAME_WLAN1,
+	SCE_NET_IF_NAME_GBE0,
+	SCE_NET_IF_NAME_BT0,
+	SCE_NET_IF_NAME_PHONE0,
+	SCE_NET_IF_NAME_VIRTUAL,
+	SCE_NET_IF_NAME_PPPOE0 = 9,
+	SCE_NET_IF_NAME_MAX
+};
+
+struct OrbisNetIfEntry
+{
+	char Name[0x10];				// 0x00
+	char padding0[0x18];			// 0x10
+	int IPAddress;					// 0x28
+	char padding1[0x24];			// 0x2C
+	unsigned char MacAddress[6];	// 0x50
+	char padding2[0x192];			// 0x56
+}; //0x1E8
