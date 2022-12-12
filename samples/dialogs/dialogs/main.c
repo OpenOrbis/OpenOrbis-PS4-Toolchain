@@ -36,10 +36,11 @@ int show_dialog(int dialog_type, const char * format, ...)
     OrbisMsgDialogParam param;
     OrbisMsgDialogUserMessageParam userMsgParam;
     OrbisMsgDialogResult result;
-    char str[0x800];
-    va_list opt;
 
+    char str[0x800];
     memset(str, 0, sizeof(str));
+
+    va_list opt;
     va_start(opt, format);
     vsprintf(str, format, opt);
     va_end(opt);
@@ -72,18 +73,18 @@ int main()
     if (sceSysmoduleLoadModule(ORBIS_SYSMODULE_MESSAGE_DIALOG) < 0 ||
         sceCommonDialogInitialize() < 0)
     {
-        printf("Failed to initialize CommonDialog");
+        printf("Failed to initialize CommonDialog\n");
         for(;;);
     }
 
     // Show a message dialog
     if (show_dialog(MDIALOG_YESNO, "Do you like %s?", "OpenOrbis"))
     {
-        printf("User likes OpenOrbis :)");
+        show_dialog(MDIALOG_OK, "User likes %s :)", "OpenOrbis");
     }
     else
     {
-        printf("User doesn't like OpenOrbis :(");
+        show_dialog(MDIALOG_OK, "User doesn't like %s :(", "OpenOrbis");
     }
 
     for(;;);
