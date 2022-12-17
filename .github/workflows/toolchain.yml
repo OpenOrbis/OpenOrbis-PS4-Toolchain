@@ -1,31 +1,40 @@
-name: Toolchain
+name: Build OpenOrbis Toolchain
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Install dependencies
-        run: sudo apt-get install -y lld llvm
-      
-      - name: Set environment variables
-        run: echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
-      # Get latest musl
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set environment variables
+        run: | 
+          echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          echo llvm_ver=12.0 >> $GITHUB_ENV
+          echo "llvm_path=$RUNNER_TOOL_CACHE/llvm" >> $GITHUB_ENV
+
+      - name: Cache LLVM and Clang (${{ env.llvm_ver }})
+        id: cache-llvm
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.llvm_path }}
+          key: llvm-${{ env.llvm_ver }}
+
+      - name: Install LLVM and Clang (${{ env.llvm_ver }})
+        uses: KyleMayes/install-llvm-action@v1
+        with:
+          version: ${{ env.llvm_ver }}
+          directory: ${{ env.llvm_path }}
+          cached: ${{ steps.cache-llvm.outputs.cache-hit }}
+
       - name: Fetch musl stable
         uses: i3h/download-release-asset@v1
         with:
@@ -33,10 +42,10 @@ jobs:
           repo: musl
           tag: latest
           file: musl.tar.gz
-      
-      - run: tar -xvzf musl.tar.gz
-      
-      # Get latest libcxx
+
+      - name: Extract musl
+        run: tar -xvzf musl.tar.gz
+
       - name: Fetch libcxx stable
         uses: i3h/download-release-asset@v1
         with:
@@ -44,10 +53,10 @@ jobs:
           repo: llvm-project
           tag: latest
           file: libcxx-full.tar.gz
-      
-      - run: tar -xvzf libcxx-full.tar.gz
-      
-      # Get latest SDL2
+
+      - name: Extract libcxx
+        run: tar -xvzf libcxx-full.tar.gz
+
       - name: Fetch SDL2
         uses: i3h/download-release-asset@v1
         with:
@@ -55,21 +64,21 @@ jobs:
           repo: SDL-PS4
           tag: latest
           file: SDL2.tar.gz
-      
-      - run: tar -xvzf SDL2.tar.gz
-      
-      # Get latest library stubs
-      - name: Fetch library stubs stable
+
+      - name: Extract SDL2
+        run: tar -xvzf SDL2.tar.gz
+
+      - name: Fetch library stubs
         uses: i3h/download-release-asset@v1
         with:
           owner: OpenOrbis
           repo: orbis-lib-gen
           tag: latest
           file: lib.tar.gz
-      
-      - run: tar -xvzf lib.tar.gz
-      
-      # Get latest create-fself
+
+      - name: Extract library stubs
+        run: tar -xvzf lib.tar.gz
+
       - name: Fetch create-fself
         uses: i3h/download-release-asset@v1
         with:
@@ -78,9 +87,9 @@ jobs:
           tag: latest
           file: binaries.tar.gz
 
-      - run: tar -xvzf binaries.tar.gz
+      - name: Extract create-fself
+        run: tar -xvzf binaries.tar.gz
 
-      # Get latest create-gp4
       - name: Fetch create-gp4
         uses: i3h/download-release-asset@v1
         with:
@@ -89,9 +98,9 @@ jobs:
           tag: latest
           file: binaries.tar.gz
 
-      - run: tar -xvzf binaries.tar.gz
-      
-      # Get latest readoelf
+      - name: Extract create-gp4
+        run: tar -xvzf binaries.tar.gz
+
       - name: Fetch readoelf
         uses: i3h/download-release-asset@v1
         with:
@@ -99,9 +108,10 @@ jobs:
           repo: readoelf
           tag: latest
           file: binaries.tar.gz
-      
-      - run: tar -xvzf binaries.tar.gz
-      
+
+      - name: Extract readoelf
+        run: tar -xvzf binaries.tar.gz
+
       # Get maxton's publishing tools <3
       - name: Fetch windows PkgEditor
         uses: i3h/download-release-asset@v1
@@ -110,9 +120,10 @@ jobs:
           repo: LibOrbisPkg
           tag: latest
           file: PkgEditor-0.2.231.zip
-      
-      - run: unzip PkgEditor-0.2.231.zip -d bin/windows
-      
+
+      - name: Extract windows PkgEditor
+        run: unzip PkgEditor-0.2.231.zip -d bin/windows
+
       - name: Fetch windows PkgCore
         uses: i3h/download-release-asset@v1
         with:
@@ -120,9 +131,10 @@ jobs:
           repo: LibOrbisPkg
           tag: latest
           file: PkgTool.Core-0.2.231.zip
-      
-      - run: unzip -o PkgTool.Core-0.2.231.zip -d bin/windows
-      
+
+      - name: Extract windows PkgCore
+        run: unzip -o PkgEditor-0.2.231.zip -d bin/windows
+
       - name: Fetch linux PkgCore
         uses: i3h/download-release-asset@v1
         with:
@@ -130,73 +142,51 @@ jobs:
           repo: LibOrbisPkg
           tag: latest
           file: PkgTool.Core-linux-x64-0.2.231.zip
-      
-      - run: |
+
+      - name: Extract linux PkgCore
+        run: |
           unzip PkgTool.Core-linux-x64-0.2.231.zip -d bin/linux
           chmod +x bin/linux/PkgTool.Core
-          
-      - name: Fetch macOS PkgCore
+
+      - name: Fetch Mac OS X PkgCore
         uses: i3h/download-release-asset@v1
         with:
           owner: maxton
           repo: LibOrbisPkg
           tag: latest
           file: PkgTool.Core-osx-x64-0.2.231.zip
-      
-      - run: |
+
+      - name: Extract Mac OS X PkgCore
+        run: |
           unzip PkgTool.Core-osx-x64-0.2.231.zip -d bin/macos
           chmod +x bin/macos/PkgTool.Core
-      
-      # Build crtlib
+
       - name: Build crtlib
         run: |
           cd src/crt
           clang crtlib.c -c -o crtlib.o && mv crtlib.o ../../lib
 
-      # Merge compiler-rt into libc
       - name: Merge compiler-rt into libc
         run: |
           cd lib
-          touch mri.txt
-          echo "CREATE libcM.a"                       >> mri.txt
+          echo "CREATE libcM.a"                        > mri.txt
           echo "ADDLIB libc.a"                        >> mri.txt
           echo "ADDLIB libclang_rt.builtins-x86_64.a" >> mri.txt
           echo "SAVE"                                 >> mri.txt
           echo "END"                                  >> mri.txt
           llvm-ar -M < mri.txt && rm mri.txt && rm libc.a && mv libcM.a libc.a
 
-      # Build sce_module
       - name: Build sce_module/ and copy to samples
         run: |
           cd src/modules
           bash build-and-copy.sh
-      
-      # Cleanup
+
       - name: Cleanup
-        run: |
-          rm musl.tar.gz
-          rm libcxx-full.tar.gz
-          rm SDL2.tar.gz
-          rm lib.tar.gz
-          rm binaries.tar.gz
-          rm PkgEditor-0.2.231.zip
-          rm PkgTool.Core-0.2.231.zip
-          rm PkgTool.Core-linux-x64-0.2.231.zip
-          rm PkgTool.Core-osx-x64-0.2.231.zip
-      
-      # Create a tarball
+        run: rm *.zip *.tar.gz
+
       - name: Create tarball
-        run: |
-          tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
-          
-      # Upload artifact
-      - name: Upload toolchain
-        uses: actions/upload-artifact@v2
-        with:
-          name: toolchain.tar.gz
-          path: toolchain.tar.gz
-      
-      # Build samples
+        run: tar -cvzf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
+
       - name: Build samples
         run: |
           cd samples/SDL2 && make
@@ -228,13 +218,14 @@ jobs:
           cd ../using_library && make
           cp IV0000-BREW00089_00-USINGLIBEX000000.pkg ..
 
-      # Create a zip of samples
-      - name: Create samples zip
-        run: zip -qq -r -D samples.zip samples/*.pkg
-          
-      # Upload artifact
+      - name: Upload toolchain
+        uses: actions/upload-artifact@v3
+        with:
+          name: toolchain.tar.gz
+          path: toolchain.tar.gz
+
       - name: Upload samples
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: sample-packages
-          path: samples.zip
+          path: samples/*.pkg
