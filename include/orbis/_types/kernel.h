@@ -188,3 +188,11 @@ typedef struct
 	char iconUri[1024];
 	char unk[1024];
 } OrbisNotificationRequest;
+
+struct OrbisKernelProcStats
+{
+	int lo_data;								//0x00
+	unsigned int td_tid;						//0x04
+	OrbisKernelTimespec user_cpu_usage_time;	//0x08
+	OrbisKernelTimespec system_cpu_usage_time;  //0x18
+}; //0x28
