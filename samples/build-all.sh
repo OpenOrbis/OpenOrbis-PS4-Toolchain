@@ -4,6 +4,7 @@ MAKEFILE="Makefile"
 
 for dir in ./*
 do
+    echo "[+] Current directory $dir"
     if [[ "$dir" == "./trophies" ]]; then
         continue
     fi
