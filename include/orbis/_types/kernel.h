@@ -196,9 +196,9 @@ struct OrbisKernelProcStats
 	unsigned int td_tid;						//0x04
 	OrbisKernelTimespec user_cpu_usage_time;	//0x08
 	OrbisKernelTimespec system_cpu_usage_time;  //0x18
-}; //0x28
+} OrbisKernelProcStats; //0x28
 
-typedef struct
+typedef struct OrbisAppInfo
 {
 	int AppId;
 	int Unk;
