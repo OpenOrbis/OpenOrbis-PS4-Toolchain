@@ -189,6 +189,7 @@ typedef struct
 	char unk[1024];
 } OrbisNotificationRequest;
 
+
 struct OrbisKernelProcStats
 {
 	int lo_data;								//0x00
@@ -196,3 +197,13 @@ struct OrbisKernelProcStats
 	OrbisKernelTimespec user_cpu_usage_time;	//0x08
 	OrbisKernelTimespec system_cpu_usage_time;  //0x18
 }; //0x28
+
+typedef struct
+{
+	int AppId;
+	int Unk;
+	char unk0x8[0x4];
+	int AppType;
+	char TitleId[10];
+	char unk0x1A[0x2E];
+} OrbisAppInfo;

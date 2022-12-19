@@ -64,11 +64,11 @@ SECTIONS
 	}
 
 	.data.sce_process_param : ALIGN(0x4000) {
-		*(.data.sce_process_param)
+		KEEP(*(.data.sce_process_param))
 	}
 
 	.data.sce_module_param : ALIGN(0x4000) {
-		*(.data.sce_module_param)
+		KEEP(*(.data.sce_module_param))
 	}
 
 	.data : {

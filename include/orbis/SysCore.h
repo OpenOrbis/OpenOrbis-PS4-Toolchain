@@ -24,7 +24,7 @@ void sceApplicationExitSpawn2();
 // Empty Comment
 void sceApplicationFinalize();
 // Empty Comment
-void sceApplicationGetAppInfoByAppId();
+int sceApplicationGetAppInfoByAppId(int appId, OrbisAppInfo* info);
 // Empty Comment
 void sceApplicationGetCoredumpDirAndFileName();
 // Empty Comment
