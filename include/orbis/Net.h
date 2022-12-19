@@ -204,7 +204,7 @@ void sceNetGetArpInfo();
 // Empty Comment
 int sceNetGetDnsInfo(OrbisNetDnsInfo* info, int flags);
 // Empty Comment
-int sceNetGetIfList(OrbisNetIfName ifName_num, OrbisNetIfEntry* out, int unk);
+int sceNetGetIfList(enum OrbisNetIfName ifName_num, struct OrbisNetIfEntry* out, int unk);
 // Empty Comment
 void sceNetGetIfListOnce();
 // Empty Comment
