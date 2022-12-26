@@ -1,6 +1,15 @@
 name: Build OpenOrbis Toolchain
 
-on: [ push, pull_request, workflow_dispatch ]
+on:
+  push:
+    paths-ignore:
+      - "**/*.md"
+      - '**/*.txt'
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
+      - '**/*.txt'
+  workflow_dispatch:
 
 jobs:
   build:
