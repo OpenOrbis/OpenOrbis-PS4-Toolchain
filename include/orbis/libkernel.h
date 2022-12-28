@@ -282,13 +282,13 @@ int sceKernelIsStack(void *, void **, void **);
 // Empty Comment
 int sceKernelIsTestKit(void);
 // Empty Comment
-void sceKernelJitCreateAliasOfSharedMemory();
+int sceKernelJitCreateAliasOfSharedMemory(int, int, int *);
 // Empty Comment
-void sceKernelJitCreateSharedMemory();
+int sceKernelJitCreateSharedMemory(int, size_t, int, int *);
 // Empty Comment
 void sceKernelJitGetSharedMemoryInfo();
 // Empty Comment
-void sceKernelJitMapSharedMemory();
+int sceKernelJitMapSharedMemory(int, int, void **);
 // Empty Comment
 uint32_t sceKernelLoadStartModule(const char *, size_t, const void *, uint32_t, void *, void *);
 // Empty Comment
