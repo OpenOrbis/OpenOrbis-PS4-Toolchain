@@ -1,6 +1,9 @@
 # OpenOrbis PS4 Toolchain
 
-[![Release State](https://img.shields.io/badge/release%20state-beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain) [![Release](https://img.shields.io/github/v/release/OpenOrbis/OpenOrbis-PS4-Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest) [![Build](https://img.shields.io/github/workflow/status/OpenOrbis/OpenOrbis-PS4-Toolchain/Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/blob/master/LICENSE) [![Platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-lightgrey)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
+[![Release State](https://img.shields.io/badge/release%20state-beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
+[![Release](https://img.shields.io/github/v/release/OpenOrbis/OpenOrbis-PS4-Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
+[![Build OpenOrbis Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/actions/workflows/toolchain.yml/badge.svg?branch=master&event=push)](/LICENSE)
+[![Platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
 **Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.**
 

@@ -186,7 +186,7 @@ void sceNetEpollWait();
 // Empty Comment
 void sceNetErrnoLoc();
 // Empty Comment
-void sceNetEtherNtostr();
+int sceNetEtherNtostr(unsigned char* macAddr, char* out, int length);
 // Empty Comment
 void sceNetEtherStrton();
 // Empty Comment
@@ -204,7 +204,7 @@ void sceNetGetArpInfo();
 // Empty Comment
 int sceNetGetDnsInfo(OrbisNetDnsInfo* info, int flags);
 // Empty Comment
-void sceNetGetIfList();
+int sceNetGetIfList(enum OrbisNetIfName ifName_num, struct OrbisNetIfEntry* out, int unk);
 // Empty Comment
 void sceNetGetIfListOnce();
 // Empty Comment
@@ -212,7 +212,7 @@ void sceNetGetIfName();
 // Empty Comment
 void sceNetGetIfnameNumList();
 // Empty Comment
-void sceNetGetMacAddress();
+int sceNetGetMacAddress(OrbisNetEtherAddr* mac_address, int len);
 // Empty Comment
 void sceNetGetMemoryPoolStats();
 // Empty Comment
@@ -358,9 +358,8 @@ void sceNetThreadJoin();
 // Empty Comment
 void sceNetUsleep();
 
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

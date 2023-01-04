@@ -8,7 +8,18 @@
 #define ORBIS_VIDEO_OUT_BUS_SOCIAL	5
 #define ORBIS_VIDEO_OUT_BUS_LIVE	6
 
-#define ORBIS_VIDEO_OUT_FLIP_VSYNC  1
+typedef enum OrbisFlipType : int32_t
+{
+	ORBIS_VIDEO_OUT_FLIP_VSYNC = 1,
+	ORBIS_VIDEO_OUT_FLIP_HSYNC = 2,
+} OrbisFlipType;
+
+typedef enum OrbisFlipRate : int32_t
+{
+	ORBIS_VIDEO_OUT_FLIP_60HZ = 0,
+	ORBIS_VIDEO_OUT_FLIP_30HZ = 1,
+	ORBIS_VIDEO_OUT_FLIP_20HZ = 2,
+} OrbisFlipRate;
 
 #define ORBIS_VIDEO_OUT_PIXEL_FORMAT_A8B8G8R8_SRGB 0x80002200
 
@@ -163,14 +174,14 @@ typedef struct OrbisVideoOutResolutionStatus
 
 typedef struct OrbisVideoOutMode
 {
-    uint32_t   size;				// = sizeof(OrbisVideoOutMode);
+    uint32_t   size;				      // = sizeof(OrbisVideoOutMode);
     uint8_t    signalEncoding;		// = OrbisVideoOutSignalEncoding
-    uint8_t    signalRange;			// = OrbisVideoOutSignalRange
-    uint8_t    colorimetry;			// = OrbisVideoOutColorimetry
-    uint8_t    depth;				// = OrbisVideoOutColorDepth
-    uint64_t   refreshRate;			// = OrbisVideoOutRefreshRate
-    uint64_t   resolution;			// = OrbisVideoOutResolution
-    uint8_t    contentType;			// = OrbisVideoOutContentType
+    uint8_t    signalRange;			  // = OrbisVideoOutSignalRange
+    uint8_t    colorimetry;			  // = OrbisVideoOutColorimetry
+    uint8_t    depth;				      // = OrbisVideoOutColorDepth
+    uint64_t   refreshRate;			  // = OrbisVideoOutRefreshRate
+    uint64_t   resolution;			  // = OrbisVideoOutResolution
+    uint8_t    contentType;			  // = OrbisVideoOutContentType
     uint8_t    reserved[3];
     uint32_t   reserved2[1];
 } OrbisVideoOutMode;

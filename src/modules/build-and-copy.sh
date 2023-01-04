@@ -22,10 +22,15 @@ for d in ../../samples/*/
 	do
 		checkdir=$(basename $d)
 		echo $checkdir
-		if [[ "$checkdir" == "_common" ]] || [[ "$checkdir" == "fork_process" ]] || [[ "$checkdir" == "library_example" ]] || [[ $checkdir == "mira_jailbreak" ]] || [[ $checkdir == "substitute_example" ]] ; then
+		if [[ "$checkdir" == "_common" ]] ||
+		[[ "$checkdir" == "fork_process" ]] ||
+		[[ "$checkdir" == "library_example" ]] ||
+		[[ $checkdir == "mira_jailbreak" ]] ||
+		[[ $checkdir == "substitute_example" ]]; then
 			continue
 		fi
-		#[[ $checkdir =~ ^(_common|fork_process|library_example|mira_jailbreak|substitute_example)$ ]] && continue
+		mkdir -p $d/sce_module
+		mkdir -p $d/sce_sys/about
 		cp libc.prx $d/sce_module/libc.prx
 		cp libSceFios2.prx $d/sce_module/libSceFios2.prx
 		cp right.sprx $d/sce_sys/about/right.sprx

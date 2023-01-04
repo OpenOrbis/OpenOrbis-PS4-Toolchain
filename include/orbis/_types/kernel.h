@@ -188,3 +188,13 @@ typedef struct
 	char iconUri[1024];
 	char unk[1024];
 } OrbisNotificationRequest;
+
+typedef struct
+{
+	int AppId;
+	int Unk;
+	char unk0x8[0x4];
+	int AppType;
+	char TitleId[10];
+	char unk0x1A[0x2E];
+} OrbisAppInfo;
