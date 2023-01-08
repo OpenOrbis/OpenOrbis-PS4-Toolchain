@@ -39,153 +39,45 @@ jobs:
           directory: ${{ env.llvm_path }}
           cached: ${{ steps.cache-llvm.outputs.cache-hit }}
 
-      - name: Fetch musl stable
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: musl
-          tag: latest
-          file: musl.tar.gz
-
-      - name: Extract musl
-        run: tar -xvzf musl.tar.gz
-
-      - name: Fetch libcxx stable
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: llvm-project
-          tag: latest
-          file: libcxx-full.tar.gz
-
-      - name: Extract libcxx
-        run: tar -xvzf libcxx-full.tar.gz
-
-      - name: Fetch SDL2
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: SDL-PS4
-          tag: latest
-          file: SDL2.tar.gz
-
-      - name: Extract SDL2
-        run: tar -xvzf SDL2.tar.gz
-
-      - name: Fetch library stubs
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: orbis-lib-gen
-          tag: latest
-          file: lib.tar.gz
-
-      - name: Extract library stubs
-        run: tar -xvzf lib.tar.gz
-
-      - name: Fetch create-fself
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: create-fself
-          tag: latest
-          file: binaries.tar.gz
-
-      - name: Extract create-fself
-        run: tar -xvzf binaries.tar.gz
-
-      - name: Fetch create-gp4
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: create-gp4
-          tag: latest
-          file: binaries.tar.gz
-
-      - name: Extract create-gp4
-        run: tar -xvzf binaries.tar.gz
-
-      - name: Fetch readoelf
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: OpenOrbis
-          repo: readoelf
-          tag: latest
-          file: binaries.tar.gz
-
-      - name: Extract readoelf
-        run: tar -xvzf binaries.tar.gz
+      - name: Download and extract dependencies
+        run: |
+          curl -sL https://github.com/OpenOrbis/musl/releases/latest/download/musl.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/llvm-project/releases/latest/download/libcxx-full.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/SDL-PS4/releases/latest/download/SDL2.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/orbis-lib-gen/releases/latest/download/lib.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/create-fself/releases/latest/download/binaries.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/create-gp4/releases/latest/download/binaries.tar.gz | tar xz -C ./
+          curl -sL https://github.com/OpenOrbis/readoelf/releases/latest/download/binaries.tar.gz | tar xz -C ./
 
       # Get maxton's publishing tools <3
-      - name: Fetch windows PkgEditor
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: maxton
-          repo: LibOrbisPkg
-          tag: latest
-          file: PkgEditor-0.2.231.zip
-
-      - name: Extract windows PkgEditor
-        run: unzip PkgEditor-0.2.231.zip -d bin/windows
-
-      - name: Fetch windows PkgCore
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: maxton
-          repo: LibOrbisPkg
-          tag: latest
-          file: PkgTool.Core-0.2.231.zip
-
-      - name: Extract windows PkgCore
-        run: unzip -o PkgEditor-0.2.231.zip -d bin/windows
-
-      - name: Fetch linux PkgCore
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: maxton
-          repo: LibOrbisPkg
-          tag: latest
-          file: PkgTool.Core-linux-x64-0.2.231.zip
-
-      - name: Extract linux PkgCore
+      - name: Download and extract maxton's Publishing Tools
         run: |
-          unzip PkgTool.Core-linux-x64-0.2.231.zip -d bin/linux
-          chmod +x bin/linux/PkgTool.Core
-
-      - name: Fetch Mac OS X PkgCore
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: maxton
-          repo: LibOrbisPkg
-          tag: latest
-          file: PkgTool.Core-osx-x64-0.2.231.zip
-
-      - name: Extract Mac OS X PkgCore
-        run: |
-          unzip PkgTool.Core-osx-x64-0.2.231.zip -d bin/macos
-          chmod +x bin/macos/PkgTool.Core
+          BASE_URL="https://github.com/maxton/LibOrbisPkg/releases/latest/download"
+          curl -sL $BASE_URL/PkgEditor-0.2.231.zip | busybox unzip - -o -d bin/windows
+          curl -sL $BASE_URL/PkgTool.Core-0.2.231.zip | busybox unzip - -o -d bin/windows
+          curl -sL $BASE_URL/PkgTool.Core-linux-x64-0.2.231.zip | busybox unzip - -o -d bin/linux
+          curl -sL $BASE_URL/PkgTool.Core-osx-x64-0.2.231.zip | busybox unzip - -o -d bin/macos
+          chmod +x -R bin/
 
       - name: Build crtlib
-        run: |
-          cd src/crt
-          clang crtlib.c -c -o crtlib.o && mv crtlib.o ../../lib
+        working-directory: src/crt
+        run: clang crtlib.c -c -o ../../lib/crtlib.o
 
       - name: Merge compiler-rt into libc
+        working-directory: lib
         run: |
-          cd lib
           echo "CREATE libcM.a"                        > mri.txt
           echo "ADDLIB libc.a"                        >> mri.txt
           echo "ADDLIB libclang_rt.builtins-x86_64.a" >> mri.txt
           echo "SAVE"                                 >> mri.txt
           echo "END"                                  >> mri.txt
-          llvm-ar -M < mri.txt && rm mri.txt && rm libc.a && mv libcM.a libc.a
+          llvm-ar -M < mri.txt
+          rm mri.txt libc.a
+          mv libcM.a libc.a
 
       - name: Build sce_module/ and copy to samples
         working-directory: src/modules
         run: bash build-and-copy.sh
-
-      - name: Cleanup
-        run: rm *.zip *.tar.gz
 
       - name: Create tarball
         run: tar -czf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
@@ -199,6 +91,7 @@ jobs:
         with:
           name: toolchain
           path: toolchain.tar.gz
+          if-no-files-found: error
 
       - name: Upload samples
         uses: actions/upload-artifact@v3
