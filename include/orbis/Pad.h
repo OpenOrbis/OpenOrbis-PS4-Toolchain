@@ -21,14 +21,18 @@ extern "C" {
 
 int scePadInit(void);
 int scePadOpen(int userID, int type, int index, void *param);
+int scePadOpenExt(int userID, int type, int index, OrbisPadExtParam *param);
 int scePadClose(int handle);
 int scePadRead(int handle, OrbisPadData *data, int count);
-int scePadReadState(int handle, void *data);
+int scePadReadState(int handle, OrbisPadData *data);
 int scePadResetLightBar(int handle);
 int scePadSetLightBar(int handle, OrbisPadColor *inputColor);
+int scePadGetControllerInformation(int handle, OrbisPadInformation *info);
+int scePadGetExtControllerInformation(int handle, OrbisPadInformation *info);
 int scePadGetHandle(int userID, uint32_t controller_type, uint32_t controller_index);
 int scePadResetOrientation(int handle);
 int scePadSetVibration(int handle, const OrbisPadVibeParam *param);
+int scePadOutputReport(int handle, int type, uint8_t *report, int length);
 
 // The below functions are currently not reversed
 void scePadConnectPort();
@@ -44,11 +48,9 @@ void scePadEnableSpecificDeviceClass();
 void scePadEnableUsbConnection();
 void scePadGetBluetoothAddress();
 void scePadGetCapability();
-void scePadGetControllerInformation();
 void scePadGetDataInternal();
 void scePadGetDeviceId();
 void scePadGetDeviceInfo();
-void scePadGetExtControllerInformation();
 void scePadGetExtensionUnitInfo();
 void scePadGetFeatureReport();
 void scePadGetIdleCount();
@@ -67,9 +69,7 @@ void scePadIsMoveReproductionModel();
 void scePadIsValidHandle();
 void scePadMbusInit();
 void scePadMbusTerm();
-void scePadOpenExt();
 void scePadOpenExt2();
-void scePadOutputReport();
 void scePadReadBlasterForTracker();
 void scePadReadExt();
 void scePadReadForTracker();

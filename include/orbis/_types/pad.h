@@ -3,6 +3,14 @@
 #include <stdint.h>
 
 #define ORBIS_PAD_PORT_TYPE_STANDARD 0
+#define ORBIS_PAD_PORT_TYPE_SPECIAL  2
+
+#define ORBIS_PAD_DEVICE_CLASS_PAD    0
+#define ORBIS_PAD_DEVICE_CLASS_GUITAR 1
+#define ORBIS_PAD_DEVICE_CLASS_DRUMS  2
+
+#define ORBIS_PAD_CONNECTION_TYPE_STANDARD 0
+#define ORBIS_PAD_CONNECTION_TYPE_REMOTE   2
 
 #define ORBIS_PAD_BUTTON_L3           0x0002
 #define ORBIS_PAD_BUTTON_R3           0x0004
@@ -98,3 +106,24 @@ typedef struct OrbisPadVibeParam {
 	uint8_t lgMotor;
 	uint8_t smMotor;
 } OrbisPadVibeParam;
+
+// Vendor information about which controller to open for scePadOpenExt
+typedef struct _OrbisPadExtParam {
+    uint16_t vendorId;
+    uint16_t productId;
+    uint16_t productId_2; // this is in here twice?
+    uint8_t unknown[10];
+} OrbisPadExtParam;
+
+typedef struct _OrbisPadInformation {
+	float touchpadDensity;
+	uint16_t touchResolutionX;
+	uint16_t touchResolutionY;
+	uint8_t stickDeadzoneL;
+	uint8_t stickDeadzoneR;
+	uint8_t connectionType;
+	uint8_t count;
+	int connected;
+	int deviceClass;
+	uint8_t unknown[8];
+} OrbisPadInformation;
