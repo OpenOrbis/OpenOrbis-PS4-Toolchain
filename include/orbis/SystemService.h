@@ -12,6 +12,9 @@ extern "C" {
 int32_t sceSystemServiceHideSplashScreen();
 int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
 int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
+int32_t sceSystemServiceGetAppIdOfBigApp();
+int32_t sceSystemServiceGetAppIdOfMiniApp();
+int32_t sceSystemServiceKillApp(uint32_t appid, int opt, int method, int reason);
 
 void sceSystemServiceAcquireFb0();
 void sceSystemServiceAddLocalProcess();
@@ -33,8 +36,6 @@ void sceSystemServiceDisableSuspendConfirmationDialog();
 void sceSystemServiceEnablePersonalEyeToEyeDistanceSetting();
 void sceSystemServiceEnableSuspendConfirmationDialog();
 void sceSystemServiceGetAppFocusedAppStatus();
-void sceSystemServiceGetAppIdOfBigApp();
-void sceSystemServiceGetAppIdOfMiniApp();
 void sceSystemServiceGetAppStatus();
 void sceSystemServiceGetAppType();
 void sceSystemServiceGetDisplaySafeAreaInfo();
@@ -53,7 +54,6 @@ void sceSystemServiceIsBgmPlaying();
 void sceSystemServiceIsEyeToEyeDistanceAdjusted();
 void sceSystemServiceIsScreenSaverOn();
 void sceSystemServiceIsShellUiFgAndGameBgCpuMode();
-void sceSystemServiceKillApp();
 void sceSystemServiceKillLocalProcess();
 void sceSystemServiceKillLocalProcessForPsmKit();
 void sceSystemServiceLaunchApp();

@@ -80,7 +80,7 @@ void sceKernelClockGettime();
 // Empty Comment
 int sceKernelClose(int);
 // Empty Comment
-void sceKernelCloseEventFlag();
+int sceKernelCloseEventFlag(void* event);
 // Empty Comment
 void sceKernelCloseSema();
 // Empty Comment
@@ -338,7 +338,7 @@ int sceKernelNanosleep(const OrbisKernelTimespec *, OrbisKernelTimespec *);
 // Empty Comment
 int sceKernelOpen(const char *, int, OrbisKernelMode);
 // Empty Comment
-void sceKernelOpenEventFlag();
+int sceKernelOpenEventFlag(void* event, const char* name);
 // Empty Comment
 void sceKernelOpenSema();
 // Empty Comment
