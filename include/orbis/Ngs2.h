@@ -96,8 +96,8 @@ void sceNgs2VoiceGetState();
 // Empty Comment
 void sceNgs2VoiceGetStateFlags();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -47,8 +47,8 @@ void sceAppContentTemporaryDataMount2();
 // Empty Comment
 void sceAppContentTemporaryDataUnmount();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

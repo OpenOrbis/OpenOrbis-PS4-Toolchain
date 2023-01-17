@@ -24,8 +24,8 @@ void sceHmdSetupDialogTerminate();
 void sceHmdSetupDialogUpdateStatus();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

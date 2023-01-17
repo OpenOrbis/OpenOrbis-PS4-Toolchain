@@ -32,8 +32,8 @@ void sceVideodec2ReleaseComputeQueue();
 void sceVideodec2Reset();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

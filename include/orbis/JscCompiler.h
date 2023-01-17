@@ -10,8 +10,8 @@ extern "C" {
 // Empty Comment
 void compile();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

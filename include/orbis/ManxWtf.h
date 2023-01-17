@@ -24,8 +24,8 @@ void pa_pop_marker();
 // Empty Comment
 void pa_push_marker();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

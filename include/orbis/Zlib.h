@@ -18,8 +18,8 @@ int sceZlibInitialize(void *, uint64_t);
 // if maxtimeforwait is NULL it means wait till decompression is done.
 int sceZlibWaitForDone(uint64_t *id, uint32_t *maxtimeforwait);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

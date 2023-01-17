@@ -94,5 +94,6 @@ unsigned long scePigletHeapGetInfo(void *FILE_fprintf_stream, int unk_1);
 }
 #endif
 
-#endif /*_SCE_PIGLET_V2_VSH_H_*/
+#endif
+ /*_SCE_PIGLET_V2_VSH_H_*/
 

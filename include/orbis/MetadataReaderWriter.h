@@ -68,8 +68,8 @@ void _ZNK23sceMetadataReaderWriter8Metadata8getValueERKSsRNS_5ValueE();
 void _ZNK23sceMetadataReaderWriter8Metadata9dumpValueEv();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

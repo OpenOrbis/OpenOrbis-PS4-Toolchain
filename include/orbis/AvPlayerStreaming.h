@@ -33,8 +33,8 @@ void sceTsStartFileStreaming();
 // Empty Comment
 void sceTsStopFileStreaming();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

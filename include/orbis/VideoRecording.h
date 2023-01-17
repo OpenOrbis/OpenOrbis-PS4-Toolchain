@@ -29,8 +29,8 @@ void sceVideoRecordingStart();
 // Empty Comment
 void sceVideoRecordingStop();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -13,8 +13,8 @@ int32_t sceCommonDialogInitialize();
 // Check if a system dialog is currently running.
 bool sceCommonDialogIsUsed();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -54,8 +54,8 @@ int sceBgftServiceIntDebugDownloadRegisterPkg(OrbisBgftDownloadParam* params, Or
 
 void sceBgftServiceDownloadQueryTask();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

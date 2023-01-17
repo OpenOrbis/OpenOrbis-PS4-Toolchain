@@ -12,8 +12,8 @@ extern "C" {
 void _Z5dummyv();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

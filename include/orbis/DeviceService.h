@@ -19,8 +19,8 @@ void sceDeviceServiceQueryDeviceInfo_();
 // Empty Comment
 void sceDeviceServiceTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -147,8 +147,8 @@ void _ZTVN15AbstractStorage12LocalServiceE();
 // Empty Comment
 void _ZTVN15AbstractStorage12LocalStorageE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

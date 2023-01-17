@@ -84,8 +84,8 @@ void sceNpScoreSetTimeout();
 // Empty Comment
 void sceNpScoreWaitAsync();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

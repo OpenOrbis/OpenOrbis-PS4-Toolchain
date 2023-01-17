@@ -24,8 +24,8 @@ void sceVideodecQueryResourceInfo();
 void sceVideodecReset();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

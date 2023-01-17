@@ -6,7 +6,7 @@
 #include <orbis/_types/user.h>
 #include <orbis/_types/errors.h>
 
-#if defined(__cplusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 

@@ -2050,8 +2050,8 @@ void WKViewWillEnterFullScreen();
 // Empty Comment
 void WKViewWillExitFullScreen();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

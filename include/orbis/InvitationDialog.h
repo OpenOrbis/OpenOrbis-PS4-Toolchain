@@ -27,8 +27,8 @@ void sceInvitationDialogTerminate();
 // Empty Comment
 void sceInvitationDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

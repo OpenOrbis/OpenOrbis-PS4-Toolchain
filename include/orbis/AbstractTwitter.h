@@ -142,8 +142,8 @@ void _ZTVN15AbstractStorage14TwitterServiceE();
 // Empty Comment
 void _ZTVN15AbstractStorage14TwitterStorageE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

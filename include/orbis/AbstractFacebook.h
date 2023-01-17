@@ -160,8 +160,8 @@ void _ZTVN15AbstractStorage15FacebookServiceE();
 // Empty Comment
 void _ZTVN15AbstractStorage15FacebookStorageE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

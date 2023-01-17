@@ -44,8 +44,8 @@ void sceAudioInSetSparkSideTone();
 void sceAudioInSetUserMute();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -44,8 +44,8 @@ void sceShareUtilityOpenShareMenuForShareContent();
 void sceShareUtilityTerminate();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

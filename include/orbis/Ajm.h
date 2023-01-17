@@ -52,8 +52,8 @@ void sceAjmModuleUnregister();
 // Empty Comment
 void sceAjmStrError();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

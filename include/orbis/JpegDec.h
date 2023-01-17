@@ -25,4 +25,5 @@ int32_t sceJpegDecQueryMemorySize(const OrbisJpegDecCreateParam *, void *, uint3
 }
 #endif
 
-#endif	
+#endif
+	

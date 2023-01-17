@@ -13,8 +13,8 @@ void __dso_handle();
 // Empty Comment
 void ScePsmMonoStringToUtf8();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

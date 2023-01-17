@@ -26,8 +26,8 @@ void sceAudiodecCpuInternalQueryMemSize();
 void sceAudiodecCpuQueryMemSize();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

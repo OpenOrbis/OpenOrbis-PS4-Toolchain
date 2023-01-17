@@ -22,8 +22,8 @@ void sceHidControlSetApplicationFocus();
 // Empty Comment
 void sceHidControlSetUserColor();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

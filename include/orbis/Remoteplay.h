@@ -30,8 +30,8 @@ void sceRemoteplaySetProhibition();
 // Empty Comment
 void sceRemoteplayTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

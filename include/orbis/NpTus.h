@@ -208,8 +208,8 @@ void sceNpTusTryAndSetVariableVUserAsync();
 // Empty Comment
 void sceNpTusWaitAsync();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

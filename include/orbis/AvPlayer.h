@@ -58,8 +58,8 @@ void sceAvPlayerStreamCount();
 void sceAvPlayerVprintf();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

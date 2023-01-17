@@ -101,8 +101,8 @@ void sceAppInstUtilRequestInstallDiscGame();
 // Empty Comment
 void sceAppInstUtilSetPrimaryAppSlot();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -66,8 +66,8 @@ void sceVoiceVADAdjustment();
 void sceVoiceWriteToIPort();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

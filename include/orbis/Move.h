@@ -33,8 +33,8 @@ void sceMoveSetVibration();
 // Empty Comment
 void sceMoveTerm();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

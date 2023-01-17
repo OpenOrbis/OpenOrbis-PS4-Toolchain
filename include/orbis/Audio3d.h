@@ -71,8 +71,8 @@ void sceAudio3dStrError();
 // Empty Comment
 void sceAudio3dTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

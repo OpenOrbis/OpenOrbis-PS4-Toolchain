@@ -80,8 +80,8 @@ void sceCompsoitorGetGpuClock();
 // Empty Comment
 void sceCompsoitorGetRenderingTime();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

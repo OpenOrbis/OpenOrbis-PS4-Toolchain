@@ -20,8 +20,8 @@ void sceDbgKeyboardRead();
 // Empty Comment
 void sceDbgKeyboardReadState();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

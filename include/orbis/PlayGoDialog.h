@@ -22,8 +22,8 @@ void scePlayGoDialogTerminate();
 // Empty Comment
 void scePlayGoDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -45,8 +45,8 @@ void sceAvSettingRemoveProcessOutputMode();
 // Empty Comment
 void sceAvSettingSetVideoOutputColorEffect();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

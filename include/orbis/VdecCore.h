@@ -29,8 +29,8 @@ void sceVdecCoreSetDecodeInput();
 // Empty Comment
 void sceVdecCoreSyncDecode();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

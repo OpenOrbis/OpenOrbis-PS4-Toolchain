@@ -25,8 +25,8 @@ void scePsmUtilGetSystemAssetManagerSize();
 // Empty Comment
 void scePsmUtilInitialize();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
