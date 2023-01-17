@@ -15,6 +15,7 @@ int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSiz
 int32_t sceSystemServiceGetAppIdOfBigApp(void);
 int32_t sceSystemServiceGetAppIdOfMiniApp(void);
 int32_t sceSystemServiceKillApp(uint32_t appid, int opt, int method, int reason);
+int32_t sceLncUtilLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 
 void sceSystemServiceAcquireFb0();
 void sceSystemServiceAddLocalProcess();
