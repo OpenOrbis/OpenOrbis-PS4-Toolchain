@@ -9,11 +9,11 @@
 extern "C" {
 #endif
 
-int32_t sceSystemServiceHideSplashScreen();
+int32_t sceSystemServiceHideSplashScreen(void);
 int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
 int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
-int32_t sceSystemServiceGetAppIdOfBigApp();
-int32_t sceSystemServiceGetAppIdOfMiniApp();
+int32_t sceSystemServiceGetAppIdOfBigApp(void);
+int32_t sceSystemServiceGetAppIdOfMiniApp(void);
 int32_t sceSystemServiceKillApp(uint32_t appid, int opt, int method, int reason);
 
 void sceSystemServiceAcquireFb0();
@@ -87,10 +87,8 @@ void sceSystemServiceSuspendLocalProcess();
 void sceSystemServiceTickVideoPlayback();
 void sceSystemServiceTurnOffScreenSaver();
 
-
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
