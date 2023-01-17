@@ -87,10 +87,8 @@ void sceSystemServiceSuspendLocalProcess();
 void sceSystemServiceTickVideoPlayback();
 void sceSystemServiceTurnOffScreenSaver();
 
-
-
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
