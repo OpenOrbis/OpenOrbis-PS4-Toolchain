@@ -45,8 +45,8 @@ void sceVrTrackerUnregisterDevice();
 void sceVrTrackerUpdateMotionSensorData();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

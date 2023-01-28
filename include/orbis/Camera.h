@@ -118,8 +118,8 @@ void sceCameraStartByHandle();
 // Empty Comment
 void sceCameraStop();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

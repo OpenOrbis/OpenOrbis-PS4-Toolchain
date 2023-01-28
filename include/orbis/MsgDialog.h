@@ -46,8 +46,8 @@ int32_t sceMsgDialogClose(void);
 // operations are finished.
 int32_t sceMsgDialogTerminate(void);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

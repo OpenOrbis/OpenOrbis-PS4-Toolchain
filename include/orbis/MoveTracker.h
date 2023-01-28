@@ -45,8 +45,8 @@ void sceMoveTrackerRecordStop();
 // Empty Comment
 void sceMoveTrackerTerm();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -38,8 +38,8 @@ void sceFiberStopContextSizeCheck();
 // Empty Comment
 void sceFiberSwitch();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

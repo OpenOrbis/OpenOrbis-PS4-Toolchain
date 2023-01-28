@@ -14,8 +14,8 @@ void sceMusicCoreServerTriggerEvent();
 // Empty Comment
 void sceMusicCoreServerUnregistEventCallback();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

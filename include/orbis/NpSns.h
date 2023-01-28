@@ -42,8 +42,8 @@ void sceNpSnsIntYtGetAccessToken();
 // Empty Comment
 void sceNpSnsIntYtRefreshMasterToken();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

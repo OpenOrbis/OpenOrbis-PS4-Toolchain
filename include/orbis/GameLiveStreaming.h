@@ -67,8 +67,8 @@ void sceGameLiveStreamingStopSocialFeedbackMessageFiltering();
 // Empty Comment
 void sceGameLiveStreamingTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

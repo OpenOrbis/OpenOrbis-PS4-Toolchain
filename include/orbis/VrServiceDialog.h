@@ -22,8 +22,8 @@ void sceVrServiceDialogTerminate();
 // Empty Comment
 void sceVrServiceDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

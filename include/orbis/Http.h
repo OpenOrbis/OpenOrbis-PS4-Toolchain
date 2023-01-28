@@ -221,8 +221,8 @@ void sceHttpUriUnescape();
 void sceHttpWaitRequest();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

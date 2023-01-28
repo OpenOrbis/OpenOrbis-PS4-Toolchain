@@ -24,8 +24,8 @@ void sceAppMessagingTryGetEventFlag();
 // Empty Comment
 void sceAppMessagingTryReceiveMsg();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

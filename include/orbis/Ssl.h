@@ -421,8 +421,8 @@ void SSL_validateCertParam();
 // Empty Comment
 void VLONG_freeVlongQueue();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

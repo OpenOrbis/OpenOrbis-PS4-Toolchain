@@ -373,8 +373,8 @@ void _ZNK3sce3Xml4Attr7getNameEv();
 // Empty Comment
 void _ZNK3sce3Xml4Attr8getValueEv();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -136,8 +136,8 @@ void sceUltWaitingQueueResourcePoolDestroy();
 // Empty Comment
 void sceUltWaitingQueueResourcePoolGetWorkAreaSize();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

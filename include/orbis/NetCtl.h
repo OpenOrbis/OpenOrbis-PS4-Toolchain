@@ -59,8 +59,8 @@ int sceNetCtlGetInfo(int, OrbisNetCtlInfo *);
 int sceNetCtlInit();
 void sceNetCtlTerm();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

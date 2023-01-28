@@ -50,8 +50,8 @@ void sceSysUtilSendSystemNotificationWithUserNameInfo();
 // Empty Comment
 void sceSysUtilSendTrcCheckNotificationRequest();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

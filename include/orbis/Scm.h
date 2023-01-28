@@ -12,8 +12,8 @@ extern "C" {
 void sceSblACMgrCheckPlatformDLL();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

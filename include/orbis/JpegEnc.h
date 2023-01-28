@@ -23,4 +23,5 @@ void sceJpegEncQueryMemorySize(OrbisJpegEncCreateParam *, void *, uint32_t, Orbi
 }
 #endif
 
-#endif	
+#endif
+	

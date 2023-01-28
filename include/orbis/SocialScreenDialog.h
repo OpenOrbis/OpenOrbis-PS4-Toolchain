@@ -15,8 +15,8 @@ void sceSocialScreenDialogInitialize();
 // Empty Comment
 void sceSocialScreenDialogTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

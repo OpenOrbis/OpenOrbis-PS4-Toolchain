@@ -63,8 +63,8 @@ void sceNpTrophySystemIsServerAvailable();
 // Empty Comment
 int sceNpTrophyUnlockTrophy(int32_t context, int32_t handle, int32_t TrophyID, int32_t *PLATID);
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

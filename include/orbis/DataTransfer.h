@@ -57,8 +57,8 @@ void sceDataTransferTargetRequestTransferSpeed();
 void sceDataTransferTerminate();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

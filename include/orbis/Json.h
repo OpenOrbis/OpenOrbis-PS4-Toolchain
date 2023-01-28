@@ -200,8 +200,8 @@ void _ZNK3sce4Json5ValueixEPKc();
 // Empty Comment
 void _ZNK3sce4Json5ValueixERKSbIcSt11char_traitsIcENS0_8StlAllocIcEEE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

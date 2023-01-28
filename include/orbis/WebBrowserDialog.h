@@ -29,8 +29,8 @@ void sceWebBrowserDialogTerminate();
 void sceWebBrowserDialogUpdateStatus();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

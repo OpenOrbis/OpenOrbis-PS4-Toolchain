@@ -145,4 +145,5 @@ void sceVideoOutWaitVblank();
 #ifdef __cplusplus
 }
 #endif
+
 #endif

@@ -21,8 +21,8 @@ void scePadTrackerTerm();
 // Empty Comment
 void scePadTrackerUpdate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

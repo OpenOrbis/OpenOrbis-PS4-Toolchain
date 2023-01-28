@@ -12,8 +12,8 @@ extern "C" {
 void audiodeccpuinternal_core_ops_hevag2();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

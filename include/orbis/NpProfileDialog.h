@@ -24,8 +24,8 @@ void sceNpProfileDialogTerminate();
 // Empty Comment
 void sceNpProfileDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

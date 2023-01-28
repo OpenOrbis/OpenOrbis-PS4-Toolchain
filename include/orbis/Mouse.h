@@ -19,8 +19,8 @@ void sceMouseRead();
 // Empty Comment
 void sceMouseSetPointerSpeed();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

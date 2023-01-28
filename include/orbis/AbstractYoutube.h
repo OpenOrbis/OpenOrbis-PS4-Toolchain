@@ -154,8 +154,8 @@ void _ZTVN15AbstractStorage14YoutubeServiceE();
 // Empty Comment
 void _ZTVN15AbstractStorage14YoutubeStorageE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -255,8 +255,8 @@ void jround_up();
 void jzero_far();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

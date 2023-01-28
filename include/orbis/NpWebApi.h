@@ -110,8 +110,8 @@ void sceNpWebApiUnregisterServicePushEventCallback();
 // Empty Comment
 void sceNpWebApiUtilityParseNpId();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

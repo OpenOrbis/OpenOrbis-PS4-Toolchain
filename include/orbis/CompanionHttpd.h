@@ -43,8 +43,8 @@ void sceCompanionHttpdUnregisterRequestBodyReceptionCallback();
 // Empty Comment
 void sceCompanionHttpdUnregisterRequestCallback();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

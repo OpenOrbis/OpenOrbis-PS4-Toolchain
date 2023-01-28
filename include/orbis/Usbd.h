@@ -98,8 +98,8 @@ void sceUsbdUnrefDevice();
 // Empty Comment
 void sceUsbdWaitForEvent();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

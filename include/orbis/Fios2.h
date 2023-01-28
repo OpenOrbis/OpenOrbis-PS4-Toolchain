@@ -342,8 +342,8 @@ void sceFiosUpdateParameters();
 // Empty Comment
 void sceFiosVprintf();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

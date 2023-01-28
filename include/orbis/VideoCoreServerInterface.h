@@ -46,8 +46,8 @@ void sceVideoCoreSyncSendRequest();
 void sceVideoCoreUnregistEventCallback();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

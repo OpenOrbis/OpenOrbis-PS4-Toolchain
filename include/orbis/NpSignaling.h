@@ -57,8 +57,8 @@ void sceNpSignalingTerminate();
 // Empty Comment
 void sceNpSignalingTerminateConnection();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

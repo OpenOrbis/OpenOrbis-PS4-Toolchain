@@ -49,8 +49,8 @@ void sceVoiceQoSSetRemoteEndpointAttribute();
 void sceVoiceQoSWritePacket();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

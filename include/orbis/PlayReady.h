@@ -69,8 +69,8 @@ void scePlayReadyReset();
 // Empty Comment
 void scePlayReadyStoreCleanup();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

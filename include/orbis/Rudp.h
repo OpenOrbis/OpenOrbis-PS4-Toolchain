@@ -77,8 +77,8 @@ void sceRudpTerminate();
 // Empty Comment
 void sceRudpWrite();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

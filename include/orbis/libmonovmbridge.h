@@ -325,8 +325,8 @@ void g_utf8_to_utf16();
 // Empty Comment
 void g_utf8_validate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

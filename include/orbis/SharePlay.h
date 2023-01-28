@@ -26,8 +26,8 @@ void sceSharePlayStopStandby();
 void sceSharePlayTerminate();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -52,8 +52,8 @@ void sceMusicCoreServerSetTrackList();
 // Empty Comment
 void sceMusicCoreServerTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

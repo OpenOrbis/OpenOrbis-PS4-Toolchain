@@ -27,8 +27,8 @@ void sceGameCustomDataDialogTerminate();
 // Empty Comment
 void sceGameCustomDataDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

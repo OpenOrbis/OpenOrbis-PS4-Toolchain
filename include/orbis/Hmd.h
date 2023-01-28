@@ -144,8 +144,8 @@ void sceHmdReprojectionUnsetDisplayBuffers();
 // Empty Comment
 void sceHmdTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

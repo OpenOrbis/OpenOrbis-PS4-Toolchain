@@ -79,8 +79,8 @@ void mono_trampolines_init();
 void mono_verifier_set_mode();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

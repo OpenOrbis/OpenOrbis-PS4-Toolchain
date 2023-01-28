@@ -30,8 +30,8 @@ void sceNpCommerceSetPsStoreIconLayout();
 // Empty Comment
 void sceNpCommerceShowPsStoreIcon();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -193,8 +193,8 @@ void _ZTVN15AbstractStorage7ServiceE();
 // Empty Comment
 void _ZTVN15AbstractStorage7StorageE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

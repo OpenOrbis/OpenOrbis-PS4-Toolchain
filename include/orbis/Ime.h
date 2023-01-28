@@ -97,8 +97,8 @@ void sceImeVshUpdateContext();
 void sceImeVshUpdateContext2();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -33,8 +33,8 @@ void sceBackupRestoreUtilRestoreData();
 // Empty Comment
 void sceBackupRestoreUtilTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

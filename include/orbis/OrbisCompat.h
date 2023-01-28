@@ -258,8 +258,8 @@ void ShInitialize();
 // Empty Comment
 void uncompress();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

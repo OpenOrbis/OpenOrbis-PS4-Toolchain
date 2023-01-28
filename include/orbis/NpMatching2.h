@@ -129,8 +129,8 @@ void sceNpMatching2SignalingGetPingInfo();
 // Empty Comment
 void sceNpMatching2Terminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

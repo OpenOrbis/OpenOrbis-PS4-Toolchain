@@ -52,8 +52,8 @@ void sceSystemGestureUpdateTouchRecognizer();
 // Empty Comment
 void sceSystemGestureUpdateTouchRecognizerRectangle();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

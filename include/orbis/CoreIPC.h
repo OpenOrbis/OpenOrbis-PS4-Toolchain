@@ -205,8 +205,8 @@ void WTFCrash();
 // Empty Comment
 void WTFReportAssertionFailure();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
