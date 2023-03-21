@@ -60,8 +60,8 @@
 struct kevent {
 	uintptr_t	ident;		/* identifier for this event */
 	short		filter;	/* filter for event */
-	u_short	flags;
-	u_int		fflags;
+	uint16_t	flags;
+	uint32_t	fflags;
 	intptr_t	data;
 	void		*udata;	/* opaque user data identifier */
 };
