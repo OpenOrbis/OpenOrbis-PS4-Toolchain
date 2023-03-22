@@ -15,20 +15,16 @@ extern uint64_t sceLibcHeapSize;
 extern uint32_t sce_libc_heap_delayed_alloc;
 extern uint32_t sce_libc_heap_extended_alloc;
 
-struct Proc_Stats
-{
-	int lo_data;								//0x00
-	unsigned int td_tid;						//0x04
-	OrbisKernelTimespec user_cpu_usage_time;	//0x08
-	OrbisKernelTimespec system_cpu_usage_time;  //0x18
-}; //0x28
-
+// Empty Comment
+int sceKernelGetProcessType(int pid);
+// Empty Comment
+int sceKernelGetProcessName(int pid, char* out);
 // Empty Comment
 int sceKernelDebugOutText(int dbg_channel, const char* text, ...);
 // Empty Comment
 int sceKernelGetThreadName(unsigned int id, char* out);
 // Empty Comment
-int sceKernelGetCpuUsage(struct Proc_Stats* out, int* size);
+int sceKernelGetCpuUsage(OrbisKernelProcStats* out, int* size);
 // Empty Comment
 int sceKernelGetCpuFrequency();
 // Empty Comment
