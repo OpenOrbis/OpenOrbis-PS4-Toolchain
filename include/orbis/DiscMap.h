@@ -12,8 +12,8 @@ extern "C" {
 void sceDiscMapIsRequestOnHDD();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

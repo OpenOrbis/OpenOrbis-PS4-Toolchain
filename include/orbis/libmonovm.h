@@ -596,8 +596,8 @@ void mono_type_get_type();
 void mono_unhandled_exception();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -18,8 +18,8 @@ void sceCompanionUtilOptParamInitialize();
 // Empty Comment
 void sceCompanionUtilTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

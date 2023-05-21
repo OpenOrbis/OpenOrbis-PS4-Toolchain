@@ -96,8 +96,8 @@ void sceRegMgrToolGetEntryCnt();
 // Empty Comment
 void sceRegMgrToolGetUpdateCnt();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

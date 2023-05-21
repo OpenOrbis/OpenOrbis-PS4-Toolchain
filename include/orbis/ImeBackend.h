@@ -31,8 +31,8 @@ void sceImeBackendGetString();
 void sceImeBackendPartConfirm();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

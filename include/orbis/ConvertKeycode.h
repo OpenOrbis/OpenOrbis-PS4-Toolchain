@@ -13,8 +13,8 @@ void sceConvertKeycodeGetCharacter();
 // Empty Comment
 void sceConvertKeycodeGetVirtualKeycode();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

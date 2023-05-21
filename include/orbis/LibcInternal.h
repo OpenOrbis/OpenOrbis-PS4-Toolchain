@@ -5868,8 +5868,8 @@ void yn();
 void ynf();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

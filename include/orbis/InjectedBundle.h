@@ -11,8 +11,8 @@ extern "C" {
 void WKBundleInitialize();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

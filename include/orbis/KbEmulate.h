@@ -14,8 +14,8 @@ void sceKeyboardPadEmulateClose();
 // Empty Comment
 void sceKeyboardPadEmulateOpen();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

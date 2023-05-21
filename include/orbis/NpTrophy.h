@@ -36,8 +36,7 @@ void sceNpTrophyIntGetRunningTitle();
 void sceNpTrophyIntGetRunningTitles();
 void sceNpTrophyIntGetTrpIconByUri();
 void sceNpTrophyIntNetSyncTitles();
-#endif
-
 #ifdef __cplusplus
 }
+#endif
 #endif

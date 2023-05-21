@@ -14,8 +14,8 @@ void sceShareFactoryUtilBackToGameFromShareFactory();
 void sceShareFactoryUtilGetLaunchStatusOfShareFactory();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

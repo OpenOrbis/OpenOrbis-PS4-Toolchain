@@ -21,6 +21,15 @@ typedef enum OrbisFlipRate : int32_t
 	ORBIS_VIDEO_OUT_FLIP_20HZ = 2,
 } OrbisFlipRate;
 
+typedef enum OrbisVideoOutTilingMode {
+	ORBIS_VIDEO_OUT_TILING_MODE_TILE = 0x0,
+	ORBIS_VIDEO_OUT_TILING_MODE_LINEAR = 0x1,
+} OrbisVideoOutTilingMode;
+
+typedef enum OrbisVideoOutAspectRatio {
+	ORBIS_VIDEO_OUT_ASPECT_RATIO_16_9 = 0x0,
+} OrbisVideoOutAspectRatio;
+
 #define ORBIS_VIDEO_OUT_PIXEL_FORMAT_A8B8G8R8_SRGB 0x80002200
 
 typedef enum 

@@ -178,8 +178,8 @@ void _ZNK3sce4Json5ValueixEPKc();
 // Empty Comment
 void _ZNK3sce4Json6String5c_strEv();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

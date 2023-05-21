@@ -42,8 +42,8 @@ void sceDepthValidateCurrentCalibrationData();
 // Empty Comment
 void sceDepthWaitAndExecutePostProcess();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -29,8 +29,8 @@ void _ZN9JITBridge20shutdownFromCompilerEPS_b();
 // Empty Comment
 void _ZN9JITBridge22initializeFromCompilerEPKcPPcPKNS_11RestartDataE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

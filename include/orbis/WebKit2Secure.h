@@ -2052,8 +2052,8 @@ void WKViewWillEnterFullScreen();
 void WKViewWillExitFullScreen();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

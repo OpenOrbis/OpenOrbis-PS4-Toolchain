@@ -336,8 +336,8 @@ void get_random();
 // Empty Comment
 void pss_code_mem_alloc();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

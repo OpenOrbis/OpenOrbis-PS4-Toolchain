@@ -27,8 +27,8 @@ void sceNpFriendListDialogTerminate();
 void sceNpFriendListDialogUpdateStatus();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

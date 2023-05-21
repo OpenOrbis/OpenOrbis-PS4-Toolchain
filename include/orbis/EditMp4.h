@@ -21,8 +21,8 @@ void sceEditMp4InitializeParam();
 // Empty Comment
 void sceEditMp4Terminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

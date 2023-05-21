@@ -1,5 +1,6 @@
 #include <inttypes.h>
 #include <stdint.h>
+#include <sys/time.h> // time_t
 #pragma once
 
 #define ORBIS_SAVE_DATA_MOUNT_MODE_RDONLY			1		//Read-only

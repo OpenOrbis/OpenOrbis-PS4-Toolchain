@@ -33,8 +33,8 @@ int sceScreenShotSetOverlayImageWithOrigin(const char *path, int x, int y, int);
 // Empty Comment
 void sceScreenShotSetParam();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

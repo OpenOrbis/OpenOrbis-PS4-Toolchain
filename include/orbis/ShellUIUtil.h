@@ -20,8 +20,8 @@ void sceShellUIUtilLaunchByUri();
 void sceShellUIUtilTerminate();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -15,7 +15,9 @@ int32_t sceVideodecQueryResourceInfo(const OrbisVideodecConfigInfo*, OrbisVideod
 int32_t sceVideodecReset(OrbisVideodecCtrl*);
 int32_t sceVideodecDeleteDecoder(OrbisVideodecCtrl*);
 
+//
 void sceVideodecMapMemory();
+
 
 #ifdef __cplusplus
 }

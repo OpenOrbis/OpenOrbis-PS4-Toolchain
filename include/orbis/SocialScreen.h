@@ -16,8 +16,8 @@ void sceSocialScreenOpenSeparateMode();
 void sceSocialScreenTerminate();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

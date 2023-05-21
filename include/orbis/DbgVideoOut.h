@@ -15,8 +15,8 @@ void sceDbgVideoOutAddProcessAttribute();
 // Empty Comment
 void sceDbgVideoOutRemoveProcessAttribute();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

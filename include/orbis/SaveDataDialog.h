@@ -30,8 +30,8 @@ void sceSaveDataDialogTerminate();
 void sceSaveDataDialogUpdateStatus();
 
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

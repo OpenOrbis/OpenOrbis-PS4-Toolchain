@@ -22,8 +22,8 @@ void sceNetCtlApDialogTerminate();
 // Empty Comment
 void sceNetCtlApDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

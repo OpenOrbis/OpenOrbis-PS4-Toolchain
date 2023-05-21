@@ -22,8 +22,8 @@ void sceNpSnsFacebookDialogTerminate();
 // Empty Comment
 void sceNpSnsFacebookDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

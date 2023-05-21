@@ -28,8 +28,8 @@ void sceNpAuthSetTimeout();
 // Empty Comment
 void sceNpAuthWaitAsync();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

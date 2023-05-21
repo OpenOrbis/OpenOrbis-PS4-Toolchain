@@ -181,8 +181,8 @@ void _ZNK4IPMI6Server6Config29estimateTempWorkingMemorySizeEv();
 // Empty Comment
 void _ZTVN4IPMI6Server12EventHandlerE();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

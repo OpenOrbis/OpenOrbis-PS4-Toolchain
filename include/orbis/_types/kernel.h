@@ -57,13 +57,14 @@
 #define ORBIS_KERNEL_PROT_GPU_RW (ORBIS_KERNEL_PROT_GPU_READ | ORBIS_KERNEL_PROT_GPU_WRITE)
 #define ORBIS_KERNEL_PROT_GPU_ALL ORBIS_KERNEL_PROT_GPU_RW
 
-struct kevent {
+struct kevent 
+{
 	uintptr_t	ident;		/* identifier for this event */
-	short		filter;		/* filter for event */
-	u_short		flags;
-	u_int		fflags;
+	short		  filter;	/* filter for event */
+	uint16_t	flags;
+	uint32_t	fflags;
 	intptr_t	data;
-	void*		udata;		/* opaque user data identifier */
+	void*    udata;	/* opaque user data identifier */
 };
 
 typedef struct OrbisKernelModuleSegmentInfo

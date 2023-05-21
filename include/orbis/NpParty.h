@@ -50,8 +50,8 @@ void sceNpPartyShowInvitationListA();
 // Empty Comment
 void sceNpPartyTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

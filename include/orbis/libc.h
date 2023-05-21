@@ -4945,8 +4945,8 @@ void yn();
 // Empty Comment
 void ynf();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

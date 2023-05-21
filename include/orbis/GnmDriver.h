@@ -37,8 +37,11 @@ void sceGnmDispatchIndirect();
 void sceGnmDispatchIndirectOnMec();
 // Empty Comment
 void sceGnmDispatchInitDefaultHardwareState();
-// Empty Comment
-void sceGnmDrawIndex();
+// Queue a draw indexed instruction into the command buffer.
+int32_t sceGnmDrawIndex(
+	uint32_t* cmd, uint32_t numdwords, uint32_t indexcount,
+	const void* indexaddr, OrbisGnmDrawIndexFlags flags
+);
 // Empty Comment
 void sceGnmDrawIndexAuto();
 // Empty Comment
@@ -169,10 +172,14 @@ void sceGnmSetGsShader();
 void sceGnmSetHsShader();
 // Empty Comment
 void sceGnmSetLsShader();
-// Empty Comment
-void sceGnmSetPsShader();
-// Empty Comment
-void sceGnmSetPsShader350();
+// Set the pixel shader to be used in the command buffer.
+int32_t sceGnmSetPsShader(
+	uint32_t* cmd, uint32_t numdwords, const void* psregs
+);
+// Set the pixel shader to be used in the command buffer.
+int32_t sceGnmSetPsShader350(
+	uint32_t* cmd, uint32_t numdwords, const void* psregs
+);
 // Empty Comment
 void sceGnmSetResourceRegistrationUserMemory();
 // Empty Comment
@@ -185,20 +192,26 @@ void sceGnmSetSpiEnableSqCountersForUnitInstance();
 void sceGnmSetupMipStatsReport();
 // Empty Comment
 void sceGnmSetVgtControl();
-// Empty Comment
-void sceGnmSetVsShader();
+// Set the vertex shader to be used in the command buffer.
+int32_t sceGnmSetVsShader(
+	uint32_t* cmd, uint32_t numdwords,
+	const void* vsregs, uint32_t shadermodifier
+);
 // Empty Comment
 void sceGnmSetWaveLimitMultipliers();
 // Empty Comment
 int32_t sceGnmSubmitAndFlipCommandBuffers(uint32_t count, void *dcbGpuAddrs[], uint32_t *dcbSizesInBytes, void *ccbGpuAddrs[], uint32_t *ccbSizesInBytes, uint32_t videoOutHandle, uint32_t displayBufferIndex, uint32_t flipMode, int64_t flipArg);
 // Empty Comment
 void sceGnmSubmitAndFlipCommandBuffersForWorkload();
-// Empty Comment
-void sceGnmSubmitCommandBuffers();
+// Submit one or more draw command buffer, and optionally one or more compute command buffers.
+int32_t sceGnmSubmitCommandBuffers(
+	uint32_t count, void* dcbaddrs[], uint32_t* dcbbytesizes,
+	void* ccbaddrs[], uint32_t* ccbbytesizes
+);
 // Empty Comment
 void sceGnmSubmitCommandBuffersForWorkload();
 // Empty Comment
-void sceGnmSubmitDone();
+int32_t sceGnmSubmitDone(void);
 // Empty Comment
 void sceGnmUnmapComputeQueue();
 // Empty Comment

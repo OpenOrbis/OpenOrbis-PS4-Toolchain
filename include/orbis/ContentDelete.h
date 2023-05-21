@@ -17,8 +17,8 @@ void sceContentDeleteInitialize();
 // Empty Comment
 void sceContentDeleteTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

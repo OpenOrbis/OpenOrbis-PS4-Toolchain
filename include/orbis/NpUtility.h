@@ -122,8 +122,8 @@ void sceNpWordFilterSetTimeout();
 // Empty Comment
 void sceNpWordFilterWaitAsync();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

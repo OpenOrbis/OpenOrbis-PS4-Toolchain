@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#if defined(__cplusplus)
+#ifdef __cplusplus
 extern "C" {
 #endif
 

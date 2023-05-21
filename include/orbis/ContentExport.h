@@ -29,8 +29,8 @@ void sceContentExportStart();
 // Empty Comment
 void sceContentExportTerm();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

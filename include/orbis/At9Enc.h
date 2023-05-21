@@ -19,8 +19,8 @@ void sceAt9EncFlush();
 // Empty Comment
 void sceAt9EncQueryMemSize();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

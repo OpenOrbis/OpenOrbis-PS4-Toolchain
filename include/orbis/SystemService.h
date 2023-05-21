@@ -6,7 +6,8 @@
 #include "_types/sys_service.h"
 
 #ifdef __cplusplus 
-extern "C" {
+extern "C"
+{
 #endif
 
 int32_t sceSystemServiceLoadExec(const char *path, const char *args[]);
@@ -33,6 +34,12 @@ int32_t sceSystemServiceReenableMusicPlayer();
 int32_t sceSystemServiceDisableMusicPlayer();
 int32_t sceSystemServiceGetStatus(OrbisSystemServiceStatus*);
 int32_t sceSystemServiceReceiveEvent(OrbisSystemServiceEvent*);
+int32_t sceSystemServiceHideSplashScreen(void);
+int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
+int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
+int32_t sceSystemServiceGetAppIdOfBigApp(void);
+int32_t sceSystemServiceGetAppIdOfMiniApp(void);
+int32_t sceSystemServiceKillApp(uint32_t appid, int opt, int method, int reason);
 
 void sceSystemServiceAcquireFb0();
 void sceSystemServiceAddLocalProcess();
@@ -49,8 +56,6 @@ void sceSystemServiceChangeSamuClock();
 void sceSystemServiceChangeUvdClock();
 void sceSystemServiceChangeVceClock();
 void sceSystemServiceGetAppFocusedAppStatus();
-void sceSystemServiceGetAppIdOfBigApp();
-void sceSystemServiceGetAppIdOfMiniApp();
 void sceSystemServiceGetAppStatus();
 void sceSystemServiceGetAppType();
 void sceSystemServiceGetEventForDaemon();
@@ -65,7 +70,6 @@ void sceSystemServiceIsAppSuspended();
 void sceSystemServiceIsBgmPlaying();
 void sceSystemServiceIsScreenSaverOn();
 void sceSystemServiceIsShellUiFgAndGameBgCpuMode();
-void sceSystemServiceKillApp();
 void sceSystemServiceKillLocalProcess();
 void sceSystemServiceKillLocalProcessForPsmKit();
 void sceSystemServiceLaunchApp();
@@ -86,7 +90,6 @@ void sceSystemServiceSuspendBackgroundApp();
 void sceSystemServiceSuspendLocalProcess();
 void sceSystemServiceTickVideoPlayback();
 void sceSystemServiceTurnOffScreenSaver();
-
 
 #ifdef __cplusplus
 }

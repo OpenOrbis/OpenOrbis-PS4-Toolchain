@@ -385,8 +385,8 @@ void sceNpXmlParse();
 // Empty Comment
 void sceNpXmlParseInit();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

@@ -18,8 +18,8 @@ void sceM4aacEncEncode();
 // Empty Comment
 void sceM4aacEncFlush();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

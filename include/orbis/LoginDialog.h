@@ -23,8 +23,8 @@ void sceLoginDialogTerminate();
 // Empty Comment
 void sceLoginDialogUpdateStatus();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

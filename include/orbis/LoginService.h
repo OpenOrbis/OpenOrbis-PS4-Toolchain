@@ -14,8 +14,8 @@ void sceLoginServiceRequestDevices();
 // Empty Comment
 void sceLoginServiceTerminate();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

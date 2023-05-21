@@ -13,8 +13,8 @@ void sceDbgPlayGoRequestNextChunk();
 // Empty Comment
 void sceDbgPlayGoSnapshot();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

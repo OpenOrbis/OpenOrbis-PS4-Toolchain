@@ -26,8 +26,8 @@ void sceUsbStorageTerm();
 // Empty Comment
 void sceUsbStorageUnregisterCallback();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

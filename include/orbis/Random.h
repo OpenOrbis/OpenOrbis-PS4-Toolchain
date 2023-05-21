@@ -11,8 +11,8 @@ extern "C" {
 // Empty Comment
 void sceRandomGetRandomNumber();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif

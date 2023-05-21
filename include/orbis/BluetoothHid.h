@@ -11,8 +11,8 @@ extern "C" {
 // Empty Comment
 void sceBluetoothHidGetDeviceInfo();
 
-#endif
-
 #ifdef __cplusplus
 }
+#endif
+
 #endif
