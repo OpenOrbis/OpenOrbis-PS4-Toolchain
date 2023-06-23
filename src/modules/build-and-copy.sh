@@ -4,17 +4,14 @@
 cd libc/
 make clean && make
 cp libc.prx ../libc.prx
-make clean
 
 cd ../libSceFios2
 make clean && make
 cp libSceFios2.prx ../libSceFios2.prx
-make clean
 
 cd ../right
 make clean && make
 cp right.sprx ../right.sprx
-make clean
 
 # Copy into samples
 cd ..
