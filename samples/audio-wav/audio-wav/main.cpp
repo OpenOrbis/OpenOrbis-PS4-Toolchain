@@ -11,8 +11,6 @@
 #define DR_WAV_IMPLEMENTATION
 #include "dr_wav.h"
 
-#define PARAMS16 ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO
-
 int32_t audio = 0;
 
 /*********************************************************************
@@ -37,7 +35,7 @@ int main()
     }
 
     // Open a handle to audio output device
-    audio = sceAudioOutOpen(userId, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, 256, 48000, PARAMS16);
+    audio = sceAudioOutOpen(userId, ORBIS_AUDIO_OUT_PORT_TYPE_MAIN, 0, 256, 48000, ORBIS_AUDIO_OUT_PARAM_FORMAT_S16_STEREO);
 
     if (audio <= 0)
     {

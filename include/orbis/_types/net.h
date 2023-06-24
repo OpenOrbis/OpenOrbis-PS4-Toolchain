@@ -1,12 +1,15 @@
 #pragma once
 
-#define ORBIS_NET_AF_INET				2
-#define ORBIS_NET_SOCK_STREAM			1
-#define ORBIS_NET_SOCK_DGRAM			2
-#define ORBIS_NET_SOCK_RAW				3
-#define ORBIS_NET_SOCK_DGRAM_P2P		6
-#define ORBIS_NET_SOCK_STREAM_P2P		10
- 
+typedef enum OrbisNetType
+{
+	ORBIS_NET_AF_INET = 2,
+	ORBIS_NET_SOCK_STREAM = 1,
+	ORBIS_NET_SOCK_DGRAM = 2,
+	ORBIS_NET_SOCK_RAW = 3,
+	ORBIS_NET_SOCK_DGRAM_P2P = 6,
+	ORBIS_NET_SOCK_STREAM_P2P = 0,
+} OrbisNetType;
+
 #define SCE_NET_DBG_MAX_NAME_LENGTH	31
 
 typedef int32_t OrbisNetId;

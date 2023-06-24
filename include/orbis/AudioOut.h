@@ -30,7 +30,7 @@ int32_t sceAudioOutMasteringGetState(void *);
 int32_t sceAudioOutMasteringInit(uint32_t);
 
 // Opens the audio port to the system.
-int32_t sceAudioOutOpen(int32_t, int32_t, int32_t, uint32_t, uint32_t, uint32_t);
+int32_t sceAudioOutOpen(OrbisUserServiceUserId UserId, enum OrbisAudioOutPort, int32_t, uint32_t length, uint32_t sample_rate, uint32_t param_type);
 
 // document functions later
 int32_t sceAudioOutOutput(int32_t, const void *);

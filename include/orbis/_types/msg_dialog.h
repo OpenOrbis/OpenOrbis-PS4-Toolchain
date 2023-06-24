@@ -3,16 +3,19 @@
 #include "common_dialog.h"
 #include <stdint.h>
 
-#define ORBIS_MSG_DIALOG_BUTTON_ID_INVALID			(0)
-#define ORBIS_MSG_DIALOG_BUTTON_ID_OK				(1)
-#define ORBIS_MSG_DIALOG_BUTTON_ID_YES				(1)
-#define ORBIS_MSG_DIALOG_BUTTON_ID_NO				(2)
-#define ORBIS_MSG_DIALOG_BUTTON_ID_BUTTON1			(1)
-#define ORBIS_MSG_DIALOG_BUTTON_ID_BUTTON2			(2)
-
 typedef int32_t OrbisUserServiceUserId;
 typedef int32_t OrbisMsgDialogButtonId;
 typedef int32_t OrbisMsgDialogProgressBarTarget;
+
+typedef enum OrbisMsgDialogButton : OrbisMsgDialogButtonId
+{
+	ORBIS_MSG_DIALOG_BUTTON_ID_INVALID = 0,
+	ORBIS_MSG_DIALOG_BUTTON_ID_OK = 1,
+	ORBIS_MSG_DIALOG_BUTTON_ID_YES = 1,
+	ORBIS_MSG_DIALOG_BUTTON_ID_NO = 2,
+	ORBIS_MSG_DIALOG_BUTTON_ID_BUTTON1 = 1,
+	ORBIS_MSG_DIALOG_BUTTON_ID_BUTTON2 = 2,
+} OrbisMsgDialogButton;
 
 typedef enum OrbisMsgDialogMode {
 	ORBIS_MSG_DIALOG_MODE_USER_MSG = 1,
@@ -23,7 +26,7 @@ typedef enum OrbisMsgDialogMode {
 typedef struct OrbisMsgDialogResult {
 	OrbisMsgDialogMode mode;
 	int32_t result;
-	OrbisMsgDialogButtonId buttonId;
+	OrbisMsgDialogButton buttonId;
 	char reserved[32];
 } OrbisMsgDialogResult;
 

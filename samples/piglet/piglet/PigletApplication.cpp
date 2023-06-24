@@ -548,7 +548,7 @@ namespace nik {
 
         // internal SystemService...
         // need to load it once, no need to unload.
-        sceSysmoduleLoadModuleInternal(0x80000010u);
+        sceSysmoduleLoadModuleInternal(ORBIS_SYSMODULE_INTERNAL_SYSTEM_SERVICE);
 
         ret = sceSystemServiceHideSplashScreen();
         if (ret < ORBIS_OK) {
