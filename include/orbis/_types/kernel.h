@@ -9,6 +9,56 @@
 	#define MAP_TYPE 0x0f
 #endif
 
+// https://github.com/red-prig/fpPS4/blob/441da1d04080615326e5f55ef6fa3110e642bff6/kernel/ps4_queue.pas#L14
+#define EVFILT_READ -1
+#define EVFILT_WRITE -2
+#define EVFILT_AIO -3	 // attached to aio requests
+#define EVFILT_VNODE -4	 // attached to vnodes
+#define EVFILT_PROC -5	 // attached to struct proc
+#define EVFILT_SIGNAL -6 // attached to struct proc
+#define EVFILT_TIMER -7	 // timers
+#define EVFILT_FS -9	 // filesystem events
+#define EVFILT_LIO -10	 // attached to lio requests
+#define EVFILT_USER -11	 // User events
+#define EVFILT_POLLING -12
+#define EVFILT_DISPLAY -13
+#define EVFILT_GRAPHICS_CORE -14
+#define EVFILT_HRTIMER -15
+#define EVFILT_UVD_TRAP -16
+#define EVFILT_VCE_TRAP -17
+#define EVFILT_SDMA_TRAP -18
+#define EVFILT_REG_EV -19
+#define EVFILT_GPU_EXCEPTION -20
+#define EVFILT_GPU_SYSTEM_EXCEPTION -21
+#define EVFILT_GPU_DBGGC_EV -22
+#define EVFILT_SYSCOUNT 22
+// actions
+#define EV_ADD 0x0001	  // add event to kq (implies enable)
+#define EV_DELETE 0x0002  // delete event from kq
+#define EV_ENABLE 0x0004  // enable event
+#define EV_DISABLE 0x0008 // disable event (not reported)
+
+// flags
+#define EV_ONESHOT 0x0010  // only report one occurrence
+#define EV_CLEAR 0x0020	   // clear event state after reporting
+#define EV_RECEIPT 0x0040  // force EV_ERROR on success, data=0
+#define EV_DISPATCH 0x0080 // disable event after reporting
+
+#define EV_SYSFLAGS 0xF000 // reserved by system
+#define EV_FLAG1 0x2000	   // filter-specific flag
+
+// returned values
+#define EV_EOF 0x8000	// EOF detected
+#define EV_ERROR 0x4000 // error, data contains errno
+
+#define NOTE_DELETE 0x0001 // vnode was removed
+#define NOTE_WRITE 0x0002  // data contents changed
+#define NOTE_EXTEND 0x0004 // size increased
+#define NOTE_ATTRIB 0x0008 // attributes changed
+#define NOTE_LINK 0x0010   // link count changed
+#define NOTE_RENAME 0x0020 // vnode was renamed
+#define NOTE_REVOKE 0x0040 // vnode access was revoked
+
 #define ORBIS_KERNEL_EVFILT_TIMER    EVFILT_TIMER
 #define ORBIS_KERNEL_EVFILT_READ     EVFILT_READ
 #define ORBIS_KERNEL_EVFILT_WRITE    EVFILT_WRITE
