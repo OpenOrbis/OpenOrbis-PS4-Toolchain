@@ -78,7 +78,7 @@ typedef struct OrbisPadTouchData {
 // The ScePadData Structure contains data polled from the DS4 controller. This includes button states, analogue
 // positional data, and touchpad related data.
 typedef struct OrbisPadData {
-	unsigned int buttons;
+	uint32_t buttons;
 	stick leftStick;
 	stick rightStick;
 	analog analogButtons;
@@ -123,7 +123,7 @@ typedef struct _OrbisPadInformation {
 	uint8_t stickDeadzoneR;
 	uint8_t connectionType;
 	uint8_t count;
-	int connected;
-	int deviceClass;
+	int32_t connected;
+	int32_t deviceClass;
 	uint8_t unknown[8];
 } OrbisPadInformation;

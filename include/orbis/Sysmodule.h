@@ -14,21 +14,21 @@ extern "C" {
   * @param id is the internal module id. see list of module ids.
   * @return 0 = Success/Valid or Negatives values are error codes.
   */
-int sceSysmoduleIsLoaded(uint16_t id);
+int32_t sceSysmoduleIsLoaded(uint16_t id);
 
 /**
   * Sysmodule function to load a module.
   * @param id is the internal module id. see list of module ids.
   * @return 0 = Success/Valid or Negatives values are error codes.
   */
-int sceSysmoduleLoadModule(uint16_t id);
+int32_t sceSysmoduleLoadModule(uint16_t id);
 
 /**
   * Sysmodule function to unload a module.
   * @param id is the internal module id. see list of module ids.
   * @return 0 = Success/Valid or Negatives values are error codes.
   */
-int sceSysmoduleUnloadModule(uint16_t id);
+int32_t sceSysmoduleUnloadModule(uint16_t id);
  
 // Undocumented Function... Need to reverse
 void sceSysmoduleGetModuleHandleInternal();
@@ -45,7 +45,7 @@ void sceSysmodulePreloadModuleForLibkernel();
 // Undocumented Function... Need to reverse
 void sceSysmoduleUnloadModuleByNameInternal();
 // Undocumented Function... Need to reverse
-int sceSysmoduleUnloadModuleInternal(uint32_t id);
+int32_t sceSysmoduleUnloadModuleInternal(uint32_t id);
 // Undocumented Function... Need to reverse
 void sceSysmoduleUnloadModuleInternalWithArg();
 

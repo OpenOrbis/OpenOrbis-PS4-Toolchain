@@ -11,11 +11,11 @@
 extern "C" {
 #endif
 
-int sceKeyboardInit(void);
-int sceKeyboardOpen(int userID, int type, int index, void* param);
-int sceKeyboardClose(int handle);
-int sceKeyboardReadState(int handle, OrbisKeyboardData* data);
-int sceKeyboardGetKey2Char(int handle, bool unknown, int locks, int mods, int keycode, OrbisKeyboardKey2Char* data);
+int32_t sceKeyboardInit(void);
+int32_t sceKeyboardOpen(int32_t userID, int32_t type, int32_t index, void* param);
+int32_t sceKeyboardClose(int32_t handle);
+int32_t sceKeyboardReadState(int32_t handle, OrbisKeyboardData* data);
+int32_t sceKeyboardGetKey2Char(int32_t handle, bool unknown, int32_t locks, int32_t mods, int32_t keycode, OrbisKeyboardKey2Char* data);
 
 // The below functions are currently not reversed
 void sceKeyboardConnectPort(void);

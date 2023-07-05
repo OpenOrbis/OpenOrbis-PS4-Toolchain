@@ -25,4 +25,4 @@ typedef enum {
 	ORBIS_HTTP_CONTENTLEN_CHUNK_ENC
 } OrbisHttpContentLengthType;
 
-typedef int (*OrbisHttpsCallback)(int libsslCtxId,unsigned int verifyErr,void * const sslCert[],int certNum,void *userArg);
+typedef int32_t (*OrbisHttpsCallback)(int32_t libsslCtxId,uint32_t verifyErr,void * const sslCert[],int32_t certNum,void *userArg);

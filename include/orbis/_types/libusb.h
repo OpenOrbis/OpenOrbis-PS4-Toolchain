@@ -35,12 +35,12 @@ struct libusb_interface_descriptor {
 	uint8_t  iInterface;
 	struct libusb_endpoint_descriptor *endpoint;
 	const unsigned char *extra;
-	int extra_length;
+	int32_t extra_length;
 };
 
 struct libusb_interface {
 	struct libusb_interface_descriptor *altsetting;
-	int num_altsetting;
+	int32_t num_altsetting;
 };
 
 struct libusb_config_descriptor {
@@ -54,7 +54,7 @@ struct libusb_config_descriptor {
 	uint8_t  MaxPower;
 	struct libusb_interface *interface;
 	unsigned char *extra;
-	int extra_length;
+	int32_t extra_length;
 };
 
 enum libusb_transfer_status {
@@ -68,8 +68,8 @@ enum libusb_transfer_status {
 };
 
 struct libusb_iso_packet_descriptor {
-    unsigned int length;
-    unsigned int actual_length;
+    uint32_t length;
+    uint32_t actual_length;
     enum libusb_transfer_status status;
 };
 
@@ -81,13 +81,13 @@ struct libusb_transfer {
     uint8_t flags;
     unsigned char endpoint;
     unsigned char type;
-    unsigned int timeout;
+    uint32_t timeout;
     enum libusb_transfer_status status;
-    int length;
-    int actual_length;
+    int32_t length;
+    int32_t actual_length;
     libusb_transfer_cb_fn callback;
     void *user_data;
     unsigned char *buffer;
-    int num_iso_packets;
+    int32_t num_iso_packets;
     struct libusb_iso_packet_descriptor iso_packet_desc[0];
 };

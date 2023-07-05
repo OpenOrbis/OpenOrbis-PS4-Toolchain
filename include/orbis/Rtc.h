@@ -26,13 +26,13 @@ typedef struct RealTick {
 	The struct has entrys for (year, month, day, hour, minute, second, microsecond)
 */
 typedef struct TimeTable {
-	unsigned short year;
-	unsigned short month;
-	unsigned short day;
-	unsigned short hour;
-	unsigned short minute;
-	unsigned short second;
-	unsigned short microsecond;
+	uint16_t year;
+	uint16_t month;
+	uint16_t day;
+	uint16_t hour;
+	uint16_t minute;
+	uint16_t second;
+	uint16_t microsecond;
 } TimeTable;
 
 /**
@@ -40,7 +40,7 @@ typedef struct TimeTable {
   * @param input is the time table you want to verify.
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcCheckValid(TimeTable *input);
+int32_t sceRtcCheckValid(TimeTable *input);
 
 /**
   * Returns the current tick of the Real Time Clock.
@@ -48,7 +48,7 @@ int sceRtcCheckValid(TimeTable *input);
   * @param outTick is the current tick of the rtc.
   * @return 0 = Valid and Negatives values are error codes. 
   */
-int sceRtcGetTick(const TimeTable *outTimeTable, RealTick *outTick);
+int32_t sceRtcGetTick(const TimeTable *outTimeTable, RealTick *outTick);
 
 /**
   * Set the Real Time Clock by given param inputTick
@@ -56,7 +56,7 @@ int sceRtcGetTick(const TimeTable *outTimeTable, RealTick *outTick);
   * @param inputTick is the tick you wish to supply to SceRtcSetTick
   * @return 0 = Valid and Negatives values are error codes. 
   */
-int sceRtcSetTick(TimeTable *inputTimeTable, RealTick *inputTick);
+int32_t sceRtcSetTick(TimeTable *inputTimeTable, RealTick *inputTick);
 
 /**
   * Adds Days to RTC Clock
@@ -65,7 +65,7 @@ int sceRtcSetTick(TimeTable *inputTimeTable, RealTick *inputTick);
   * @param days
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddDays(TimeTable *inputTimeTable, RealTick *inputTick, int days);
+int32_t sceRtcTickAddDays(TimeTable *inputTimeTable, RealTick *inputTick, int32_t days);
 
 /**
   * Adds hours to RTC Clock
@@ -74,7 +74,7 @@ int sceRtcTickAddDays(TimeTable *inputTimeTable, RealTick *inputTick, int days);
   * @param hours
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddHours(TimeTable *inputTimeTable, RealTick *inputTick, int hours);
+int32_t sceRtcTickAddHours(TimeTable *inputTimeTable, RealTick *inputTick, int32_t hours);
 
 /**
   * Add Micro Seconds to RTC Clock
@@ -83,7 +83,7 @@ int sceRtcTickAddHours(TimeTable *inputTimeTable, RealTick *inputTick, int hours
   * @param msecs
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddMicroseconds(TimeTable *inputTimeTable, RealTick *inputTick, int64_t msecs);
+int32_t sceRtcTickAddMicroseconds(TimeTable *inputTimeTable, RealTick *inputTick, int64_t msecs);
 
 /**
   * Add Minutes to RTC Clock
@@ -92,7 +92,7 @@ int sceRtcTickAddMicroseconds(TimeTable *inputTimeTable, RealTick *inputTick, in
   * @param mins
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddMinutes(TimeTable *inputTimeTable, RealTick *inputTick, int mins);
+int32_t sceRtcTickAddMinutes(TimeTable *inputTimeTable, RealTick *inputTick, int32_t mins);
 
 /**
   * Add Months to RTC Clock
@@ -101,7 +101,7 @@ int sceRtcTickAddMinutes(TimeTable *inputTimeTable, RealTick *inputTick, int min
   * @param months
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddMonths(TimeTable *inputTimeTable, RealTick *inputTick, int months);
+int32_t sceRtcTickAddMonths(TimeTable *inputTimeTable, RealTick *inputTick, int32_t months);
 
 /**
   * Add seconds to RTC Clock
@@ -110,7 +110,7 @@ int sceRtcTickAddMonths(TimeTable *inputTimeTable, RealTick *inputTick, int mont
   * @param seconds
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddSeconds(TimeTable *inputTimeTable, RealTick *inputTick, int64_t seconds);
+int32_t sceRtcTickAddSeconds(TimeTable *inputTimeTable, RealTick *inputTick, int64_t seconds);
 
 /**
   * Add ticks to RTC Clock
@@ -119,7 +119,7 @@ int sceRtcTickAddSeconds(TimeTable *inputTimeTable, RealTick *inputTick, int64_t
   * @param ticks
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddTicks(TimeTable *inputTimeTable, RealTick *inputTick, int64_t ticks);
+int32_t sceRtcTickAddTicks(TimeTable *inputTimeTable, RealTick *inputTick, int64_t ticks);
 
 /**
   * Add weaks to RTC Clock
@@ -128,7 +128,7 @@ int sceRtcTickAddTicks(TimeTable *inputTimeTable, RealTick *inputTick, int64_t t
   * @param weeks
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddWeeks(TimeTable *inputTimeTable, RealTick *inputTick, int weeks);
+int32_t sceRtcTickAddWeeks(TimeTable *inputTimeTable, RealTick *inputTick, int32_t weeks);
 
 /**
   * Add years to RTC Clock
@@ -137,7 +137,7 @@ int sceRtcTickAddWeeks(TimeTable *inputTimeTable, RealTick *inputTick, int weeks
   * @param years
   * @return 0 = Valid and Negatives values are error codes.
   */
-int sceRtcTickAddYears(TimeTable *inputTimeTable, RealTick *inputTick, int years);
+int32_t sceRtcTickAddYears(TimeTable *inputTimeTable, RealTick *inputTick, int32_t years);
 
 // These two functions are internal to the prx i think. -cv
 // Unused Functions ? will remain commented for now!
@@ -178,7 +178,7 @@ void sceRtcGetCurrentClock();
 // 0x0        = OK
 // 0x80B50002 = pointer is invalid
 // needs more RE to fully understand
-int sceRtcGetCurrentClockLocalTime(TimeTable*);
+int32_t sceRtcGetCurrentClockLocalTime(TimeTable*);
 
 // Undocumented Function... Need to reverse
 void sceRtcGetCurrentDebugNetworkTick();
