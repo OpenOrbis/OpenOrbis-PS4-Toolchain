@@ -10,7 +10,7 @@
 #define ORBIS_USER_SERVICE_USER_ID_SYSTEM 0xFF
 #define ORBIS_USER_SERVICE_USER_ID_INVALID	-1
 
-typedef int OrbisUserServiceUserId;
+typedef int32_t OrbisUserServiceUserId;
 
 #define ORBIS_KERNEL_PRIO_FIFO_LOWEST  0x2FF
 #define ORBIS_KERNEL_PRIO_FIFO_NORMAL  0x2BC

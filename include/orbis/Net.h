@@ -26,7 +26,7 @@ void sceNetBandwidthControlSetIfParam();
 // Empty Comment
 void sceNetBandwidthControlSetPolicy();
 // Empty Comment
-int sceNetBind(OrbisNetId, const OrbisNetSockaddr*, OrbisNetSocklen_t);
+int32_t sceNetBind(OrbisNetId, const OrbisNetSockaddr*, OrbisNetSocklen_t);
 // Empty Comment
 void sceNetClearDnsCache();
 // Empty Comment
@@ -146,7 +146,7 @@ void sceNetConfigWlanScan();
 // Empty Comment
 void sceNetConfigWlanSetDeviceConfig();
 // Empty Comment
-int sceNetConnect(OrbisNetId, const OrbisNetSockaddr*, OrbisNetSocklen_t);
+int32_t sceNetConnect(OrbisNetId, const OrbisNetSockaddr*, OrbisNetSocklen_t);
 // Empty Comment
 void sceNetControl();
 // Empty Comment
@@ -186,7 +186,7 @@ void sceNetEpollWait();
 // Empty Comment
 void sceNetErrnoLoc();
 // Empty Comment
-int sceNetEtherNtostr(unsigned char* macAddr, char* out, int length);
+int32_t sceNetEtherNtostr(unsigned char* macAddr, char* out, int32_t length);
 // Empty Comment
 void sceNetEtherStrton();
 // Empty Comment
@@ -202,9 +202,9 @@ void sceNetFreeAllRouteInfo();
 // Empty Comment
 void sceNetGetArpInfo();
 // Empty Comment
-int sceNetGetDnsInfo(OrbisNetDnsInfo* info, int flags);
+int32_t sceNetGetDnsInfo(OrbisNetDnsInfo* info, int32_t flags);
 // Empty Comment
-int sceNetGetIfList(enum OrbisNetIfName ifName_num, struct OrbisNetIfEntry* out, int unk);
+int32_t sceNetGetIfList(enum OrbisNetIfName ifName_num, struct OrbisNetIfEntry* out, int32_t unk);
 // Empty Comment
 void sceNetGetIfListOnce();
 // Empty Comment
@@ -212,13 +212,13 @@ void sceNetGetIfName();
 // Empty Comment
 void sceNetGetIfnameNumList();
 // Empty Comment
-int sceNetGetMacAddress(OrbisNetEtherAddr* mac_address, int len);
+int32_t sceNetGetMacAddress(OrbisNetEtherAddr* mac_address, int32_t len);
 // Empty Comment
 void sceNetGetMemoryPoolStats();
 // Empty Comment
 void sceNetGetNameToIndex();
 // Empty Comment
-int sceNetGetpeername(OrbisNetId, OrbisNetSockaddr*, OrbisNetSocklen_t*);
+int32_t sceNetGetpeername(OrbisNetId, OrbisNetSockaddr*, OrbisNetSocklen_t*);
 // Empty Comment
 void sceNetGetRandom();
 // Empty Comment
@@ -228,9 +228,9 @@ void sceNetGetSockInfo();
 // Empty Comment
 void sceNetGetSockInfo6();
 // Empty Comment
-int sceNetGetsockname(OrbisNetId, OrbisNetSockaddr*, OrbisNetSocklen_t*);
+int32_t sceNetGetsockname(OrbisNetId, OrbisNetSockaddr*, OrbisNetSocklen_t*);
 // Empty Comment
-int sceNetGetsockopt(OrbisNetId, int, int, void*, OrbisNetSocklen_t*);
+int32_t sceNetGetsockopt(OrbisNetId, int32_t, int32_t, void*, OrbisNetSocklen_t*);
 // Empty Comment
 void sceNetGetStatisticsInfo();
 // Empty Comment
@@ -244,15 +244,15 @@ uint16_t sceNetHtons(uint16_t);
 // Empty Comment
 void sceNetInetNtop();
 // Empty Comment
-int sceNetInetPton(int, const char*, void*);
+int32_t sceNetInetPton(int32_t, const char*, void*);
 // Empty Comment
 void sceNetInetPtonEx();
 // Empty Comment
-int sceNetInit();
+int32_t sceNetInit();
 // Empty Comment
 void sceNetIoctl();
 // Empty Comment
-int sceNetListen(OrbisNetId, int);
+int32_t sceNetListen(OrbisNetId, int);
 // Empty Comment
 void sceNetMemoryAllocate();
 // Empty Comment
@@ -264,25 +264,25 @@ uint64_t sceNetNtohll(uint64_t);
 // Empty Comment
 uint16_t sceNetNtohs(uint16_t);
 // Empty Comment
-int sceNetPoolCreate(const char *name, int size, int flags);
+int32_t sceNetPoolCreate(const char *name, int32_t size, int32_t flags);
 // Empty Comment
-void sceNetPoolDestroy(int);
+void sceNetPoolDestroy(int32_t);
 // Empty Comment
 void sceNetPppoeStart();
 // Empty Comment
 void sceNetPppoeStop();
 // Empty Comment
-int sceNetRecv(OrbisNetId, void*, size_t, int);
+int32_t sceNetRecv(OrbisNetId, void*, size_t, int);
 // Empty Comment
-int sceNetRecvfrom(OrbisNetId, void*, size_t, int, OrbisNetSockaddr*, OrbisNetSocklen_t*);
+int32_t sceNetRecvfrom(OrbisNetId, void*, size_t, int32_t, OrbisNetSockaddr*, OrbisNetSocklen_t*);
 // Empty Comment
-int sceNetRecvmsg(OrbisNetId, OrbisNetMsghdr*, int);
+int32_t sceNetRecvmsg(OrbisNetId, OrbisNetMsghdr*, int);
 // Empty Comment
-int sceNetResolverAbort(OrbisNetId, int flags);
+int32_t sceNetResolverAbort(OrbisNetId, int32_t flags);
 // Empty Comment
-OrbisNetId sceNetResolverCreate(const char *name, int memid, int flags);
+OrbisNetId sceNetResolverCreate(const char *name, int32_t memid, int32_t flags);
 // Empty Comment
-int sceNetResolverDestroy(OrbisNetId);
+int32_t sceNetResolverDestroy(OrbisNetId);
 // Empty Comment
 void sceNetResolverGetError();
 // Empty Comment
@@ -290,7 +290,7 @@ void sceNetResolverStartAton();
 // Empty Comment
 void sceNetResolverStartAton6();
 // Empty Comment
-int sceNetResolverStartNtoa(OrbisNetId rid, const char *hostname, OrbisNetInAddr *addr, int timeout, int retry, int flags);
+int32_t sceNetResolverStartNtoa(OrbisNetId rid, const char *hostname, OrbisNetInAddr *addr, int32_t timeout, int32_t retry, int32_t flags);
 // Empty Comment
 void sceNetResolverStartNtoa6();
 // Empty Comment
@@ -298,17 +298,17 @@ void sceNetResolverStartNtoaMultipleRecords();
 // Empty Comment
 void sceNetResolverStartNtoaMultipleRecordsEx();
 // Empty Comment
-int sceNetSend(OrbisNetId, const void*, size_t, int);
+int32_t sceNetSend(OrbisNetId, const void*, size_t, int);
 // Empty Comment
-int sceNetSendmsg(OrbisNetId, const OrbisNetMsghdr*, int);
+int32_t sceNetSendmsg(OrbisNetId, const OrbisNetMsghdr*, int);
 // Empty Comment
-int sceNetSendto(OrbisNetId, const void*, size_t, int, const OrbisNetSockaddr*, OrbisNetSocklen_t);
+int32_t sceNetSendto(OrbisNetId, const void*, size_t, int32_t, const OrbisNetSockaddr*, OrbisNetSocklen_t);
 // Empty Comment
 void sceNetSetDnsInfo();
 // Empty Comment
 void sceNetSetDnsInfoToKernel();
 // Empty Comment
-int sceNetSetsockopt(OrbisNetId, int, int, const void*, OrbisNetSocklen_t);
+int32_t sceNetSetsockopt(OrbisNetId, int32_t, int32_t, const void*, OrbisNetSocklen_t);
 // Empty Comment
 void sceNetShowIfconfig();
 // Empty Comment
@@ -328,13 +328,13 @@ void sceNetShowRoute6();
 // Empty Comment
 void sceNetShowRouteWithMemory();
 // Empty Comment
-int sceNetShutdown(OrbisNetId, int);
+int32_t sceNetShutdown(OrbisNetId, int);
 // Empty Comment
-OrbisNetId sceNetSocket(const char *, int, int, int);
+OrbisNetId sceNetSocket(const char *, int32_t, int32_t, int);
 // Empty Comment
-int sceNetSocketAbort(OrbisNetId, int);
+int32_t sceNetSocketAbort(OrbisNetId, int);
 // Empty Comment
-int sceNetSocketClose(OrbisNetId);
+int32_t sceNetSocketClose(OrbisNetId);
 // Empty Comment
 void sceNetSyncCreate();
 // Empty Comment

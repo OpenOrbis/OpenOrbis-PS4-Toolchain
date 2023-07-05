@@ -52,7 +52,7 @@ void sceNpCheckCallbackForLib();
 // Empty Comment
 void sceNpCheckNpAvailability();
 
-int32_t sceNpCheckNpAvailabilityA(int, int32_t UserID);
+int32_t sceNpCheckNpAvailabilityA(int32_t, int32_t UserID);
 
 // Empty Comment
 void sceNpCheckNpReachability();

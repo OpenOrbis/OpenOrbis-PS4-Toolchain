@@ -9,32 +9,32 @@
 extern "C" {
 #endif
 
-int sceAppInstUtilInitialize(void);
-int sceAppInstUtilTerminate(void);
+int32_t sceAppInstUtilInitialize(void);
+int32_t sceAppInstUtilTerminate(void);
 
-int sceAppInstUtilGetTitleIdFromPkg(const char* pkgPath, char* titleId, int* isApp);
-int sceAppInstUtilGetPrimaryAppSlot(const char* titleId, int* slot);
+int32_t sceAppInstUtilGetTitleIdFromPkg(const char* pkgPath, char* titleId, int32_t* isApp);
+int32_t sceAppInstUtilGetPrimaryAppSlot(const char* titleId, int32_t* slot);
 
-int sceAppInstUtilAppPrepareOverwritePkg(const char* pkgPath);
+int32_t sceAppInstUtilAppPrepareOverwritePkg(const char* pkgPath);
 
-int sceAppInstUtilAppInstallPkg(const char* pkgPath, void* reserved);
+int32_t sceAppInstUtilAppInstallPkg(const char* pkgPath, void* reserved);
 
-int sceAppInstUtilAppUnInstall(const char* titleId);
-int sceAppInstUtilAppUnInstallByUser(const char* titleId, int userId);
-int sceAppInstUtilAppUnInstallPat(const char* titleId);
-int sceAppInstUtilAppUnInstallTypes(const char* titleId, unsigned int deleteTypes);
-int sceAppInstUtilAppUnInstallAddcont(const char* titleId, const char* addcontName);
-int sceAppInstUtilAppUnInstallTheme(const char* contentId);
+int32_t sceAppInstUtilAppUnInstall(const char* titleId);
+int32_t sceAppInstUtilAppUnInstallByUser(const char* titleId, int32_t userId);
+int32_t sceAppInstUtilAppUnInstallPat(const char* titleId);
+int32_t sceAppInstUtilAppUnInstallTypes(const char* titleId, uint32_t deleteTypes);
+int32_t sceAppInstUtilAppUnInstallAddcont(const char* titleId, const char* addcontName);
+int32_t sceAppInstUtilAppUnInstallTheme(const char* contentId);
 
 bool sceAppInstUtilAppIsInInstalling(const char* contentId);
-int sceAppInstUtilAppIsInUpdating(const char* titleId, int* updating);
-int sceAppInstUtilAppExists(const char* titleId, int* exists);
-int sceAppInstUtilAppGetSize(const char* titleId, unsigned long* size);
+int32_t sceAppInstUtilAppIsInUpdating(const char* titleId, int32_t* updating);
+int32_t sceAppInstUtilAppExists(const char* titleId, int32_t* exists);
+int32_t sceAppInstUtilAppGetSize(const char* titleId, uint32_t* size);
 
-int sceAppInstUtilAppRecoverApp(const char* titleId);
+int32_t sceAppInstUtilAppRecoverApp(const char* titleId);
 
-int sceAppInstUtilGetInstallProgress(const char* contentId, unsigned int* progress);
-int sceAppInstUtilGetInstallProgressInfo(const char* contentId, unsigned int* state, unsigned int* progress, unsigned long* progressSize, unsigned long* totalSize, unsigned int* restSec);
+int32_t sceAppInstUtilGetInstallProgress(const char* contentId, uint32_t* progress);
+int32_t sceAppInstUtilGetInstallProgressInfo(const char* contentId, uint32_t* state, uint32_t* progress, uint32_t* progressSize, uint32_t* totalSize, uint32_t* restSec);
 
 // Empty Comment
 void sceAppInstUtilAppCancelableUnInstall();

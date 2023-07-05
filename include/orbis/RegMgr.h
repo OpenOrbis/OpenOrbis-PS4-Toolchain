@@ -30,15 +30,15 @@ void sceRegMgrEvtGetCnt();
 // Empty Comment
 void sceRegMgrEvtGetRegId();
 // Empty Comment
-int sceRegMgrGetBin(int optionId, void* outData, size_t dataLength);
+int32_t sceRegMgrGetBin(int32_t optionId, void* outData, size_t dataLength);
 // Empty Comment
 void sceRegMgrGetBinInitVal();
 // Empty Comment
-int sceRegMgrGetInt(int optionId, int* outInt);
+int32_t sceRegMgrGetInt(int32_t optionId, int32_t* outInt);
 // Empty Comment
 void sceRegMgrGetIntInitVal();
 // Empty Comment
-int sceRegMgrGetStr(int optionId, char* outString, size_t stringLength);
+int32_t sceRegMgrGetStr(int32_t optionId, char* outString, size_t stringLength);
 // Empty Comment
 void sceRegMgrGetStrInitVal();
 // Empty Comment
@@ -68,13 +68,13 @@ void sceRegMgrNonSysSetStr();
 // Empty Comment
 void sceRegMgrResetVal();
 // Empty Comment
-int sceRegMgrSetBin(int optionId, const void* inData, size_t dataLength);
+int32_t sceRegMgrSetBin(int32_t optionId, const void* inData, size_t dataLength);
 // Empty Comment
 void sceRegMgrSetInitLevel();
 // Empty Comment
-int sceRegMgrSetInt(int optionId, int inInt);
+int32_t sceRegMgrSetInt(int32_t optionId, int32_t inInt);
 // Empty Comment
-int sceRegMgrSetStr(int optionId, const char* inStirng, size_t stringLength);
+int32_t sceRegMgrSetStr(int32_t optionId, const char* inStirng, size_t stringLength);
 // Empty Comment
 void sceRegMgrSrvCnvRegionInt();
 // Empty Comment

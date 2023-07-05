@@ -60,10 +60,10 @@
 
 typedef struct OrbisKeyboardData
 {
-	unsigned int timestamp; // microseconds XXX: is it 64-bit?
+	uint32_t timestamp; // microseconds XXX: is it 64-bit?
 	uint8_t padding[12];
-	int unk1; // always 1
-	int nkeys;
+	int32_t unk1; // always 1
+	int32_t nkeys;
 	uint32_t locks; // num lock, caps lock, scroll lock
 	uint32_t mods; // ctrl, shift, alt, meta
 	uint16_t keycodes[32];
@@ -71,8 +71,8 @@ typedef struct OrbisKeyboardData
 
 typedef struct OrbisKeyboardKey2Char
 {
-	int ok;
-	int ok2; //wtf it is
-	int keycode;
+	int32_t ok;
+	int32_t ok2; //wtf it is
+	int32_t keycode;
 	char unk[8]; //zeros
 } OrbisKeyboardKey2Char;

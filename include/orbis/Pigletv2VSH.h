@@ -82,13 +82,13 @@ bool scePigletSetConfigurationVSH(const OrbisPglConfig *in_config);
 bool scePigletGetConfigurationVSH(OrbisPglConfig *out_config);
 
 // A valid display must exist, and pname can only be 1 it seems.
-bool scePigletGetInteger(int pname, long *out_data);
+bool scePigletGetInteger(int32_t pname, int32_t *out_data);
 
 // Prints heap statistics to a FILE* stream. The stream must be created by libSceLibcInternal.
-unsigned long scePigletHeapDump(void *FILE_fprintf_stream, int unk_1, int unk_2);
+uint32_t scePigletHeapDump(void *FILE_fprintf_stream, int32_t unk_1, int32_t unk_2);
 
 // Mostly the same as scePigletHeapDump?? The stream must be created by libSceLibcInternal.
-unsigned long scePigletHeapGetInfo(void *FILE_fprintf_stream, int unk_1);
+uint32_t scePigletHeapGetInfo(void *FILE_fprintf_stream, int32_t unk_1);
 
 #ifdef __cplusplus
 }
