@@ -87,7 +87,7 @@ typedef struct _OrbisKernelEventFlagOptParam {
 } OrbisKernelEventFlagOptParam;
 
 typedef struct timeval OrbisKernelTimeval;
-typedef unsigned int OrbisKernelUseconds;
+typedef uint32_t OrbisKernelUseconds;
 typedef uint32_t OrbisKernelModule;
 
 typedef uint64_t OrbisKernelEqueue;
@@ -123,8 +123,8 @@ typedef struct {
 	void* unk01;
 	void* unk02;
 	off_t offset;
-	int unk04;
-	int unk05;
+	int32_t unk04;
+	int32_t unk05;
 	unsigned isFlexibleMemory : 1;
 	unsigned isDirectMemory : 1;
 	unsigned isStack : 1;
@@ -173,16 +173,16 @@ enum OrbisNotificationRequestType
 typedef struct
 {
 	enum OrbisNotificationRequestType type;
-	int reqId;
-	int priority;
-	int msgId;
-	int targetId;
-	int userId;
-	int unk1;
-	int unk2;
-	int appId;
-	int errorNum;
-	int unk3;
+	int32_t reqId;
+	int32_t priority;
+	int32_t msgId;
+	int32_t targetId;
+	int32_t userId;
+	int32_t unk1;
+	int32_t unk2;
+	int32_t appId;
+	int32_t errorNum;
+	int32_t unk3;
 	unsigned char useIconImageUri;
 	char message[1024];
 	char iconUri[1024];
@@ -191,10 +191,10 @@ typedef struct
 
 typedef struct
 {
-	int AppId;
-	int Unk;
+	int32_t AppId;
+	int32_t Unk;
 	char unk0x8[0x4];
-	int AppType;
+	int32_t AppType;
 	char TitleId[10];
 	char unk0x1A[0x2E];
 } OrbisAppInfo;

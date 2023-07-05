@@ -19,20 +19,20 @@ extern "C" {
 #endif
 
 
-int scePadInit(void);
-int scePadOpen(int userID, int type, int index, void *param);
-int scePadOpenExt(int userID, int type, int index, OrbisPadExtParam *param);
-int scePadClose(int handle);
-int scePadRead(int handle, OrbisPadData *data, int count);
-int scePadReadState(int handle, OrbisPadData *data);
-int scePadResetLightBar(int handle);
-int scePadSetLightBar(int handle, OrbisPadColor *inputColor);
-int scePadGetControllerInformation(int handle, OrbisPadInformation *info);
-int scePadGetExtControllerInformation(int handle, OrbisPadInformation *info);
-int scePadGetHandle(int userID, uint32_t controller_type, uint32_t controller_index);
-int scePadResetOrientation(int handle);
-int scePadSetVibration(int handle, const OrbisPadVibeParam *param);
-int scePadOutputReport(int handle, int type, uint8_t *report, int length);
+int32_t scePadInit(void);
+int32_t scePadOpen(int32_t userID, int32_t type, int32_t index, void *param);
+int32_t scePadOpenExt(int32_t userID, int32_t type, int32_t index, OrbisPadExtParam *param);
+int32_t scePadClose(int32_t handle);
+int32_t scePadRead(int32_t handle, OrbisPadData *data, int32_t count);
+int32_t scePadReadState(int32_t handle, OrbisPadData *data);
+int32_t scePadResetLightBar(int32_t handle);
+int32_t scePadSetLightBar(int32_t handle, OrbisPadColor *inputColor);
+int32_t scePadGetControllerInformation(int32_t handle, OrbisPadInformation *info);
+int32_t scePadGetExtControllerInformation(int32_t handle, OrbisPadInformation *info);
+int32_t scePadGetHandle(int32_t userID, uint32_t controller_type, uint32_t controller_index);
+int32_t scePadResetOrientation(int32_t handle);
+int32_t scePadSetVibration(int32_t handle, const OrbisPadVibeParam *param);
+int32_t scePadOutputReport(int32_t handle, int32_t type, uint8_t *report, int32_t length);
 
 // The below functions are currently not reversed
 void scePadConnectPort();

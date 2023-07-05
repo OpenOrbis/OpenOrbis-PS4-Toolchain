@@ -59,7 +59,7 @@ typedef struct OrbisMsgDialogButtonsParam {
 
 typedef struct OrbisMsgDialogUserMessageParam {
 	OrbisMsgDialogButtonType buttonType;
-	int :32;
+	int32_t :32;
 	const char *msg;
 	OrbisMsgDialogButtonsParam *buttonsParam;
 	char reserved[24];
@@ -67,7 +67,7 @@ typedef struct OrbisMsgDialogUserMessageParam {
 
 typedef struct OrbisMsgDialogProgressBarParam {
 	OrbisMsgDialogProgressBarType barType;
-	int :32;
+	int32_t :32;
 	const char *msg;
 	char reserved[64];
 } OrbisMsgDialogProgressBarParam;
@@ -81,11 +81,11 @@ typedef struct OrbisMsgDialogParam {
 	OrbisCommonDialogBaseParam baseParam;
 	size_t size;
 	OrbisMsgDialogMode mode;
-	int :32;
+	int32_t :32;
 	OrbisMsgDialogUserMessageParam *userMsgParam;
 	OrbisMsgDialogProgressBarParam *progBarParam;
 	OrbisMsgDialogSystemMessageParam *sysMsgParam;
 	OrbisUserServiceUserId userId;
 	char reserved[40];
-	int :32;
+	int32_t :32;
 } OrbisMsgDialogParam;

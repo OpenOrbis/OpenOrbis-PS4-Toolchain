@@ -13,13 +13,13 @@ void sceNpTrophyAbortHandle();
 // Empty Comment
 void sceNpTrophyCaptureScreenshot();
 // Empty Comment
-int sceNpTrophyCreateContext(int32_t *context, int32_t user, uint32_t unk, uint64_t unk2);
+int32_t sceNpTrophyCreateContext(int32_t *context, int32_t user, uint32_t unk, uint64_t unk2);
 // Empty Comment
-int sceNpTrophyCreateHandle(int32_t *handle);
+int32_t sceNpTrophyCreateHandle(int32_t *handle);
 // Empty Comment
-int sceNpTrophyDestroyContext(int32_t context);
+int32_t sceNpTrophyDestroyContext(int32_t context);
 // Empty Comment
-int sceNpTrophyDestroyHandle(int32_t handle);
+int32_t sceNpTrophyDestroyHandle(int32_t handle);
 // Empty Comment
 void sceNpTrophyGetGameIcon();
 // Empty Comment
@@ -55,13 +55,13 @@ void sceNpTrophyIntGetTrpIconByUri();
 // Empty Comment
 void sceNpTrophyIntNetSyncTitles();
 // Empty Comment
-int sceNpTrophyRegisterContext(int32_t context, int32_t handle, uint64_t unk);
+int32_t sceNpTrophyRegisterContext(int32_t context, int32_t handle, uint64_t unk);
 // Empty Comment
-int sceNpTrophyShowTrophyList(int32_t Context, int32_t hadle);
+int32_t sceNpTrophyShowTrophyList(int32_t Context, int32_t hadle);
 // Empty Comment
 void sceNpTrophySystemIsServerAvailable();
 // Empty Comment
-int sceNpTrophyUnlockTrophy(int32_t context, int32_t handle, int32_t TrophyID, int32_t *PLATID);
+int32_t sceNpTrophyUnlockTrophy(int32_t context, int32_t handle, int32_t TrophyID, int32_t *PLATID);
 
 #ifdef __cplusplus
 }

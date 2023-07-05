@@ -11,18 +11,18 @@
 extern "C" {
 #endif
 
-int sceVideoOutOpen(OrbisUserServiceUserId, int, int, const void *);
-int sceVideoOutClose(int);
+int32_t sceVideoOutOpen(OrbisUserServiceUserId, int32_t, int32_t, const void *);
+int32_t sceVideoOutClose(int32_t);
 // need to port sceVideoOutBufferAttribute (last arg)
-int sceVideoOutRegisterBuffers(int, int, void * const *, int, const OrbisVideoOutBufferAttribute *);
-int sceVideoOutUnregisterBuffers(int, int);
-int sceVideoOutSubmitFlip(int, int, unsigned int, int64_t);
-void sceVideoOutSetBufferAttribute(void *, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int);
-int sceVideoOutSetFlipRate(int handle, int fliprate);
-int sceVideoOutAddFlipEvent(OrbisKernelEqueue, int, void *);
-int sceVideoOutGetFlipStatus(int, OrbisVideoOutFlipStatus *);
-int sceVideoOutIsFlipPending(int);
-int sceVideoOutGetResolutionStatus(int, OrbisVideoOutResolutionStatus *status);
+int32_t sceVideoOutRegisterBuffers(int32_t, int32_t, void * const *, int32_t, const OrbisVideoOutBufferAttribute *);
+int32_t sceVideoOutUnregisterBuffers(int32_t, int);
+int32_t sceVideoOutSubmitFlip(int32_t, int32_t, uint32_t, int64_t);
+void sceVideoOutSetBufferAttribute(void *, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
+int32_t sceVideoOutSetFlipRate(int32_t handle, int32_t fliprate);
+int32_t sceVideoOutAddFlipEvent(OrbisKernelEqueue, int32_t, void *);
+int32_t sceVideoOutGetFlipStatus(int32_t, OrbisVideoOutFlipStatus *);
+int32_t sceVideoOutIsFlipPending(int32_t);
+int32_t sceVideoOutGetResolutionStatus(int32_t, OrbisVideoOutResolutionStatus *status);
 
 void sceVideoOutAddBuffer();
 void sceVideoOutAddBuffer4k2kPrivilege();
