@@ -356,4 +356,3 @@ void sceUserServiceUnregisterEventCallback();
 }
 #endif
 #endif
-
