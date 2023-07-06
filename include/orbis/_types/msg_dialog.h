@@ -1,5 +1,6 @@
 #pragma once 
 
+#include "common_dialog.h"
 #include <stdint.h>
 
 #define ORBIS_MSG_DIALOG_BUTTON_ID_INVALID			(0)
