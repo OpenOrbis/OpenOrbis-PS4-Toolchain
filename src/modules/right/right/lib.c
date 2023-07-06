@@ -9,22 +9,22 @@ uint32_t sceGameRightGetVersion()
 	return 1;
 }
 
-void* sceGameRightGetString()
+const char* sceGameRightGetString()
 {
 	return string_data;
 }
 
 int32_t sceGameRightGetStringSizeInBytes()
 {
-	return (int32_t)size_string_data;
+	return (int32_t)sizeof(string_data);
 }
 
 void* sceGameRightGetLogoPngImage()
 {
-	return logo_data;
+	return (void*)logo_data;
 }
 
 int32_t sceGameRightGetLogoPngImageSizeInBytes()
 {
-	return (int32_t)size_logo_data;
+	return (int32_t)sizeof(logo_data);
 }

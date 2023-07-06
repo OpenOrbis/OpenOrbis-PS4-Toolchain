@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 void(*__init_array_start[])(void);
 void(*__init_array_end[])(void);
 
@@ -28,23 +30,27 @@ __asm__(
 ".att_syntax prefix \n"
 );
 
-int __attribute__((visibility("hidden"))) module_start(unsigned long long args, const void* argp)
+int32_t __attribute__((visibility("hidden"))) module_start(int64_t args, const void* argp)
 {
 	// Iterate init array and initialize all objects
 	for(void(**i)(void) = __init_array_start; i != __init_array_end; i++)
-	        i[0]();
+	{
+		i[0]();
+	}
+	return 0;
 }
 
-int __attribute__((visibility("hidden"))) module_stop(unsigned long long args, const void* argp)
-{
-}
-
-int _init()
+int32_t __attribute__((visibility("hidden"))) module_stop(int64_t args, const void* argp)
 {
 	return 0;
 }
 
-int _fini()
+int32_t _init()
+{
+	return 0;
+}
+
+int32_t _fini()
 {
 	return 0;
 }

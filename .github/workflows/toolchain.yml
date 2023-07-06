@@ -13,17 +13,48 @@ on:
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        llvm: [ '10', '11', '12', '13', '14', '15', '16' ]
     runs-on: ubuntu-latest
     steps:
 
-      - name: Checkout
+      - name: Checkout OOSDK
         uses: actions/checkout@v3
+
+      - name: Checkout musl
+        uses: actions/checkout@v3
+        with:
+          repository: OpenOrbis/musl
+          path: musl
+
+      - name: Checkout create-fself
+        uses: actions/checkout@v3
+        with:
+          repository: OpenOrbis/create-fself
+          path: create-fself
+
+      - name: Checkout orbis-lib-gen
+        uses: actions/checkout@v3
+        with:
+          repository: OpenOrbis/orbis-lib-gen
+          path: orbis-lib-gen
+
+      - name: Checkout ps4libdoc
+        uses: actions/checkout@v3
+        with:
+          repository: idc/ps4libdoc
+          path: orbis-lib-gen/ps4libdoc
+          ref: '5.05'
 
       - name: Set environment variables
         run: | 
           echo "OO_PS4_TOOLCHAIN=$GITHUB_WORKSPACE" >> $GITHUB_ENV
-          echo llvm_ver=12.0 >> $GITHUB_ENV
-          echo "llvm_path=$RUNNER_TOOL_CACHE/llvm" >> $GITHUB_ENV
+          echo llvm_ver=${{ matrix.llvm }} >> $GITHUB_ENV
+          echo "llvm_path=${{ runner.tool_cache }}/llvm" >> $GITHUB_ENV
+          # llvm 13 fix for ci
+          sudo apt install libncurses5
 
       - name: Cache LLVM and Clang (${{ env.llvm_ver }})
         id: cache-llvm
@@ -33,24 +64,77 @@ jobs:
           key: llvm-${{ env.llvm_ver }}
 
       - name: Install LLVM and Clang (${{ env.llvm_ver }})
-        uses: KyleMayes/install-llvm-action@v1
+        uses: KyleMayes/install-llvm-action@master
         with:
           version: ${{ env.llvm_ver }}
           directory: ${{ env.llvm_path }}
           cached: ${{ steps.cache-llvm.outputs.cache-hit }}
 
+      - name: Set up musl environment
+        working-directory: musl
+        run: |
+         mkdir ps4
+         clang -v
+         ./configure --target=x86_64-scei-ps4 --disable-shared CC="clang" \
+         CFLAGS="-fPIC -DPS4 -D_LIBUNWIND_IS_BAREMETAL=1" \
+         --prefix=./ps4
+
+      - name: Build musl
+        working-directory: musl
+        run: make
+
+      - name: Install musl
+        working-directory: musl
+        run: |
+          make install
+          cp -r ps4/include/* ../include/
+          cp -r ps4/lib/* ../lib/
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+
+      - name: Build create-fself
+        working-directory: create-fself/cmd/create-fself
+        run: |
+          GOOS=windows go build -o ${{ github.workspace }}/bin/windows/create-fself.exe -modfile=go-linux.mod
+          go build -o ${{ github.workspace }}/bin/linux/create-fself -modfile=go-linux.mod
+          GOOS=darwin go build -o ${{ github.workspace }}/bin/macos/create-fself-macos -modfile=go-linux.mod
+
+      - name: Generate library stub sources
+        working-directory: orbis-lib-gen
+        run: python generate.py ps4libdoc/system/common/lib
+
+      - name: Generate makefile
+        working-directory: orbis-lib-gen
+        run: python gen_makefile.py
+
+      - name: Build library stubs
+        working-directory: orbis-lib-gen/build
+        run: make
+
+      - name: Install library stubs
+        working-directory: orbis-lib-gen
+        run: |
+          rm build/out/libc.so
+          cp -r build/out/* ../lib/
+
+      - name: Remove built dependencies
+        run: |
+          rm -rf create-fself
+          rm -rf musl
+          rm -rf orbis-lib-gen
+
       - name: Download and extract dependencies
         run: |
-          curl -sL https://github.com/OpenOrbis/musl/releases/latest/download/musl.tar.gz | tar xz -C ./
           curl -sL https://github.com/OpenOrbis/llvm-project/releases/latest/download/libcxx-full.tar.gz | tar xz -C ./
           curl -sL https://github.com/OpenOrbis/SDL-PS4/releases/latest/download/SDL2.tar.gz | tar xz -C ./
-          curl -sL https://github.com/OpenOrbis/orbis-lib-gen/releases/latest/download/lib.tar.gz | tar xz -C ./
-          curl -sL https://github.com/OpenOrbis/create-fself/releases/latest/download/binaries.tar.gz | tar xz -C ./
           curl -sL https://github.com/OpenOrbis/create-gp4/releases/latest/download/binaries.tar.gz | tar xz -C ./
           curl -sL https://github.com/OpenOrbis/readoelf/releases/latest/download/binaries.tar.gz | tar xz -C ./
 
       # Get maxton's publishing tools <3
-      - name: Download and extract maxton's Publishing Tools
+      - name: "Download and extract maxton's Publishing Tools"
         run: |
           BASE_URL="https://github.com/maxton/LibOrbisPkg/releases/latest/download"
           curl -sL $BASE_URL/PkgEditor-0.2.231.zip | busybox unzip - -o -d bin/windows
@@ -79,8 +163,8 @@ jobs:
         working-directory: src/modules
         run: bash build-and-copy.sh
 
-      - name: Create tarball
-        run: tar -czf toolchain.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
+      - name: Create toolchain tarball
+        run: tar -czf toolchain-llvm-${{ env.llvm_ver }}.tar.gz --transform 's,^,OpenOrbis/PS4Toolchain/,' *
 
       - name: Build samples
         working-directory: samples
@@ -89,12 +173,22 @@ jobs:
       - name: Upload toolchain
         uses: actions/upload-artifact@v3
         with:
-          name: toolchain
-          path: toolchain.tar.gz
+          name: toolchain-llvm-${{ env.llvm_ver }}
+          path: toolchain-llvm-${{ env.llvm_ver }}.tar.gz
           if-no-files-found: error
 
-      - name: Upload samples
+      - name: Upload samples packages
         uses: actions/upload-artifact@v3
         with:
-          name: samples
+          name: samples-pkg-llvm-${{ env.llvm_ver }}
           path: samples/**/*.pkg
+
+      - name: Upload samples binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: samples-elf-llvm-${{ env.llvm_ver }}
+          path: |
+            samples/**/*.elf
+            samples/**/*.so
+            src/**/*.elf
+            src/**/*.so

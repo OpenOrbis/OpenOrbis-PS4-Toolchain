@@ -7,21 +7,25 @@ LIBS 		:= -lSceLibcInternal -lkernel
 
 # Compiler options. You likely won't need to touch these.
 UNAME_S := $(shell uname -s)
+
 ifeq ($(UNAME_S),Linux)
-		CC  	:= clang++
-		LD 		:= ld.lld
-		CDIR	:= linux
+		CC      := clang
+		CCX     := clang++
+		LD      := ld.lld
+		CDIR    := linux
 endif
 ifeq ($(UNAME_S),Darwin)
-		CC 		:= /usr/local/opt/llvm/bin/clang++
-		LD 		:= /usr/local/opt/llvm/bin/ld.lld
-		CDIR	:= macos
+		CC      := /usr/local/opt/llvm/bin/clang
+		CCX     := /usr/local/opt/llvm/bin/clang++
+		LD      := /usr/local/opt/llvm/bin/ld.lld
+		CDIR    := macos
 endif
+
 ODIR 		:= $(INTDIR)
 SDIR 		:= $(PROJDIR)
 IDIRS 		:= -I$(TOOLCHAIN)/include
 LDIRS 		:= -L$(TOOLCHAIN)/lib
-CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf -munwind-tables $(IDIRS) -emit-obj
+CFLAGS 		:= -cc1 -triple x86_64-scei-ps4-elf $(IDIRS) -emit-obj
 LFLAGS 		:= -m elf_x86_64 -pie --version-script="right/right.version" --script $(TOOLCHAIN)/link.x --eh-frame-hdr $(LDIRS) $(LIBS) $(TOOLCHAIN)/lib/crtlib.o
 
 CFILES 		:= $(wildcard $(SDIR)/*.c)
