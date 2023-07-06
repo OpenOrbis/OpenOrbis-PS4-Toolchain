@@ -64,3 +64,25 @@
 #define ORBIS_SYSTEM_PARAM_LANG_THAI					27		//Thai
 #define ORBIS_SYSTEM_PARAM_LANG_VIETNAMESE				28		//Vietnamese
 #define ORBIS_SYSTEM_PARAM_LANG_INDONESIAN				29		//Indonesian
+
+// Credit: LightningMods
+enum LaunchApp_Flag
+{
+    LaunchApp_None = 0,
+    LaunchApp_SkipLaunch = 1,
+    LaunchApp_SkipResume = 1,
+    LaunchApp_SkipSystemUpdate = 2,
+    LaunchApp_RebootPatchInstall = 4,
+    LaunchApp_VRMode = 8,
+    LaunchApp_NonVRMode = 16
+};
+
+typedef struct _LncAppParam
+{
+    uint32_t size;
+    uint32_t user_id;
+    uint32_t app_opt;
+    uint64_t crash_report;
+    enum LaunchApp_Flag LaunchAppCheck_flag;
+}
+LncAppParam;

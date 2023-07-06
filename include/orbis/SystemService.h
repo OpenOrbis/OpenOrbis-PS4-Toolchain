@@ -14,8 +14,8 @@ int32_t sceSystemServiceParamGetInt(int32_t paramId, int32_t *value);
 int32_t sceSystemServiceParamGetString(int32_t paramId, char *buf, size_t bufSize);
 int32_t sceSystemServiceGetAppIdOfBigApp(void);
 int32_t sceSystemServiceGetAppIdOfMiniApp(void);
+int32_t sceLncUtilLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 int32_t sceSystemServiceKillApp(uint32_t appid, int32_t opt, int32_t method, int32_t reason);
-
 void sceSystemServiceAcquireFb0();
 void sceSystemServiceAddLocalProcess();
 void sceSystemServiceAddLocalProcessForPsmKit();

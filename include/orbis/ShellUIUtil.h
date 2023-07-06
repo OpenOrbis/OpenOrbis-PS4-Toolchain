@@ -2,26 +2,25 @@
 #define _SCE_SHELL_UI_UTIL_H_
 
 #include <stdint.h>
+#include <orbis/_types/shell_ui.h>
 
 #ifdef __cplusplus 
 extern "C" {
 #endif
-
 
 // Empty Comment
 void sceShellUIUtilGetAppUrl();
 // Empty Comment
 void sceShellUIUtilGetDefaultQueryParameter();
 // Empty Comment
-void sceShellUIUtilInitialize();
+int sceShellUIUtilInitialize();
 // Empty Comment
-void sceShellUIUtilLaunchByUri();
+int sceShellUIUtilLaunchByUri(const char* uri,  OrbisShellUIUtilLaunchByUriParam *Param);
 // Empty Comment
 void sceShellUIUtilTerminate();
-
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // _SCE_SHELL_UI_UTIL_H_
