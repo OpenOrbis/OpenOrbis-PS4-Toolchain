@@ -2,7 +2,7 @@
 
 [![Release State](https://img.shields.io/badge/release%20state-beta-yellow.svg)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain)
 [![Release](https://img.shields.io/github/v/release/OpenOrbis/OpenOrbis-PS4-Toolchain)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
-[![Build OpenOrbis Toolchain](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/actions/workflows/toolchain.yml/badge.svg?branch=master&event=push)](/LICENSE)
+[![Build OpenOrbis Toolchain](../../actions/workflows/toolchain.yml/badge.svg)](../../actions/workflows/toolchain.yml)
 [![Platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)](https://github.com/OpenOrbis/OpenOrbis-PS4-Toolchain/releases/latest)
 
 **Note: Use the release zip or an installer, or you'll have to build the libraries and binaries yourself. It's setup this way to prevent the repo from getting bloated with binaries.**
@@ -46,21 +46,21 @@ Tool-specific documentation can be found alongside it's source code. The `docs` 
 
 The clang toolchain as well as the llvm linker (lld) is needed to compile and link using this SDK. For Windows, these can be downloaded using the [Pre-Built Binaries](https://releases.llvm.org/download.html) provided by LLVM. For Linux and macOS, the same page contains pre-built binaries, however you can also use the following commands (Debian/Ubuntu):
 
-```
-sudo apt-get update
-sudo apt-get install clang
-sudo apt-get install lld
+```bash
+sudo apt update
+sudo apt install clang
+sudo apt install lld
 ```
 In case you're using any Arch derivative:
 
-```
+```bash
 sudo pacman -S clang
 sudo pacman -S lld
 ```
 
 macOS users can use [Homebrew](https://brew.sh/) to install a pure copy of LLVM (the Apple version would not work with the toolchain!)
 
-```
+```bash
 brew install llvm
 ```
 
@@ -68,7 +68,7 @@ In the future, we may include pre-built binaries for clang/lld, however for the 
 
 The `OO_PS4_TOOLCHAIN` environment variable also needs to be set. On Windows, this can be done using the environment variables control panel. On linux and macOS, the following command can be added to `~/.bashrc` (Debian/Ubuntu), `~/.bash_profile` (macOS Mojave and lower) or `~/.zshrc` (macOS Catalina):
 
-```
+```bash
 export OO_PS4_TOOLCHAIN=[directory of installation]
 ```
 
@@ -154,8 +154,6 @@ All scripts in the `/scripts` directory are Python 3 scripts, specifically targe
 
 **symbol_entries.py** - Gets a list of symbols from the symbol table of Orbis ELFs.
 
-
-
 ## License
 
 [OpenOrbis](https://github.com/OpenOrbis).
@@ -163,8 +161,6 @@ All scripts in the `/scripts` directory are Python 3 scripts, specifically targe
 This project is licensed under the GPLv3 license - see the [LICENSE](LICENSE) file for details.
 
 The accompanying LLVM binaries are licensed under the Apache 2.0 license and is owned by LLVM. Under that license, redistribution is allowed.
-
-
 
 ## Credits + Special Thanks
 

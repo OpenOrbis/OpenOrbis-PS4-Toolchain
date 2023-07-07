@@ -32,7 +32,7 @@ bool Scene2D::Init(size_t memSize, int numFrameBuffers)
 	
 #ifdef GRAPHICS_USES_FONT
 	// Load freetype
-	rc = sceSysmoduleLoadModule(0x009A);
+	rc = sceSysmoduleLoadModule(ORBIS_SYSMODULE_FREETYPE_OL);
 
 	if (rc < 0)
 	{

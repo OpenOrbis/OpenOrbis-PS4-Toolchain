@@ -5,9 +5,7 @@
 #include <orbis/_types/keyboard.h>
 #include <orbis/_types/errors.h>
 
-#define SCE_SYSMODULE_KEYBOARD 0x106
-
-#ifdef __cplusplus 
+#ifdef __cplusplus
 extern "C" {
 #endif
 

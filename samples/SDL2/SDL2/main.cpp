@@ -85,7 +85,7 @@ int main(int argc, char* args[])
     // We have to force load the freetype module or we'll get unresolved NID crashes
     DEBUGLOG << "Initializing TTF";
 
-    rc = sceSysmoduleLoadModule(0x009A);
+    rc = sceSysmoduleLoadModule(ORBIS_SYSMODULE_FREETYPE_OL);
 
     if (rc < 0)
     {
