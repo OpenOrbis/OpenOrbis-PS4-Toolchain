@@ -9,6 +9,56 @@
 	#define MAP_TYPE 0x0f
 #endif
 
+// https://github.com/red-prig/fpPS4/blob/441da1d04080615326e5f55ef6fa3110e642bff6/kernel/ps4_queue.pas#L14
+#define EVFILT_READ -1
+#define EVFILT_WRITE -2
+#define EVFILT_AIO -3	 // attached to aio requests
+#define EVFILT_VNODE -4	 // attached to vnodes
+#define EVFILT_PROC -5	 // attached to struct proc
+#define EVFILT_SIGNAL -6 // attached to struct proc
+#define EVFILT_TIMER -7	 // timers
+#define EVFILT_FS -9	 // filesystem events
+#define EVFILT_LIO -10	 // attached to lio requests
+#define EVFILT_USER -11	 // User events
+#define EVFILT_POLLING -12
+#define EVFILT_DISPLAY -13
+#define EVFILT_GRAPHICS_CORE -14
+#define EVFILT_HRTIMER -15
+#define EVFILT_UVD_TRAP -16
+#define EVFILT_VCE_TRAP -17
+#define EVFILT_SDMA_TRAP -18
+#define EVFILT_REG_EV -19
+#define EVFILT_GPU_EXCEPTION -20
+#define EVFILT_GPU_SYSTEM_EXCEPTION -21
+#define EVFILT_GPU_DBGGC_EV -22
+#define EVFILT_SYSCOUNT 22
+// actions
+#define EV_ADD 0x0001	  // add event to kq (implies enable)
+#define EV_DELETE 0x0002  // delete event from kq
+#define EV_ENABLE 0x0004  // enable event
+#define EV_DISABLE 0x0008 // disable event (not reported)
+
+// flags
+#define EV_ONESHOT 0x0010  // only report one occurrence
+#define EV_CLEAR 0x0020	   // clear event state after reporting
+#define EV_RECEIPT 0x0040  // force EV_ERROR on success, data=0
+#define EV_DISPATCH 0x0080 // disable event after reporting
+
+#define EV_SYSFLAGS 0xF000 // reserved by system
+#define EV_FLAG1 0x2000	   // filter-specific flag
+
+// returned values
+#define EV_EOF 0x8000	// EOF detected
+#define EV_ERROR 0x4000 // error, data contains errno
+
+#define NOTE_DELETE 0x0001 // vnode was removed
+#define NOTE_WRITE 0x0002  // data contents changed
+#define NOTE_EXTEND 0x0004 // size increased
+#define NOTE_ATTRIB 0x0008 // attributes changed
+#define NOTE_LINK 0x0010   // link count changed
+#define NOTE_RENAME 0x0020 // vnode was renamed
+#define NOTE_REVOKE 0x0040 // vnode access was revoked
+
 #define ORBIS_KERNEL_EVFILT_TIMER    EVFILT_TIMER
 #define ORBIS_KERNEL_EVFILT_READ     EVFILT_READ
 #define ORBIS_KERNEL_EVFILT_WRITE    EVFILT_WRITE
@@ -46,11 +96,25 @@
 #define ORBIS_KERNEL_WC_GARLIC 0x3
 #define ORBIS_KERNEL_WB_GARLIC 0xA
 
-#define ORBIS_KERNEL_PROT_CPU_READ 0x01
-#define ORBIS_KERNEL_PROT_CPU_WRITE 0x02
-#define ORBIS_KERNEL_PROT_CPU_RW (ORBIS_KERNEL_PROT_CPU_READ | ORBIS_KERNEL_PROT_CPU_WRITE)
-#define ORBIS_KERNEL_PROT_CPU_EXEC 0x04
-#define ORBIS_KERNEL_PROT_CPU_ALL (ORBIS_KERNEL_PROT_CPU_RW | ORBIS_KERNEL_PROT_CPU_EXEC)
+// https://github.com/freebsd/freebsd-src/blob/eec2228f5545242471ebda48e26e79eb85156ee5/sys/vm/vm.h#L73
+typedef unsigned char vm_prot_t; // freebsd protection codes
+
+#define VM_PROT_NONE ((vm_prot_t)0x00)
+#define VM_PROT_READ ((vm_prot_t)0x01)
+#define VM_PROT_WRITE ((vm_prot_t)0x02)
+#define VM_PROT_EXECUTE ((vm_prot_t)0x04)
+#define VM_PROT_COPY ((vm_prot_t)0x08) // copy-on-read
+
+#define VM_PROT_ALL (VM_PROT_READ | VM_PROT_WRITE | VM_PROT_EXECUTE)
+#define VM_PROT_RW (VM_PROT_READ | VM_PROT_WRITE)
+#define VM_PROT_DEFAULT VM_PROT_ALL
+
+#define ORBIS_KERNEL_PROT_CPU_NONE VM_PROT_NONE
+#define ORBIS_KERNEL_PROT_CPU_READ VM_PROT_READ
+#define ORBIS_KERNEL_PROT_CPU_WRITE VM_PROT_WRITE
+#define ORBIS_KERNEL_PROT_CPU_RW VM_PROT_RW
+#define ORBIS_KERNEL_PROT_CPU_EXEC VM_PROT_EXECUTE
+#define ORBIS_KERNEL_PROT_CPU_ALL VM_PROT_ALL
 
 #define ORBIS_KERNEL_PROT_GPU_READ 0x10
 #define ORBIS_KERNEL_PROT_GPU_WRITE 0x20
@@ -88,7 +152,7 @@ typedef struct _OrbisKernelEventFlagOptParam {
 } OrbisKernelEventFlagOptParam;
 
 typedef struct timeval OrbisKernelTimeval;
-typedef unsigned int OrbisKernelUseconds;
+typedef uint32_t OrbisKernelUseconds;
 typedef uint32_t OrbisKernelModule;
 
 typedef uint64_t OrbisKernelEqueue;
@@ -124,8 +188,8 @@ typedef struct {
 	void* start;
 	void* end;
 	off_t offset;
-	int protection;
-	int memoryType;
+	int32_t protection;
+	int32_t memoryType;
 	unsigned isFlexibleMemory : 1;
 	unsigned isDirectMemory : 1;
 	unsigned isStack : 1;
@@ -174,16 +238,16 @@ enum OrbisNotificationRequestType
 typedef struct
 {
 	enum OrbisNotificationRequestType type;
-	int reqId;
-	int priority;
-	int msgId;
-	int targetId;
-	int userId;
-	int unk1;
-	int unk2;
-	int appId;
-	int errorNum;
-	int unk3;
+	int32_t reqId;
+	int32_t priority;
+	int32_t msgId;
+	int32_t targetId;
+	int32_t userId;
+	int32_t unk1;
+	int32_t unk2;
+	int32_t appId;
+	int32_t errorNum;
+	int32_t unk3;
 	unsigned char useIconImageUri;
 	char message[1024];
 	char iconUri[1024];
@@ -192,10 +256,10 @@ typedef struct
 
 typedef struct
 {
-	int AppId;
-	int Unk;
+	int32_t AppId;
+	int32_t Unk;
 	char unk0x8[0x4];
-	int AppType;
+	int32_t AppType;
 	char TitleId[10];
 	char unk0x1A[0x2E];
 } OrbisAppInfo;

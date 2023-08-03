@@ -47,8 +47,8 @@ struct _OrbisBgftDownloadRegisterErrorInfo {
 typedef struct _OrbisBgftDownloadRegisterErrorInfo OrbisBgftDownloadRegisterErrorInfo;
 
 struct _OrbisBgftDownloadParam {
-	int userId;
-	int entitlementType;
+	int32_t userId;
+	int32_t entitlementType;
 	const char* id; /* max size = 0x30 */
 	const char* contentUrl; /* max size = 0x800 */
 	const char* contentExUrl;
@@ -60,35 +60,35 @@ struct _OrbisBgftDownloadParam {
 	const char* releaseDate;
 	const char* packageType;
 	const char* packageSubType;
-	unsigned long packageSize;
+	uint32_t packageSize;
 };
 typedef struct _OrbisBgftDownloadParam OrbisBgftDownloadParam;
 
 struct _OrbisBgftDownloadParamEx {
 	OrbisBgftDownloadParam params;
-	unsigned int slot;
+	uint32_t slot;
 };
 typedef struct _OrbisBgftDownloadParamEx OrbisBgftDownloadParamEx;
 
 struct _OrbisBgftDownloadTaskInfo {
 	char* contentTitle;
 	char* iconPath;
-	unsigned long notificationUtcTick;
+	uint32_t notificationUtcTick;
 };
 typedef struct _OrbisBgftDownloadTaskInfo OrbisBgftDownloadTaskInfo;
 
 struct _OrbisBgftTaskProgress {
-	unsigned int bits;
-	int errorResult;
-	unsigned long length;
-	unsigned long transferred;
-	unsigned long lengthTotal;
-	unsigned long transferredTotal;
-	unsigned int numIndex;
-	unsigned int numTotal;
-	unsigned int restSec;
-	unsigned int restSecTotal;
-	int preparingPercent;
-	int localCopyPercent;
+	uint32_t bits;
+	int32_t errorResult;
+	uint32_t length;
+	uint32_t transferred;
+	uint32_t lengthTotal;
+	uint32_t transferredTotal;
+	uint32_t numIndex;
+	uint32_t numTotal;
+	uint32_t restSec;
+	uint32_t restSecTotal;
+	int32_t preparingPercent;
+	int32_t localCopyPercent;
 };
 typedef struct _OrbisBgftTaskProgress OrbisBgftTaskProgress;

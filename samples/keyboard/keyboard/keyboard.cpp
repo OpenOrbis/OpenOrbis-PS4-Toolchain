@@ -16,7 +16,7 @@ bool Keyboard::Init(int keyboardUserID)
     static bool isSysmoduleLoaded = false;
     if(!isSysmoduleLoaded)
     {
-        if(sceSysmoduleLoadModule(SCE_SYSMODULE_KEYBOARD))
+        if(sceSysmoduleLoadModule(ORBIS_SYSMODULE_KEYBOARD))
         {
             DEBUGLOG << "[DEBUG] [ERROR] Failed to load SCE_SYSMODULE_KEYBOARD!";
             return false;

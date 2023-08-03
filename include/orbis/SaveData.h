@@ -24,8 +24,8 @@ void sceSaveDataCheckBackupDataInternal();
 void sceSaveDataClearProgress();
 // Empty Comment
 void sceSaveDataDelete5();
-// Empty Comment
-void sceSaveDataDirNameSearch();
+// Searches save data for a spesific Dir Name
+int32_t sceSaveDataDirNameSearch(const OrbisSaveDataDirNameSearchCond *cond,OrbisSaveDataDirNameSearchResult *result);
 // Empty Comment
 void sceSaveDataDirNameSearchInternal();
 // Empty Comment
@@ -72,6 +72,8 @@ void sceSaveDataTerminate();
 void sceSaveDataTransferringMount();
 // Empty Comment
 void sceSaveDataUmountWithBackup();
+//This will delete all save data for a spesific user
+int32_t sceSaveDataDeleteAllUser();
 
 #ifdef __cplusplus
 }

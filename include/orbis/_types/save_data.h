@@ -1,6 +1,6 @@
 #include <inttypes.h>
 #include <stdint.h>
-#include <sys/time.h> // time_t
+#include <time.h> // time_t
 #pragma once
 
 #define ORBIS_SAVE_DATA_MOUNT_MODE_RDONLY			1		//Read-only
@@ -39,6 +39,10 @@
 typedef struct OrbisSaveDataMountPoint {
 	char data[ORBIS_SAVE_DATA_MOUNT_POINT_DATA_MAXSIZE];
 } OrbisSaveDataMountPoint;
+
+typedef uint32_t OrbisSaveDataSortKey;
+typedef uint32_t OrbisSaveDataSortOrder;
+typedef uint64_t OrbisSaveDataBlocks;
 
 typedef struct OrbisSaveDataFingerprint {
 	char data[ORBIS_SAVE_DATA_FINGERPRINT_DATA_SIZE];
@@ -122,3 +126,32 @@ typedef struct OrbisSaveDataIcon {
 	size_t dataSize;
 	uint8_t reserved[32];
 } OrbisSaveDataIcon;
+
+typedef struct OrbisSaveDataDirNameSearchCond {
+	int32_t userId;
+	int :32;
+	const OrbisSaveDataTitleId *titleId;
+	const OrbisSaveDataDirName *dirName;
+	OrbisSaveDataSortKey key;
+	OrbisSaveDataSortOrder order;
+	uint8_t reserved[32];
+} OrbisSaveDataDirNameSearchCond;
+
+typedef struct OrbisSaveDataSearchInfo {
+	OrbisSaveDataBlocks blocks;
+	OrbisSaveDataBlocks freeBlocks;
+	uint8_t reserved[32];
+} OrbisSaveDataSearchInfo;
+
+typedef struct OrbisSaveDataDirNameSearchResult {
+	uint32_t hitNum;
+	int :32;
+	OrbisSaveDataDirName *dirNames;
+	uint32_t dirNamesNum;
+	uint32_t setNum;
+	OrbisSaveDataParam *params;
+	OrbisSaveDataSearchInfo *infos;
+	uint8_t reserved[12];
+	int :32;
+} OrbisSaveDataDirNameSearchResult;
+

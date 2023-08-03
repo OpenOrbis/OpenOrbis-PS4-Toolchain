@@ -214,7 +214,7 @@ void sceNpArchInit();
 // Empty Comment
 void sceNpArchTerm();
 // reversed by idc
-int sceNpBase64Decoder(const void* inbuf, size_t inlen, void* outbuf, size_t* outlen);
+int32_t sceNpBase64Decoder(const void* inbuf, size_t inlen, void* outbuf, size_t* outlen);
 // Empty Comment
 void sceNpBase64Encoder();
 // Empty Comment
@@ -361,8 +361,8 @@ void sceNpUtilHttpUrlEncode();
 void sceNpUtilJidToNpId();
 
 // reversed by flatz
-int sceNpUtilJsonEscape(char* out, size_t max_out_size, const char* in, size_t in_size);
-int sceNpUtilJsonUnescape(char* out, size_t max_out_size, const char* in, size_t in_size, unsigned int flags);
+int32_t sceNpUtilJsonEscape(char* out, size_t max_out_size, const char* in, size_t in_size);
+int32_t sceNpUtilJsonUnescape(char* out, size_t max_out_size, const char* in, size_t in_size, uint32_t flags);
 
 // Empty Comment
 void sceNpUtilNpIdToJid();

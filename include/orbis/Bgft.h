@@ -9,48 +9,48 @@
 extern "C" {
 #endif
 
-typedef int OrbisBgftTaskId;
+typedef int32_t OrbisBgftTaskId;
 
-int sceBgftServiceIntInit(OrbisBgftInitParams* params);
-int sceBgftServiceIntTerm();
+int32_t sceBgftServiceIntInit(OrbisBgftInitParams* params);
+int32_t sceBgftServiceIntTerm();
 
-int sceBgftServiceDownloadFindTaskByContentId(const char* contentId, OrbisBgftTaskSubType subType, OrbisBgftTaskId* taskId);
-int sceBgftServiceDownloadFindActivePatchTask(const char* unk, OrbisBgftTaskId* taskId);
-int sceBgftServiceDownloadFindActivePupTask(OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceDownloadFindTaskByContentId(const char* contentId, OrbisBgftTaskSubType subType, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceDownloadFindActivePatchTask(const char* unk, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceDownloadFindActivePupTask(OrbisBgftTaskId* taskId);
 
-int sceBgftServiceDownloadStartTask(OrbisBgftTaskId taskId);
-int sceBgftServiceDownloadStartTaskAll(void);
-int sceBgftServiceDownloadPauseTask(OrbisBgftTaskId taskId);
-int sceBgftServiceDownloadPauseTaskAll(void);
-int sceBgftServiceDownloadResumeTask(OrbisBgftTaskId taskId);
-int sceBgftServiceDownloadResumeTaskAll(void);
-int sceBgftServiceDownloadStopTask(OrbisBgftTaskId taskId);
-int sceBgftServiceDownloadStopTaskAll(void);
+int32_t sceBgftServiceDownloadStartTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceDownloadStartTaskAll(void);
+int32_t sceBgftServiceDownloadPauseTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceDownloadPauseTaskAll(void);
+int32_t sceBgftServiceDownloadResumeTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceDownloadResumeTaskAll(void);
+int32_t sceBgftServiceDownloadStopTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceDownloadStopTaskAll(void);
 
-int sceBgftServiceDownloadGetProgress(OrbisBgftTaskId taskId, OrbisBgftTaskProgress* progress);
+int32_t sceBgftServiceDownloadGetProgress(OrbisBgftTaskId taskId, OrbisBgftTaskProgress* progress);
 
-int sceBgftServiceIntDownloadRegisterTask(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId);
-int sceBgftServiceIntDownloadRegisterTaskByStorageEx(OrbisBgftDownloadParamEx* params, OrbisBgftTaskId* taskId);
-int sceBgftServiceIntDownloadRegisterTaskStore(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId, OrbisBgftDownloadRegisterErrorInfo* errorInfo);
-int sceBgftServiceIntDownloadUnregisterTask(OrbisBgftTaskId taskId);
-int sceBgftServiceIntDownloadReregisterTaskPatch(OrbisBgftTaskId oldTaskId, OrbisBgftTaskId* newTaskId);
+int32_t sceBgftServiceIntDownloadRegisterTask(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceIntDownloadRegisterTaskByStorageEx(OrbisBgftDownloadParamEx* params, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceIntDownloadRegisterTaskStore(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId, OrbisBgftDownloadRegisterErrorInfo* errorInfo);
+int32_t sceBgftServiceIntDownloadUnregisterTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceIntDownloadReregisterTaskPatch(OrbisBgftTaskId oldTaskId, OrbisBgftTaskId* newTaskId);
 
-int sceBgftServiceIntDownloadStartTask(OrbisBgftTaskId taskId);
-int sceBgftServiceIntDownloadStopTask(OrbisBgftTaskId taskId);
-int sceBgftServiceIntDownloadPauseTask(OrbisBgftTaskId taskId);
-int sceBgftServiceIntDownloadResumeTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceIntDownloadStartTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceIntDownloadStopTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceIntDownloadPauseTask(OrbisBgftTaskId taskId);
+int32_t sceBgftServiceIntDownloadResumeTask(OrbisBgftTaskId taskId);
 
-int sceBgftServiceIntDownloadGetTaskInfo(OrbisBgftTaskId taskId, OrbisBgftDownloadTaskInfo* taskInfo);
+int32_t sceBgftServiceIntDownloadGetTaskInfo(OrbisBgftTaskId taskId, OrbisBgftDownloadTaskInfo* taskInfo);
 
-int sceBgftServiceIntDownloadGetProgress(OrbisBgftTaskId taskId, OrbisBgftTaskProgress* progress);
-int sceBgftServiceIntDownloadGetPatchProgress(const char* contentId, OrbisBgftTaskProgress* progress);
-int sceBgftServiceIntDownloadGetPlayGoProgress(const char* contentId, OrbisBgftTaskProgress* progress);
-int sceBgftServiceIntDownloadGetGameAndGameAcProgress(const char* contentId, OrbisBgftTaskProgress* progress);
+int32_t sceBgftServiceIntDownloadGetProgress(OrbisBgftTaskId taskId, OrbisBgftTaskProgress* progress);
+int32_t sceBgftServiceIntDownloadGetPatchProgress(const char* contentId, OrbisBgftTaskProgress* progress);
+int32_t sceBgftServiceIntDownloadGetPlayGoProgress(const char* contentId, OrbisBgftTaskProgress* progress);
+int32_t sceBgftServiceIntDownloadGetGameAndGameAcProgress(const char* contentId, OrbisBgftTaskProgress* progress);
 
-int sceBgftServiceIntDownloadFindActiveGameAndGameAcTask(const char* contentId, OrbisBgftTaskId* taskId);
-int sceBgftServiceIntDownloadFindActiveTask(const char* contentId, OrbisBgftTaskSubType subType, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceIntDownloadFindActiveGameAndGameAcTask(const char* contentId, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceIntDownloadFindActiveTask(const char* contentId, OrbisBgftTaskSubType subType, OrbisBgftTaskId* taskId);
 
-int sceBgftServiceIntDebugDownloadRegisterPkg(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId);
+int32_t sceBgftServiceIntDebugDownloadRegisterPkg(OrbisBgftDownloadParam* params, OrbisBgftTaskId* taskId);
 
 void sceBgftServiceDownloadQueryTask();
 

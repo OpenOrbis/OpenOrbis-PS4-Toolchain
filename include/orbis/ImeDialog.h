@@ -22,11 +22,11 @@ void sceImeDialogGetPanelSize();
 // Empty Comment
 void sceImeDialogGetPanelSizeExtended();
 // Empty Comment
-int sceImeDialogGetResult(OrbisDialogResult *result);
+int32_t sceImeDialogGetResult(OrbisDialogResult *result);
 // Empty Comment
 OrbisDialogStatus sceImeDialogGetStatus();
 // Empty Comment
-int sceImeDialogInit(const OrbisImeDialogSetting *param, OrbisImeSettingsExtended* paramExtended);
+int32_t sceImeDialogInit(const OrbisImeDialogSetting *param, OrbisImeSettingsExtended* paramExtended);
 // Empty Comment
 void sceImeDialogInitInternal();
 // Empty Comment
@@ -36,7 +36,7 @@ void sceImeDialogInitInternal3();
 // Empty Comment
 void sceImeDialogSetPanelPosition();
 // Empty Comment
-int sceImeDialogTerm();
+int32_t sceImeDialogTerm();
 
 #ifdef __cplusplus
 }

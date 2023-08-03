@@ -1,15 +1,18 @@
 #pragma once
 
-#define ORBIS_NET_AF_INET				2
-#define ORBIS_NET_SOCK_STREAM			1
-#define ORBIS_NET_SOCK_DGRAM			2
-#define ORBIS_NET_SOCK_RAW				3
-#define ORBIS_NET_SOCK_DGRAM_P2P		6
-#define ORBIS_NET_SOCK_STREAM_P2P		10
- 
+typedef enum OrbisNetType
+{
+	ORBIS_NET_AF_INET = 2,
+	ORBIS_NET_SOCK_STREAM = 1,
+	ORBIS_NET_SOCK_DGRAM = 2,
+	ORBIS_NET_SOCK_RAW = 3,
+	ORBIS_NET_SOCK_DGRAM_P2P = 6,
+	ORBIS_NET_SOCK_STREAM_P2P = 0,
+} OrbisNetType;
+
 #define SCE_NET_DBG_MAX_NAME_LENGTH	31
 
-typedef int OrbisNetId;
+typedef int32_t OrbisNetId;
 typedef uint32_t OrbisNetSocklen_t;
 typedef uint32_t OrbisNetInAddr_t;
 typedef uint16_t OrbisNetInPort_t;
@@ -17,8 +20,8 @@ typedef uint8_t OrbisNetSaFamily_t;
 
 
 typedef struct OrbisNetLinger {
-	int status;
-	int unk01;
+	int32_t status;
+	int32_t unk01;
 } OrbisNetLinger;
 
 typedef struct OrbisNetSockaddr {
@@ -43,14 +46,14 @@ typedef struct OrbisNetMsghdr {
 	void *msg_name;
 	OrbisNetSocklen_t msg_namelen;
 	OrbisNetIovec *msg_iov;
-	int msg_iovlen;
+	int32_t msg_iovlen;
 	void *msg_control;
 	OrbisNetSocklen_t msg_controllen;
-	int msg_flags;
+	int32_t msg_flags;
 } OrbisNetMsghdr;
 
 typedef struct OrbisNetUdpSndOnSuspend {
-	int onoff;
+	int32_t onoff;
 	OrbisNetSockaddr *addr;
 	OrbisNetSocklen_t addrlen;
 	void *data;
@@ -93,7 +96,7 @@ struct OrbisNetIfEntry
 {
 	char Name[0x10];				// 0x00
 	char padding0[0x18];			// 0x10
-	int IPAddress;					// 0x28
+	int32_t IPAddress;					// 0x28
 	char padding1[0x24];			// 0x2C
 	unsigned char MacAddress[6];	// 0x50
 	char padding2[0x192];			// 0x56

@@ -10,15 +10,15 @@
 extern "C" {
 #endif
 
-int sceUserServiceGetInitialUser(int *);
-int sceUserServiceGetUserName(int, char *, const size_t);
-int sceUserServiceInitialize(void *);
-int sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
-int sceUserServiceGetForegroundUser(int* user_id);
-int sceUserServiceGetNpAccountId(const OrbisUserServiceUserId, uint64_t *account_id);
-int sceUserServiceGetUserColor(const OrbisUserServiceUserId, OrbisUserServiceUserColor *);
-int sceUserServiceGetRegisteredUserIdList(OrbisUserServiceRegisteredUserIdList *);
-int sceUserServiceGetEvent(OrbisUserServiceEvent *event);
+int32_t sceUserServiceGetInitialUser(int32_t *);
+int32_t sceUserServiceGetUserName(int32_t, char *, const size_t);
+int32_t sceUserServiceInitialize(void *);
+int32_t sceUserServiceGetLoginUserIdList(OrbisUserServiceLoginUserIdList *);
+int32_t sceUserServiceGetForegroundUser(int32_t* user_id);
+int32_t sceUserServiceGetNpAccountId(const OrbisUserServiceUserId, uint64_t *account_id);
+int32_t sceUserServiceGetUserColor(const OrbisUserServiceUserId, OrbisUserServiceUserColor *);
+int32_t sceUserServiceGetRegisteredUserIdList(OrbisUserServiceRegisteredUserIdList *);
+int32_t sceUserServiceGetEvent(OrbisUserServiceEvent *event);
 
 void sceUserServiceDestroyUser();
 void sceUserServiceGetAccessibilityKeyremapData();
@@ -349,11 +349,10 @@ void sceUserServiceSetVolumeForController();
 void sceUserServiceSetVolumeForGenericUSB();
 void sceUserServiceSetVolumeForMorpheusSidetone();
 void sceUserServiceSetVolumeForSidetone();
-int sceUserServiceTerminate();
+int32_t sceUserServiceTerminate();
 void sceUserServiceUnregisterEventCallback();
 
 #ifdef __cplusplus
 }
 #endif
 #endif
-

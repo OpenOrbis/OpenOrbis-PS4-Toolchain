@@ -55,8 +55,8 @@ typedef union OrbisNetCtlInfo {
 	uint16_t http_proxy_port;
 } OrbisNetCtlInfo;
 
-int sceNetCtlGetInfo(int, OrbisNetCtlInfo *);
-int sceNetCtlInit();
+int32_t sceNetCtlGetInfo(int32_t, OrbisNetCtlInfo *);
+int32_t sceNetCtlInit();
 void sceNetCtlTerm();
 
 #ifdef __cplusplus
