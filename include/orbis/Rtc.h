@@ -39,8 +39,8 @@ int32_t sceRtcGetDayOfWeek(int32_t y, int32_t m, int32_t d);
 int32_t sceRtcGetTime_t(OrbisRtcDateTime*, time_t*);
 int32_t sceRtcSetTime_t(OrbisRtcDateTime*, time_t);
 int32_t sceRtcGetDosTime(OrbisRtcDateTime*, uint32_t*);
-int32_t sceRtcSetWin32FileTime(OrbisRtcDateTime*, uint32_t64_t);
-int32_t sceRtcGetWin32FileTime(OrbisRtcDateTime*, uint32_t64_t*);
+int32_t sceRtcSetWin32FileTime(OrbisRtcDateTime*, uint64_t);
+int32_t sceRtcGetWin32FileTime(OrbisRtcDateTime*, uint64_t*);
 int32_t sceRtcSetDosTime(OrbisRtcDateTime*, uint32_t);
 
 uint32_t sceRtcGetTickResolution();
