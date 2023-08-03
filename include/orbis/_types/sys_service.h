@@ -27,13 +27,6 @@ typedef enum OrbisSystemParamTimeFormat : int32_t
     ORBIS_SYSTEM_PARAM_TIME_FORMAT_24HOUR = 1
 } OrbisSystemParamTimeFormat;
 
-typedef enum OrbisSystemServiceGpuLoadEmulationMode
-{
-    ORBIS_SYSTEM_SERVICE_GPU_LOAD_EMULATION_MODE_OFF,
-    ORBIS_SYSTEM_SERVICE_GPU_LOAD_EMULATION_MODE_NORMAL,
-    ORBIS_SYSTEM_SERVICE_GPU_LOAD_EMULATION_MODE_HIGH,
-} OrbisSystemServiceGpuLoadEmulationMode;
-
 typedef enum OrbisSystemParamGameParentalLevel : int32_t
 {
     ORBIS_SYSTEM_PARAM_GAME_PARENTAL_OFF = 0,
