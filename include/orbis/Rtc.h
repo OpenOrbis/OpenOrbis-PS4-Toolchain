@@ -2,7 +2,7 @@
 #define _SCE_RTC_H_
 
 #include "_types/rtc.h"
-#include <stdint.h>>
+#include <stdint.h>
 #include <time.h>
 
 #ifdef __cplusplus 
@@ -14,11 +14,11 @@ int32_t sceRtcGetTick(const OrbisRtcDateTime *outOrbisRtcDateTime, OrbisRtcTick 
 int32_t sceRtcSetTick(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick);
 int32_t sceRtcTickAddDays(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t days);
 int32_t sceRtcTickAddHours(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t hours);
-int32_t sceRtcTickAddMicroseconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t64_t msecs);
+int32_t sceRtcTickAddMicroseconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t msecs);
 int32_t sceRtcTickAddMinutes(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t mins);
 int32_t sceRtcTickAddMonths(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t months);
-int32_t sceRtcTickAddSeconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t64_t seconds);
-int32_t sceRtcTickAddTicks(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t64_t ticks);
+int32_t sceRtcTickAddSeconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t seconds);
+int32_t sceRtcTickAddTicks(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t ticks);
 int32_t sceRtcTickAddWeeks(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t weeks);
 int32_t sceRtcTickAddYears(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t years);
 int32_t sceRtcConvertLocalTimeToUtc(OrbisRtcTick*, OrbisRtcTick*);
