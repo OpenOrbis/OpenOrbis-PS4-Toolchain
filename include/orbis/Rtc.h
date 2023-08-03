@@ -2,7 +2,7 @@
 #define _SCE_RTC_H_
 
 #include "_types/rtc.h"
-#include <stdint32_t.h>
+#include <stdint.h>>
 #include <time.h>
 
 #ifdef __cplusplus 
