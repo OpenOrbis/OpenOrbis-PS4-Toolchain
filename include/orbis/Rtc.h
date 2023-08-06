@@ -6,44 +6,45 @@
 #include <time.h>
 
 #ifdef __cplusplus 
-extern "C" {
+extern "C" 
+{
 #endif
 
-int32_t sceRtcCheckValid(OrbisRtcDateTime *input);
-int32_t sceRtcGetTick(const OrbisRtcDateTime *outOrbisRtcDateTime, OrbisRtcTick *outTick);
-int32_t sceRtcSetTick(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick);
-int32_t sceRtcTickAddDays(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t days);
-int32_t sceRtcTickAddHours(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t hours);
-int32_t sceRtcTickAddMicroseconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t msecs);
-int32_t sceRtcTickAddMinutes(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t mins);
-int32_t sceRtcTickAddMonths(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t months);
-int32_t sceRtcTickAddSeconds(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t seconds);
-int32_t sceRtcTickAddTicks(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int64_t ticks);
-int32_t sceRtcTickAddWeeks(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t weeks);
-int32_t sceRtcTickAddYears(OrbisRtcDateTime *inputOrbisRtcDateTime, OrbisRtcTick *inputTick, int32_t years);
-int32_t sceRtcConvertLocalTimeToUtc(OrbisRtcTick*, OrbisRtcTick*);
-int32_t sceRtcConvertUtcToLocalTime(OrbisRtcTick*, OrbisRtcTick*);
-int32_t sceRtcGetCurrentClock(OrbisRtcDateTime*);
-int32_t sceRtcGetCurrentClockLocalTime(OrbisRtcDateTime*);
-int32_t sceRtcGetCurrentNetworkTick(OrbisRtcTick*);
-int32_t sceRtcGetCurrentTick(OrbisRtcTick*);
+int32_t sceRtcCheckValid(const OrbisRtcDateTime* time);
+int32_t sceRtcGetTick(const OrbisRtcDateTime* time, OrbisRtcTick* tick);
+int32_t sceRtcSetTick(OrbisRtcDateTime* time, const OrbisRtcTick* tick);
+int32_t sceRtcTickAddDays(OrbisRtcDateTime* tick, const OrbisRtcTick* tick, int32_t add);
+int32_t sceRtcTickAddHours(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
+int32_t sceRtcTickAddMicroseconds(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int64_t add);
+int32_t sceRtcTickAddMinutes(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
+int32_t sceRtcTickAddMonths(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
+int32_t sceRtcTickAddSeconds(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int64_t add);
+int32_t sceRtcTickAddTicks(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int64_t add);
+int32_t sceRtcTickAddWeeks(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
+int32_t sceRtcTickAddYears(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
+int32_t sceRtcConvertLocalTimeToUtc(const OrbisRtcTick* localtime, OrbisRtcTick* utc);
+int32_t sceRtcConvertUtcToLocalTime(const OrbisRtcTick* utc, OrbisRtcTick* localtime);
+int32_t sceRtcGetCurrentClock(OrbisRtcDateTime* time, int32_t timezone);
+int32_t sceRtcGetCurrentClockLocalTime(OrbisRtcDateTime* time);
+int32_t sceRtcGetCurrentNetworkTick(OrbisRtcTick* tick);
+int32_t sceRtcGetCurrentTick(OrbisRtcTick* tick);
 int32_t sceRtcGetDaysInMonth(int32_t year, int32_t month);
 int32_t sceRtcIsLeapYear(int32_t year);
-int32_t sceRtcParseRFC3339(OrbisRtcTick*, const char*);
-int32_t sceRtcParseDateTime(OrbisRtcTick*, const char*);
-int32_t sceRtcFormatRFC3339LocalTime(char*, OrbisRtcTick*);
-int32_t sceRtcFormatRFC3339(char*, OrbisRtcTick*, int32_t);
-int32_t sceRtcFormatRFC2822LocalTime(char*, OrbisRtcTick*);
-int32_t sceRtcFormatRFC2822(char*, OrbisRtcTick*, int32_t);
-int32_t sceRtcGetDayOfWeek(int32_t y, int32_t m, int32_t d);
-int32_t sceRtcGetTime_t(OrbisRtcDateTime*, time_t*);
-int32_t sceRtcSetTime_t(OrbisRtcDateTime*, time_t);
-int32_t sceRtcGetDosTime(OrbisRtcDateTime*, uint32_t*);
-int32_t sceRtcSetWin32FileTime(OrbisRtcDateTime*, uint64_t);
-int32_t sceRtcGetWin32FileTime(OrbisRtcDateTime*, uint64_t*);
-int32_t sceRtcSetDosTime(OrbisRtcDateTime*, uint32_t);
-
+int32_t sceRtcParseRFC3339(OrbisRtcTick* utc, const char* datetime);
+int32_t sceRtcParseDateTime(OrbisRtcTick* utc, const char* datetime);
+int32_t sceRtcFormatRFC3339LocalTime(char* datetime, const OrbisRtcTick* utc);
+int32_t sceRtcFormatRFC3339(char* datetime, const OrbisRtcTick* utc, int32_t timezoneMinutes);
+int32_t sceRtcFormatRFC2822LocalTime(char* datetime, const OrbisRtcTick* utc);
+int32_t sceRtcFormatRFC2822(char* datetime, const OrbisRtcTick* utc, int32_t timezoneMinutes);
+int32_t sceRtcGetDayOfWeek(int32_t year, int32_t month, int32_t day);
+int32_t sceRtcGetTime_t(const OrbisRtcDateTime* time, time_t* time);
+int32_t sceRtcSetTime_t(OrbisRtcDateTime* time, time_t time);
+int32_t sceRtcGetDosTime(const OrbisRtcDateTime* time, uint32_t* dosTime);
+int32_t sceRtcSetWin32FileTime(OrbisRtcDateTime* time, uint64_t win32Time);
+int32_t sceRtcGetWin32FileTime(const OrbisRtcDateTime* time, uint64_t* win32Time);
+int32_t sceRtcSetDosTime(OrbisRtcDateTime* Time, uint32_t dosTime);
 uint32_t sceRtcGetTickResolution();
+
 int32_t sceRtcGetCurrentDebugNetworkTick();
 int32_t sceRtcGetCurrentAdNetworkTick();
 int32_t sceRtcCompareTick();
