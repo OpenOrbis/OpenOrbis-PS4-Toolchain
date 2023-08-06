@@ -13,7 +13,7 @@ extern "C"
 int32_t sceRtcCheckValid(const OrbisRtcDateTime* time);
 int32_t sceRtcGetTick(const OrbisRtcDateTime* time, OrbisRtcTick* tick);
 int32_t sceRtcSetTick(OrbisRtcDateTime* time, const OrbisRtcTick* tick);
-int32_t sceRtcTickAddDays(OrbisRtcDateTime* tick, const OrbisRtcTick* tick, int32_t add);
+int32_t sceRtcTickAddDays(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
 int32_t sceRtcTickAddHours(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
 int32_t sceRtcTickAddMicroseconds(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int64_t add);
 int32_t sceRtcTickAddMinutes(OrbisRtcDateTime* tick, const OrbisRtcTick* tick1, int32_t add);
