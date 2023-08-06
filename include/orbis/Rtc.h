@@ -37,8 +37,8 @@ int32_t sceRtcFormatRFC3339(char* datetime, const OrbisRtcTick* utc, int32_t tim
 int32_t sceRtcFormatRFC2822LocalTime(char* datetime, const OrbisRtcTick* utc);
 int32_t sceRtcFormatRFC2822(char* datetime, const OrbisRtcTick* utc, int32_t timezoneMinutes);
 int32_t sceRtcGetDayOfWeek(int32_t year, int32_t month, int32_t day);
-int32_t sceRtcGetTime_t(const OrbisRtcDateTime* time, time_t* time);
-int32_t sceRtcSetTime_t(OrbisRtcDateTime* time, time_t time);
+int32_t sceRtcGetTime_t(const OrbisRtcDateTime* rtctime, time_t* time);
+int32_t sceRtcSetTime_t(OrbisRtcDateTime* rtctime, time_t time);
 int32_t sceRtcGetDosTime(const OrbisRtcDateTime* time, uint32_t* dosTime);
 int32_t sceRtcSetWin32FileTime(OrbisRtcDateTime* time, uint64_t win32Time);
 int32_t sceRtcGetWin32FileTime(const OrbisRtcDateTime* time, uint64_t* win32Time);
