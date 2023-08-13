@@ -697,8 +697,8 @@ void scePthreadTestcancel(void);
 void scePthreadTimedjoin();
 // Empty Comment
 void scePthreadYield(void);
-// Empty Comment
-int32_t ioctl(int32_t fd, uint32_t request, ...);
+// This is a redeclaration of the one used by FreeBSD, do not change this.
+int ioctl(int fd, unsigned long request, ...);
 
 #ifdef __cplusplus
 }
