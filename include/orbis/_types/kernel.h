@@ -121,18 +121,19 @@ typedef unsigned char vm_prot_t; // freebsd protection codes
 #define ORBIS_KERNEL_PROT_GPU_RW (ORBIS_KERNEL_PROT_GPU_READ | ORBIS_KERNEL_PROT_GPU_WRITE)
 #define ORBIS_KERNEL_PROT_GPU_ALL ORBIS_KERNEL_PROT_GPU_RW
 
-struct kevent {
+struct kevent 
+{
 	uintptr_t	ident;		/* identifier for this event */
-	short		filter;	/* filter for event */
+	uint16_t	filter;	/* filter for event */
 	uint16_t	flags;
 	uint32_t	fflags;
 	intptr_t	data;
-	void		*udata;	/* opaque user data identifier */
+	void*		udata;	/* opaque user data identifier */
 };
 
 typedef struct OrbisKernelModuleSegmentInfo
 {
-    void *address;
+    void* address;
     uint32_t size;
     int32_t prot;
 } OrbisKernelModuleSegmentInfo;
@@ -146,7 +147,8 @@ typedef struct OrbisKernelModuleInfo
 	uint8_t fingerprint[20];
 } OrbisKernelModuleInfo;
 
-typedef struct _OrbisKernelEventFlagOptParam {
+typedef struct _OrbisKernelEventFlagOptParam 
+{
 	size_t sz;
 } OrbisKernelEventFlagOptParam;
 
@@ -164,13 +166,14 @@ typedef struct _OrbisKernelSemaOptParam {
 
 typedef struct _OrbisKernelSema* OrbisKernelSema;
 
-typedef struct {
-	uint32_t    unk01;
-	uint16_t    unk02;
-	uint16_t    unk03;
-	uint8_t     unk04;
-	uint8_t     unk05;
-	uint8_t     unk06[6];
+typedef struct OrbisKernelUuid 
+{
+	uint32_t    timeLow;
+	uint16_t    timeMid;
+	uint16_t    timeHiAndVersion;
+	uint8_t     clockSeqHiAndReserved;
+	uint8_t     clockSeqLow;
+	uint8_t     node[6];
 } OrbisKernelUuid;
 
 typedef mode_t OrbisKernelMode;
@@ -178,17 +181,19 @@ typedef struct stat OrbisKernelStat;
 
 typedef struct timespec OrbisKernelTimespec;
 
-typedef struct OrbisKernelIovec {
+typedef struct OrbisKernelIovec 
+{
 	void* base;
 	size_t len;
 } OrbisKernelIovec;
 
-typedef struct {
-	void* unk01;
-	void* unk02;
+typedef struct 
+{
+	void* start;
+	void* end;
 	off_t offset;
-	int32_t unk04;
-	int32_t unk05;
+	int32_t protection;
+	int32_t memoryType;
 	unsigned isFlexibleMemory : 1;
 	unsigned isDirectMemory : 1;
 	unsigned isStack : 1;
