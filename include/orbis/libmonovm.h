@@ -399,11 +399,17 @@ void mono_field_set_value(MonoObject *obj, MonoClassField *field, void *value);
 // Empty Comment
 void mono_field_get_value(MonoObject *obj, MonoClassField *field, void *value);
 // Empty Comment
+MonoObject* mono_field_get_value_object(MonoDomain* domain, MonoClassField *field, MonoObject* value);
+// Empty Comment
 MonoClass*  mono_get_byte_class();
 // Empty Comment
 void mono_class_get_nesting_type();
 // Empty Comment
-void mono_class_get_type();
+MonoType* mono_class_get_type(MonoClass* klass);
+// Empty Comment
+MonoType* mono_class_inflate_generic_type(MonoType *type, MonoGenericContext *context) /* MONO_DEPRECATED */;
+//
+MonoClass* mono_class_from_mono_type(MonoType *type);
 // Empty Comment
 void mono_config_parse();
 // Empty Comment
@@ -594,10 +600,17 @@ void mono_type_get_class();
 void mono_type_get_type();
 // Empty Comment
 void mono_unhandled_exception();
-
+// Empty Comment
+guint32 mono_gchandle_new(MonoObject* obj, gboolean pinned);
+// Empty Comment
+MonoObject* mono_gchandle_get_target(guint32 gchandle);
+// Empty Comment
+void mono_gchandle_free(guint32 gchandle);
+// Empty Comment
+gpointer mono_compile_method(MonoMethod *method);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif
+#endif // _SCE_MONO_VM_H_
