@@ -11,8 +11,9 @@ extern "C" {
 
 // Empty Comment
 void sceGnmAddEqEvent();
-// Empty Comment
-void sceGnmAreSubmitsAllowed();
+// Checks if any draw or compute submission will stall sceGnmSubmitDone()
+// Returns 1 if it won't stall, and 0 if it will
+int32_t sceGnmAreSubmitsAllowed(void);
 // Empty Comment
 void sceGnmBeginWorkload();
 // Empty Comment
@@ -38,12 +39,18 @@ void sceGnmDispatchIndirectOnMec();
 // Empty Comment
 void sceGnmDispatchInitDefaultHardwareState();
 // Queue a draw indexed instruction into the command buffer.
+// numdwords must be 10, and 10 DWORDS must be available in cmd.
 int32_t sceGnmDrawIndex(
 	uint32_t* cmd, uint32_t numdwords, uint32_t indexcount,
-	const void* indexaddr, OrbisGnmDrawIndexFlags flags
+	const void* indexaddr, OrbisGnmDrawFlags flags
 );
-// Empty Comment
-void sceGnmDrawIndexAuto();
+// Queue a draw instruction using auto generated indices
+// into the command buffer.
+// numdwords must be 7, and 7 DWORDS must be available in cmd.
+int32_t sceGnmDrawIndexAuto(
+	uint32_t* cmd, uint32_t numdwords, uint32_t indexcount,
+	OrbisGnmDrawFlags flags
+);
 // Empty Comment
 void sceGnmDrawIndexIndirect();
 // Empty Comment
@@ -52,8 +59,13 @@ void sceGnmDrawIndexIndirectMulti();
 void sceGnmDrawIndexMultiInstanced();
 // Empty Comment
 void sceGnmDrawIndexOffset();
-// Empty Comment
-void sceGnmDrawIndirect();
+// Queue an indirect draw instruction into the command buffer.
+// numdwords must be 9, and 9 DWORDS must be available in cmd.
+int32_t sceGnmDrawIndirect(
+	uint32_t* cmd, uint32_t numdwords, uint32_t dataoffset,
+	uint32_t stage, uint8_t vertexoffusersgpr, uint8_t instanceoffusersgpr,
+	OrbisGnmDrawFlags flags
+);
 // Empty Comment
 void sceGnmDrawIndirectMulti();
 // Empty Comment
@@ -62,8 +74,11 @@ void sceGnmDrawInitDefaultHardwareState();
 void sceGnmDrawInitDefaultHardwareState175();
 // Empty Comment
 void sceGnmDrawInitDefaultHardwareState200();
-// Empty Comment
-void sceGnmDrawInitDefaultHardwareState350();
+// Sets the hardware's graphics ring state to its default values.
+// numdwords must be 256, and 256 DWORDS must be available in cmd.
+int32_t sceGnmDrawInitDefaultHardwareState350(
+	uint32_t* cmd, uint32_t numdwords
+);
 // Empty Comment
 void sceGnmDrawInitToDefaultContextState();
 // Empty Comment
@@ -158,10 +173,26 @@ void sceGnmResetVgtControl();
 void sceGnmSetCsShader();
 // Empty Comment
 void sceGnmSetCsShaderWithModifier();
-// Empty Comment
-void sceGnmSetEmbeddedPsShader();
-// Empty Comment
-void sceGnmSetEmbeddedVsShader();
+// Sets a predefined pixel shader according to the shader ID
+// to be used in the command buffer.
+// Available shader IDs:
+// - 0: Empty shader
+// - 1: Empty shader exporting 32 bit R and G
+// Any other ID will return an error.
+// numdwords must be 40, and 40 DWORDS must be available in cmd.
+int32_t sceGnmSetEmbeddedPsShader(
+	uint32_t* cmd, uint32_t numdwords, int32_t shaderid
+);
+// Sets a predefined vertex shader according to the shader ID
+// to be used in the command buffer.
+// Available shader IDs:
+// - 0: Fullscreen quad shader
+// Any other ID will return an error.
+// numdwords must be 29, and 29 DWORDS must be available in cmd.
+int32_t sceGnmSetEmbeddedVsShader(
+	uint32_t* cmd, uint32_t numdwords,
+	int32_t shaderid, uint32_t shadermodifier
+);
 // Empty Comment
 void sceGnmSetEsShader();
 // Empty Comment
@@ -177,6 +208,7 @@ int32_t sceGnmSetPsShader(
 	uint32_t* cmd, uint32_t numdwords, const void* psregs
 );
 // Set the pixel shader to be used in the command buffer.
+// numdwords must be 40, and 40 DWORDS must be available in cmd.
 int32_t sceGnmSetPsShader350(
 	uint32_t* cmd, uint32_t numdwords, const void* psregs
 );
@@ -193,14 +225,20 @@ void sceGnmSetupMipStatsReport();
 // Empty Comment
 void sceGnmSetVgtControl();
 // Set the vertex shader to be used in the command buffer.
+// numdwords must be 29, and 29 DWORDS must be available in cmd.
 int32_t sceGnmSetVsShader(
 	uint32_t* cmd, uint32_t numdwords,
 	const void* vsregs, uint32_t shadermodifier
 );
 // Empty Comment
 void sceGnmSetWaveLimitMultipliers();
-// Empty Comment
-void sceGnmSubmitAndFlipCommandBuffers();
+// Submit one or more draw command buffer, and optionally one or more compute command buffers,
+// then flip a registered video buffer.
+int32_t sceGnmSubmitAndFlipCommandBuffers(
+	uint32_t count, void* dcbaddrs[], uint32_t* dcbbytesizes,
+	void* ccbaddrs[], uint32_t* ccbbytesizes, uint32_t videohandle,
+	uint32_t displaybufidx, uint32_t flipmode, uint64_t fliparg
+);
 // Empty Comment
 void sceGnmSubmitAndFlipCommandBuffersForWorkload();
 // Submit one or more draw command buffer, and optionally one or more compute command buffers.
@@ -210,7 +248,7 @@ int32_t sceGnmSubmitCommandBuffers(
 );
 // Empty Comment
 void sceGnmSubmitCommandBuffersForWorkload();
-// Empty Comment
+// Tell the driver that all command buffers were submitted for this frame.
 int32_t sceGnmSubmitDone(void);
 // Empty Comment
 void sceGnmUnmapComputeQueue();
