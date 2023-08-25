@@ -7,7 +7,7 @@
 _sceModuleParam:
 	.quad 	0x18		# Size
 	.quad   0x13C13F4BF	# Magic
-	.quad 	0x4508001 	# SDK version
+	.quad 	0x1000051 	# SDK version
 
 # data globals
 .align 0x8
