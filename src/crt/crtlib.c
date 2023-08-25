@@ -14,7 +14,7 @@ __asm__(
 	// magic
 "	.quad   0x13C13F4BF \n"
 	// SDK version
-"	.quad 	0x4508101 \n"
+"	.quad 	0x1000051 \n"
 ".att_syntax prefix \n"
 );
 
