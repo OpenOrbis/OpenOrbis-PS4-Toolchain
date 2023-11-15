@@ -38,7 +38,7 @@ void sceGnmDispatchIndirect();
 void sceGnmDispatchIndirectOnMec();
 // Empty Comment
 void sceGnmDispatchInitDefaultHardwareState();
-// Queue a draw indexed instruction into the command buffer.
+// Queue an indexed draw instruction into the command buffer.
 // numdwords must be 10, and 10 DWORDS must be available in cmd.
 int32_t sceGnmDrawIndex(
 	uint32_t* cmd, uint32_t numdwords, uint32_t indexcount,
@@ -51,20 +51,41 @@ int32_t sceGnmDrawIndexAuto(
 	uint32_t* cmd, uint32_t numdwords, uint32_t indexcount,
 	OrbisGnmDrawFlags flags
 );
-// Empty Comment
-void sceGnmDrawIndexIndirect();
+// Queue an indirect indexed draw instruction into the command buffer.
+// numdwords must be 9, and 9 DWORDS must be available in cmd.
+// dataoffset is an offset to the instance data.
+// stage must be 2 for Vertex shader usage.
+// vertexoffusgpr optionally specifies which user SGPR should have
+// the base vertex written. Set to 0 if not needed.
+// instanceoffusgpr optionally specifies which user SGPR should have
+// the start instance written. Set to 0 if not needed.
+int32_t sceGnmDrawIndexIndirect(
+	uint32_t* cmd, uint32_t numdwords, uint32_t dataoffset, uint32_t stage,
+	uint32_t vertexoffusgpr, uint32_t instanceoffusgpr, OrbisGnmDrawFlags flags
+);
 // Empty Comment
 void sceGnmDrawIndexIndirectMulti();
 // Empty Comment
 void sceGnmDrawIndexMultiInstanced();
 // Empty Comment
-void sceGnmDrawIndexOffset();
+// Queue an indexed draw instruction into the command buffer.
+// The index buffer must be set in a previous INDEX_BASE command.
+// numdwords must be 9, and 9 DWORDS must be available in cmd.
+int32_t sceGnmDrawIndexOffset(
+	uint32_t* cmd, uint32_t numdwords, uint32_t offset,
+	uint32_t indexcount, OrbisGnmDrawFlags flags
+);
 // Queue an indirect draw instruction into the command buffer.
 // numdwords must be 9, and 9 DWORDS must be available in cmd.
+// dataoffset is an offset to the instance data.
+// stage must be 2 for Vertex shader usage.
+// vertexoffusgpr optionally specifies which user SGPR should have
+// the base vertex written. Set to 0 if not needed.
+// instanceoffusgpr optionally specifies which user SGPR should have
+// the start instance written. Set to 0 if not needed.
 int32_t sceGnmDrawIndirect(
-	uint32_t* cmd, uint32_t numdwords, uint32_t dataoffset,
-	uint32_t stage, uint8_t vertexoffusersgpr, uint8_t instanceoffusersgpr,
-	OrbisGnmDrawFlags flags
+	uint32_t* cmd, uint32_t numdwords, uint32_t dataoffset, uint32_t stage,
+	uint32_t vertexoffusgpr, uint32_t instanceoffusgpr, OrbisGnmDrawFlags flags
 );
 // Empty Comment
 void sceGnmDrawIndirectMulti();
@@ -139,8 +160,13 @@ void sceGnmInsertSetColorMarker();
 void sceGnmInsertSetMarker();
 // Empty Comment
 void sceGnmInsertThreadTraceMarker();
-// Empty Comment
-void sceGnmInsertWaitFlipDone();
+// Instructs the command processor (CP) to wait for writes
+// to a VideoOut display buffer to be complete
+// numdwords must be 7, and 7 DWORDS must be available in cmd.
+int32_t sceGnmInsertWaitFlipDone(
+	uint32_t* cmd, uint32_t numdwords, uint32_t videohandle,
+	uint32_t displaybufidx
+);
 // Empty Comment
 void sceGnmIsUserPaEnabled();
 // Empty Comment
@@ -176,8 +202,8 @@ void sceGnmSetCsShaderWithModifier();
 // Sets a predefined pixel shader according to the shader ID
 // to be used in the command buffer.
 // Available shader IDs:
-// - 0: Empty shader
-// - 1: Empty shader exporting 32 bit R and G
+// - 0: Exports zeros in 16 bit floats, RGBA
+// - 1: Exports zeros in 32 bit floats, RGBA
 // Any other ID will return an error.
 // numdwords must be 40, and 40 DWORDS must be available in cmd.
 int32_t sceGnmSetEmbeddedPsShader(
@@ -204,6 +230,7 @@ void sceGnmSetHsShader();
 // Empty Comment
 void sceGnmSetLsShader();
 // Set the pixel shader to be used in the command buffer.
+// numdwords must be 40, and 40 DWORDS must be available in cmd.
 int32_t sceGnmSetPsShader(
 	uint32_t* cmd, uint32_t numdwords, const void* psregs
 );
