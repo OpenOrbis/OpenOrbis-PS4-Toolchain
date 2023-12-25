@@ -59,10 +59,10 @@ $(INTDIR)/%.o: $(PROJDIR)/%.c
 $(INTDIR)/%.o: $(PROJDIR)/%.cpp
 	$(CCX) $(CXXFLAGS) -o $@ $<
 
-$(INTDIR)/%.o.stub: $(PROJDIR)/%.c
+$(INTDIR)/%.o.stub: $(PROJDIR)/%.stub.c
 	$(CC) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(TOOLCHAIN)/include -o $@ $<
 
-$(INTDIR)/%.o.stub: $(PROJDIR)/%.cpp
+$(INTDIR)/%.o.stub: $(PROJDIR)/%.stub.cpp
 	$(CCX) -target x86_64-pc-linux-gnu -ffreestanding -nostdlib -fno-builtin -fPIC -c $(TOOLCHAIN)/include -o $@ $<
 
 .PHONY: clean
