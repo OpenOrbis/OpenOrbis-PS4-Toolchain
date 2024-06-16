@@ -10,39 +10,41 @@ on:
       - "**/*.md"
       - '**/*.txt'
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 1 1-12 *' # rebuild once every month
 
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
-        llvm: [ '10', '11', '12', '13', '14', '15', '16' ]
+        llvm: [ '10', '11', '12', '13', '14', '15', '16', '17', '18' ]
     runs-on: ubuntu-latest
     steps:
 
       - name: Checkout OOSDK
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
 
       - name: Checkout musl
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           repository: OpenOrbis/musl
           path: musl
 
       - name: Checkout create-fself
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           repository: OpenOrbis/create-fself
           path: create-fself
 
       - name: Checkout orbis-lib-gen
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           repository: OpenOrbis/orbis-lib-gen
           path: orbis-lib-gen
 
       - name: Checkout ps4libdoc
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           repository: idc/ps4libdoc
           path: orbis-lib-gen/ps4libdoc
@@ -58,13 +60,14 @@ jobs:
 
       - name: Cache LLVM and Clang (${{ env.llvm_ver }})
         id: cache-llvm
-        uses: actions/cache@v3
+        uses: actions/cache@main
         with:
           path: ${{ env.llvm_path }}
           key: llvm-${{ env.llvm_ver }}
 
       - name: Install LLVM and Clang (${{ env.llvm_ver }})
-        uses: KyleMayes/install-llvm-action@master
+      # https://github.com/KyleMayes/install-llvm-action/issues/75
+        uses: gentoo-root/install-llvm-action@abb6cec0ec431e834bc5e5090ea39a2d1d63a4c6
         with:
           version: ${{ env.llvm_ver }}
           directory: ${{ env.llvm_path }}
@@ -91,7 +94,7 @@ jobs:
           cp -r ps4/lib/* ../lib/
 
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@main
         with:
           go-version: 1.17
 
@@ -171,20 +174,20 @@ jobs:
         run: bash ./build-all.sh
 
       - name: Upload toolchain
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: toolchain-llvm-${{ env.llvm_ver }}
           path: toolchain-llvm-${{ env.llvm_ver }}.tar.gz
           if-no-files-found: error
 
       - name: Upload samples packages
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: samples-pkg-llvm-${{ env.llvm_ver }}
           path: samples/**/*.pkg
 
       - name: Upload samples binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: samples-elf-llvm-${{ env.llvm_ver }}
           path: |
