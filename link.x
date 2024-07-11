@@ -72,7 +72,7 @@ SECTIONS
 	}
 
 	.data : {
-		*(.data)
+		*(.data .data.*)
 	}
 
 	.bss : {
