@@ -148,7 +148,7 @@ jobs:
 
       - name: Build crtlib
         working-directory: src/crt
-        run: clang crtlib.c -c -o ../../lib/crtlib.o
+        run: clang crtlib.c -fPIC -c -o ../../lib/crtlib.o
 
       - name: Merge compiler-rt into libc
         working-directory: lib
