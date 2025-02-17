@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         llvm: [ '10', '11', '12', '13', '14', '15', '16', '17', '18' ]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
 
       - name: Checkout OOSDK
