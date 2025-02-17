@@ -56,7 +56,7 @@ jobs:
           echo llvm_ver=${{ matrix.llvm }} >> $GITHUB_ENV
           echo "llvm_path=${{ runner.tool_cache }}/llvm" >> $GITHUB_ENV
           # llvm 13 fix for ci
-          sudo apt install libncurses5
+          # sudo apt install libncurses5
 
       - name: Cache LLVM and Clang (${{ env.llvm_ver }})
         id: cache-llvm
