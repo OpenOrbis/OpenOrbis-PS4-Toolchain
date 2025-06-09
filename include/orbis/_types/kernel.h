@@ -189,7 +189,7 @@ typedef struct OrbisKernelStat {
     off_t           st_size;       /* file size, in bytes */
     blkcnt_t        st_blocks;     /* blocks allocated for file */
     blksize_t       st_blksize;    /* optimal blocksize for I/O */
-    fflags_t        st_flags;      /* user defined flags for file */
+    uint32_t        st_flags;      /* user defined flags for file */
     uint32_t        st_gen;        /* file generation number */
     int32_t         st_lspare;
     struct timespec st_birthtim;   /* time of file creation */
