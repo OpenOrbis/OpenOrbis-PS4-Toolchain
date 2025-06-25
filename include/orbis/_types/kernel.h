@@ -137,7 +137,7 @@ typedef struct OrbisKernelModuleSegmentInfo
     int32_t prot;
 } OrbisKernelModuleSegmentInfo;
 
-typedef struct OrbisKernelModuleInfo
+typedef struct OrbisKernelModuleInfo //352
 {
 	size_t size;
 	char name[256];
@@ -145,6 +145,41 @@ typedef struct OrbisKernelModuleInfo
 	uint32_t segmentCount;
 	uint8_t fingerprint[20];
 } OrbisKernelModuleInfo;
+
+typedef struct OrbisKernelModuleInfoEx { //424
+	size_t size;
+	char name[256];
+	int id;
+	uint32_t tls_index;
+	void* tls_init_addr;
+	uint32_t tls_init_size;
+	uint32_t tls_size;
+	uint32_t tls_offset;
+	uint32_t tls_align;
+	void* init_proc_addr;
+	void* fini_proc_addr;
+	uint64_t reserved1;
+	uint64_t reserved2;
+	void* eh_frame_hdr_addr;
+	void* eh_frame_addr;
+	uint32_t eh_frame_hdr_size;
+	uint32_t eh_frame_size;
+	OrbisKernelModuleSegmentInfo segmentInfo[4];
+	uint32_t segmentCount;
+	uint32_t ref_count;
+} OrbisKernelModuleInfoEx;
+
+typedef struct OrbisKernelModuleInfoForUnwind //304
+{
+	size_t size;
+	char name[256];
+	void* eh_frame_hdr_addr;
+	void* eh_frame_addr;
+	uint32_t eh_frame_size;
+	uint32_t;
+	void* seg0_addr;
+	uint64_t seg0_size;
+} OrbisKernelModuleInfoForUnwind;
 
 typedef struct _OrbisKernelEventFlagOptParam {
 	size_t sz;
@@ -205,11 +240,11 @@ typedef struct OrbisKernelIovec {
 } OrbisKernelIovec;
 
 typedef struct {
-	void* unk01;
-	void* unk02;
+	void* start_addr;
+	void* end_addr;
 	off_t offset;
-	int32_t unk04;
-	int32_t unk05;
+	int32_t prot;
+	int32_t mtype;
 	unsigned isFlexibleMemory : 1;
 	unsigned isDirectMemory : 1;
 	unsigned isStack : 1;
