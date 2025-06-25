@@ -48,17 +48,17 @@ int32_t sceKernelAddWriteEvent(OrbisKernelEqueue, int32_t, size_t, void*);
 // Empty Comment
 int32_t sceKernelAllocateDirectMemory(off_t, off_t, size_t, size_t, int32_t, off_t*);
 // Empty Comment
-int32_t sceKernelAllocateMainDirectMemory(size_t, size_t, int32_t, off_t);
+int32_t sceKernelAllocateMainDirectMemory(size_t, size_t, int32_t, off_t*);
 // Empty Comment
 int32_t sceKernelAvailableDirectMemorySize(off_t, off_t, size_t, off_t, size_t);
 // Empty Comment
-int32_t sceKernelAvailableFlexibleMemorySize(size_t);
+int32_t sceKernelAvailableFlexibleMemorySize(size_t*);
 // Empty Comment
 void sceKernelBacktraceSelf();
 // Empty Comment
-void sceKernelBatchMap();
+int32_t sceKernelBatchMap(void*, int, int*);
 // Empty Comment
-void sceKernelBatchMap2();
+int32_t sceKernelBatchMap2(void*, int, int*, int);
 // Empty Comment
 int32_t sceKernelCancelEventFlag(OrbisKernelEventFlag, uint64_t, int32_t*);
 // Empty Comment
@@ -66,7 +66,7 @@ int32_t sceKernelCancelSema(OrbisKernelSema, int32_t, int32_t*);
 // Empty Comment
 void sceKernelCheckedReleaseDirectMemory(off_t memstart, size_t memlen);
 // Empty Comment
-void sceKernelCheckReachability();
+int sceKernelCheckReachability(char*);
 // Empty Comment
 int32_t sceKernelChmod(const char *path, OrbisKernelMode mode);
 // Empty Comment
@@ -194,11 +194,11 @@ void sceKernelGetIpcPath();
 // Empty Comment
 int32_t sceKernelGetModuleInfo(OrbisKernelModule handle, OrbisKernelModuleInfo* info);
 // Empty Comment
-void sceKernelGetModuleInfoForUnwind();
+int32_t sceKernelGetModuleInfoForUnwind(void* addr, uint32_t flags, OrbisKernelModuleInfoForUnwind* info);
 // Empty Comment
-void sceKernelGetModuleInfoFromAddr();
+int32_t sceKernelGetModuleInfoFromAddr(void* addr, uint32_t flags, OrbisKernelModuleInfoEx* info);
 // Empty Comment
-void sceKernelGetModuleInfoInternal();
+int32_t sceKernelGetModuleInfoInternal(OrbisKernelModule handle, OrbisKernelModuleInfoEx* info);
 // Empty Comment
 int32_t sceKernelGetModuleList(OrbisKernelModule *array, size_t size, size_t *available);
 // Empty Comment
