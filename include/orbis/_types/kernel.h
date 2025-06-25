@@ -276,10 +276,26 @@ typedef struct
 
 typedef struct
 {
-	int32_t AppId;
-	int32_t Unk;
-	char unk0x8[0x4];
-	int32_t AppType;
-	char TitleId[10];
-	char unk0x1A[0x2E];
+	int32_t version;
+	int32_t;
+	uint64_t ids_bits[2];
+} OrbisTitleWorkaround;
+
+typedef struct
+{
+	int32_t  AppId;
+	int32_t  mmap_flags;
+	int32_t  attributeExe;
+	int32_t  AppType;
+	char     TitleId[10];
+	uint8_t  debug_level;
+	uint8_t  slv_flags;
+	uint8_t  miniAppDmemFlags;
+	uint8_t  render_mode;
+	uint8_t  mdbg_out;
+	uint8_t  requiredHdcpType;
+	uint64_t preloadPrxFlags;
+	int32_t  attribute;
+	int32_t  hasParamSfo;
+	OrbisTitleWorkaround TitleWorkaround;
 } OrbisAppInfo;
