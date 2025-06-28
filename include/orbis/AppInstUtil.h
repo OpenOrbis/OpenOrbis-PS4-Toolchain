@@ -29,12 +29,12 @@ int32_t sceAppInstUtilAppUnInstallTheme(const char* contentId);
 bool sceAppInstUtilAppIsInInstalling(const char* contentId);
 int32_t sceAppInstUtilAppIsInUpdating(const char* titleId, int32_t* updating);
 int32_t sceAppInstUtilAppExists(const char* titleId, int32_t* exists);
-int32_t sceAppInstUtilAppGetSize(const char* titleId, uint32_t* size);
+int32_t sceAppInstUtilAppGetSize(const char* titleId, uint64_t* size);
 
 int32_t sceAppInstUtilAppRecoverApp(const char* titleId);
 
 int32_t sceAppInstUtilGetInstallProgress(const char* contentId, uint32_t* progress);
-int32_t sceAppInstUtilGetInstallProgressInfo(const char* contentId, uint32_t* state, uint32_t* progress, uint32_t* progressSize, uint32_t* totalSize, uint32_t* restSec);
+int32_t sceAppInstUtilGetInstallProgressInfo(const char* contentId, uint32_t* state, uint32_t* progress, uint64_t* progressSize, uint64_t* totalSize, uint32_t* restSec);
 
 // Empty Comment
 void sceAppInstUtilAppCancelableUnInstall();
