@@ -173,12 +173,12 @@ typedef struct {
 	uint8_t     unk06[6];
 } OrbisKernelUuid;
 
-typedef mode_t OrbisKernelMode;
+typedef uint16_t OrbisKernelMode;
 
-typedef struct OrbisKernelStat {
+typedef struct OrbisKernelStat {   /* 120 */
     dev_t           st_dev;        /* inode's device */
     ino_t           st_ino;        /* inode's number */
-    mode_t          st_mode;       /* inode protection mode */
+    OrbisKernelMode st_mode;       /* inode protection mode */
     nlink_t         st_nlink;      /* number of hard links */
     uid_t           st_uid;        /* user ID of the file's owner */
     gid_t           st_gid;        /* group ID of the file's group */
