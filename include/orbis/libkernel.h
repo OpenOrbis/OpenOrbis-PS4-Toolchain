@@ -168,7 +168,7 @@ size_t sceKernelGetDirectMemorySize();
 // Empty Comment
 int32_t sceKernelGetDirectMemoryType(off_t, int32_t *, off_t *, off_t *);
 // Empty Comment
-int32_t sceKernelGetdirentries(int32_t, char *, int32_t, int32_t *);
+int32_t sceKernelGetdirentries(int32_t, char *, int32_t, int64_t *);
 // Empty Comment
 intptr_t sceKernelGetEventData(const OrbisKernelEvent*);
 // Empty Comment
