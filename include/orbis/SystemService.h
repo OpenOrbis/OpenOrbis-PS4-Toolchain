@@ -17,7 +17,7 @@ int32_t sceSystemServiceGetAppIdOfMiniApp(void);
 int32_t sceLncUtilLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 int32_t sceSystemServiceKillApp(uint32_t appid, int32_t opt, int32_t method, int32_t reason);
 void sceSystemServiceAcquireFb0();
-void sceSystemServiceAddLocalProcess();
+void sceSystemServiceAddLocalProcess(int app_id, const char* eboot_path, int param_size, const char* args[]);
 void sceSystemServiceAddLocalProcessForPsmKit();
 void sceSystemServiceChangeAcpClock();
 void sceSystemServiceChangeCpuClock();
