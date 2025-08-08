@@ -107,7 +107,7 @@ LncAppParam;
 
 enum SystemState
 {
-    INVALID = 0,
+    INVALID_STATE = 0,
     INITIALIZING = 10,
     SHUTDOWN_ON_GOING = 100,
     POWER_SAVING = 200,
@@ -118,7 +118,7 @@ enum SystemState
 
 enum TriggerCode
 {
-    INVALID,
+    INVALID_TRIGGER,
     MISC,
     HDMI_CEC,
     REMOTE_PLAY = 100,
