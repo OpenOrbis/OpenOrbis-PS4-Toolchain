@@ -87,6 +87,14 @@ void sceSystemServiceSuspendLocalProcess();
 void sceSystemServiceTickVideoPlayback();
 void sceSystemServiceTurnOffScreenSaver();
 
+bool sceSystemStateMgrIsStandbyModeEnabled(); 
+int sceSystemStateMgrGetTriggerCode();
+int sceSystemStateMgrWakeUp(enum TriggerCode trigger);
+int sceSystemStateMgrReboot();
+int sceSystemStateMgrTurnOff();
+int sceSystemStateMgrEnterStandby();
+int sceSystemStateMgrGetCurrentState(); 
+
 #ifdef __cplusplus
 }
 #endif
