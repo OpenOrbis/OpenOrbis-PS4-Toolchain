@@ -188,7 +188,7 @@ uint64_t sceKernelGetGPI(void);
 // Empty Comment
 void sceKernelGetGPO();
 // Empty Comment
-void sceKernelGetIdPs();
+void sceKernelGetIdPs(void* ret);
 // Empty Comment
 void sceKernelGetIpcPath();
 // Empty Comment
