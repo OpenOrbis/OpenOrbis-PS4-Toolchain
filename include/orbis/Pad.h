@@ -91,7 +91,7 @@ void scePadSetLightBarForTracker();
 void scePadSetLoginUserNumber();
 void scePadSetMotionSensorState();
 void scePadSetProcessFocus();
-void scePadSetProcessPrivilege();
+void scePadSetProcessPrivilege(int privilage);
 void scePadSetProcessPrivilegeOfButtonRemapping();
 void scePadSetTiltCorrectionState();
 void scePadSetUserColor();
