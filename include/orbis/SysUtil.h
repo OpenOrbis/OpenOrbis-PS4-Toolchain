@@ -37,8 +37,8 @@ void sceSysUtilSendSystemNotificationWithDeviceIdRelatedToUser();
 void sceSysUtilSendSystemNotificationWithErrorCode();
 // Empty Comment
 void sceSysUtilSendSystemNotificationWithParams();
-// Empty Comment
-void sceSysUtilSendSystemNotificationWithText();
+// 
+void sceSysUtilSendSystemNotificationWithText(int messageType, char* message);
 // Empty Comment
 void sceSysUtilSendSystemNotificationWithTextRelatedToUser();
 // Empty Comment
