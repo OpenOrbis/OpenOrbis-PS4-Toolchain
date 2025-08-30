@@ -69,7 +69,7 @@ void sceSystemServicePowerTick();
 void sceSystemServiceRaiseExceptionLocalProcess();
 void sceSystemServiceReceiveEvent();
 void sceSystemServiceReenableMusicPlayer();
-void sceSystemServiceRegisterDaemon();
+int32_t sceSystemServiceRegisterDaemon();
 void sceSystemServiceReleaseFb0();
 void sceSystemServiceReportAbnormalTermination();
 void sceSystemServiceRequestCameraCalibration();
