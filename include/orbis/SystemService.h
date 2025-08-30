@@ -56,7 +56,7 @@ void sceSystemServiceIsScreenSaverOn();
 void sceSystemServiceIsShellUiFgAndGameBgCpuMode();
 void sceSystemServiceKillLocalProcess();
 void sceSystemServiceKillLocalProcessForPsmKit();
-void sceSystemServiceLaunchApp();
+int32_t sceSystemServiceLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 void sceSystemServiceLaunchEventDetails();
 void sceSystemServiceLaunchTournamentsTeamProfile();
 void sceSystemServiceLaunchWebBrowser();
