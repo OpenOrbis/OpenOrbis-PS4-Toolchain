@@ -174,4 +174,5 @@ typedef enum OrbisSysModuleInternal : uint32_t
     ORBIS_SYSMODULE_INTERNAL_BGFT = 0x8000002A, // libSceBgft
     ORBIS_SYSMODULE_INTERNAL_PRECOMPILED_SHADERS = 0x80000064, // libScePrecompiledShaders
     ORBIS_SYSMODULE_INTERNAL_PAD = 0x80000024, // libScePad
+    ORBIS_SYSMODULE_INTERNAL_SYS_UTIL= 0x80000026, // libSceSysUtil
 } OrbisSysModuleInternal;

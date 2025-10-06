@@ -38,7 +38,7 @@ void sceSysUtilSendSystemNotificationWithErrorCode();
 // Empty Comment
 void sceSysUtilSendSystemNotificationWithParams();
 // Empty Comment
-void sceSysUtilSendSystemNotificationWithText();
+void sceSysUtilSendSystemNotificationWithText(int type, const char * message);
 // Empty Comment
 void sceSysUtilSendSystemNotificationWithTextRelatedToUser();
 // Empty Comment

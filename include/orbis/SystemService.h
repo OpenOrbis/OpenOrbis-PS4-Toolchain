@@ -17,7 +17,7 @@ int32_t sceSystemServiceGetAppIdOfMiniApp(void);
 int32_t sceLncUtilLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 int32_t sceSystemServiceKillApp(uint32_t appid, int32_t opt, int32_t method, int32_t reason);
 void sceSystemServiceAcquireFb0();
-void sceSystemServiceAddLocalProcess();
+int32_t sceSystemServiceAddLocalProcess(int app_id, const char* eboot_path, int param_size, const char* args[]);
 void sceSystemServiceAddLocalProcessForPsmKit();
 void sceSystemServiceChangeAcpClock();
 void sceSystemServiceChangeCpuClock();
@@ -56,7 +56,7 @@ void sceSystemServiceIsScreenSaverOn();
 void sceSystemServiceIsShellUiFgAndGameBgCpuMode();
 void sceSystemServiceKillLocalProcess();
 void sceSystemServiceKillLocalProcessForPsmKit();
-void sceSystemServiceLaunchApp();
+int32_t sceSystemServiceLaunchApp(const char* title_id, const char* argv[], LncAppParam* param);
 void sceSystemServiceLaunchEventDetails();
 void sceSystemServiceLaunchTournamentsTeamProfile();
 void sceSystemServiceLaunchWebBrowser();
@@ -69,7 +69,7 @@ void sceSystemServicePowerTick();
 void sceSystemServiceRaiseExceptionLocalProcess();
 void sceSystemServiceReceiveEvent();
 void sceSystemServiceReenableMusicPlayer();
-void sceSystemServiceRegisterDaemon();
+int32_t sceSystemServiceRegisterDaemon();
 void sceSystemServiceReleaseFb0();
 void sceSystemServiceReportAbnormalTermination();
 void sceSystemServiceRequestCameraCalibration();
@@ -86,6 +86,14 @@ void sceSystemServiceSuspendBackgroundApp();
 void sceSystemServiceSuspendLocalProcess();
 void sceSystemServiceTickVideoPlayback();
 void sceSystemServiceTurnOffScreenSaver();
+
+bool sceSystemStateMgrIsStandbyModeEnabled(); 
+int sceSystemStateMgrGetTriggerCode();
+int sceSystemStateMgrWakeUp(enum TriggerCode trigger);
+int sceSystemStateMgrReboot();
+int sceSystemStateMgrTurnOff();
+int sceSystemStateMgrEnterStandby();
+int sceSystemStateMgrGetCurrentState(); 
 
 #ifdef __cplusplus
 }
