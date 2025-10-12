@@ -60,7 +60,7 @@ struct _OrbisBgftDownloadParam {
 	const char* releaseDate;
 	const char* packageType;
 	const char* packageSubType;
-	uint32_t packageSize;
+	uint64_t packageSize;
 };
 typedef struct _OrbisBgftDownloadParam OrbisBgftDownloadParam;
 
@@ -73,17 +73,17 @@ typedef struct _OrbisBgftDownloadParamEx OrbisBgftDownloadParamEx;
 struct _OrbisBgftDownloadTaskInfo {
 	char* contentTitle;
 	char* iconPath;
-	uint32_t notificationUtcTick;
+	uint64_t notificationUtcTick;
 };
 typedef struct _OrbisBgftDownloadTaskInfo OrbisBgftDownloadTaskInfo;
 
 struct _OrbisBgftTaskProgress {
 	uint32_t bits;
 	int32_t errorResult;
-	uint32_t length;
-	uint32_t transferred;
-	uint32_t lengthTotal;
-	uint32_t transferredTotal;
+	uint64_t length;
+	uint64_t transferred;
+	uint64_t lengthTotal;
+	uint64_t transferredTotal;
 	uint32_t numIndex;
 	uint32_t numTotal;
 	uint32_t restSec;
