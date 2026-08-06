@@ -77,9 +77,9 @@ If you don't wish to restart your shell, remember to `source` your updated profi
 This is needed so the build scripts and the converter tool know where to look for certain files. It is also recommended you add the root SDK directory + `/bin` to your path variable.
 
 ### Windows Installer
-For Windows, a Nullsoft scriptable installer is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable.
+For Windows, an [Inno Setup 7](https://jrsoftware.org/isdl.php) installer in the `/extra` folder is provided, which will automate the process of extracting the toolchain files and setting the `OO_PS4_TOOLCHAIN` environment variable.
 
-Dependency [.NET Core 3.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-3.0.3-windows-x64-installer) is required to run LibOrbisPkg tools as part of build process.
+After installation, the compiled installer will be placed in the `installer-output` folder in the project root.
 
 ### Linux
 For Linux, after installing the required dependencies and setting up the environment variable as noted above, you should be good to go.
@@ -89,7 +89,7 @@ For macOS, a PKG installer is provided, which will automate the process of extra
 
 ## Creating Homebrew Projects
 
-For Windows, `/extra` provides Visual Studio templates which can be added into your VS installation's templates directory to allow easy creation of homebrew projects. You can also copy and modify the solutions from the provided samples.
+For Windows, `/extra` provides project templates (SPRX and SELF) which can be extracted and used to create homebrew projects. You can also copy and modify the solutions from the provided samples.
 
 For Linux and macOS, `/extra` contains a `setup-project.sh` script which will create a project directory based on the `hello_world` sample.
 
