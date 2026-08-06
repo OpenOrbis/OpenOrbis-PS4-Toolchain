@@ -5,7 +5,6 @@
 #define MyAppVersion "0.5.2"
 #define MyAppPublisher "OpenOrbis"
 #define MyAppURL "http://www.github.com/openorbis"
-#define Toolchain GetEnv('OO_PS4_TOOLCHAIN_SRC')
 
 [Setup]
 ; Tell Windows Explorer to reload the environment
@@ -23,25 +22,25 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName=C:\OpenOrbis\PS4Toolchain
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
-LicenseFile={#Toolchain}\LICENSE
-InfoBeforeFile={#Toolchain}\extra\readme.txt
+LicenseFile=..\LICENSE
+InfoBeforeFile=readme.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir={#Toolchain}\
+OutputDir=..\installer-output
 OutputBaseFilename=OpenOrbis PS4 Toolchain
-SetupIconFile={#Toolchain}\extra\logo.ico
+SetupIconFile=logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-WizardSmallImageFile={#Toolchain}\extra\installer-wizard-small.bmp
-WizardImageFile={#Toolchain}\extra\installer-wizard-large.bmp
+WizardSmallImageFile=installer-wizard-small.bmp
+WizardImageFile=installer-wizard-large.bmp
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "{#Toolchain}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Code]
@@ -49,11 +48,6 @@ const
   SMTO_ABORTIFHUNG = 2;
   WM_WININICHANGE = $001A;
   WM_SETTINGCHANGE = WM_WININICHANGE;
-
-type
-  WPARAM = UINT_PTR;
-  LPARAM = INT_PTR;
-  LRESULT = INT_PTR;
 
 function SendTextMessageTimeout(hWnd: HWND; Msg: UINT;
   wParam: WPARAM; lParam: PAnsiChar; fuFlags: UINT;
