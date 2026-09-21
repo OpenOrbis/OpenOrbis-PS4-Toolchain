@@ -291,9 +291,9 @@ void sceSslLoadCert();
 // Empty Comment
 void sceSslLoadRootCACert();
 // Empty Comment
-void sceSslRecv();
+int sceSslRecv(int sslConnectionId, void *buf, size_t len, int flags);
 // Empty Comment
-void sceSslSend();
+int sceSslSend(int sslConnectionId, const void *buf, size_t len, int flags);
 // Empty Comment
 void sceSslSetSslVersion();
 // Empty Comment
